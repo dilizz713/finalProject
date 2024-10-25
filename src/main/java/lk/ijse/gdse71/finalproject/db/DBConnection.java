@@ -1,9 +1,12 @@
 package lk.ijse.gdse71.finalproject.db;
 
+import lombok.Getter;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+@Getter
 public class DBConnection {
     private static DBConnection dbConnection;
     public Connection connection;
@@ -22,4 +25,6 @@ public class DBConnection {
         }
         return dbConnection;
     }
+
+
 }

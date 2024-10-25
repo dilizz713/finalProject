@@ -4,9 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8f56836-dcbd-491c-9322-619cc95de4a1" name="Changes" comment="final project day1">
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/db/DBConnection.java" afterDir="false" />
+    <list default="true" id="a8f56836-dcbd-491c-9322-619cc95de4a1" name="Changes" comment="add db connection">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/CustomerModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/DriverModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/InvoiceModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/MaintenanceRecordModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/MileageTrackingModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/PaymentModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/ReservationModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/VehicleDamageModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/VehicleModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/VehicleTypeModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/util/CrudUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/db/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/db/DBConnection.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +65,11 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
   <component name="RunAnythingCache">
@@ -68,7 +85,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1729882396389</updated>
-      <workItem from="1729882397461" duration="2389000" />
+      <workItem from="1729882397461" duration="3352000" />
     </task>
     <task id="LOCAL-00001" summary="final project day1">
       <option name="closed" value="true" />
@@ -86,7 +103,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729884103201</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add db connection">
+      <option name="closed" value="true" />
+      <created>1729885065992</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1729885065992</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -94,6 +119,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="final project day1" />
-    <option name="LAST_COMMIT_MESSAGE" value="final project day1" />
+    <MESSAGE value="add db connection" />
+    <option name="LAST_COMMIT_MESSAGE" value="add db connection" />
   </component>
 </project>
