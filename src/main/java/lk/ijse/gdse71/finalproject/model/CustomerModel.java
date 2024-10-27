@@ -35,23 +35,5 @@ public class CustomerModel {
         return "C001";
     }
 
-    public ArrayList<CustomerDTO> getAllCustomers() throws SQLException {
-        ResultSet rst = CrudUtil.execute("select * from Customer");
 
-        ArrayList<CustomerDTO> customerDTOS = new ArrayList<>();
-
-        while (rst.next()) {
-            CustomerDTO customerDTO = new CustomerDTO(
-                   rst.getString(1),        //id
-                    rst.getString(2),       //name
-                    rst.getString(3),       //address
-                    rst.getString(4),       //email
-                    rst.getInt(5),          //phone
-                    rst.getString(6)        //nic
-
-            );
-            customerDTOS.add(customerDTO);
-        }
-        return customerDTOS;
-    }
 }
