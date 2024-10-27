@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="customerAnchorPane" prefHeight="726.0" prefWidth="1120.0" style="-fx-background-color: #0b58ab;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.CustomerController">
+   <children>
+      <VBox layoutX="24.0" layoutY="21.0" prefHeight="288.0" prefWidth="1064.0">
+         <children>
+            <HBox prefHeight="46.0" prefWidth="1064.0">
+               <children>
+                  <Label prefHeight="22.0" prefWidth="199.0" text="Customer Id">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblCustomerId" text="1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold Italic" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="10.0" prefHeight="46.0" prefWidth="1064.0">
+               <children>
+                  <HBox prefHeight="46.0" prefWidth="1064.0">
+                     <children>
+                        <Label prefHeight="22.0" prefWidth="199.0" text="Name">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtName" prefHeight="26.0" prefWidth="874.0" promptText="name" style="-fx-border-color: black; -fx-background-color: #0b58ab; -fx-border-width: 0 0 1px 0;">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="46.0" prefWidth="1064.0">
+               <children>
+                  <Label prefHeight="22.0" prefWidth="199.0" text="Address">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtAddress" prefHeight="26.0" prefWidth="874.0" promptText="address" style="-fx-border-color: black; -fx-background-color: #0b58ab; -fx-border-width: 0 0 1px 0;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="102.0" prefHeight="46.0" prefWidth="1064.0">
+               <children>
+                  <Label prefHeight="22.0" prefWidth="199.0" text="Email">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtEmail" prefHeight="26.0" prefWidth="874.0" promptText="email@gmail.com" style="-fx-border-color: black; -fx-background-color: #0b58ab; -fx-border-width: 0 0 1px 0;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="148.0" prefHeight="46.0" prefWidth="1064.0">
+               <children>
+                  <Label prefHeight="22.0" prefWidth="199.0" text="Phone Number">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtPhone" prefHeight="26.0" prefWidth="874.0" promptText="0000000000" style="-fx-background-color: #0b58ab; -fx-border-color: black; -fx-border-width: 0 0 1px 0;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="194.0" prefHeight="46.0" prefWidth="1064.0">
+               <children>
+                  <Label prefHeight="22.0" prefWidth="199.0" text="Nic">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtNic" prefHeight="26.0" prefWidth="874.0" promptText="000000000000" style="-fx-background-color: #0b58ab; -fx-border-color: black; -fx-border-width: 0 0 1px 0;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button fx:id="btnSave" layoutX="24.0" layoutY="309.0" mnemonicParsing="false" onAction="#SaveCustomerOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #eca32e;" text="Save">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnUpdate" layoutX="246.0" layoutY="309.0" mnemonicParsing="false" onAction="#updateCustomerOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #3aec2e;" text="Update">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnDelete" layoutX="471.0" layoutY="309.0" mnemonicParsing="false" onAction="#deleteCustomerOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #ec2e60;" text="Delete">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnReset" layoutX="716.0" layoutY="309.0" mnemonicParsing="false" onAction="#resetOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #a61212;" text="Reset">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnSearch" layoutX="946.0" layoutY="309.0" mnemonicParsing="false" onAction="#searchcustomerOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #8b12a6;" text="Search">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Pane fx:id="tablePane" layoutX="-1.0" layoutY="343.0" prefHeight="383.0" prefWidth="1120.0">
+         <children>
+            <TableView fx:id="customerTableView" layoutY="14.0" prefHeight="369.0" prefWidth="1120.0" style="-fx-background-color: #83cdef;">
+              <columns>
+                <TableColumn fx:id="colId" prefWidth="109.0" text="Customer Id" />
+                <TableColumn fx:id="colName" prefWidth="193.0" text="Name" />
+                  <TableColumn fx:id="colAddress" prefWidth="217.0" text="Address" />
+                  <TableColumn fx:id="colEmail" prefWidth="191.0" text="Email" />
+                  <TableColumn fx:id="colPhone" prefWidth="198.0" text="Phone Number" />
+                  <TableColumn fx:id="colNic" prefWidth="211.0" text="Nic" />
+              </columns>
+            </TableView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
