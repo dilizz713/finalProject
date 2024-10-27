@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Vehicle {
+public class VehicleDTO {
     private String id;
     private String registrationNumber;
     private String make;

@@ -2,19 +2,17 @@ package lk.ijse.gdse71.finalproject.dto;
 
 import lombok.*;
 
-import java.util.Date;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Payment {
+public class MileageTrackingDTO {
     private String id;
-    private double amount;
-    private Date date;
-    private String type;
-    private String status;
+    private double estimatedMileage;
+    private double actualMileage;
+    private double extraChargePerKm;
+    private double totalExtraCharges;
     private String reservationId;
 
 }

@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Driver {
+public class DriverDTO {
     private String id;
     private String name;
     private String licenseNumber;

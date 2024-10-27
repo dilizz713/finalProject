@@ -9,12 +9,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class MaintenanceRecord {
+public class VehicleDamageDTO {
     private String id;
-    private Date date;
     private String description;
-    private String maintenanceType;
-    private double cost;
+    private Date reportedDate;
+    private double repairCost;
     private String vehicleId;
 
 }

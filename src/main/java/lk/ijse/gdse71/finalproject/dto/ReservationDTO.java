@@ -9,7 +9,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Reservation {
+public class ReservationDTO {
     private String id;
     private Date startDate;
     private Date endDate;

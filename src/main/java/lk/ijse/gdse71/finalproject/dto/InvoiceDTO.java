@@ -9,7 +9,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Invoice {
+public class InvoiceDTO {
         private String id;
         private  Date date;
         private double totalAmount;

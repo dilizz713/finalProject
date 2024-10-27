@@ -1,4 +1,57 @@
 package lk.ijse.gdse71.finalproject.model;
 
+import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
+import lk.ijse.gdse71.finalproject.util.CrudUtil;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class CustomerModel {
+    public boolean saveCustomer(CustomerDTO customerDTO) throws SQLException {
+        return CrudUtil.execute(
+                "insert into Customer values (?,?,?,?,?,?)",
+                customerDTO.getId(),
+                customerDTO.getName(),
+                customerDTO.getAddress(),
+                customerDTO.getEmail(),
+                customerDTO.getPhoneNumber(),
+                customerDTO.getNic()
+        );
+    }
+
+    public String getNextCustomerId() throws SQLException {
+        ResultSet resultSet =  CrudUtil.execute(
+                "select id from Customer order by id desc limit 1"
+        );
+
+        if(resultSet.next()){
+            String lastId = resultSet.getString(1);
+            String subString = lastId.substring(1);
+            int i = Integer.parseInt(subString);
+            int newId = i+1;
+            return String.format("C%03d",newId);
+        }
+        return "C001";
+    }
+
+    public ArrayList<CustomerDTO> getAllCustomers() throws SQLException {
+        ResultSet rst = CrudUtil.execute("select * from Customer");
+
+        ArrayList<CustomerDTO> customerDTOS = new ArrayList<>();
+
+        while (rst.next()) {
+            CustomerDTO customerDTO = new CustomerDTO(
+                   rst.getString(1),        //id
+                    rst.getString(2),       //name
+                    rst.getString(3),       //address
+                    rst.getString(4),       //email
+                    rst.getInt(5),          //phone
+                    rst.getString(6)        //nic
+
+            );
+            customerDTOS.add(customerDTO);
+        }
+        return customerDTOS;
+    }
 }
