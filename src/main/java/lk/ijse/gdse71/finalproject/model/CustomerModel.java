@@ -5,7 +5,7 @@ import lk.ijse.gdse71.finalproject.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+
 
 public class CustomerModel {
     public boolean saveCustomer(CustomerDTO customerDTO) throws SQLException {
