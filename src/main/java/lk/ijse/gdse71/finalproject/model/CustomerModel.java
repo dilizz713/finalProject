@@ -5,6 +5,7 @@ import lk.ijse.gdse71.finalproject.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 public class CustomerModel {
@@ -21,9 +22,7 @@ public class CustomerModel {
     }
 
     public String getNextCustomerId() throws SQLException {
-        ResultSet resultSet =  CrudUtil.execute(
-                "select id from Customer order by id desc limit 1"
-        );
+        ResultSet resultSet = CrudUtil.execute("select id from Customer order by id desc limit 1");
 
         if(resultSet.next()){
             String lastId = resultSet.getString(1);
@@ -33,6 +32,36 @@ public class CustomerModel {
             return String.format("C%03d",newId);
         }
         return "C001";
+    }
+
+    public ArrayList<CustomerDTO> getAllCustomers() throws SQLException {
+        ResultSet rst = CrudUtil.execute("select * from Customer");
+
+        ArrayList<CustomerDTO> customerDTOS = new ArrayList<>();
+
+        while (rst.next()) {
+            CustomerDTO customerDTO = new CustomerDTO(
+                   rst.getString(1),        //id
+                   rst.getString(2),        //name
+                   rst.getString(3),        //address
+                   rst.getString(4),        //email
+                   rst.getInt(5),           //phone
+                   rst.getString(6)         //nic
+
+            );
+            customerDTOS.add(customerDTO);
+        }
+        return customerDTOS;
+    }
+
+    public ArrayList<String> getAllCustomerIds() throws SQLException, ClassNotFoundException {
+        ResultSet resultSet = CrudUtil.execute("select id from Customer");
+        ArrayList<String> customerIds = new ArrayList<>();
+
+        while(resultSet.next()){
+            customerIds.add(resultSet.getString(1));
+        }
+        return customerIds;
     }
 
 

@@ -5,7 +5,7 @@ module lk.ijse.gdse71.finalproject {
     requires lombok;
 
 
-
+    opens lk.ijse.gdse71.finalproject.dto.tm to javafx.base;
     opens lk.ijse.gdse71.finalproject.controller to javafx.fxml;
     exports lk.ijse.gdse71.finalproject;
 }

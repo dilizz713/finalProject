@@ -1,18 +1,23 @@
 package lk.ijse.gdse71.finalproject.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 import lk.ijse.gdse71.finalproject.dto.tm.CustomerTM;
 import lk.ijse.gdse71.finalproject.model.CustomerModel;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
@@ -54,7 +59,7 @@ public class CustomerController implements Initializable {
     private AnchorPane customerAnchorPane;
 
     @FXML
-    private TableView<?> customerTableView;
+    private TableView<CustomerTM> customerTableView;
 
     @FXML
     private Label lblCustomerId;
@@ -78,66 +83,103 @@ public class CustomerController implements Initializable {
     private TextField txtPhone;
 
     @FXML
-    void SaveCustomerOnAction(ActionEvent event) throws SQLException {
+    void SaveCustomerOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+
+        // Get field values
         String id = lblCustomerId.getText();
         String name = txtName.getText();
         String address = txtAddress.getText();
         String email = txtEmail.getText();
-        int phone = Integer.parseInt(txtPhone.getText());
+        String phoneText = txtPhone.getText();
         String nic = txtNic.getText();
 
+        // Validation patterns
         String namePattern = "^[A-Za-z ]+$";
-        String nicPattern = "^[0-9]{9}[vVxX]||[0-9]{12}$";
+        String nicPattern = "^[0-9]{9}[vVxX]$|^[0-9]{12}$";
         String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
+        // Reset error indicators
+        boolean hasErrors = false;
+        StringBuilder errorMessage = new StringBuilder("Please correct the following errors:\n");
 
-        txtName.setStyle(txtName.getStyle()+";-fx-border-color:  black;");
-        txtAddress.setStyle(txtName.getStyle()+";-fx-border-color:  black;");
-        txtEmail.setStyle(txtEmail.getStyle()+";-fx-border-color:  black;");
-        txtPhone.setStyle(txtPhone.getStyle()+";-fx-border-color:  black;");
-        txtNic.setStyle(txtNic.getStyle()+";-fx-border-color:  black;");
+        String errorStyle = "-fx-border-color: red; -fx-text-fill: white; -fx-background-color: transparent;";
+        String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
 
-        boolean isValidName = name.matches(namePattern);
-        boolean isValidNic = nic.matches(nicPattern);
-        boolean isValidEmail = email.matches(emailPattern);
-
-
-        if(!isValidName || name.isEmpty()){
-            txtName.setStyle(txtName.getStyle()+";-fx-border-color: red;");
+        // Check and apply error style if validation fails
+        if (name.isEmpty() || !name.matches(namePattern)) {
+            txtName.setStyle(errorStyle);
+            errorMessage.append("- Name is empty or in an incorrect format\n");
+            hasErrors = true;
+        }else{
+            txtName.setStyle(defaultStyle);
         }
-        if(address.isEmpty()){
-            txtAddress.setStyle(txtAddress.getStyle()+";-fx-border-color: red;");
+        if (address.isEmpty()) {
+            txtAddress.setStyle(errorStyle);
+            errorMessage.append("- Address is empty\n");
+            hasErrors = true;
+        }else{
+            txtAddress.setStyle(defaultStyle);
         }
-        if(!isValidEmail || email.isEmpty()){
-            txtEmail.setStyle(txtEmail.getStyle()+";-fx-border-color: red;");
-        }
-        if(phone == -1){
-            txtPhone.setStyle(txtPhone.getStyle()+";-fx-border-color: red;");
-        }
-        if(!isValidNic || nic.isEmpty()){
-            txtNic.setStyle(txtNic.getStyle()+";-fx-border-color: red;");
-        }
-
-        if(isValidName && isValidNic && isValidEmail ){
-            CustomerDTO customerDTO = new CustomerDTO(
-                    id,
-                    name,
-                    address,
-                    email,
-                    phone,
-                    nic
-            );
-
-            boolean isSaved = customerModel.saveCustomer(customerDTO);
-            if(isSaved){
-                refreshPage();
-                new Alert(Alert.AlertType.INFORMATION, "Customer saved successfully!").show();
-            }else{
-                new Alert(Alert.AlertType.ERROR, "Fail to save Customer!").show();
-            }
+        if (email.isEmpty() || !email.matches(emailPattern)) {
+            txtEmail.setStyle(errorStyle);
+            errorMessage.append("- Email is empty or in an incorrect format\n");
+            hasErrors = true;
+        }else{
+            txtEmail.setStyle(defaultStyle);
         }
 
+        int phone = -1;
+        try {
+            phone = Integer.parseInt(phoneText);
+            txtPhone.setStyle(defaultStyle);
+        } catch (NumberFormatException e) {
+            txtPhone.setStyle(errorStyle);
+            errorMessage.append("- Phone number is empty or not a valid number\n");
+            hasErrors = true;
+        }
+
+        if (nic.isEmpty() || !nic.matches(nicPattern)) {
+            txtNic.setStyle(errorStyle);
+            errorMessage.append("- NIC is empty or in an incorrect format\n");
+            hasErrors = true;
+        }else{
+            txtNic.setStyle(defaultStyle);
+        }
+
+        // Show alert if there are validation errors and reset to default style
+        if (hasErrors) {
+            new Alert(Alert.AlertType.ERROR, errorMessage.toString()).show();
+            return;
+        }
+
+        // If validation is successful, proceed with saving the customer
+        CustomerDTO customerDTO = new CustomerDTO(id, name, address, email, phone, nic);
+        boolean isSaved = customerModel.saveCustomer(customerDTO);
+        if (isSaved) {
+            refreshPage();
+            new Alert(Alert.AlertType.INFORMATION, "Customer saved successfully!").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Failed to save customer!").show();
+        }
     }
+    @FXML
+    void clickedTable(MouseEvent event) {
+        CustomerTM customerTM = customerTableView.getSelectionModel().getSelectedItem();
+        if(customerTM != null){
+            lblCustomerId.setText(customerTM.getId());
+            txtName.setText(customerTM.getName());
+            txtAddress.setText(customerTM.getAddress());
+            txtEmail.setText(customerTM.getEmail());
+            txtPhone.setText(String.valueOf(customerTM.getPhoneNumber()));
+            txtNic.setText(customerTM.getNic());
+
+            btnSave.setDisable(true);
+            btnDelete.setDisable(false);
+            btnUpdate.setDisable(false);
+        }
+    }
+
+
 
     @FXML
     void deleteCustomerOnAction(ActionEvent event) {
@@ -145,8 +187,8 @@ public class CustomerController implements Initializable {
     }
 
     @FXML
-    void resetOnAction(ActionEvent event) {
-
+    void resetOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        refreshPage();
     }
 
     @FXML
@@ -167,15 +209,44 @@ public class CustomerController implements Initializable {
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         colNic.setCellValueFactory(new PropertyValueFactory<>("nic"));
+
+        // Define the default style (black border and transparent background)
+        String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
+
+        // Apply the default style to all fields at the beginning of each save attempt
+        txtName.setStyle(defaultStyle);
+        txtAddress.setStyle(defaultStyle);
+        txtEmail.setStyle(defaultStyle);
+        txtPhone.setStyle(defaultStyle);
+        txtNic.setStyle(defaultStyle);
+
+
+        try{
+            refreshPage();
+        }catch (SQLException | ClassNotFoundException e){
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Fail to load customer id").show();
+        }
+
+
     }
 
     CustomerModel customerModel = new CustomerModel();
-    private void refreshPage() throws SQLException {
+    private void refreshPage() throws SQLException, ClassNotFoundException {
         loadNextCustomerId();
+        loadTableData();
 
         btnSave.setDisable(false);
         btnDelete.setDisable(true);
         btnUpdate.setDisable(true);
+
+        String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
+
+        txtName.setStyle(defaultStyle);
+        txtAddress.setStyle(defaultStyle);
+        txtEmail.setStyle(defaultStyle);
+        txtPhone.setStyle(defaultStyle);
+        txtNic.setStyle(defaultStyle);
 
         txtName.setText("");
        txtAddress.setText("");
@@ -188,4 +259,26 @@ public class CustomerController implements Initializable {
         String nextCustomerID = customerModel.getNextCustomerId();
         lblCustomerId.setText(nextCustomerID);
     }
+
+    private void loadTableData() throws SQLException, ClassNotFoundException {
+        ArrayList<CustomerDTO> customerDTOS = customerModel.getAllCustomers();
+        ObservableList<CustomerTM> customerTMS = FXCollections.observableArrayList();
+
+        for(CustomerDTO customerDTO:customerDTOS){
+            CustomerTM customerTM = new CustomerTM(
+                    customerDTO.getId(),
+                    customerDTO.getName(),
+                    customerDTO.getAddress(),
+                    customerDTO.getEmail(),
+                    customerDTO.getPhoneNumber(),
+                    customerDTO.getNic()
+
+
+            );
+            customerTMS.add(customerTM);
+        }
+        customerTableView.setItems(customerTMS);
+
+    }
+
 }

@@ -11,14 +11,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="customerAnchorPane" prefHeight="726.0" prefWidth="1120.0" style="-fx-background-color: #0b58ab;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.CustomerController">
+<AnchorPane fx:id="customerAnchorPane" prefHeight="726.0" prefWidth="1120.0" style="-fx-background-color: #27272d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.CustomerController">
    <children>
       <VBox layoutX="24.0" layoutY="21.0" prefHeight="288.0" prefWidth="1064.0">
          <children>
             <HBox prefHeight="46.0" prefWidth="1064.0">
                <children>
-                  <Label prefHeight="22.0" prefWidth="199.0" text="Customer Id">
+                  <Label prefHeight="22.0" prefWidth="199.0" text="Customer Id" textFill="#819dbc">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -34,12 +33,12 @@
                <children>
                   <HBox prefHeight="46.0" prefWidth="1064.0">
                      <children>
-                        <Label prefHeight="22.0" prefWidth="199.0" text="Name">
+                        <Label prefHeight="22.0" prefWidth="199.0" text="Name" textFill="#819dbc">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtName" prefHeight="26.0" prefWidth="874.0" promptText="name" style="-fx-border-color: black; -fx-background-color: #0b58ab; -fx-border-width: 0 0 1px 0;">
+                        <TextField fx:id="txtName" prefHeight="26.0" prefWidth="874.0" promptText="name" style="-fx-border-color: black; -fx-background-color: #27272d; -fx-border-width: 0 0 1px 0;">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -50,12 +49,12 @@
             </HBox>
             <HBox prefHeight="46.0" prefWidth="1064.0">
                <children>
-                  <Label prefHeight="22.0" prefWidth="199.0" text="Address">
+                  <Label prefHeight="22.0" prefWidth="199.0" text="Address" textFill="#819dbc">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtAddress" prefHeight="26.0" prefWidth="874.0" promptText="address" style="-fx-border-color: black; -fx-background-color: #0b58ab; -fx-border-width: 0 0 1px 0;">
+                  <TextField fx:id="txtAddress" prefHeight="26.0" prefWidth="874.0" promptText="address" style="-fx-border-color: black; -fx-background-color: #27272d; -fx-border-width: 0 0 1px 0;">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -64,12 +63,12 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="102.0" prefHeight="46.0" prefWidth="1064.0">
                <children>
-                  <Label prefHeight="22.0" prefWidth="199.0" text="Email">
+                  <Label prefHeight="22.0" prefWidth="199.0" text="Email" textFill="#819dbc">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtEmail" prefHeight="26.0" prefWidth="874.0" promptText="email@gmail.com" style="-fx-border-color: black; -fx-background-color: #0b58ab; -fx-border-width: 0 0 1px 0;">
+                  <TextField fx:id="txtEmail" prefHeight="26.0" prefWidth="874.0" promptText="email@gmail.com" style="-fx-border-color: black; -fx-background-color: #27272d; -fx-border-width: 0 0 1px 0;">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -78,12 +77,12 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="148.0" prefHeight="46.0" prefWidth="1064.0">
                <children>
-                  <Label prefHeight="22.0" prefWidth="199.0" text="Phone Number">
+                  <Label prefHeight="22.0" prefWidth="199.0" text="Phone Number" textFill="#819dbc">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtPhone" prefHeight="26.0" prefWidth="874.0" promptText="0000000000" style="-fx-background-color: #0b58ab; -fx-border-color: black; -fx-border-width: 0 0 1px 0;">
+                  <TextField fx:id="txtPhone" prefHeight="26.0" prefWidth="874.0" promptText="0000000000" style="-fx-background-color: #27272d; -fx-border-color: black; -fx-border-width: 0 0 1px 0;">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -92,12 +91,12 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="194.0" prefHeight="46.0" prefWidth="1064.0">
                <children>
-                  <Label prefHeight="22.0" prefWidth="199.0" text="Nic">
+                  <Label prefHeight="22.0" prefWidth="199.0" text="Nic" textFill="#819dbc">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtNic" prefHeight="26.0" prefWidth="874.0" promptText="000000000000" style="-fx-background-color: #0b58ab; -fx-border-color: black; -fx-border-width: 0 0 1px 0;">
+                  <TextField fx:id="txtNic" prefHeight="26.0" prefWidth="874.0" promptText="000000000000" style="-fx-background-color: #27272d; -fx-border-color: black; -fx-border-width: 0 0 1px 0;">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -106,34 +105,34 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="btnSave" layoutX="24.0" layoutY="309.0" mnemonicParsing="false" onAction="#SaveCustomerOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #eca32e;" text="Save">
+      <Button fx:id="btnSave" layoutX="24.0" layoutY="309.0" mnemonicParsing="false" onAction="#SaveCustomerOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #35068c;" text="Save" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="btnUpdate" layoutX="246.0" layoutY="309.0" mnemonicParsing="false" onAction="#updateCustomerOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #3aec2e;" text="Update">
+      <Button fx:id="btnUpdate" layoutX="246.0" layoutY="309.0" mnemonicParsing="false" onAction="#updateCustomerOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #4f80b8;" text="Update" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="btnDelete" layoutX="471.0" layoutY="309.0" mnemonicParsing="false" onAction="#deleteCustomerOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #ec2e60;" text="Delete">
+      <Button fx:id="btnDelete" layoutX="471.0" layoutY="309.0" mnemonicParsing="false" onAction="#deleteCustomerOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #a63322;" text="Delete" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="btnReset" layoutX="716.0" layoutY="309.0" mnemonicParsing="false" onAction="#resetOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #a61212;" text="Reset">
+      <Button fx:id="btnReset" layoutX="716.0" layoutY="309.0" mnemonicParsing="false" onAction="#resetOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #5e39a4;" text="Reset" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="btnSearch" layoutX="946.0" layoutY="309.0" mnemonicParsing="false" onAction="#searchcustomerOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #8b12a6;" text="Search">
+      <Button fx:id="btnSearch" layoutX="946.0" layoutY="309.0" mnemonicParsing="false" onAction="#searchcustomerOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #8b12a6;" text="Search" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
       <Pane fx:id="tablePane" layoutX="-1.0" layoutY="343.0" prefHeight="383.0" prefWidth="1120.0">
          <children>
-            <TableView fx:id="customerTableView" layoutY="14.0" prefHeight="369.0" prefWidth="1120.0" style="-fx-background-color: #83cdef;">
+            <TableView fx:id="customerTableView" layoutY="14.0" onMouseClicked="#clickedTable" prefHeight="369.0" prefWidth="1120.0" style="-fx-background-color: #a0b5c9;">
               <columns>
                 <TableColumn fx:id="colId" prefWidth="109.0" text="Customer Id" />
                 <TableColumn fx:id="colName" prefWidth="193.0" text="Name" />

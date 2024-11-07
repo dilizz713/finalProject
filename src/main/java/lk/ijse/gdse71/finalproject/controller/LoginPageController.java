@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -45,6 +46,8 @@ public class LoginPageController implements Initializable {
     void BackButtonOnAction(ActionEvent event) {
         navigateTo("/view/dash-board.fxml");
     }
+
+
 
     @FXML
     void LoginButtonOnAction(ActionEvent event) {
@@ -90,5 +93,11 @@ public class LoginPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         shownPwLabel.setVisible(false);
+
+        txtUserName.setOnAction(event -> txtPassword.requestFocus());
+        txtPassword.setOnAction(this::LoginButtonOnAction);
+
+
     }
+
 }
