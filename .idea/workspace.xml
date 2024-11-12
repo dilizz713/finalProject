@@ -5,25 +5,53 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a8f56836-dcbd-491c-9322-619cc95de4a1" name="Changes" comment="updated">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/360_F_485940219_vemGDyRZMidx9oACruSPO2dAPmO65sEN.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/dashboard.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/image.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/login.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/DriverController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/InvoiceController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/MaintenanceMainController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/MileageTrackingController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/PaymentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/ReservationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/VehicleController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/VehicleDamageController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/VehicleMainController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/VehicleMaintenanceRecordsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dto/tm/DriverTM.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dto/tm/MaintenanceRecordTM.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dto/tm/ReservationTM.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dto/tm/VehicleTM.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/bus.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/car.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/damage.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/luxary.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/maintenance.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/pickup trucks.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/assets/van.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/view/driver-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/view/invoice-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/view/maintenance-main-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/view/mileage-tracking-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/view/payment-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/view/reservation-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/view/vehicle-damage-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/view/vehicle-main-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/view/vehicle-maintenance-records-view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/view/vehicle-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/DashBoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/DashBoardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/LoginPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/LoginPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/HomePageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/HomePageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dto/MaintenanceRecordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dto/MaintenanceRecordDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dto/VehicleDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dto/VehicleDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dto/VehicleTypeDTO.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/CustomerModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/CustomerModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/loginPage.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/loginPageBackground.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/DriverModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/DriverModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/MaintenanceRecordModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/MaintenanceRecordModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/ReservationModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/ReservationModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/VehicleModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/VehicleModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/VehicleTypeModel.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/view/customer-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/customer-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/dash-board.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/dash-board.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/home-page.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/home-page.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/login-page.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/login-page.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,33 +90,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.AppInitializer.executor": "Run",
-    "Maven.FinalProject [install].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/dilini/Documents/OOP/Course Work/course work/CourseWork",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "database.query.execution",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Application.AppInitializer.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.FinalProject [install].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/dilini/Desktop/gdse-71-supermarket-master(1)&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.25747126&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;database.query.execution&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn install" />
@@ -114,6 +143,13 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.2-corretto-21.0.2-4caba194b151-fd297b8c" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -133,6 +169,19 @@
       <workItem from="1730128754740" duration="59000" />
       <workItem from="1730952463331" duration="14186000" />
       <workItem from="1730987488457" duration="7664000" />
+      <workItem from="1730998946426" duration="6787000" />
+      <workItem from="1731038536929" duration="3022000" />
+      <workItem from="1731041570571" duration="4099000" />
+      <workItem from="1731058095898" duration="12212000" />
+      <workItem from="1731124548857" duration="33000" />
+      <workItem from="1731124626435" duration="360000" />
+      <workItem from="1731133522184" duration="106000" />
+      <workItem from="1731162397700" duration="9540000" />
+      <workItem from="1731211028368" duration="3564000" />
+      <workItem from="1731216677859" duration="13354000" />
+      <workItem from="1731242037169" duration="19774000" />
+      <workItem from="1731273922035" duration="1790000" />
+      <workItem from="1731293498901" duration="3693000" />
     </task>
     <task id="LOCAL-00001" summary="final project day1">
       <option name="closed" value="true" />
@@ -190,7 +239,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730072958408</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="updated">
+      <option name="closed" value="true" />
+      <created>1730998980265</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1730998980265</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -1,4 +1,4 @@
-package lk.ijse.gdse71.finalproject.dto;
+package lk.ijse.gdse71.finalproject.dto.tm;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class VehicleDTO {
+public class VehicleTM {
     private String id;
     private String registrationNumber;
     private String make;
@@ -18,5 +18,3 @@ public class VehicleDTO {
     private String vehicleType;
 
 }
-
-

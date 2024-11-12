@@ -20,6 +20,20 @@ public class CustomerModel {
                 customerDTO.getNic()
         );
     }
+    public boolean updateCustomer(CustomerDTO customerDTO) throws SQLException {
+        return CrudUtil.execute(
+                "update Customer set name=?, address=?, email=?, phoneNumber=?, nic=? where id=?",
+                customerDTO.getName(),
+                customerDTO.getAddress(),
+                customerDTO.getEmail(),
+                customerDTO.getPhoneNumber(),
+                customerDTO.getNic(),
+                customerDTO.getId()
+        );
+    }
+    public boolean deleteCustomer(String customerId) throws SQLException {
+        return CrudUtil.execute("delete from Customer where id=?", customerId);
+    }
 
     public String getNextCustomerId() throws SQLException {
         ResultSet resultSet = CrudUtil.execute("select id from Customer order by id desc limit 1");
@@ -54,7 +68,7 @@ public class CustomerModel {
         return customerDTOS;
     }
 
-    public ArrayList<String> getAllCustomerIds() throws SQLException, ClassNotFoundException {
+    /*public ArrayList<String> getAllCustomerIds() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("select id from Customer");
         ArrayList<String> customerIds = new ArrayList<>();
 
@@ -62,7 +76,7 @@ public class CustomerModel {
             customerIds.add(resultSet.getString(1));
         }
         return customerIds;
-    }
+    }*/
 
 
 }

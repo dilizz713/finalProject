@@ -49,7 +49,7 @@ public class HomePageController {
 
     @FXML
     void driverOnAction(ActionEvent event) {
-
+        navigateTo("/view/driver-view.fxml");
     }
 
     @FXML
@@ -59,27 +59,27 @@ public class HomePageController {
 
     @FXML
     void maintenanceOnAction(ActionEvent event) {
-
+        navigateTo("/view/maintenance-main-view.fxml");
     }
 
     @FXML
     void mileageTrackingOnAction(ActionEvent event) {
-
+        navigateTo("/view/mileage-tracking-view.fxml");
     }
 
     @FXML
     void paymentOnAction(ActionEvent event) {
-
+        navigateTo("/view/payment-view.fxml");
     }
 
     @FXML
     void reservationOnAction(ActionEvent event) {
-
+        navigateTo("/view/reservation-view.fxml");
     }
 
     @FXML
     void vehicleOnAction(ActionEvent event) {
-
+        navigateTo("/view/vehicle-view.fxml");
     }
 
     public void navigateTo(String fxmlPath){

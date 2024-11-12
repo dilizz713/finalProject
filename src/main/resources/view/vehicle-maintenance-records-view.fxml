@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="maintenanceAnchorPane" prefHeight="720.0" prefWidth="1120.0" style="-fx-background-color: #27272d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.VehicleMaintenanceRecordsController">
+   <children>
+      <VBox layoutY="-1.0" prefHeight="720.0" prefWidth="1120.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="1120.0">
+               <children>
+                  <Label prefHeight="22.0" prefWidth="278.0" text="Maintenance Id" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblMAintenanceId" layoutX="40.0" layoutY="31.0" prefHeight="22.0" prefWidth="308.0" text="1" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtSearchBar" prefHeight="26.0" prefWidth="371.0" promptText="search">
+                     <font>
+                        <Font name="System Bold Italic" size="13.0" />
+                     </font></TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="41.0" prefWidth="1120.0">
+               <children>
+                  <Label prefHeight="22.0" prefWidth="278.0" text="Maintenance Start Date" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtStartDtate" prefHeight="26.0" prefWidth="234.0" promptText="YYYY/MM/DD" style="-fx-background-color: #27272d; -fx-border-color: white; -fx-border-width: 0 0 1;">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin></TextField>
+                  <Label layoutX="40.0" layoutY="20.0" prefHeight="22.0" prefWidth="278.0" text="Maintenance Completion Date" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtEndDate" layoutX="318.0" layoutY="17.0" prefHeight="26.0" prefWidth="234.0" promptText="YYYY/MM/DD" style="-fx-background-color: #27272d; -fx-border-color: white; -fx-border-width: 0 0 1;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="74.0" prefHeight="37.0" prefWidth="1120.0">
+               <children>
+                  <Label prefHeight="22.0" prefWidth="278.0" text="Maintenance Type" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtMaintenanceType" prefHeight="27.0" prefWidth="688.0" style="-fx-background-color: #27272d; -fx-border-color: white; -fx-border-width: 0 0 1;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="138.0" prefHeight="40.0" prefWidth="1120.0">
+               <children>
+                  <Label prefHeight="22.0" prefWidth="278.0" text="Description" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtDesc" prefHeight="27.0" prefWidth="688.0" style="-fx-background-color: #27272d; -fx-border-color: white; -fx-border-width: 0 0 1;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="266.0" prefHeight="59.0" prefWidth="1120.0">
+               <children>
+                  <Label prefHeight="22.0" prefWidth="278.0" text="Vehicle Id" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ComboBox fx:id="cmbVehicleId" onAction="#selectVehicleId" prefHeight="26.0" prefWidth="230.0" />
+                  <Label layoutX="40.0" layoutY="31.0" prefHeight="22.0" prefWidth="197.0" text="Vehicle Model" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="80.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblModel" layoutX="628.0" layoutY="31.0" prefHeight="22.0" prefWidth="197.0" text="model" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="1120.0">
+               <children>
+                  <Button fx:id="btnSave" mnemonicParsing="false" onAction="#SaveOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #35068c;" text="Save" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="60.0" right="150.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updateOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #4f80b8;" text="Update" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="150.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #a63322;" text="Delete" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="150.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnReset" mnemonicParsing="false" onAction="#resetOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #5e39a4;" text="Reset" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <TableView fx:id="MaintenanceTable" onMouseClicked="#clickedTable" prefHeight="461.0" prefWidth="1120.0" style="-fx-background-color: #a0b5c9;">
+               <columns>
+                  <TableColumn fx:id="colId" prefWidth="133.0" text="Maintenance Id" />
+                  <TableColumn fx:id="colStartDate" prefWidth="130.0" text="Start Date" />
+                  <TableColumn fx:id="colEndDate" prefWidth="163.0" text="Completion Date" />
+                  <TableColumn fx:id="colMaintenanceType" prefWidth="171.0" text="Maintenance Type" />
+                  <TableColumn fx:id="colVehicleId" prefWidth="136.0" text="Vehicle Id" />
+                  <TableColumn fx:id="colModel" prefWidth="135.0" text="Model" />
+                  <TableColumn fx:id="colDesc" prefWidth="250.0" text="Description" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

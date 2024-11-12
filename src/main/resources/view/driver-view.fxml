@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="driverAnchorPane" prefHeight="720.0" prefWidth="1120.0" style="-fx-background-color: #27272d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.DriverController">
+   <children>
+      <VBox layoutX="-1.0" prefHeight="726.0" prefWidth="1126.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="1122.0">
+               <children>
+                  <Label prefHeight="24.0" prefWidth="288.0" text="Driver id" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblDriverId" layoutX="40.0" layoutY="24.0" prefHeight="24.0" prefWidth="288.0" text="1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtSearchBar" prefHeight="26.0" prefWidth="475.0" promptText="search">
+                     <font>
+                        <Font name="System Bold Italic" size="13.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="51.0" prefWidth="1122.0">
+               <children>
+                  <Label prefHeight="24.0" prefWidth="288.0" text="Name" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtName" prefHeight="26.0" prefWidth="762.0" style="-fx-background-color: #27272d; -fx-border-color: white; -fx-border-width: 0 0 1;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="61.0" prefHeight="51.0" prefWidth="1122.0">
+               <children>
+                  <Label prefHeight="24.0" prefWidth="288.0" text="Licence Number" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtLicenceNum" prefHeight="26.0" prefWidth="762.0" style="-fx-background-color: #27272d; -fx-border-color: white; -fx-border-width: 0 0 1;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="112.0" prefHeight="51.0" prefWidth="1122.0">
+               <children>
+                  <Label prefHeight="24.0" prefWidth="288.0" text="Phone Number" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtPhone" prefHeight="26.0" prefWidth="762.0" style="-fx-background-color: #27272d; -fx-border-color: white; -fx-border-width: 0 0 1;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="163.0" prefHeight="51.0" prefWidth="1122.0">
+               <children>
+                  <Label prefHeight="24.0" prefWidth="288.0" text="NIC" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtNic" prefHeight="26.0" prefWidth="762.0" style="-fx-background-color: #27272d; -fx-border-color: white; -fx-border-width: 0 0 1;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="1120.0">
+               <children>
+                  <Button fx:id="btnSave" mnemonicParsing="false" onAction="#SaveOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #35068c;" text="Save" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="60.0" right="150.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updateOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #4f80b8;" text="Update" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="150.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #a63322;" text="Delete" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="150.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnReset" mnemonicParsing="false" onAction="#resetOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #5e39a4;" text="Reset" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <TableView fx:id="driverTable" onMouseClicked="#clickedTable" prefHeight="416.0" prefWidth="1123.0" style="-fx-background-color: #a0b5c9;">
+               <columns>
+                  <TableColumn fx:id="colDriverId" prefWidth="179.0" text="Driver Id" />
+                  <TableColumn fx:id="colName" prefWidth="260.0" text="Name" />
+                  <TableColumn fx:id="colLicenceNum" prefWidth="256.0" text="Licence Number" />
+                  <TableColumn fx:id="colPhone" prefWidth="209.0" text="Phone Number" />
+                  <TableColumn fx:id="colNic" prefWidth="217.0" text="NIC" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

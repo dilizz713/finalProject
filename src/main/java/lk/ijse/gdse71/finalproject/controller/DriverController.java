@@ -9,19 +9,22 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.HBox;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
+import lk.ijse.gdse71.finalproject.dto.DriverDTO;
+import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
 import lk.ijse.gdse71.finalproject.dto.tm.CustomerTM;
-import lk.ijse.gdse71.finalproject.model.CustomerModel;
+import lk.ijse.gdse71.finalproject.dto.tm.DriverTM;
+import lk.ijse.gdse71.finalproject.dto.tm.VehicleTM;
+import lk.ijse.gdse71.finalproject.model.DriverModel;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class CustomerController implements Initializable {
+public class DriverController implements Initializable {
 
     @FXML
     private Button btnDelete;
@@ -33,46 +36,34 @@ public class CustomerController implements Initializable {
     private Button btnSave;
 
     @FXML
-    private Button btnSearch;
-
-    @FXML
     private Button btnUpdate;
 
     @FXML
-    private TableColumn<CustomerTM, String> colAddress;
+    private TableColumn<DriverTM, String> colDriverId;
 
     @FXML
-    private TableColumn<CustomerTM, String> colEmail;
+    private TableColumn<DriverTM, String > colLicenceNum;
 
     @FXML
-    private TableColumn<CustomerTM, String> colId;
+    private TableColumn<DriverTM, String> colName;
 
     @FXML
-    private TableColumn<CustomerTM, String> colName;
+    private TableColumn<DriverTM, String> colNic;
 
     @FXML
-    private TableColumn<CustomerTM, String> colNic;
+    private TableColumn<DriverTM, Integer> colPhone;
 
     @FXML
-    private TableColumn<CustomerTM, Integer> colPhone;
+    private AnchorPane driverAnchorPane;
 
     @FXML
-    private AnchorPane customerAnchorPane;
+    private TableView<DriverTM> driverTable;
 
     @FXML
-    private TableView<CustomerTM> customerTableView;
+    private Label lblDriverId;
 
     @FXML
-    private Label lblCustomerId;
-
-    @FXML
-    private Pane tablePane;
-
-    @FXML
-    private TextField txtAddress;
-
-    @FXML
-    private TextField txtEmail;
+    private TextField txtLicenceNum;
 
     @FXML
     private TextField txtName;
@@ -84,20 +75,21 @@ public class CustomerController implements Initializable {
     private TextField txtPhone;
 
     @FXML
-    void SaveCustomerOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+    private TextField txtSearchBar;
 
+    @FXML
+    void SaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         // Get field values
-        String id = lblCustomerId.getText();
+        String id = lblDriverId.getText();
         String name = txtName.getText();
-        String address = txtAddress.getText();
-        String email = txtEmail.getText();
+        String licenceNumber = txtLicenceNum.getText();
         String phoneText = txtPhone.getText();
         String nic = txtNic.getText();
 
         // Validation patterns
         String namePattern = "^[A-Za-z ]+$";
         String nicPattern = "^[0-9]{9}[vVxX]$|^[0-9]{12}$";
-        String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+
 
         // Reset error indicators
         boolean hasErrors = false;
@@ -114,19 +106,13 @@ public class CustomerController implements Initializable {
         }else{
             txtName.setStyle(defaultStyle);
         }
-        if (address.isEmpty()) {
-            txtAddress.setStyle(errorStyle);
-            errorMessage.append("- Address is empty\n");
+
+        if (licenceNumber.isEmpty()) {
+            txtLicenceNum.setStyle(errorStyle);
+            errorMessage.append("- Licence number is empty\n");
             hasErrors = true;
         }else{
-            txtAddress.setStyle(defaultStyle);
-        }
-        if (email.isEmpty() || !email.matches(emailPattern)) {
-            txtEmail.setStyle(errorStyle);
-            errorMessage.append("- Email is empty or in an incorrect format\n");
-            hasErrors = true;
-        }else{
-            txtEmail.setStyle(defaultStyle);
+            txtLicenceNum.setStyle(defaultStyle);
         }
 
         int phone = -1;
@@ -154,25 +140,25 @@ public class CustomerController implements Initializable {
         }
 
         // If validation is successful, proceed with saving the customer
-        CustomerDTO customerDTO = new CustomerDTO(id, name, address, email, phone, nic);
-        boolean isSaved = customerModel.saveCustomer(customerDTO);
+        DriverDTO driverDTO = new DriverDTO(id, name, licenceNumber, phone, nic);
+        boolean isSaved = driverModel.saveDriver(driverDTO);
         if (isSaved) {
             refreshPage();
-            new Alert(Alert.AlertType.INFORMATION, "Customer saved successfully!").show();
+            new Alert(Alert.AlertType.INFORMATION, "Driver saved successfully!").show();
         } else {
-            new Alert(Alert.AlertType.ERROR, "Failed to save customer!").show();
+            new Alert(Alert.AlertType.ERROR, "Failed to save driver!").show();
         }
     }
+
     @FXML
     void clickedTable(MouseEvent event) {
-        CustomerTM customerTM = customerTableView.getSelectionModel().getSelectedItem();
-        if(customerTM != null){
-            lblCustomerId.setText(customerTM.getId());
-            txtName.setText(customerTM.getName());
-            txtAddress.setText(customerTM.getAddress());
-            txtEmail.setText(customerTM.getEmail());
-            txtPhone.setText(String.valueOf(customerTM.getPhoneNumber()));
-            txtNic.setText(customerTM.getNic());
+        DriverTM driverTM = driverTable.getSelectionModel().getSelectedItem();
+        if(driverTM != null){
+            lblDriverId.setText(driverTM.getId());
+            txtName.setText(driverTM.getName());
+            txtLicenceNum.setText(driverTM.getLicenseNumber());
+            txtPhone.setText(String.valueOf(driverTM.getPhoneNumber()));
+            txtNic.setText(driverTM.getNic());
 
             btnSave.setDisable(true);
             btnDelete.setDisable(false);
@@ -180,22 +166,20 @@ public class CustomerController implements Initializable {
         }
     }
 
-
-
     @FXML
-    void deleteCustomerOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String customerId = lblCustomerId.getText();
+    void deleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String driverId = lblDriverId.getText();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to delete this customer?", ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to delete this driver?", ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if(optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES){
-            boolean isDeleted = customerModel.deleteCustomer(customerId);
+            boolean isDeleted = driverModel.deleteDriver(driverId);
             if(isDeleted){
                 refreshPage();
-                new Alert(Alert.AlertType.INFORMATION, "Customer deleted!").show();
+                new Alert(Alert.AlertType.INFORMATION, "Driver deleted!").show();
             }else{
-                new Alert(Alert.AlertType.ERROR, "Fail to delete customer!").show();
+                new Alert(Alert.AlertType.ERROR, "Fail to delete driver!").show();
             }
         }
     }
@@ -206,22 +190,17 @@ public class CustomerController implements Initializable {
     }
 
     @FXML
-    void searchcustomerOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void updateCustomerOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String id = lblCustomerId.getText();
+    void updateOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String id = lblDriverId.getText();
         String name = txtName.getText();
-        String address = txtAddress.getText();
-        String email = txtEmail.getText();
+        String licenceNumber = txtLicenceNum.getText();
         String phoneText = txtPhone.getText();
         String nic = txtNic.getText();
 
+        // Validation patterns
         String namePattern = "^[A-Za-z ]+$";
         String nicPattern = "^[0-9]{9}[vVxX]$|^[0-9]{12}$";
-        String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+
 
         // Reset error indicators
         boolean hasErrors = false;
@@ -238,19 +217,13 @@ public class CustomerController implements Initializable {
         }else{
             txtName.setStyle(defaultStyle);
         }
-        if (address.isEmpty()) {
-            txtAddress.setStyle(errorStyle);
-            errorMessage.append("- Address is empty\n");
+
+        if (licenceNumber.isEmpty()) {
+            txtLicenceNum.setStyle(errorStyle);
+            errorMessage.append("- Licence number is empty\n");
             hasErrors = true;
         }else{
-            txtAddress.setStyle(defaultStyle);
-        }
-        if (email.isEmpty() || !email.matches(emailPattern)) {
-            txtEmail.setStyle(errorStyle);
-            errorMessage.append("- Email is empty or in an incorrect format\n");
-            hasErrors = true;
-        }else{
-            txtEmail.setStyle(defaultStyle);
+            txtLicenceNum.setStyle(defaultStyle);
         }
 
         int phone = -1;
@@ -277,23 +250,23 @@ public class CustomerController implements Initializable {
             return;
         }
 
-        // If validation is successful, proceed with saving the customer
-        CustomerDTO customerDTO = new CustomerDTO(id, name, address, email, phone, nic);
-        boolean isUpdate = customerModel.updateCustomer(customerDTO);
+        DriverDTO driverDTO = new DriverDTO(id, name, licenceNumber, phone, nic);
+        boolean isUpdate = driverModel.updateDriver(driverDTO);
         if (isUpdate) {
             refreshPage();
-            new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully!").show();
+            new Alert(Alert.AlertType.INFORMATION, "Driver updated successfully!").show();
         } else {
-            new Alert(Alert.AlertType.ERROR, "Failed to update customer!").show();
+            new Alert(Alert.AlertType.ERROR, "Failed to update driver!").show();
         }
     }
 
+    DriverModel driverModel = new DriverModel();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colDriverId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colLicenceNum.setCellValueFactory(new PropertyValueFactory<>("licenseNumber"));
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         colNic.setCellValueFactory(new PropertyValueFactory<>("nic"));
 
@@ -302,10 +275,18 @@ public class CustomerController implements Initializable {
 
         // Apply the default style to all fields at the beginning of each save attempt
         txtName.setStyle(defaultStyle);
-        txtAddress.setStyle(defaultStyle);
-        txtEmail.setStyle(defaultStyle);
+        txtLicenceNum.setStyle(defaultStyle);
         txtPhone.setStyle(defaultStyle);
         txtNic.setStyle(defaultStyle);
+
+        txtSearchBar.setOnAction(event ->{
+            try{
+                searchDrivers();
+            }catch (SQLException | ClassNotFoundException e){
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Error searching drivers").show();
+            }
+        });
 
 
         try{
@@ -315,12 +296,34 @@ public class CustomerController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Fail to load customer id").show();
         }
 
-
     }
+    private void searchDrivers() throws SQLException, ClassNotFoundException {
+        String searchText = txtSearchBar.getText().trim();
 
-    CustomerModel customerModel = new CustomerModel();
+        if(searchText.isEmpty()){
+            loadTableData();
+            return;
+        }
+
+        ArrayList<DriverDTO> driverDTOS = driverModel.getDriverBySearch(searchText);
+
+        // Populate the table with filtered data
+        ObservableList<DriverTM> driverTMS = FXCollections.observableArrayList();
+        for (DriverDTO driverDTO : driverDTOS) {
+            DriverTM driverTM = new DriverTM(
+                    driverDTO.getId(),
+                    driverDTO.getName(),
+                    driverDTO.getLicenseNumber(),
+                    driverDTO.getPhoneNumber(),
+                    driverDTO.getNic()
+
+            );
+            driverTMS.add(driverTM);
+        }
+        driverTable.setItems(driverTMS);
+    }
     private void refreshPage() throws SQLException, ClassNotFoundException {
-        loadNextCustomerId();
+        loadNextDriverId();
         loadTableData();
 
         btnSave.setDisable(false);
@@ -330,42 +333,39 @@ public class CustomerController implements Initializable {
         String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
 
         txtName.setStyle(defaultStyle);
-        txtAddress.setStyle(defaultStyle);
-        txtEmail.setStyle(defaultStyle);
+        txtLicenceNum.setStyle(defaultStyle);
         txtPhone.setStyle(defaultStyle);
         txtNic.setStyle(defaultStyle);
 
         txtName.setText("");
-       txtAddress.setText("");
-        txtEmail.setText("");
+        txtLicenceNum.setText("");
         txtPhone.setText("");
         txtNic.setText("");
 
     }
-    public void loadNextCustomerId() throws SQLException {
-        String nextCustomerID = customerModel.getNextCustomerId();
-        lblCustomerId.setText(nextCustomerID);
-    }
 
-    private void loadTableData() throws SQLException, ClassNotFoundException {
-        ArrayList<CustomerDTO> customerDTOS = customerModel.getAllCustomers();
-        ObservableList<CustomerTM> customerTMS = FXCollections.observableArrayList();
+    private void loadTableData() throws SQLException {
+        ArrayList<DriverDTO> driverDTOS = driverModel.getAllDrivers();
+        ObservableList<DriverTM> driverTMS = FXCollections.observableArrayList();
 
-        for(CustomerDTO customerDTO:customerDTOS){
-            CustomerTM customerTM = new CustomerTM(
-                    customerDTO.getId(),
-                    customerDTO.getName(),
-                    customerDTO.getAddress(),
-                    customerDTO.getEmail(),
-                    customerDTO.getPhoneNumber(),
-                    customerDTO.getNic()
+        for(DriverDTO driverDTO:driverDTOS){
+            DriverTM driverTM = new DriverTM(
+                    driverDTO.getId(),
+                    driverDTO.getName(),
+                    driverDTO.getLicenseNumber(),
+                    driverDTO.getPhoneNumber(),
+                    driverDTO.getNic()
 
 
             );
-            customerTMS.add(customerTM);
+            driverTMS.add(driverTM);
         }
-        customerTableView.setItems(customerTMS);
+        driverTable.setItems(driverTMS);
 
     }
 
+    private void loadNextDriverId() throws SQLException {
+        String nextDriverId = driverModel.getNextDriverId();
+        lblDriverId.setText(nextDriverId);
+    }
 }

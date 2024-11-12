@@ -1,4 +1,4 @@
-package lk.ijse.gdse71.finalproject.dto;
+package lk.ijse.gdse71.finalproject.dto.tm;
 
 import lombok.*;
 
@@ -9,12 +9,13 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class MaintenanceRecordDTO {
+public class MaintenanceRecordTM {
     private String id;
     private Date startDate;
     private Date endDate;
-    private String description;
     private String maintenanceType;
     private String vehicleId;
+    private String model;
+    private String description;
 
 }
