@@ -2,7 +2,7 @@ package lk.ijse.gdse71.finalproject.dto;
 
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Getter
 @Setter

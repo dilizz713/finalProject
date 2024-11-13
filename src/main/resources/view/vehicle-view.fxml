@@ -146,14 +146,14 @@
       </Button>
       <TableView fx:id="vehicleTable" layoutY="306.0" onMouseClicked="#clickedTable" prefHeight="420.0" prefWidth="1120.0" style="-fx-background-color: #a0b5c9;">
          <columns>
-            <TableColumn fx:id="colId" prefWidth="120.0" text="Vehicle Id" />
-            <TableColumn fx:id="colRegNumber" prefWidth="158.0" text="Registration Number" />
-            <TableColumn fx:id="colCompanyName" prefWidth="129.0" text="Company Name" />
-            <TableColumn fx:id="colModel" prefWidth="147.0" text="Model" />
-            <TableColumn fx:id="colYear" prefWidth="115.0" text="Year" />
-            <TableColumn fx:id="colMileagePrice" prefWidth="118.0" text="Mileage" />
+            <TableColumn fx:id="colId" prefWidth="90.0" text="Vehicle Id" />
+            <TableColumn fx:id="colRegNumber" prefWidth="150.0" text="Registration Number" />
+            <TableColumn fx:id="colCompanyName" prefWidth="164.0" text="Company Name" />
+            <TableColumn fx:id="colModel" prefWidth="131.0" text="Model" />
+            <TableColumn fx:id="colYear" prefWidth="113.0" text="Year" />
+            <TableColumn fx:id="colMileagePrice" prefWidth="140.0" text="Mileage" />
             <TableColumn fx:id="colVehicleType" prefWidth="160.0" text="Vehicle Type" />
-            <TableColumn fx:id="colStatus" prefWidth="172.0" text="Status" />
+            <TableColumn fx:id="colStatus" prefWidth="171.0" text="Status" />
          </columns>
       </TableView>
       <Button fx:id="btnDelete" layoutX="620.0" layoutY="265.0" mnemonicParsing="false" onAction="#deleteVehicleOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #a63322;" text="Delete" textFill="WHITE">

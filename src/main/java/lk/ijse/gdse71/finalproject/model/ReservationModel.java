@@ -4,8 +4,10 @@ import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
 import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
 import lk.ijse.gdse71.finalproject.util.CrudUtil;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ReservationModel {
@@ -62,15 +64,15 @@ public class ReservationModel {
         }
         return driverId;
     }
-
     public ArrayList<String> getAllVehicleIds() throws SQLException {
         ResultSet rst = CrudUtil.execute("select id from Vehicle");
-        ArrayList<String> vehicleId = new ArrayList<>();
+        ArrayList<String> vehilceId = new ArrayList<>();
         while (rst.next()) {
-            vehicleId.add(rst.getString(1));
+            vehilceId.add(rst.getString(1));
         }
-        return vehicleId;
+        return vehilceId;
     }
+
     public String getCustomerNameById(String customerId) throws SQLException {
         ResultSet rst = CrudUtil.execute("select name from Customer where id = ?", customerId);
         return rst.next() ? rst.getString(1) : null;
@@ -88,7 +90,7 @@ public class ReservationModel {
 
 
     public boolean saveReservation(ReservationDTO reservationDTO) throws SQLException {
-        return CrudUtil.execute(
+       return CrudUtil.execute(
                 "insert into Reservation values (?,?,?,?,?,?,?,?)",
                 reservationDTO.getId(),
                 reservationDTO.getStartDate(),
@@ -99,7 +101,10 @@ public class ReservationModel {
                 reservationDTO.getDriverId(),
                 reservationDTO.getStatus()
         );
+
     }
+
+
     public boolean updateReservation(ReservationDTO reservationDTO) throws SQLException {
         return CrudUtil.execute(
                 "update  Reservation set startDate=?, endDate=?, estimatedMileage=?, customerId=?, vehicleId=?, driverId=?, status=? where id=?",
@@ -113,6 +118,7 @@ public class ReservationModel {
                 reservationDTO.getId()
         );
     }
+
     public boolean deleteReservation(String reservationId) throws SQLException {
         return CrudUtil.execute("delete from Reservation where id=?",reservationId );
     }
@@ -139,4 +145,6 @@ public class ReservationModel {
         }
         return reservationDTOS;
     }
+
+
 }

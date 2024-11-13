@@ -17,7 +17,11 @@ import lk.ijse.gdse71.finalproject.model.CustomerModel;
 import lk.ijse.gdse71.finalproject.model.VehicleModel;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -63,6 +67,7 @@ public class VehicleController implements Initializable {
     @FXML
     private TableColumn<VehicleTM, Integer> colYear;
 
+
     @FXML
     private Label lblVehicleId;
 
@@ -107,6 +112,8 @@ public class VehicleController implements Initializable {
         String mileage =txtMileage.getText();
         String status = txtStatus.getText();
         String vehicleType = cmbVehicleType.getValue();
+
+
 
         // Validation patterns
         String regNumberPattern = "^[A-Za-z0-9]{6}$";  // Registration number must be 6 alphanumeric characters
@@ -191,6 +198,7 @@ public class VehicleController implements Initializable {
             new Alert(Alert.AlertType.ERROR, errorMessage.toString()).show();
             return;
         }
+
 
         // If validation is successful, proceed with saving the customer
         VehicleDTO vehicleDTO = new VehicleDTO(id, regNumber, companyName, model, y, m,status,vehicleType);
@@ -263,6 +271,7 @@ public class VehicleController implements Initializable {
         String status = txtStatus.getText();
         String vehicleType = cmbVehicleType.getValue();
 
+
         // Validation patterns
         String regNumberPattern = "^[A-Za-z0-9]{6}$";  // Registration number must be 6 alphanumeric characters
         String yearPattern = "^[0-9]{4}$";  // Year must be exactly 4 digits
@@ -346,6 +355,7 @@ public class VehicleController implements Initializable {
             return;
         }
 
+
         // If validation is successful, proceed with saving the customer
         VehicleDTO vehicleDTO = new VehicleDTO(id, regNumber, companyName, model, y, m,status,vehicleType);
         boolean isUpdate = vehicleModel.updateVehicle(vehicleDTO);
@@ -409,6 +419,7 @@ public class VehicleController implements Initializable {
                     vehicleDTO.getVehicleType()
 
 
+
             );
             vehicleTMS.add(vehicleTM);
         }
@@ -428,6 +439,7 @@ public class VehicleController implements Initializable {
         colVehicleType.setCellValueFactory(new PropertyValueFactory<>("vehicleType"));
 
 
+
         // Define the default style (black border and transparent background)
         String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
 
@@ -445,7 +457,7 @@ public class VehicleController implements Initializable {
         );
         cmbVehicleType.setItems(vehicleTypes);
 
-        searchBar.setOnAction(event ->{
+       searchBar.setOnAction(event ->{
             try{
                 searchVehicles();
             }catch (SQLException | ClassNotFoundException e){

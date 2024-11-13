@@ -92,6 +92,36 @@ public class VehicleMaintenanceRecordsController implements Initializable {
 
     @FXML
     void SaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        String id = lblMAintenanceId.getText();
+        String startDateText = txtStartDtate.getText();
+        String endDateText = txtEndDate.getText();
+        String desc = txtDesc.getText();
+        String maintenanceType = txtMaintenanceType.getText();
+        String vehicleId = cmbVehicleId.getValue();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        java.sql.Date startDate;
+        java.sql.Date endDate;
+
+        try {
+            LocalDate startLocalDate = LocalDate.parse(startDateText, formatter);
+            LocalDate endLocalDate = LocalDate.parse(endDateText, formatter);
+            startDate = java.sql.Date.valueOf(startLocalDate);
+            endDate = java.sql.Date.valueOf(endLocalDate);
+        } catch (DateTimeException e) {
+            new Alert(Alert.AlertType.ERROR, "Please enter dates in the format yyyy-MM-dd").show();
+            return;
+        }
+
+
+        MaintenanceRecordDTO maintenanceRecordDTO = new MaintenanceRecordDTO(id, startDate, endDate, desc, maintenanceType, vehicleId);
+        boolean isSaved = maintenanceRecordModel.saveMaintenanceRecord(maintenanceRecordDTO);
+        if (isSaved) {
+            refreshPage();
+            new Alert(Alert.AlertType.INFORMATION, "Maintenance record saved successfully!").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Failed to save record!").show();
+        }
 
 
     }
@@ -113,7 +143,13 @@ public class VehicleMaintenanceRecordsController implements Initializable {
 
     @FXML
     void selectVehicleId(ActionEvent event) {
-
+        String selectedVehicleID = cmbVehicleId.getValue();
+        try {
+            lblModel.setText(maintenanceRecordModel.getVehicleNameById(selectedVehicleID));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Fail to load vehicle model!").show();
+        }
     }
 
     @FXML
@@ -133,18 +169,76 @@ public class VehicleMaintenanceRecordsController implements Initializable {
         colModel.setCellValueFactory(new PropertyValueFactory<>("model"));
         colDesc.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-        // Define the default style (black border and transparent background)
+        try {
+            loadComboBoxData();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error loading combobox data").show();
+        }
+
+
+        try {
+            refreshPage();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Fail to load vehicle id").show();
+        }
+
+
+    }
+
+    private void refreshPage() throws SQLException, ClassNotFoundException {
+        loadNextMaintenanceId();
+        loadTableData();
+
+        btnSave.setDisable(false);
+        btnDelete.setDisable(true);
+        btnUpdate.setDisable(true);
+
+
         String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
 
-
-        // Apply the default style to all fields at the beginning of each save attempt
         txtStartDtate.setStyle(defaultStyle);
         txtEndDate.setStyle(defaultStyle);
         txtMaintenanceType.setStyle(defaultStyle);
         txtDesc.setStyle(defaultStyle);
 
+        txtStartDtate.setText("");
+        txtEndDate.setText("");
+        txtMaintenanceType.setText("");
+        txtDesc.setText("");
+
 
     }
+    public void loadNextMaintenanceId() throws SQLException {
+        String nextMaintenanceId = maintenanceRecordModel.getNextMaintenanceId();
+        lblMAintenanceId.setText(nextMaintenanceId);
+    }
+    private void loadTableData() throws SQLException, ClassNotFoundException {
+        ArrayList<MaintenanceRecordDTO> maintenanceRecordDTOS = maintenanceRecordModel.getAllMaintenanceRecords();
+        ObservableList<MaintenanceRecordTM> maintenanceRecordTMS = FXCollections.observableArrayList();
+
+        for (MaintenanceRecordDTO maintenanceRecordDTO : maintenanceRecordDTOS) {
+            MaintenanceRecordTM maintenanceRecordTM = new MaintenanceRecordTM(
+                    maintenanceRecordDTO.getId(),
+                    maintenanceRecordDTO.getStartDate(),
+                    maintenanceRecordDTO.getEndDate(),
+                    maintenanceRecordDTO.getMaintenanceType(),
+                    maintenanceRecordDTO.getVehicleId(),
+                    maintenanceRecordModel.getVehicleNameById(maintenanceRecordDTO.getVehicleId()),
+                    maintenanceRecordDTO.getDescription()
+            );
+            maintenanceRecordTMS.add(maintenanceRecordTM);
+        }
+        MaintenanceTable.setItems(maintenanceRecordTMS);
+
+    }
+
+    private void loadComboBoxData() throws SQLException {
+        ObservableList<String> vehicleId = FXCollections.observableArrayList(maintenanceRecordModel.getAllVehicleIds());
+        cmbVehicleId.setItems(vehicleId);
+    }
+
 
 
 

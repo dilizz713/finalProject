@@ -2,6 +2,8 @@ package lk.ijse.gdse71.finalproject.dto.tm;
 
 import lombok.*;
 
+import java.sql.Date;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,5 +18,6 @@ public class VehicleTM {
     private double mileage;
     private String status;
     private String vehicleType;
+
 
 }

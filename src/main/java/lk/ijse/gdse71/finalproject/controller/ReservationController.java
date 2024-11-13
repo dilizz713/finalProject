@@ -14,6 +14,7 @@ import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
 import lk.ijse.gdse71.finalproject.dto.tm.ReservationTM;
 import lk.ijse.gdse71.finalproject.dto.tm.VehicleTM;
 import lk.ijse.gdse71.finalproject.model.ReservationModel;
+import lk.ijse.gdse71.finalproject.model.VehicleModel;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -112,6 +113,9 @@ public class ReservationController implements Initializable {
 
     @FXML
     private TextField searchBar;
+
+    ReservationModel reservationModel = new ReservationModel();
+    VehicleModel vehicleModel = new VehicleModel();
 
     @FXML
     void SaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
@@ -264,6 +268,7 @@ public class ReservationController implements Initializable {
         }
     }
 
+
     @FXML
     void selectVehicleId(ActionEvent event) {
         String selectedVehicleID = cmbVehiicleId.getValue();
@@ -319,7 +324,7 @@ public class ReservationController implements Initializable {
 
     }
 
-    ReservationModel reservationModel = new ReservationModel();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -345,6 +350,9 @@ public class ReservationController implements Initializable {
         txtEndDate.setStyle(defaultStyle);
         txtMileage.setStyle(defaultStyle);
 
+
+
+
         try {
             loadComboBoxData();
         } catch (SQLException e) {
@@ -353,7 +361,7 @@ public class ReservationController implements Initializable {
         }
 
 
-       searchBar.setOnAction(event ->{
+        searchBar.setOnAction(event ->{
             try{
                 searchReservations();
             }catch (SQLException | ClassNotFoundException e){
@@ -372,10 +380,12 @@ public class ReservationController implements Initializable {
 
     }
 
+
     private void loadComboBoxData() throws SQLException {
         ObservableList<String> customerId = FXCollections.observableArrayList(reservationModel.getAllCustomerIds());
         ObservableList<String> driverId = FXCollections.observableArrayList(reservationModel.getAllDriversIds());
         ObservableList<String> vehicleId = FXCollections.observableArrayList(reservationModel.getAllVehicleIds());
+
 
         cmbCustomerId.setItems(customerId);
         cmbDriverId.setItems(driverId);

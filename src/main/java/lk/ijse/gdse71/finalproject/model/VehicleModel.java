@@ -5,8 +5,10 @@ import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
 import lk.ijse.gdse71.finalproject.dto.tm.VehicleTM;
 import lk.ijse.gdse71.finalproject.util.CrudUtil;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class VehicleModel {
@@ -36,9 +38,7 @@ public class VehicleModel {
                           rst.getInt(5),        // year
                           rst.getDouble(6),     // mileage
                           rst.getString(7),     // status
-                          rst.getString(8)      // vehicle type
-
-
+                          rst.getString(8)    // vehicle type
 
             );
             vehicleDTOS.add(vehicleDTO);
@@ -48,7 +48,7 @@ public class VehicleModel {
 
     public boolean saveVehicle(VehicleDTO vehicleDTO) throws SQLException {
         return CrudUtil.execute(
-                "insert into Vehicle values (?,?,?,?,?,?,?,?)",
+                "insert into Vehicle values (?,?,?,?,?,?,?,?,?,?)",
                 vehicleDTO.getId(),
                 vehicleDTO.getRegistrationNumber(),
                 vehicleDTO.getMake(),
@@ -57,8 +57,13 @@ public class VehicleModel {
                 vehicleDTO.getMileage(),
                 vehicleDTO.getStatus(),
                 vehicleDTO.getVehicleType()
+
         );
     }
+
+
+
+
     public boolean updateVehicle(VehicleDTO vehicleDTO) throws SQLException {
         return CrudUtil.execute(
                 "update Vehicle set registrationNumber =?, make=?, model=?, year=?, mileage=?, status=?, vehicleType=? where id=?",
@@ -72,16 +77,17 @@ public class VehicleModel {
                 vehicleDTO.getId()
         );
     }
+
+
     public boolean deleteVehicle(String vehicleId) throws SQLException {
         return CrudUtil.execute("delete from Vehicle where id=?",vehicleId );
     }
 
     public ArrayList<VehicleDTO> getVehiclesBySearch(String keyword) throws SQLException {
-       String searchQuery = "select * from Vehicle where vehicleType Like ? or model Like ?";
-       ResultSet rst = CrudUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%");
+        String searchQuery = "select * from Vehicle where vehicleType Like ? or model Like ? or id Like ?";
+        ResultSet rst = CrudUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%");
 
         ArrayList<VehicleDTO> vehicleDTOS = new ArrayList<>();
-
         while (rst.next()) {
             VehicleDTO vehicleDTO = new VehicleDTO(
                     rst.getString(1),     //id
@@ -91,13 +97,14 @@ public class VehicleModel {
                     rst.getInt(5),        // year
                     rst.getDouble(6),     // mileage
                     rst.getString(7),     // status
-                    rst.getString(8)      // vehicle type
+                    rst.getString(8)     // vehicle type
 
             );
             vehicleDTOS.add(vehicleDTO);
         }
         return vehicleDTOS;
     }
+
 
 
 }
