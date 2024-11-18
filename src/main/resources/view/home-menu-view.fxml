@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="homeMenuAnchorPane" prefHeight="726.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.HomeMenuController">
+   <children>
+      <VBox prefHeight="726.0" prefWidth="1120.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox prefHeight="329.0" prefWidth="1120.0">
+               <children>
+                  <HBox prefHeight="316.0" prefWidth="1120.0">
+                     <children>
+                        <VBox prefHeight="216.0" prefWidth="253.0" style="-fx-border-color: white; -fx-border-radius: 5 5 5 5;">
+                           <children>
+                              <Label fx:id="lblCustomersCount" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="230.0" text="0" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="System Bold Italic" size="17.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="138.0" fitWidth="131.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/customerIcon.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor>
+                              </ImageView>
+                              <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="198.0" text="Customers" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets left="40.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="System Bold" size="21.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets bottom="30.0" left="100.0" top="50.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefHeight="216.0" prefWidth="253.0" style="-fx-border-color: white; -fx-border-radius: 5 5 5 5;">
+                           <children>
+                              <Label fx:id="lblVehicleCount" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="230.0" text="0" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="System Bold Italic" size="17.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="138.0" fitWidth="131.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/VehicleIcon.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </ImageView>
+                              <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="198.0" text="Vehicles" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="21.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="40.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets bottom="30.0" left="100.0" top="50.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefHeight="216.0" prefWidth="253.0" style="-fx-border-color: white; -fx-border-radius: 5 5 5 5;">
+                           <children>
+                              <Label fx:id="lblReservationCount" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="230.0" text="0" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="System Bold Italic" size="17.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="164.0" fitWidth="122.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/reservationIcon.jpg" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                              <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="198.0" text="Reservations" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="21.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="40.0" top="40.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets bottom="30.0" left="100.0" right="100.0" top="50.0" />
+                           </HBox.margin>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="397.0" prefWidth="1120.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="290.0" prefWidth="1026.0">
+                     <children>
+                        <ImageView fitHeight="287.0" fitWidth="338.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/incomeIcon.jpg" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </ImageView>
+                        <Label fx:id="lblInCome" alignment="CENTER" prefHeight="287.0" prefWidth="377.0" text="Income" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="50.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

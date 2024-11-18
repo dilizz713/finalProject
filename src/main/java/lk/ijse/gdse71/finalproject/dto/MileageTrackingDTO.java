@@ -14,5 +14,8 @@ public class MileageTrackingDTO {
     private double extraChargePerKm;
     private double totalExtraCharges;
     private String reservationId;
+    private double startDateMileage;
+    private double endDateMileage;
+    private double estimatedMileageCost;
 
 }

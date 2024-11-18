@@ -1,7 +1,9 @@
 package lk.ijse.gdse71.finalproject.dto.tm;
 
+import javafx.scene.control.Button;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -11,15 +13,15 @@ import java.util.Date;
 @ToString
 public class ReservationTM {
     private String id;
-    private Date startDate;
-    private Date endDate;
-    private double estimatedMileage;
-    private String customerId;
+    private LocalDate reservationDate;
     private String customerName;
-    private String vehicleId;
+    private String numberPlate;
     private String model;
-    private String driverId;
-    private String driverName;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private double price;
     private String status;
+    private Button updateButton;
+
 
 }

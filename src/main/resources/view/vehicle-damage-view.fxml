@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1120.0" style="-fx-background-color: #27272d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.VehicleDamageController">
+<AnchorPane prefHeight="726.0" prefWidth="1120.0" style="-fx-background-color: #27272d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.VehicleDamageController">
    <children>
       <VBox prefHeight="726.0" prefWidth="1120.0">
          <children>

@@ -1,7 +1,9 @@
 package lk.ijse.gdse71.finalproject.dto.tm;
 
+import javafx.scene.control.Button;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -11,11 +13,12 @@ import java.util.Date;
 @ToString
 public class MaintenanceRecordTM {
     private String id;
-    private Date startDate;
-    private Date endDate;
-    private String maintenanceType;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String vehicleId;
     private String model;
     private String description;
+    private String status;
+    private Button updateButton;
 
 }

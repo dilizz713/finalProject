@@ -1,6 +1,7 @@
 package lk.ijse.gdse71.finalproject.model;
 
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
+import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
 import lk.ijse.gdse71.finalproject.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -68,15 +69,30 @@ public class CustomerModel {
         return customerDTOS;
     }
 
-    /*public ArrayList<String> getAllCustomerIds() throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("select id from Customer");
-        ArrayList<String> customerIds = new ArrayList<>();
+    public ArrayList<CustomerDTO> getCustomersBySearch(String keyword) throws SQLException {
+        String searchQuery = "select * from Customer where id Like ? or name Like ? ";
 
-        while(resultSet.next()){
-            customerIds.add(resultSet.getString(1));
+        // Execute the query with the search keyword
+        ResultSet rst = CrudUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%");
+
+
+        ArrayList<CustomerDTO> customerDTOS = new ArrayList<>();
+
+        while (rst.next()) {
+            CustomerDTO customerDTO = new CustomerDTO(
+                    rst.getString(1),        //id
+                    rst.getString(2),        //name
+                    rst.getString(3),        //address
+                    rst.getString(4),        //email
+                    rst.getInt(5),           //phone
+                    rst.getString(6)         //nic
+
+            );
+            customerDTOS.add(customerDTO);
         }
-        return customerIds;
-    }*/
+        return customerDTOS;
+    }
+
 
 
 }

@@ -1,106 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.HomePageController">
+<AnchorPane prefHeight="726.0" prefWidth="1280.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.HomePageController">
    <children>
-      <Pane prefHeight="724.0" prefWidth="194.0" style="-fx-background-color: #030202;">
+      <VBox prefHeight="726.0" prefWidth="1280.0" style="-fx-border-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="67.0" layoutY="14.0" text="Home" textFill="#3d7ba4">
+            <AnchorPane fx:id="homeAnchorPane" prefHeight="726.0" prefWidth="1120.0">
+               <VBox.margin>
+                  <Insets left="158.0" />
+               </VBox.margin>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="-4.0" prefHeight="726.0" prefWidth="160.0" style="-fx-border-color: white; -fx-border-width: 1 1 1 1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="btnHome" mnemonicParsing="false" onAction="#clickHomeButtonOnAction" prefHeight="26.0" prefWidth="89.0" text="Home">
                <font>
-                  <Font name="System Bold" size="19.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
-            </Label>
-            <VBox layoutX="58.0" layoutY="78.0" prefHeight="28.0" prefWidth="100.0" />
-            <VBox layoutX="22.0" layoutY="64.0" prefHeight="70.0" prefWidth="157.0">
-               <children>
-                  <Button fx:id="btnCustomer" mnemonicParsing="false" onAction="#customerOnaction" prefHeight="37.0" prefWidth="158.0" style="-fx-background-color: #030202;" text="Customer" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Button>
-               </children>
-            </VBox>
-            <VBox layoutX="22.0" layoutY="134.0" prefHeight="70.0" prefWidth="157.0">
-               <children>
-                  <Button fx:id="btnReservation" mnemonicParsing="false" onAction="#reservationOnAction" prefHeight="37.0" prefWidth="158.0" style="-fx-background-color: #030202;" text="Reservation" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Button>
-               </children>
-            </VBox>
-            <VBox layoutX="17.0" layoutY="204.0" prefHeight="70.0" prefWidth="157.0">
-               <children>
-                  <Button fx:id="btnVehicle" mnemonicParsing="false" onAction="#vehicleOnAction" prefHeight="37.0" prefWidth="158.0" style="-fx-background-color: #030202;" text="Vehicle" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Button>
-               </children>
-            </VBox>
-            <VBox layoutX="17.0" layoutY="274.0" prefHeight="70.0" prefWidth="157.0">
-               <children>
-                  <Button fx:id="btnDriver" mnemonicParsing="false" onAction="#driverOnAction" prefHeight="37.0" prefWidth="158.0" style="-fx-background-color: #030202;" text="Driver" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Button>
-               </children>
-            </VBox>
-            <VBox layoutX="17.0" layoutY="344.0" prefHeight="70.0" prefWidth="157.0">
-               <children>
-                  <Button fx:id="btnPayment" mnemonicParsing="false" onAction="#paymentOnAction" prefHeight="37.0" prefWidth="158.0" style="-fx-background-color: #030202;" text="Payment" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Button>
-               </children>
-            </VBox>
-            <VBox layoutX="17.0" layoutY="414.0" prefHeight="70.0" prefWidth="157.0">
-               <children>
-                  <Button fx:id="btnInvoice" mnemonicParsing="false" onAction="#invoiceOnAction" prefHeight="37.0" prefWidth="158.0" style="-fx-background-color: #030202;" text="Invoice" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Button>
-               </children>
-            </VBox>
-            <VBox layoutX="22.0" layoutY="484.0" prefHeight="70.0" prefWidth="157.0">
-               <children>
-                  <Button fx:id="btnMAintenance" mnemonicParsing="false" onAction="#maintenanceOnAction" prefHeight="37.0" prefWidth="158.0" style="-fx-background-color: #030202;" text="Maintenance" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Button>
-               </children>
-            </VBox>
-            <VBox layoutX="17.0" layoutY="554.0" prefHeight="70.0" prefWidth="157.0">
-               <children>
-                  <Button fx:id="btnMilage" mnemonicParsing="false" onAction="#mileageTrackingOnAction" prefHeight="37.0" prefWidth="158.0" style="-fx-background-color: #030202;" text="Mileage Track" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Button>
-               </children>
-            </VBox>
+            </Button>
+            <Button fx:id="btnCustomer" mnemonicParsing="false" onAction="#customerOnaction" prefHeight="96.0" prefWidth="158.0" style="-fx-background-color: #030202;" text="Customer" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnVehicle" mnemonicParsing="false" onAction="#vehicleOnAction" prefHeight="100.0" prefWidth="158.0" style="-fx-background-color: #030202;" text="Vehicle" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnReservation" mnemonicParsing="false" onAction="#reservationOnAction" prefHeight="100.0" prefWidth="158.0" style="-fx-background-color: #030202;" text="Reservation" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnPayment" mnemonicParsing="false" onAction="#paymentOnAction" prefHeight="100.0" prefWidth="158.0" style="-fx-background-color: #030202;" text="Payment" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnMAintenance" mnemonicParsing="false" onAction="#maintenanceOnAction" prefHeight="100.0" prefWidth="158.0" style="-fx-background-color: #030202;" text="Maintenance" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnMilage" mnemonicParsing="false" onAction="#mileageTrackingOnAction" prefHeight="100.0" prefWidth="158.0" style="-fx-background-color: #030202;" text="Mileage Track" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
          </children>
-      </Pane>
-      <AnchorPane fx:id="homeAnchorPAne" layoutX="200.0" layoutY="-2.0" prefHeight="726.0" prefWidth="1120.0">
-         <children>
-            <ImageView fx:id="homeImage" fitHeight="726.0" fitWidth="1120.0" layoutX="-6.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-6.0" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="0.0">
-               <image>
-                  <Image url="@../assets/homepage.jpeg" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>

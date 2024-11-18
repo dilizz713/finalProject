@@ -15,4 +15,9 @@ public class CustomerDTO {
     private String email;
     private int phoneNumber;
     private String nic;
+
+    public CustomerDTO(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

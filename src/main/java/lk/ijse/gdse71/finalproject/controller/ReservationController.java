@@ -4,34 +4,44 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
 import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
 import lk.ijse.gdse71.finalproject.dto.tm.ReservationTM;
-import lk.ijse.gdse71.finalproject.dto.tm.VehicleTM;
+import lk.ijse.gdse71.finalproject.model.CustomerModel;
 import lk.ijse.gdse71.finalproject.model.ReservationModel;
-import lk.ijse.gdse71.finalproject.model.VehicleModel;
+import lk.ijse.gdse71.finalproject.util.CrudUtil;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.sql.Date;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ReservationController implements Initializable {
 
-    public TableColumn<ReservationTM, String> colVehicleId;
-    public TableColumn<ReservationTM, String> colDriverId;
     @FXML
-    private Button btnDelete;
+    public Button btnUpdate;
+
+    @FXML
+    public Label lblVehicleId;
+    @FXML
+    private Button btnAddCustomer;
+
+    @FXML
+    private Button btnAddMileage;
+
+    @FXML
+    private Button btnAddPayment;
+
+    @FXML
+    private Button btnHistory;
 
     @FXML
     private Button btnReset;
@@ -40,58 +50,34 @@ public class ReservationController implements Initializable {
     private Button btnSave;
 
     @FXML
-    private Button btnUpdate;
+    private ComboBox<CustomerDTO> cmbCustomer;
 
     @FXML
-    private ComboBox<String> cmbCustomerId;
+    private Label lblCurrentDate;
 
     @FXML
-    private ComboBox<String> cmbDriverId;
+    private Label lblEndDate;
 
     @FXML
-    private ComboBox<String> cmbVehiicleId;
+    private Label lblModel;
 
     @FXML
-    private TableColumn<ReservationTM, String> colCustomerId;
+    private Label lblNumberPlate;
 
     @FXML
-    private TableColumn<ReservationTM, String> colCustomerName;
-
-    @FXML
-    private TableColumn<ReservationTM, String> colDriverName;
-
-    @FXML
-    private TableColumn<ReservationTM, Date> colEndDate;
-
-    @FXML
-    private TableColumn<ReservationTM, Double> colMileage;
-
-    @FXML
-    private TableColumn<ReservationTM, String> colModel;
-
-    @FXML
-    private TableColumn<ReservationTM, String> colReservationId;
-
-    @FXML
-    private TableColumn<ReservationTM, Date> colStartDate;
-
-    @FXML
-    private TableColumn<ReservationTM, String> colStatus;
-
-    @FXML
-    private Label lblCustomerName;
-
-    @FXML
-    private Label lblDriverName;
+    private Label lblPrice;
 
     @FXML
     private Label lblReservationId;
 
     @FXML
-    private Label lblVehicleModel;
+    private Label lblStartDate;
 
     @FXML
     private RadioButton rdbDone;
+
+    @FXML
+    private RadioButton rdbOngoing;
 
     @FXML
     private RadioButton rdbPending;
@@ -99,277 +85,190 @@ public class ReservationController implements Initializable {
     @FXML
     private AnchorPane reservationAnchorpane;
 
-    @FXML
-    private TableView<ReservationTM> reservationTable;
+    private ReservationTableController reservationTableController;
+    private ReservationModel reservationModel = new ReservationModel();
+    private VehicleDTO selectedVehicle;
+    private boolean isEditMode = false;
+    private String editingReservationId;
+    private LocalDate originalStartDate;
 
-    @FXML
-    private TextField txtEndDate;
+    private ReservationDTO currentReservation;
 
-    @FXML
-    private TextField txtMileage;
 
-    @FXML
-    private TextField txtStartDate;
 
-    @FXML
-    private TextField searchBar;
-
-    ReservationModel reservationModel = new ReservationModel();
-    VehicleModel vehicleModel = new VehicleModel();
+    public void setReservationTableController(ReservationTableController controller){
+        this.reservationTableController = controller;
+    }
 
     @FXML
     void SaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String id = lblReservationId.getText();
-        String startDateText = txtStartDate.getText();
-        String endDateText = txtEndDate.getText();
-        String estimatedMileage = txtMileage.getText();
-        String customerId = cmbCustomerId.getValue();
-        String vehicleId = cmbVehiicleId.getValue();
-        String driverId = cmbDriverId.getValue();
-        String status = rdbDone.isSelected() ? "Done" : rdbPending.isSelected() ? "Pending" : null;
 
-        if (status == null) {
-            new Alert(Alert.AlertType.ERROR, "Please select a status (Done or Pending)").show();
+         CustomerDTO selectedCustomer = cmbCustomer.getValue();
+
+
+       if (cmbCustomer.getValue() == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select a customer.").show();
             return;
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        Date startDate;
-        Date endDate;
+        String status = rdbPending.isSelected() ? "Pending" : rdbOngoing.isSelected() ? "Ongoing" : "Done";
+        LocalDate reservationDate = LocalDate.now();
+        String customerId = selectedCustomer.getId();
+        String vehicleId = lblVehicleId.getText();
 
-        try {
-            LocalDate startLocalDate = LocalDate.parse(startDateText, formatter);
-            LocalDate endLocalDate = LocalDate.parse(endDateText, formatter);
-            startDate = Date.valueOf(startLocalDate);
-            endDate = Date.valueOf(endLocalDate);
-        } catch (DateTimeException e) {
-            new Alert(Alert.AlertType.ERROR, "Please enter dates in the format yyyy-MM-dd").show();
+        LocalDate startDate = null;
+        LocalDate endDate = null;
+
+        if(btnSave.getText().equals("Update")){
+            reservationDate = getOriginalReservationDate(id);
+            if(reservationDate == null){
+                new Alert(Alert.AlertType.ERROR, "Failed to fetch the original reservation date");
+                return;
+            }
+        }else{
+            reservationDate = LocalDate.now();
+        }
+
+
+        if(rdbOngoing.isSelected()){
+          startDate = LocalDate.now();
+
+        }else if(rdbDone.isSelected()){
+            startDate = LocalDate.parse(lblStartDate.getText());
+            endDate = LocalDate.now();
+        }
+
+
+        if (reservationDate == null) {
+            new Alert(Alert.AlertType.ERROR, "Failed to fetch the original reservation date!").show();
             return;
         }
 
-        double mileage = -1;
-        mileage = Double.parseDouble(estimatedMileage);
 
-        ReservationDTO reservationDTO = new ReservationDTO(id, startDate, endDate, mileage, customerId, vehicleId, driverId, status);
-        boolean isSaved = reservationModel.saveReservation(reservationDTO);
+
+       /* LocalDate startDate = lblStartDate.getText().isEmpty() ? null : LocalDate.parse(lblStartDate.getText());
+        LocalDate endDate = lblEndDate.getText().isEmpty() ? null : LocalDate.parse(lblEndDate.getText());
+*/
+
+       /* LocalDate startDate = rdbOngoing.isSelected() ? LocalDate.now() : null;
+        LocalDate endDate = rdbDone.isSelected() ? LocalDate.now() : null;*/
+
+        /*currentReservation.setStatus(status);
+        currentReservation.setStartDate(startDate);
+        currentReservation.setEndDate(endDate);*/
+
+
+
+        System.out.println("Reservation saved with status: " + status);
+
+        ReservationDTO reservationDTO = new ReservationDTO(id, startDate, endDate, customerId, vehicleId, status,reservationDate);
+
+        boolean isSaved = false;
+        boolean isUpdated = false;
+
+        if(btnSave.getText().equals("Update")){
+            isUpdated = reservationModel.updateReservation(reservationDTO);
+        }else{
+            isSaved = reservationModel.saveReservation(reservationDTO);
+        }
+
         if (isSaved) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Reservation saved successfully!").show();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Failed to save reservation!").show();
+
+            rdbPending.setSelected(false);
+            rdbOngoing.setSelected(false);
+            rdbDone.setSelected(false);
+
         }
 
+        if (isUpdated) {
+            refreshPage();
+            new Alert(Alert.AlertType.INFORMATION, "Reservation updated successfully!").show();
 
-    }
+            rdbPending.setSelected(false);
+            rdbOngoing.setSelected(false);
+            rdbDone.setSelected(false);
 
-    @FXML
-    void clickedTable(MouseEvent event) {
-        ReservationTM reservationTM = reservationTable.getSelectionModel().getSelectedItem();
-        if (reservationTM != null) {
-            lblReservationId.setText(reservationTM.getId());
-            txtStartDate.setText(String.valueOf(reservationTM.getStartDate()));
-            txtEndDate.setText(String.valueOf(reservationTM.getEndDate()));
-            txtMileage.setText(String.valueOf(reservationTM.getEstimatedMileage()));
-            cmbCustomerId.setValue(reservationTM.getCustomerId());
-            cmbVehiicleId.setValue(reservationTM.getVehicleId());
-            cmbDriverId.setValue(reservationTM.getDriverId());
-
-            try {
-                lblCustomerName.setText(reservationModel.getCustomerNameById(reservationTM.getCustomerId()));
-                lblVehicleModel.setText(reservationModel.getVehicleNameById(reservationTM.getVehicleId()));
-                lblDriverName.setText(reservationModel.getDriverNameById(reservationTM.getDriverId()));
-            } catch (SQLException e) {
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Fail to load related details!").show();
-            }
-
-            if ("Done".equalsIgnoreCase(reservationTM.getStatus())) {
-                rdbDone.setSelected(true);
-                rdbPending.setDisable(true);
-                rdbDone.setDisable(false);
-
-            } else if ("Pending".equalsIgnoreCase(reservationTM.getStatus())) {
-                rdbPending.setSelected(true);
-                rdbDone.setDisable(true);
-                rdbPending.setDisable(false);
-            } else {
-                rdbDone.setSelected(false);
-                rdbPending.setSelected(false);
-                rdbDone.setDisable(false);
-                rdbPending.setDisable(false);
-            }
-
-            btnSave.setDisable(true);
-            btnDelete.setDisable(false);
-            btnUpdate.setDisable(false);
         }
     }
 
     @FXML
-    void deleteOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String reservationId = lblReservationId.getText();
+    void addCustomerOnAction(ActionEvent event) {
+        navigateTo("/view/customer-view.fxml");
+    }
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to delete this reservation?", ButtonType.YES, ButtonType.NO);
-        Optional<ButtonType> optionalButtonType = alert.showAndWait();
+    @FXML
+    void addMileageOnaction(ActionEvent event) {
+        navigateTo("/view/mileage-tracking-view.fxml");
+    }
 
-        if(optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES){
-            boolean isDeleted = reservationModel.deleteReservation(reservationId);
-            if(isDeleted){
-                refreshPage();
-                new Alert(Alert.AlertType.INFORMATION, "Vehicle deleted!").show();
-            }else{
-                new Alert(Alert.AlertType.ERROR, "Fail to delete vehicle!").show();
-            }
-        }
+    @FXML
+    void addPaymentOnAction(ActionEvent event) {
+        navigateTo("/view/payment-view.fxml");
     }
 
     @FXML
     void resetOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        refreshPage();
+       navigateTo("/view/reservation-vehicle-view.fxml");
     }
 
     @FXML
-    void selectCustomerId(ActionEvent event) {
-        String selectedCustomerID = cmbCustomerId.getValue();
-        try {
-            lblCustomerName.setText(reservationModel.getCustomerNameById(selectedCustomerID));
-        } catch (SQLException e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Fail to load customer name!").show();
-        }
-    }
+    void handleStatus(ActionEvent event) {
+        if(rdbPending.isSelected()){
+            lblStartDate.setText("");
+            lblEndDate.setText("");
 
-    @FXML
-    void selectDone(ActionEvent event) {
-        if (rdbDone.isSelected()) {
-            rdbPending.setDisable(true);
-        } else {
-            rdbPending.setDisable(false);
-        }
-    }
+        }else if(rdbOngoing.isSelected()){
+            lblStartDate.setText(LocalDate.now().toString());
+            lblEndDate.setText("");
+            /*rdbPending.setDisable(true);
+            rdbPending.setDisable(false);*/
 
-    @FXML
-    void selectDriverId(ActionEvent event) {
-        String selectedDriverID = cmbDriverId.getValue();
-        try {
-            lblDriverName.setText(reservationModel.getDriverNameById(selectedDriverID));
-        } catch (SQLException e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Fail to load driver name!").show();
+        }else if(rdbDone.isSelected()){
+            lblEndDate.setText(LocalDate.now().toString());
+           /* rdbPending.setDisable(true);
+            rdbOngoing.setDisable(true);*/
+
+
         }
     }
 
     @FXML
-    void selectPending(ActionEvent event) {
-        if (rdbPending.isSelected()) {
-            rdbDone.setDisable(true);
-        } else {
-            rdbDone.setDisable(false);
-        }
-    }
-
-
-    @FXML
-    void selectVehicleId(ActionEvent event) {
-        String selectedVehicleID = cmbVehiicleId.getValue();
-        try {
-            lblVehicleModel.setText(reservationModel.getVehicleNameById(selectedVehicleID));
-        } catch (SQLException e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Fail to load vehicle model!").show();
-        }
+    void watchHistory(ActionEvent event) {
+       navigateTo("/view/reservation-table.fxml");
     }
 
     @FXML
-    void updateOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String id = lblReservationId.getText();
-        String startDateText = txtStartDate.getText();
-        String endDateText = txtEndDate.getText();
-        Double estimatedMileage = Double.valueOf(txtMileage.getText());
-        String customerId = cmbCustomerId.getValue();
-        String vehicleId = cmbVehiicleId.getValue();
-        String driverId = cmbDriverId.getValue();
-        String status = rdbDone.isSelected() ? "Done" : rdbPending.isSelected() ? "Pending" : null;
+    void selectCustomers(ActionEvent event) {
+        CustomerDTO selectCustomers = cmbCustomer.getValue();
+        if(selectCustomers != null){
+            String customerID = selectCustomers.getId();
+            System.out.println(customerID);
 
-        if (status == null) {
-            new Alert(Alert.AlertType.ERROR, "Please select a status (Done or Pending)").show();
-            return;
         }
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        Date startDate;
-        Date endDate;
-
-        try {
-            LocalDate startLocalDate = LocalDate.parse(startDateText, formatter);
-            LocalDate endLocalDate = LocalDate.parse(endDateText, formatter);
-            startDate = Date.valueOf(startLocalDate);
-            endDate = Date.valueOf(endLocalDate);
-        } catch (DateTimeException e) {
-            new Alert(Alert.AlertType.ERROR, "Please enter dates in the format yyyy-MM-dd").show();
-            return;
-        }
-
-//        double mileage = -1;
-//        mileage = Double.parseDouble(estimatedMileage);
-
-        ReservationDTO reservationDTO = new ReservationDTO(id, startDate, endDate, estimatedMileage, customerId, vehicleId, driverId, status);
-        boolean isUpdate = reservationModel.updateReservation(reservationDTO);
-        if (isUpdate) {
-            refreshPage();
-            new Alert(Alert.AlertType.INFORMATION, "Reservation updated successfully!").show();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Failed to updated reservation!").show();
-        }
-
     }
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        colReservationId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-        colEndDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
-        colMileage.setCellValueFactory(new PropertyValueFactory<>("estimatedMileage"));
-        colCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        colCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        colVehicleId.setCellValueFactory(new PropertyValueFactory<>("vehicleId"));
-        colModel.setCellValueFactory(new PropertyValueFactory<>("model"));
-        colDriverId.setCellValueFactory(new PropertyValueFactory<>("driverId"));
-        colDriverName.setCellValueFactory(new PropertyValueFactory<>("driverName"));
-        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        cmbCustomer.setStyle("-fx-background-color: white;-fx-border-color: black;-fx-font-weight: bold;"); // White text for ComboBox
 
+        lblCurrentDate.setText(LocalDate.now().toString());
 
-        // Define the default style (black border and transparent background)
-        String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
+        // ****
+        lblStartDate.setText("");
+        lblEndDate.setText("");
+// ****
 
+        rdbPending.setOnAction(event -> handleStatusChange());
+        rdbOngoing.setOnAction(event -> handleStatusChange());
+        rdbDone.setOnAction(event -> handleStatusChange());
 
-        // Apply the default style to all fields at the beginning of each save attempt
-        txtStartDate.setStyle(defaultStyle);
-        txtEndDate.setStyle(defaultStyle);
-        txtMileage.setStyle(defaultStyle);
+        /*rdbPending.setOnAction(event -> clearDates());
+        rdbOngoing.setOnAction(event -> lblStartDate.setText(LocalDate.now().toString()));
+        rdbDone.setOnAction(event -> lblEndDate.setText(LocalDate.now().toString()));*/
 
-
-
-
-        try {
-            loadComboBoxData();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Error loading combobox data").show();
-        }
-
-
-        searchBar.setOnAction(event ->{
-            try{
-                searchReservations();
-            }catch (SQLException | ClassNotFoundException e){
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Error searching reservation").show();
-            }
-        });
-
+        loadCustomerNames();
 
         try {
             refreshPage();
@@ -377,107 +276,273 @@ public class ReservationController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load vehicle id").show();
         }
+    }
 
+    private void handleStatusChange() {
+        if (rdbPending.isSelected()) {
+            lblStartDate.setText("");
+            lblEndDate.setText("");
+        } else if (rdbOngoing.isSelected()) {
+            lblStartDate.setText(originalStartDate == null ? LocalDate.now().toString() : originalStartDate.toString());
+            lblEndDate.setText("");
+        } else if (rdbDone.isSelected()) {
+            lblEndDate.setText(LocalDate.now().toString());
+        }
     }
 
 
-    private void loadComboBoxData() throws SQLException {
-        ObservableList<String> customerId = FXCollections.observableArrayList(reservationModel.getAllCustomerIds());
-        ObservableList<String> driverId = FXCollections.observableArrayList(reservationModel.getAllDriversIds());
-        ObservableList<String> vehicleId = FXCollections.observableArrayList(reservationModel.getAllVehicleIds());
 
-
-        cmbCustomerId.setItems(customerId);
-        cmbDriverId.setItems(driverId);
-        cmbVehiicleId.setItems(vehicleId);
+    private void clearDates() {
+        lblStartDate.setText("");
+        lblEndDate.setText("");
     }
 
     private void refreshPage() throws SQLException, ClassNotFoundException {
-        loadNextReservationId();
-        loadTableData();
+        loadNextId();
 
-        btnSave.setDisable(false);
-        btnDelete.setDisable(true);
-        btnUpdate.setDisable(true);
-
-        rdbDone.setSelected(false);
         rdbPending.setSelected(false);
-        rdbDone.setDisable(false);
-        rdbPending.setDisable(false);
-
-        String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
-
-        txtStartDate.setStyle(defaultStyle);
-        txtEndDate.setStyle(defaultStyle);
-        txtMileage.setStyle(defaultStyle);
-
-        txtStartDate.setText("");
-        txtEndDate.setText("");
-        txtMileage.setText("");
-
+        rdbOngoing.setSelected(false);
+        rdbDone.setSelected(false);
 
     }
-
-    public void loadNextReservationId() throws SQLException {
-        String nextReservationId = reservationModel.getNextReservationId();
-        lblReservationId.setText(nextReservationId);
+    public void loadNextId() throws SQLException {
+        String nextId =reservationModel.getNextReservationId();
+        lblReservationId.setText(nextId);
     }
-
-    private void loadTableData() throws SQLException, ClassNotFoundException {
-        ArrayList<ReservationDTO> reservationDTOS = reservationModel.getAllReservations();
-        ObservableList<ReservationTM> reservationTMS = FXCollections.observableArrayList();
-
-        for (ReservationDTO reservationDTO : reservationDTOS) {
-            ReservationTM reservationTM = new ReservationTM(
-                    reservationDTO.getId(),
-                    reservationDTO.getStartDate(),
-                    reservationDTO.getEndDate(),
-                    reservationDTO.getEstimatedMileage(),
-                    reservationDTO.getCustomerId(),
-                    reservationModel.getCustomerNameById(reservationDTO.getCustomerId()),
-                    reservationDTO.getVehicleId(),
-                    reservationModel.getVehicleNameById(reservationDTO.getVehicleId()),
-                    reservationDTO.getDriverId(),
-                    reservationModel.getDriverNameById(reservationDTO.getDriverId()),
-                    reservationDTO.getStatus()
-            );
-            reservationTMS.add(reservationTM);
+    @FXML
+    public void updateOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        if (!isEditMode) {
+            new Alert(Alert.AlertType.ERROR, "No reservation selected for updating!").show();
+            return;
         }
-        reservationTable.setItems(reservationTMS);
+        CustomerDTO selectedCustomer = cmbCustomer.getValue();
 
-    }
+        String id = editingReservationId;
+        LocalDate startDate = null;
+        LocalDate endDate = null;
+        String customerId = selectedCustomer.getId();
+        String vehicleId = selectedVehicle.getId();
 
-    private void searchReservations() throws SQLException, ClassNotFoundException {
-        String searchText = searchBar.getText().trim();
+        String status = "";
 
-        if(searchText.isEmpty()){
-            loadTableData();
+        if(rdbOngoing.isSelected()){
+            status = "Ongoing";
+            startDate = LocalDate.now();
+        }else if(rdbDone.isSelected()){
+            status = "Done";
+            endDate = LocalDate.now();
+        }
+       // String status = rdbPending.isSelected() ? "Pending" : rdbOngoing.isSelected() ? "Ongoing" : "Done";
+        LocalDate reservationDate = LocalDate.now();
+
+        if (selectedCustomer == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select a customer.").show();
             return;
         }
 
-        ArrayList<ReservationDTO> reservationDTOS = reservationModel.getReservationsBySearch(searchText);
+        LocalDate vehicleReservationDate = getOriginalReservationDate(id);
 
-        // Populate the table with filtered data
-        ObservableList<ReservationTM> reservationTMS = FXCollections.observableArrayList();
+        ReservationDTO reservationDTO = new ReservationDTO(id, startDate, endDate,customerId , vehicleId, status,vehicleReservationDate);
+        boolean isUpdated = reservationModel.updateReservation(reservationDTO);
+        if (isUpdated) {
+            new Alert(Alert.AlertType.INFORMATION, "Reservation updated successfully!").show();
+            isEditMode = false;
+            editingReservationId = null;
 
-        for (ReservationDTO reservationDTO : reservationDTOS) {
-            ReservationTM reservationTM = new ReservationTM(
-                    reservationDTO.getId(),
-                    reservationDTO.getStartDate(),
-                    reservationDTO.getEndDate(),
-                    reservationDTO.getEstimatedMileage(),
-                    reservationDTO.getCustomerId(),
-                    reservationModel.getCustomerNameById(reservationDTO.getCustomerId()),
-                    reservationDTO.getVehicleId(),
-                    reservationModel.getVehicleNameById(reservationDTO.getVehicleId()),
-                    reservationDTO.getDriverId(),
-                    reservationModel.getDriverNameById(reservationDTO.getDriverId()),
-                    reservationDTO.getStatus()
-            );
-            reservationTMS.add(reservationTM);
+            rdbPending.setSelected(false);
+            rdbOngoing.setSelected(false);
+            rdbDone.setSelected(false);
+
+            refreshPage();
+
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Failed to update reservation!").show();
         }
-        reservationTable.setItems(reservationTMS);
     }
 
+    private LocalDate getOriginalReservationDate(String reservationId) throws SQLException {
+        String query = "select reservationDate from Reservation where id=?";
+        ResultSet rst = CrudUtil.execute(query, reservationId);
 
+        if(rst.next()){
+            return rst.getDate("reservationDate").toLocalDate();
+        }
+        return null;
+    }
+
+    public void navigateTo(String fxmlPath){
+        try{
+            reservationAnchorpane.getChildren().clear();
+            AnchorPane load = FXMLLoader.load(getClass().getResource(fxmlPath));
+            reservationAnchorpane.getChildren().add(load);
+        }catch (IOException e){
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
+        }
+    }
+
+    public void setReservationDetails(ReservationDTO reservationDTO) throws SQLException {
+        currentReservation = reservationDTO;
+        isEditMode = true;
+        editingReservationId = reservationDTO.getId();
+
+       lblReservationId.setText(reservationDTO.getId());
+
+      /* lblStartDate.setText(String.valueOf(reservationDTO.getStartDate()));
+       lblEndDate.setText(String.valueOf(reservationDTO.getEndDate()));*/
+
+       lblCurrentDate.setText(reservationDTO.getReservationDate() != null ? reservationDTO.getReservationDate().toString() : LocalDate.now().toString());
+        lblStartDate.setText(reservationDTO.getStartDate() != null ? reservationDTO.getStartDate().toString() : "");
+        lblEndDate.setText(reservationDTO.getEndDate() != null ? reservationDTO.getEndDate().toString() : "");
+
+        originalStartDate = reservationDTO.getStartDate();
+
+
+
+        String customerId = reservationDTO.getCustomerId();
+        CustomerDTO selectedCustomer = reservationModel.getCustomerDTOsForReservation()
+                .stream()
+                .filter(customer -> customer.getId().equals(customerId))
+                .findFirst()
+                .orElse(null);
+        if (selectedCustomer != null) {
+            cmbCustomer.getSelectionModel().select(selectedCustomer);
+        }
+
+        String vehicleId = reservationDTO.getVehicleId();
+
+        ResultSet vehicleDetailsResultSet = CrudUtil.execute("SELECT id, model, numberPlate, price FROM Vehicle WHERE id = ?", vehicleId);
+        if (vehicleDetailsResultSet.next()) {
+            String vId = vehicleDetailsResultSet.getString("id");
+            String model = vehicleDetailsResultSet.getString("model");
+            String numberPlate = vehicleDetailsResultSet.getString("numberPlate");
+            double price = vehicleDetailsResultSet.getDouble("price");
+
+            // Update vehicle labels in the UI
+            lblVehicleId.setText(vId);
+            lblModel.setText(model);
+            lblNumberPlate.setText(numberPlate);
+            lblPrice.setText(String.format("%.2f", price));
+        } else {
+            // If no details are found, display placeholders
+            lblVehicleId.setText("Vehicle id not found");
+            lblModel.setText("Model not found");
+            lblNumberPlate.setText("Number plate not found");
+            lblPrice.setText("0.00");
+        }
+
+        if(reservationDTO.getStatus().equals("Pending")) {
+            rdbPending.setSelected(true);
+        }else if(reservationDTO.getStatus().equals("Ongoing")){
+            rdbOngoing.setSelected(true);
+        }else if(reservationDTO.getStatus().equals("Done")){
+            rdbDone.setSelected(true);
+        }
+
+        lblStartDate.setText(String.valueOf(reservationDTO.getStartDate()));
+        lblEndDate.setText(String.valueOf(reservationDTO.getEndDate()));
+
+       // manageRadioButton();
+
+
+
+       /* switch (reservationDTO.getStatus()){
+           case "Pending":
+               rdbPending.setSelected(true);
+               break;
+           case "Ongoing":
+               rdbOngoing.setSelected(true);
+               lblStartDate.setText(String.valueOf(reservationDTO.getStartDate()));
+               break;
+           case "Done":
+               rdbDone.setSelected(true);
+               lblEndDate.setText(String.valueOf(reservationDTO.getEndDate()));
+               break;*/
+
+       btnSave.setText("Update");
+
+    }
+
+   /* private void manageRadioButton() {
+        if (currentReservation.getStatus().equals("Pending")) {
+            rdbPending.setDisable(true);
+            rdbOngoing.setDisable(false);
+            rdbDone.setDisable(false);
+        } else if (currentReservation.getStatus().equals("Ongoing")) {
+            rdbPending.setDisable(true);
+            rdbOngoing.setDisable(true);
+            rdbDone.setDisable(false);
+        } else if (currentReservation.getStatus().equals("Done")) {
+            rdbPending.setDisable(true);
+            rdbOngoing.setDisable(true);
+            rdbDone.setDisable(false);
+        }
+    }*/
+
+    private void loadCustomerNames() {
+        try {
+            ArrayList<CustomerDTO> customers = reservationModel.getCustomerDTOsForReservation();
+
+            // Convert the list to an observable list and set it to the ComboBox
+            ObservableList<CustomerDTO> customerList = FXCollections.observableArrayList(customers);
+            cmbCustomer.setItems(customerList);
+
+            // Customize the ComboBox to display only the customer's name
+            cmbCustomer.setCellFactory(param -> new ListCell<>() {
+                @Override
+                protected void updateItem(CustomerDTO customer, boolean empty) {
+                    super.updateItem(customer, empty);
+                    if (empty || customer == null || customer.getName() == null) {
+                        setText(null);
+                    } else {
+                        setText(customer.getName());
+                    }
+                }
+            });
+
+            cmbCustomer.setButtonCell(new ListCell<>() {
+                @Override
+                protected void updateItem(CustomerDTO customer, boolean empty) {
+                    super.updateItem(customer, empty);
+                    if (empty || customer == null || customer.getName() == null) {
+                        setText(null);
+                    } else {
+                        setText(customer.getName());
+                    }
+                }
+            });
+        } catch (SQLException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load customer names.").show();
+        }
+    }
+
+   /* public void setReservationData(ReservationTM reservation) {
+        lblReservationId.setText(reservation.getId());
+        cmbCustomer.getSelectionModel().select(new CustomerDTO(reservation.getCustomerId(), reservation.getCustomerName(), null, null, 0, null));
+        lblModel.setText(reservation.getModel());
+        lblNumberPlate.setText(reservation.getVehicleId());
+        lblPrice.setText(String.valueOf(reservation.getPrice()));
+
+        if ("Pending".equals(reservation.getStatus())) rdbPending.setSelected(true);
+        else if ("Ongoing".equals(reservation.getStatus())) rdbOngoing.setSelected(true);
+        else if ("Done".equals(reservation.getStatus())) rdbDone.setSelected(true);
+
+        btnSave.setText("update");
+    }*/
+
+
+    public void setVehicleDetails(VehicleDTO vehicle) {
+        if(vehicle == null){
+            System.err.println("Vehicle dto is null");
+        }else{
+            selectedVehicle = vehicle;
+            lblVehicleId.setText(vehicle.getId());
+            lblModel.setText(vehicle.getModel());
+            lblNumberPlate.setText(vehicle.getNumberPlate());
+            lblPrice.setText(String.valueOf(vehicle.getPrice()));
+
+        }
+
+    }
 }

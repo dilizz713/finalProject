@@ -11,7 +11,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
+import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
 import lk.ijse.gdse71.finalproject.dto.tm.CustomerTM;
+import lk.ijse.gdse71.finalproject.dto.tm.ReservationTM;
 import lk.ijse.gdse71.finalproject.model.CustomerModel;
 
 import java.io.IOException;
@@ -23,6 +25,7 @@ import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
 
+    public TextField searchBar;
     @FXML
     private Button btnDelete;
 
@@ -82,6 +85,8 @@ public class CustomerController implements Initializable {
 
     @FXML
     private TextField txtPhone;
+
+    CustomerModel customerModel = new CustomerModel();
 
     @FXML
     void SaveCustomerOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
@@ -297,6 +302,12 @@ public class CustomerController implements Initializable {
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         colNic.setCellValueFactory(new PropertyValueFactory<>("nic"));
 
+
+        txtAddress.setOnAction(event -> txtEmail.requestFocus());
+        txtEmail.setOnAction(event -> txtPhone.requestFocus());
+        txtPhone.setOnAction(event -> txtNic.requestFocus());
+
+
         // Define the default style (black border and transparent background)
         String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
 
@@ -306,6 +317,15 @@ public class CustomerController implements Initializable {
         txtEmail.setStyle(defaultStyle);
         txtPhone.setStyle(defaultStyle);
         txtNic.setStyle(defaultStyle);
+
+        searchBar.setOnAction(event ->{
+            try{
+                searchCustomers();
+            }catch (SQLException | ClassNotFoundException e){
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Error searching customer").show();
+            }
+        });
 
 
         try{
@@ -318,7 +338,37 @@ public class CustomerController implements Initializable {
 
     }
 
-    CustomerModel customerModel = new CustomerModel();
+    private void searchCustomers() throws SQLException, ClassNotFoundException {
+        String searchText = searchBar.getText().trim();
+
+        if(searchText.isEmpty()){
+            loadTableData();
+            return;
+        }
+
+        ArrayList<CustomerDTO> customerDTOS = customerModel.getCustomersBySearch(searchText);
+
+        // Populate the table with filtered data
+        ObservableList<CustomerTM> customerTMS = FXCollections.observableArrayList();
+
+        for(CustomerDTO customerDTO:customerDTOS){
+            CustomerTM customerTM = new CustomerTM(
+                    customerDTO.getId(),
+                    customerDTO.getName(),
+                    customerDTO.getAddress(),
+                    customerDTO.getEmail(),
+                    customerDTO.getPhoneNumber(),
+                    customerDTO.getNic()
+
+
+            );
+            customerTMS.add(customerTM);
+        }
+        customerTableView.setItems(customerTMS);
+    }
+
+
+
     private void refreshPage() throws SQLException, ClassNotFoundException {
         loadNextCustomerId();
         loadTableData();
@@ -327,7 +377,7 @@ public class CustomerController implements Initializable {
         btnDelete.setDisable(true);
         btnUpdate.setDisable(true);
 
-        String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
+        String defaultStyle = "-fx-border-color: white; -fx-text-fill: white; -fx-background-color: transparent; -fx-border-width: 0 0 1";
 
         txtName.setStyle(defaultStyle);
         txtAddress.setStyle(defaultStyle);
@@ -367,5 +417,6 @@ public class CustomerController implements Initializable {
         customerTableView.setItems(customerTMS);
 
     }
+
 
 }

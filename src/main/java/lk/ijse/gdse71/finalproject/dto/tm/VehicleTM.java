@@ -1,8 +1,10 @@
 package lk.ijse.gdse71.finalproject.dto.tm;
 
+import javafx.scene.control.Button;
 import lombok.*;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -11,13 +13,17 @@ import java.sql.Date;
 @ToString
 public class VehicleTM {
     private String id;
-    private String registrationNumber;
+    private String numberPlate;
     private String make;
     private String model;
-    private int year;
-    private double mileage;
-    private String status;
     private String vehicleType;
+    private LocalDate date;
+    private double price;
+    private byte[] image;
+    private Button updateButton;
+
+
+
 
 
 }

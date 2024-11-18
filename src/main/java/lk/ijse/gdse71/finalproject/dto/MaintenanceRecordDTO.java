@@ -2,6 +2,7 @@ package lk.ijse.gdse71.finalproject.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -11,10 +12,10 @@ import java.util.Date;
 @ToString
 public class MaintenanceRecordDTO {
     private String id;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String description;
-    private String maintenanceType;
     private String vehicleId;
+    private String status;
 
 }

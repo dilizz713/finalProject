@@ -11,15 +11,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.dto.LoginDTO;
+import lk.ijse.gdse71.finalproject.model.LoginModel;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class LoginPageController implements Initializable {
 
     @FXML
-    private Button btnBack;
+    public Button btnSignup;
 
     @FXML
     private Button btnLogin;
@@ -43,22 +46,59 @@ public class LoginPageController implements Initializable {
     private TextField txtUserName;
 
     @FXML
-    void BackButtonOnAction(ActionEvent event) {
-        navigateTo("/view/dash-board.fxml");
+    void SignupBtnOnAction(ActionEvent event) {
+        navigateTo("/view/sign-up-view.fxml");
     }
 
 
-
+    LoginModel loginModel = new LoginModel();
     @FXML
     void LoginButtonOnAction(ActionEvent event) {
-        String userName = txtUserName.getText();
+        String userName = txtUserName.getText().trim();
+        String pw = txtPassword.getText().trim();
+
+        if(userName.isEmpty() || pw.isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Please enter both username and password").show();
+            return;
+        }
+        try{
+            LoginDTO loginDTO = loginModel.findByUserName(userName);
+
+            if(loginDTO == null){
+                new Alert(Alert.AlertType.INFORMATION,"User name not found. Please signup first").show();
+            }else if(!loginDTO.getPassword().equals(pw)){
+                new Alert(Alert.AlertType.ERROR, "Incorrect password!. Please try again!").show();
+            }else{
+                navigateTo("/view/home-page.fxml");
+            }
+        } catch (SQLException e) {
+           e.printStackTrace();
+           new Alert(Alert.AlertType.ERROR, "An error ocuured while logging in.").show();
+        }
+
+        /*String userName = txtUserName.getText();
         String pw = txtPassword.getText();
 
-        if(userName.equals("dilini") && pw.equals("1234")){
+        LoginDTO loginDTO = new LoginDTO();
+
+        boolean hasErrors = false;
+
+        if(userName.isEmpty() || pw.isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Please Enter User Name and Password");
+        }
+
+        if(!userName.equals(loginDTO.getUserName()) || !pw.equals(loginDTO.getPassword())){
+            new Alert(Alert.AlertType.ERROR,"Invalid Credentials! Please try again" );
+        }else{
+            navigateTo("/view/home-page.fxml");
+        }
+*/
+
+       /* if(userName.equals("dilini") && pw.equals("1234")){
             navigateTo("/view/home-page.fxml");
         }else{
             new Alert(Alert.AlertType.INFORMATION, "user name or password is incorrect!").show();
-        }
+        }*/
 
     }
 
@@ -95,7 +135,7 @@ public class LoginPageController implements Initializable {
         shownPwLabel.setVisible(false);
 
         txtUserName.setOnAction(event -> txtPassword.requestFocus());
-        txtPassword.setOnAction(this::LoginButtonOnAction);
+
 
 
     }

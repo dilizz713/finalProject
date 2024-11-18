@@ -32,13 +32,14 @@ public class VehicleModel {
         while (rst.next()) {
             VehicleDTO vehicleDTO = new VehicleDTO(
                           rst.getString(1),     //id
-                          rst.getString(2),     //reg number
-                          rst.getString(3),     // company name
-                          rst.getString(4),     // model
-                          rst.getInt(5),        // year
-                          rst.getDouble(6),     // mileage
-                          rst.getString(7),     // status
-                          rst.getString(8)    // vehicle type
+                          rst.getString(2),     //company name
+                          rst.getString(3),     // model
+                          rst.getString(4),     // vehicle type
+                          rst.getBytes(5),        // image
+                          rst.getString(6),     // number plate
+                          rst.getDouble(7),     //price
+                            rst.getDate(8).toLocalDate()     //date
+
 
             );
             vehicleDTOS.add(vehicleDTO);
@@ -46,34 +47,54 @@ public class VehicleModel {
         return vehicleDTOS;
     }
 
+    public ArrayList<VehicleDTO> getVehiclesForPage(int start, int end) throws SQLException {
+        ArrayList<VehicleDTO> vehicles = new ArrayList<>();
+        String query = "select * from Vehicle limit ?, ?";
+        ResultSet resultSet = CrudUtil.execute(query, start, end - start); // end - start is the limit
+
+        while (resultSet.next()) {
+            VehicleDTO vehicle = new VehicleDTO(
+                    resultSet.getString("id"),
+                    resultSet.getString("make"),
+                    resultSet.getString("model"),
+                    resultSet.getString("vehicleType"),
+                    resultSet.getBytes("image"),
+                    resultSet.getString("numberPlate"),
+                    resultSet.getDouble("price"),
+                    resultSet.getDate("date").toLocalDate()
+            );
+            vehicles.add(vehicle);
+        }
+
+        return vehicles;
+    }
+
     public boolean saveVehicle(VehicleDTO vehicleDTO) throws SQLException {
         return CrudUtil.execute(
-                "insert into Vehicle values (?,?,?,?,?,?,?,?,?,?)",
+                "insert into Vehicle values (?,?,?,?,?,?,?,?)",
                 vehicleDTO.getId(),
-                vehicleDTO.getRegistrationNumber(),
                 vehicleDTO.getMake(),
                 vehicleDTO.getModel(),
-                vehicleDTO.getYear(),
-                vehicleDTO.getMileage(),
-                vehicleDTO.getStatus(),
-                vehicleDTO.getVehicleType()
+                vehicleDTO.getVehicleType(),
+                vehicleDTO.getImage(),
+                vehicleDTO.getNumberPlate(),
+                vehicleDTO.getPrice(),
+                vehicleDTO.getRegistrationDate()
+
 
         );
     }
 
-
-
-
     public boolean updateVehicle(VehicleDTO vehicleDTO) throws SQLException {
         return CrudUtil.execute(
-                "update Vehicle set registrationNumber =?, make=?, model=?, year=?, mileage=?, status=?, vehicleType=? where id=?",
-                vehicleDTO.getRegistrationNumber(),
+                "update Vehicle set  make=?, model=?, vehicleType=?, image=?, numberPlate=?, price=?, registrationDate=? where id=?",
                 vehicleDTO.getMake(),
                 vehicleDTO.getModel(),
-                vehicleDTO.getYear(),
-                vehicleDTO.getMileage(),
-                vehicleDTO.getStatus(),
                 vehicleDTO.getVehicleType(),
+                vehicleDTO.getImage(),
+                vehicleDTO.getNumberPlate(),
+                vehicleDTO.getPrice(),
+                vehicleDTO.getRegistrationDate(),
                 vehicleDTO.getId()
         );
     }
@@ -91,13 +112,14 @@ public class VehicleModel {
         while (rst.next()) {
             VehicleDTO vehicleDTO = new VehicleDTO(
                     rst.getString(1),     //id
-                    rst.getString(2),     //reg number
-                    rst.getString(3),     // company name
-                    rst.getString(4),     // model
-                    rst.getInt(5),        // year
-                    rst.getDouble(6),     // mileage
-                    rst.getString(7),     // status
-                    rst.getString(8)     // vehicle type
+                    rst.getString(2),     //company name
+                    rst.getString(3),     // model
+                    rst.getString(4),     // vehicle type
+                    rst.getBytes(5),        // image
+                    rst.getString(6),     // number plate
+                    rst.getDouble(7),       //price
+                    rst.getDate(8).toLocalDate()      //date
+
 
             );
             vehicleDTOS.add(vehicleDTO);

@@ -1,14 +1,14 @@
 package lk.ijse.gdse71.finalproject.model;
 
 import lk.ijse.gdse71.finalproject.controller.MileageTrackingController;
-import lk.ijse.gdse71.finalproject.dto.MaintenanceRecordDTO;
-import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
-import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
+import lk.ijse.gdse71.finalproject.dto.*;
 import lk.ijse.gdse71.finalproject.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class MaintenanceRecordModel {
     public String getNextMaintenanceId() throws SQLException {
@@ -30,13 +30,15 @@ public class MaintenanceRecordModel {
         ArrayList<MaintenanceRecordDTO> maintenanceRecordDTOS = new ArrayList<>();
 
         while (rst.next()) {
+            LocalDate endDate = rst.getDate(3) != null ? rst.getDate(3).toLocalDate() : null;
+
             MaintenanceRecordDTO maintenanceRecordDTO = new MaintenanceRecordDTO(
-                    rst.getString(1),           //reservation id
-                    rst.getDate(2),             // start date
-                    rst.getDate(3),             // end date
-                    rst.getString(4),           // desc
-                    rst.getString(5),           // maintenance type
-                    rst.getString(6)            // vehicle id
+                    rst.getString(1),                           //reservation id
+                    rst.getDate(2).toLocalDate(),             // start date
+                    endDate,                                            // end date
+                    rst.getString(4),                          // desc
+                    rst.getString(5),                        // vehicle id
+                    rst.getString(6)                        //status
 
             );
             maintenanceRecordDTOS.add(maintenanceRecordDTO);
@@ -65,10 +67,72 @@ public class MaintenanceRecordModel {
                 maintenanceRecordDTO.getStartDate(),
                 maintenanceRecordDTO.getEndDate(),
                 maintenanceRecordDTO.getDescription(),
-                maintenanceRecordDTO.getMaintenanceType(),
-                maintenanceRecordDTO.getVehicleId()
+                maintenanceRecordDTO.getVehicleId(),
+                maintenanceRecordDTO.getStatus()
         );
     }
 
 
+    public boolean updateMaintenanceRecord(MaintenanceRecordDTO maintenanceRecordDTO) throws SQLException {
+        return CrudUtil.execute(
+                "update  MaintenanceRecord set startDate =?, endDate=?, description=?, vehicleId=?, status=?  where id=?",
+                maintenanceRecordDTO.getStartDate(),
+                maintenanceRecordDTO.getEndDate(),
+                maintenanceRecordDTO.getDescription(),
+                maintenanceRecordDTO.getVehicleId(),
+                maintenanceRecordDTO.getStatus(),
+                maintenanceRecordDTO.getId()
+        );
+    }
+
+    public boolean deleteRecord(String recordId) throws SQLException {
+        return CrudUtil.execute("delete from MaintenanceRecord where id=?",recordId );
+    }
+    public ArrayList<MaintenanceRecordDTO> getRecordsBySearch(String keyword) throws SQLException {
+        String searchQuery = """
+                select M.* , V.model 
+                from MaintenanceRecord M
+                join Vehicle V 
+                on M.vehicleId = V.id
+                where M.id Like ? or M.vehicleId Like ?  or V.model Like ? 
+                """;
+        ResultSet rst = CrudUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%");
+
+        ArrayList<MaintenanceRecordDTO> maintenanceRecordDTOS = new ArrayList<>();
+
+        while (rst.next()) {
+            MaintenanceRecordDTO maintenanceRecordDTO = new MaintenanceRecordDTO(
+                    rst.getString(1),                           //reservation id
+                    rst.getDate(2).toLocalDate(),             // start date
+                    rst.getDate(3).toLocalDate(),             // end date
+                    rst.getString(4),                          // desc
+                    rst.getString(5),                        // vehicle id
+                    rst.getString(6)                        //status
+
+            );
+            maintenanceRecordDTOS.add(maintenanceRecordDTO);
+        }
+        return maintenanceRecordDTOS;
+    }
+
+
+    public MaintenanceRecordDTO getRecordsById(String recordId) throws SQLException {
+        String query = "select * from MaintenanceRecord where id=?";
+        ResultSet rst = CrudUtil.execute(query,recordId);
+
+        if(rst.next()){
+            String id = rst.getString("id");
+            LocalDate startDate = rst.getDate("startDate").toLocalDate();
+            LocalDate endDate = rst.getDate("endDate") != null ? rst.getDate("EndDate").toLocalDate() : null;
+            String description = rst.getString("description");
+            String vehicleId = rst.getString("vehicleId");
+            String status = rst.getString("status");
+
+
+            return new MaintenanceRecordDTO(id,startDate,endDate,description,vehicleId,status);
+
+        }
+        return null;
+
+    }
 }

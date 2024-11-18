@@ -3,23 +3,27 @@ package lk.ijse.gdse71.finalproject.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class HomePageController {
+public class HomePageController implements Initializable{
 
     @FXML
     private Button btnCustomer;
 
     @FXML
-    private Button btnDriver;
-
-    @FXML
-    private Button btnInvoice;
+    private Button btnHome;
 
     @FXML
     private Button btnMAintenance;
@@ -37,24 +41,20 @@ public class HomePageController {
     private Button btnVehicle;
 
     @FXML
-    private AnchorPane homeAnchorPAne;
+    private AnchorPane homeAnchorPane;
+
+    private Button activeButton;
+
 
     @FXML
-    private ImageView homeImage;
+    void clickHomeButtonOnAction(ActionEvent event) {
+        navigateTo("/view/home-menu-view.fxml");
+    }
+
 
     @FXML
     void customerOnaction(ActionEvent event) {
         navigateTo("/view/customer-view.fxml");
-    }
-
-    @FXML
-    void driverOnAction(ActionEvent event) {
-        navigateTo("/view/driver-view.fxml");
-    }
-
-    @FXML
-    void invoiceOnAction(ActionEvent event) {
-
     }
 
     @FXML
@@ -74,7 +74,7 @@ public class HomePageController {
 
     @FXML
     void reservationOnAction(ActionEvent event) {
-        navigateTo("/view/reservation-view.fxml");
+        navigateTo("/view/reservation-vehicle-view.fxml");
     }
 
     @FXML
@@ -84,13 +84,18 @@ public class HomePageController {
 
     public void navigateTo(String fxmlPath){
         try{
-            homeAnchorPAne.getChildren().clear();
+            homeAnchorPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource(fxmlPath));
-            homeAnchorPAne.getChildren().add(load);
+            homeAnchorPane.getChildren().add(load);
         }catch (IOException e){
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }
     }
 
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        navigateTo("/view/home-menu-view.fxml");
+    }
 }

@@ -4,35 +4,41 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
+import javafx.stage.FileChooser;
+import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
 import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
-import lk.ijse.gdse71.finalproject.dto.tm.CustomerTM;
 import lk.ijse.gdse71.finalproject.dto.tm.VehicleTM;
-import lk.ijse.gdse71.finalproject.model.CustomerModel;
 import lk.ijse.gdse71.finalproject.model.VehicleModel;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class VehicleController implements Initializable {
 
+    public Button btnUpdate;
     @FXML
     private AnchorPane VehicleAnchorPane;
 
     @FXML
-    private Button btnDelete;
+    private Button btnUploadImage;
+
+    @FXML
+    private Button btnHistory;
 
     @FXML
     private Button btnReset;
@@ -40,169 +46,134 @@ public class VehicleController implements Initializable {
     @FXML
     private Button btnSave;
 
-    @FXML
-    private Button btnUpdate;
 
     @FXML
-    private TableColumn<VehicleTM, String> colCompanyName;
+    private ComboBox<String> cmbType;
 
     @FXML
-    private TableColumn<VehicleTM, String> colId;
-
-    @FXML
-    private TableColumn<VehicleTM, Double> colMileagePrice;
-
-    @FXML
-    private TableColumn<VehicleTM, String> colModel;
-
-    @FXML
-    private TableColumn<VehicleTM, String> colRegNumber;
-
-    @FXML
-    private TableColumn<VehicleTM, String> colStatus;
-
-    @FXML
-    private TableColumn<VehicleTM, String> colVehicleType;
-
-    @FXML
-    private TableColumn<VehicleTM, Integer> colYear;
-
+    private ImageView imageView;
 
     @FXML
     private Label lblVehicleId;
 
     @FXML
-    private TextField searchBar;
+    private Label lblDate;
 
     @FXML
     private TextField txtCompanyName;
 
     @FXML
-    private TextField txtMileage;
+    private TextField txtDate;
 
     @FXML
     private TextField txtModel;
 
     @FXML
-    private TextField txtRegNumber;
+    private TextField txtNumberPlate;
 
     @FXML
-    private TextField txtStatus;
+    private TextField txtPrice;
 
-    @FXML
-    private ComboBox<String> cmbVehicleType;
+    private byte[] imageBytes;           // Variable to store image data as byte array
+    private boolean isEditMode = false;
+    private String editingVehicleId;
 
-    @FXML
-    private TextField txtYear;
-
-    @FXML
-    private TableView<VehicleTM> vehicleTable;
-
-
+    private VehicleTableViewController vehicleTableViewController;
     VehicleModel vehicleModel = new VehicleModel();
 
+    public void setVehicleTableViewController(VehicleTableViewController controller){
+        this.vehicleTableViewController = controller;
+    }
+
     @FXML
-    void SaveVehicleOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        // Get field values
+    void selectImageOnAction(ActionEvent event) throws IOException {
+        // Initialize a FileChooser to select an image file
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Vehicle Image");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
+
+        // Show the file chooser dialog
+        File selectedFile = fileChooser.showOpenDialog(VehicleAnchorPane.getScene().getWindow());
+        if (selectedFile != null) {
+            try {
+                // Convert the selected file to a byte array
+                imageBytes = Files.readAllBytes(selectedFile.toPath());
+
+                // Create an Image from the byte array and display it in the ImageView
+                Image image = new Image(new ByteArrayInputStream(imageBytes));
+                imageView.setImage(image);
+            } catch (IOException e) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Failed to load image").show();
+            }
+        }
+    }
+    @FXML
+    void SaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String id = lblVehicleId.getText();
-        String regNumber = txtRegNumber.getText();
-        String companyName = txtCompanyName.getText();
+        String make = txtCompanyName.getText();
         String model = txtModel.getText();
-        String year = txtYear.getText();
-        String mileage =txtMileage.getText();
-        String status = txtStatus.getText();
-        String vehicleType = cmbVehicleType.getValue();
+        String vehicleType = cmbType.getValue();
+        String numberPlate = txtNumberPlate.getText();
+        String price = txtPrice.getText();
+        LocalDate date = LocalDate.now();
 
+        String errorStyle = "-fx-border-color: red; -fx-text-fill: white; -fx-background-color: transparent;-fx-border-width: 0 0 2 ";
+        String defaultStyle = "-fx-border-color: white; -fx-text-fill: white; -fx-background-color: transparent; -fx-border-width: 0 0 2";
 
-
-        // Validation patterns
-        String regNumberPattern = "^[A-Za-z0-9]{6}$";  // Registration number must be 6 alphanumeric characters
-        String yearPattern = "^[0-9]{4}$";  // Year must be exactly 4 digits
-        String mileagePattern = "^[0-9]+(\\.[0-9]+)?$";  // Mileage must be a positive decimal number
-
-        // Reset error indicators
+        
         boolean hasErrors = false;
         StringBuilder errorMessage = new StringBuilder("Please correct the following errors:\n");
 
-        String errorStyle = "-fx-border-color: red; -fx-text-fill: white; -fx-background-color: transparent;";
-        String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent; -fx-border-width: 0 0 1 0";
-
-
-        // Check and apply error style if validation fails
-        if (regNumber.isEmpty() || !regNumber.matches(regNumberPattern)) {
-            txtRegNumber.setStyle(errorStyle);
-            errorMessage.append("- Registration number is empty or in an incorrect format\n");
-            hasErrors = true;
-        }else{
-            txtRegNumber.setStyle(defaultStyle);
-        }
-        if (companyName.isEmpty()) {
+        if(make.isEmpty()){
             txtCompanyName.setStyle(errorStyle);
             errorMessage.append("- Company name is empty\n");
             hasErrors = true;
         }else{
             txtCompanyName.setStyle(defaultStyle);
         }
-        if (model.isEmpty()) {
+        if(model.isEmpty()){
             txtModel.setStyle(errorStyle);
-            errorMessage.append("- Model is empty or in an incorrect format\n");
+            errorMessage.append("- Model is empty\n");
             hasErrors = true;
         }else{
             txtModel.setStyle(defaultStyle);
         }
-        int y = -1;
-        if (!year.matches(yearPattern) || year.isEmpty()) {
-            txtYear.setStyle(errorStyle);
-            errorMessage.append("- Year  is empty or in an incorrect format\n");
+        if(numberPlate.isEmpty()){
+            txtNumberPlate.setStyle(errorStyle);
+            errorMessage.append("- Number plate is empty\n");
             hasErrors = true;
         }else{
-            try{
-                y = Integer.parseInt(year);
-                txtYear.setStyle(defaultStyle);
-
-            }catch (NumberFormatException e){
-                txtYear.setStyle(errorStyle);
-                errorMessage.append("- Year  is empty or in an incorrect format\n");
-                hasErrors = true;
-            }
+            txtNumberPlate.setStyle(defaultStyle);
         }
 
-
-        double m = -1;
-        if (!mileage.matches(mileagePattern) || mileage.isEmpty()) {
-            txtMileage.setStyle(errorStyle);
-            errorMessage.append("- Mileage  is empty or in an incorrect format\n");
+        if(price.isEmpty()){
+            txtPrice.setStyle(errorStyle);
+            errorMessage.append("- Price is empty\n");
             hasErrors = true;
         }else{
-            try{
-                m = Double.parseDouble(mileage);
-                txtMileage.setStyle(defaultStyle);
-
-            }catch (NumberFormatException e){
-                txtMileage.setStyle(errorStyle);
-                errorMessage.append("- mileage  is empty or in an incorrect format\n");
-                hasErrors = true;
-            }
-        }
-        if (status.isEmpty()) {
-            txtStatus.setStyle(errorStyle);
-            errorMessage.append("- Status is empty or in an incorrect format\n");
-            hasErrors = true;
-        }else{
-            txtStatus.setStyle(defaultStyle);
+            txtPrice.setStyle(defaultStyle);
         }
 
+        double vehiclePrice = 0;
+        vehiclePrice = Double.parseDouble(price);
 
-        // Show alert if there are validation errors and reset to default style
+        cmbType.setStyle(defaultStyle);
+
         if (hasErrors) {
             new Alert(Alert.AlertType.ERROR, errorMessage.toString()).show();
             return;
         }
 
+        // Create a VehicleDTO with imageBytes as the image data
+        VehicleDTO vehicleDTO = new VehicleDTO(id, make, model, vehicleType, imageBytes, numberPlate, vehiclePrice,date);
+        boolean isSaved ;
+        if(btnSave.getText().equals("Update")){
+            isSaved = vehicleModel.updateVehicle(vehicleDTO);
+        }else{
+            isSaved = vehicleModel.saveVehicle(vehicleDTO);
+        }
 
-        // If validation is successful, proceed with saving the customer
-        VehicleDTO vehicleDTO = new VehicleDTO(id, regNumber, companyName, model, y, m,status,vehicleType);
-        boolean isSaved = vehicleModel.saveVehicle(vehicleDTO);
         if (isSaved) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Vehicle saved successfully!").show();
@@ -211,296 +182,130 @@ public class VehicleController implements Initializable {
         }
     }
 
-    @FXML
-    void clickedTable(MouseEvent event) {
-        VehicleTM vehicleTM = vehicleTable.getSelectionModel().getSelectedItem();
-        if(vehicleTM != null){
-            lblVehicleId.setText(vehicleTM.getId());
-            txtRegNumber.setText(vehicleTM.getRegistrationNumber());
-            txtCompanyName.setText(vehicleTM.getMake());
-            txtModel.setText(vehicleTM.getModel());
-            txtYear.setText(String.valueOf(vehicleTM.getYear()));
-            txtMileage.setText(String.valueOf(vehicleTM.getMileage()));
-            txtStatus.setText(vehicleTM.getStatus());
-            cmbVehicleType.setValue(vehicleTM.getVehicleType());
 
-            btnSave.setDisable(true);
-            btnDelete.setDisable(false);
-            btnUpdate.setDisable(false);
-        }
-    }
-
-
-    @FXML
-    void deleteVehicleOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        String vehicleId = lblVehicleId.getText();
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to delete this vehicle?", ButtonType.YES, ButtonType.NO);
-        Optional<ButtonType> optionalButtonType = alert.showAndWait();
-
-        if(optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES){
-            boolean isDeleted = vehicleModel.deleteVehicle(vehicleId);
-            if(isDeleted){
-                refreshPage();
-                new Alert(Alert.AlertType.INFORMATION, "Vehicle deleted!").show();
-            }else{
-                new Alert(Alert.AlertType.ERROR, "Fail to delete vehicle!").show();
-            }
-        }
-    }
 
     @FXML
     void resetOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         refreshPage();
-    }
-
-    @FXML
-    void searchVehicleType(ActionEvent event) {
 
     }
 
+
     @FXML
-    void updateVehicleOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        // Get field values
-        String id = lblVehicleId.getText();
-        String regNumber = txtRegNumber.getText();
-        String companyName = txtCompanyName.getText();
-        String model = txtModel.getText();
-        String year = txtYear.getText();
-        String mileage =txtMileage.getText();
-        String status = txtStatus.getText();
-        String vehicleType = cmbVehicleType.getValue();
-
-
-        // Validation patterns
-        String regNumberPattern = "^[A-Za-z0-9]{6}$";  // Registration number must be 6 alphanumeric characters
-        String yearPattern = "^[0-9]{4}$";  // Year must be exactly 4 digits
-        String mileagePattern = "^[0-9]+(\\.[0-9]+)?$";  // Mileage must be a positive decimal number
-
-        // Reset error indicators
-        boolean hasErrors = false;
-        StringBuilder errorMessage = new StringBuilder("Please correct the following errors:\n");
-
-        String errorStyle = "-fx-border-color: red; -fx-text-fill: white; -fx-background-color: transparent;";
-        String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent; -fx-border-width: 0 0 1 0";
-
-        // Check and apply error style if validation fails
-        if (regNumber.isEmpty() || !regNumber.matches(regNumberPattern)) {
-            txtRegNumber.setStyle(errorStyle);
-            errorMessage.append("- Registration number is empty or in an incorrect format\n");
-            hasErrors = true;
-        }else{
-            txtRegNumber.setStyle(defaultStyle);
+    void watchHistory(ActionEvent event) {
+        try{
+            VehicleAnchorPane.getChildren().clear();
+            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/vehicle-table-view.fxml"));
+            VehicleAnchorPane.getChildren().add(load);
+        }catch (IOException e){
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }
-        if (companyName.isEmpty()) {
-            txtCompanyName.setStyle(errorStyle);
-            errorMessage.append("- Company name is empty\n");
-            hasErrors = true;
-        }else{
-            txtCompanyName.setStyle(defaultStyle);
+    }
+
+
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        String defaultStyle = "-fx-border-color: white; -fx-text-fill: white; -fx-background-color: transparent;-fx-border-width: 0 0 2;";
+
+        txtNumberPlate.setStyle(defaultStyle);
+        txtCompanyName.setStyle(defaultStyle);
+        txtModel.setStyle(defaultStyle);
+        cmbType.setStyle(defaultStyle);
+        cmbType.setStyle("-fx-background-color: white;-fx-border-color: black;-fx-font-weight: bold;"); // White text for ComboBox
+        imageView.setStyle("-fx-border-color: white; -fx-border-width: 5;");  // White border around ImageView
+        txtPrice.setStyle(defaultStyle);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        lblDate.setText(LocalDate.now().format(formatter)); // Format date to dd-MM-yyyy
+
+
+        ObservableList<String> vehicleTypes = FXCollections.observableArrayList(
+                "Car","Van","Bus","Pickup Trucks","Luxury Car"
+        );
+        cmbType.setItems(vehicleTypes);
+
+
+        try {
+            refreshPage();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Fail to load vehicle id").show();
         }
-        if (model.isEmpty()) {
-            txtModel.setStyle(errorStyle);
-            errorMessage.append("- Model is empty or in an incorrect format\n");
-            hasErrors = true;
-        }else{
-            txtModel.setStyle(defaultStyle);
-        }
-        int y = -1;
-        if (!year.matches(yearPattern) || year.isEmpty()) {
-            txtYear.setStyle(errorStyle);
-            errorMessage.append("- Year  is empty or in an incorrect format\n");
-            hasErrors = true;
-        }else{
-            try{
-                y = Integer.parseInt(year);
-                txtYear.setStyle(defaultStyle);
-
-            }catch (NumberFormatException e){
-                txtYear.setStyle(errorStyle);
-                errorMessage.append("- Year  is empty or in an incorrect format\n");
-                hasErrors = true;
-            }
-        }
+    }
 
 
-        double m = -1;
-        if (!mileage.matches(mileagePattern) || mileage.isEmpty()) {
-            txtMileage.setStyle(errorStyle);
-            errorMessage.append("- Mileage  is empty or in an incorrect format\n");
-            hasErrors = true;
-        }else{
-            try{
-                m = Double.parseDouble(mileage);
-                txtMileage.setStyle(defaultStyle);
+    private void refreshPage() throws SQLException, ClassNotFoundException {
+        loadNextId();
 
-            }catch (NumberFormatException e){
-                txtMileage.setStyle(errorStyle);
-                errorMessage.append("- mileage  is empty or in an incorrect format\n");
-                hasErrors = true;
-            }
-        }
-        if (status.isEmpty()) {
-            txtStatus.setStyle(errorStyle);
-            errorMessage.append("- Status is empty or in an incorrect format\n");
-            hasErrors = true;
-        }else{
-            txtStatus.setStyle(defaultStyle);
-        }
+        txtNumberPlate.setText("");
+        txtCompanyName.setText("");
+        txtModel.setText("");
+        txtPrice.setText("0.00");
 
 
-        // Show alert if there are validation errors and reset to default style
-        if (hasErrors) {
-            new Alert(Alert.AlertType.ERROR, errorMessage.toString()).show();
+
+    }
+
+    public void loadNextId() throws SQLException {
+        String nextId = vehicleModel.getNextVehicleId();
+        lblVehicleId.setText(nextId);
+    }
+
+    @FXML
+    public void updateOnAction(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        if (!isEditMode) {
+            new Alert(Alert.AlertType.ERROR, "No vehicle selected for updating!").show();
             return;
         }
 
+        String id = editingVehicleId;
+        String make = txtCompanyName.getText();
+        String model = txtModel.getText();
+        String vehicleType = cmbType.getValue();
+        String numberPlate = txtNumberPlate.getText();
+        String price = txtPrice.getText();
+        LocalDate date = LocalDate.now();
 
-        // If validation is successful, proceed with saving the customer
-        VehicleDTO vehicleDTO = new VehicleDTO(id, regNumber, companyName, model, y, m,status,vehicleType);
-        boolean isUpdate = vehicleModel.updateVehicle(vehicleDTO);
-        if (isUpdate) {
-            refreshPage();
-            new Alert(Alert.AlertType.INFORMATION, "Vehicle update successfully!").show();
+        // Validate input fields and show errors if needed
+        if (make.isEmpty() || model.isEmpty() || vehicleType == null || numberPlate.isEmpty() || price == null) {
+            new Alert(Alert.AlertType.ERROR, "Please fill all fields!").show();
+            return;
+        }
+
+        double vehiclePrice = 0;
+        vehiclePrice = Double.parseDouble(price);
+
+        // Create a VehicleDTO and update vehicle information
+        VehicleDTO vehicleDTO = new VehicleDTO(id, make, model, vehicleType, imageBytes, numberPlate,vehiclePrice,date);
+        boolean isUpdated = vehicleModel.updateVehicle(vehicleDTO);
+        if (isUpdated) {
+            new Alert(Alert.AlertType.INFORMATION, "Vehicle updated successfully!").show();
+            isEditMode = false;
+            editingVehicleId = null;
+            refreshPage();  // Clear the fields after updating
         } else {
             new Alert(Alert.AlertType.ERROR, "Failed to update vehicle!").show();
         }
     }
 
-    @FXML
-    void selectVehicleType(ActionEvent event) {
-
-    }
-
-    private void refreshPage() throws SQLException, ClassNotFoundException {
-        loadNextVehicleId();
-        loadTableData();
-
-        btnSave.setDisable(false);
-        btnDelete.setDisable(true);
-        btnUpdate.setDisable(true);
-
-        String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
-
-        txtRegNumber.setStyle(defaultStyle);
-        txtCompanyName.setStyle(defaultStyle);
-        txtModel.setStyle(defaultStyle);
-        txtYear.setStyle(defaultStyle);
-        txtMileage.setStyle(defaultStyle);
-        txtStatus.setStyle(defaultStyle);
-        cmbVehicleType.getSelectionModel().clearSelection();
-
-        txtRegNumber.setText("");
-        txtCompanyName.setText("");
-        txtModel.setText("");
-        txtYear.setText("");
-        txtMileage.setText("");
-        txtStatus.setText("");
-
-    }
-    public void loadNextVehicleId() throws SQLException {
-        String nextVehicleId = vehicleModel.getNextVehicleId();
-        lblVehicleId.setText(nextVehicleId);
-    }
-
-    private void loadTableData() throws SQLException, ClassNotFoundException {
-        ArrayList<VehicleDTO> vehicleDTOS = vehicleModel.getAllVehicles();
-        ObservableList<VehicleTM> vehicleTMS = FXCollections.observableArrayList();
-
-        for(VehicleDTO vehicleDTO:vehicleDTOS){
-            VehicleTM vehicleTM = new VehicleTM(
-                    vehicleDTO.getId(),
-                    vehicleDTO.getRegistrationNumber(),
-                    vehicleDTO.getMake(),
-                    vehicleDTO.getModel(),
-                    vehicleDTO.getYear(),
-                    vehicleDTO.getMileage(),
-                    vehicleDTO.getStatus(),
-                    vehicleDTO.getVehicleType()
+    public void setVehicleData(VehicleDTO vehicleDTO) {
+        lblVehicleId.setText(vehicleDTO.getId());
+        txtCompanyName.setText(vehicleDTO.getMake());
+        txtModel.setText(vehicleDTO.getModel());
+        cmbType.setValue(vehicleDTO.getVehicleType());
+        txtNumberPlate.setText(vehicleDTO.getNumberPlate());
+        txtPrice.setText(String.valueOf(vehicleDTO.getPrice()));
+        lblDate.setText(String.valueOf(vehicleDTO.getRegistrationDate()));
 
 
-
-            );
-            vehicleTMS.add(vehicleTM);
+        if (vehicleDTO.getImage() != null) {
+           Image image = new Image(new ByteArrayInputStream(vehicleDTO.getImage()));
+           imageView.setImage(image);
         }
-        vehicleTable.setItems(vehicleTMS);
-
+        btnSave.setText("Update");  // Change button text to indicate update
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colRegNumber.setCellValueFactory(new PropertyValueFactory<>("registrationNumber"));
-        colCompanyName.setCellValueFactory(new PropertyValueFactory<>("make"));
-        colModel.setCellValueFactory(new PropertyValueFactory<>("model"));
-        colYear.setCellValueFactory(new PropertyValueFactory<>("year"));
-        colMileagePrice.setCellValueFactory(new PropertyValueFactory<>("mileage"));
-        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        colVehicleType.setCellValueFactory(new PropertyValueFactory<>("vehicleType"));
-
-
-
-        // Define the default style (black border and transparent background)
-        String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
-
-
-        // Apply the default style to all fields at the beginning of each save attempt
-        txtRegNumber.setStyle(defaultStyle);
-        txtCompanyName.setStyle(defaultStyle);
-        txtModel.setStyle(defaultStyle);
-        txtYear.setStyle(defaultStyle);
-        txtMileage.setStyle(defaultStyle);
-        txtStatus.setStyle(defaultStyle);
-
-        ObservableList<String> vehicleTypes = FXCollections.observableArrayList(
-                "Car","Van","Bus","Pickup Trucks","Luxury Car"
-        );
-        cmbVehicleType.setItems(vehicleTypes);
-
-       searchBar.setOnAction(event ->{
-            try{
-                searchVehicles();
-            }catch (SQLException | ClassNotFoundException e){
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Error searching vehicles").show();
-            }
-        });
-
-
-        try{
-            refreshPage();
-        }catch (SQLException | ClassNotFoundException e){
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Fail to load vehicle id").show();
-        }
-
-    }
-
-    private void searchVehicles() throws SQLException, ClassNotFoundException {
-        String searchText = searchBar.getText().trim();
-
-        if(searchText.isEmpty()){
-            loadTableData();
-            return;
-        }
-
-        ArrayList<VehicleDTO> vehicleDTOS = vehicleModel.getVehiclesBySearch(searchText);
-
-        // Populate the table with filtered data
-        ObservableList<VehicleTM> vehicleTMS = FXCollections.observableArrayList();
-        for (VehicleDTO vehicleDTO : vehicleDTOS) {
-            VehicleTM vehicleTM = new VehicleTM(
-                    vehicleDTO.getId(),
-                    vehicleDTO.getRegistrationNumber(),
-                    vehicleDTO.getMake(),
-                    vehicleDTO.getModel(),
-                    vehicleDTO.getYear(),
-                    vehicleDTO.getMileage(),
-                    vehicleDTO.getStatus(),
-                    vehicleDTO.getVehicleType()
-            );
-            vehicleTMS.add(vehicleTM);
-        }
-        vehicleTable.setItems(vehicleTMS);
-    }
 }

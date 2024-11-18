@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="maintenanceMainAnchorPane" prefHeight="720.0" prefWidth="1120.0" style="-fx-background-color: #0c3585;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.MaintenanceMainController">
+<AnchorPane fx:id="maintenanceMainAnchorPane" prefHeight="726.0" prefWidth="1120.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.MaintenanceMainController">
    <children>
       <VBox layoutY="-1.0" prefHeight="726.0" prefWidth="1120.0">
          <children>
