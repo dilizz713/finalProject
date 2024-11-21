@@ -1,0 +1,244 @@
+#vBox{
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+#mileageTrackingAnchorPane{
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+#lblReservationId, #lblEndDate,  #lblStartDate, #lblTrackingId, #lblMAintenanceId ,#lblModel,#lblPaymentId{
+    -fx-text-fill: black; /* White text for better contrast */
+    -fx-font-size: 14px; /* Slightly larger for readability */
+    -fx-font-family: "Arial Bold";
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, black, 3, 1, 0, 0); /* Black border effect */
+    -fx-background-color: #d5ced0;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-width: 0px;
+    -fx-padding: 5 10 5 10;
+}
+
+#lblVehicleId , #lblNumberPlate , #lblPrice, #lblEstimatedMile, #lblActualMile, #lblEstimatedMileCost, #lblTotalExtraCharges, #lblEndDate1, #lblStartDate1{
+    -fx-text-fill: white; /* White text for better contrast */
+    -fx-font-size: 14px; /* Slightly larger for readability */
+    -fx-font-family: "Arial Bold";
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, black, 3, 1, 0, 0); /* Black border effect */
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-width: 0px;
+    -fx-padding: 5 10 5 10;
+}
+
+#label,#lbl1,#label2,#label3,#label4, #label5{
+    -fx-text-fill: black; /* White text for better contrast */
+    -fx-font-size: 14px; /* Slightly larger for readability */
+    -fx-font-family: "Arial Bold";
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, white, 3, 1, 0, 0); /* Black border effect */
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-width: 0px;
+    -fx-padding: 5 10 5 10;
+}
+#label1{
+    -fx-text-fill: white; /* White text for better contrast */
+    -fx-font-size: 25px; /* Slightly larger for readability */
+    -fx-font-family: "Arial Bold";
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #122d82, 3, 1, 0, 0); /* Black border effect */
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-width: 0px;
+    -fx-padding: 5 10 5 10;
+}
+
+#lblCustomersCount, #lblVehicleCount, #lblReservationCount{
+    -fx-text-fill: #122d82; /* White text for better contrast */
+    -fx-font-size: 40px; /* Slightly larger for readability */
+    -fx-font-family: "Arial Bold";
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, white, 3, 1, 0, 0); /* Black border effect */
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-width: 0px;
+    -fx-padding: 5 10 5 10;
+}
+#lblWelcome{
+    -fx-text-fill: #7d7c7c; /* White text for better contrast */
+    -fx-font-size: 100px; /* Slightly larger for readability */
+    -fx-font-family: "Arial Bold";
+    -fx-font-weight: bold;
+    -fx-border-color: white;
+    -fx-effect: dropshadow(gaussian, #122d82, 5, 10, 5, 5); /* Black border effect */
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-width: 0px;
+    -fx-padding: 5 10 5 10;
+
+}
+
+
+#hbox{
+    -fx-background-color: #d5ced0;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-width: 0px;
+    -fx-padding: 5 10 5 10;
+    -fx-effect: dropshadow(gaussian, #122d82, 3, 1, 0, 0); /* Black border effect */
+}
+
+#lblCustomer{
+    -fx-text-fill: white; /* White text for better contrast */
+    -fx-font-size: 14px; /* Slightly larger for readability */
+    -fx-font-family: "Arial Bold";
+    -fx-font-weight: bold;
+    -fx-padding: 5 10 5 10;
+}
+#cmbCustomer , #cmbReservationId, #cmbVehicleId, #cmbStatus {
+    -fx-background-color: #d5ced0;
+    -fx-text-fill: white; /* White text for better contrast */
+    -fx-font-size: 14px; /* Slightly larger for readability */
+    -fx-font-family: "Arial Bold";
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #122d82, 3, 1, 0, 0); /* Black border effect */
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-width: 0px;
+   /* -fx-padding: 5 5 5 5;*/
+
+}
+#cmbCustomer:hover, #cmbReservationId:hover, #cmbVehicleId:hover , #cmbStatus:hover{
+    -fx-background-color:  #fff; /* Red background on hover */
+    -fx-text-fill: #122d82; /* White text on hover */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+#rdbPending, #rdbOngoing ,#rdbAdvancePAymentBtn , #rdbFullyPayment , #rdbDone{
+    -fx-background-color: #fff;
+    -fx-text-fill: black; /* White text for better contrast */
+    -fx-font-size: 14px; /* Slightly larger for readability */
+    -fx-font-family: "Arial Bold";
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #122d82, 3, 1, 0, 0); /* Black border effect */
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-width: 0px;
+    /* -fx-padding: 5 5 5 5;*/
+}
+#rdbPending:hover, #rdbOngoing:hover ,#rdbAdvancePAymentBtn:hover, #rdbFullyPayment:hover, #rdbDone:hover{
+
+    -fx-text-fill: #122d82; /* White text on hover */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+#rdbPending:pressed, #rdbOngoing:pressed,#rdbAdvancePAymentBtn:pressed, #rdbFullyPayment:pressed, #rdbDone:pressed{
+    -fx-text-fill: black; /* Muted text color */
+    -fx-border-color: #3e3e3e; /* Darker border */
+    -fx-scale-x: 0.95; /* Slightly shrink button */
+    -fx-scale-y: 0.95;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 2, 0, 1, 1); /* Subtle shadow reduction */
+}
+
+
+/*#btnSave , #btnReset , #btnHistory , #billBtn ,#addPaymentBtn, #btnUpdate, #btnDelete*/
+.button{
+    -fx-background-color: #6b6e76;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial Bold";
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 5 5;
+    -fx-background-radius: 50;
+    -fx-border-radius: 15;
+    -fx-border-color: #122d82;
+    -fx-border-width: 0px;
+    -fx-cursor: hand; /* Pointer cursor on hover */
+    -fx-effect: dropshadow(gaussian, #122d82, 3, 1, 0, 0); /* Black border effect */
+    -fx-transition: all 0.3s ease; /* Smooth transition for hover effects */
+
+}
+/*#btnSave:hover,  #btnReset:hover , #btnHistory:hover, #billBtn:hover ,#addPaymentBtn:hover, #btnUpdate:hover*/
+.button:hover{
+    -fx-background-color:  #fff; /* Red background on hover */
+    -fx-text-fill: black; /* White text on hover */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/*#btnSave:pressed,  #btnReset:pressed , #btnHistory:pressed,#billBtn:pressed ,#addPaymentBtn:pressed, #btnUpdate:pressed */
+.button:pressed{
+    -fx-text-fill: black; /* Muted text color */
+    -fx-border-color: #3e3e3e; /* Darker border */
+    -fx-scale-x: 0.95; /* Slightly shrink button */
+    -fx-scale-y: 0.95;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 2, 0, 1, 1); /* Subtle shadow reduction */
+}
+#lblPayment{
+    -fx-text-fill: white; /* Inner text color */
+    -fx-font-size: 30px;
+    -fx-font-family: "Arial Bold";
+    -fx-effect: dropshadow(gaussian, #122d82, 3, 1, 0, 0); /* Black border effect */
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-width: 0px;
+    -fx-padding: 5 10 5 10;
+}/*
+#txtAmount*/
+.text-field{
+    -fx-background-color: #d5ced0;
+    -fx-text-fill: black; /* White text on hover */
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: #122d82;
+    -fx-border-width: 2px;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 5 10 5 10;
+}
+/*#txtAmount:hover*/
+.text-field:hover{
+    -fx-background-color:  white; /* Red background on hover */
+    -fx-text-fill: black; /* White text on hover */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.table-view {
+    -fx-font-family: Arial, sans-serif; /* Set font */
+    -fx-font-size: 12px; /* Set font size */
+    -fx-border-color: #122d82; /* Border around the table */
+    -fx-border-width: black; /* Border width */
+    -fx-background-color: #122d82; /* White background */
+    -fx-table-cell-border-color: white; /* Cell borders */
+    -fx-text-fill: white;
+}
+
+/* Header row styles */
+.table-view .column-header {
+    -fx-background-color: #d5ced0; /* Green header background */
+    -fx-font-size: 12px;
+    -fx-text-fill: black; /* White text */
+    -fx-font-weight: bold; /* Bold font */
+    -fx-alignment: CENTER; /* Center text */
+}
+
+/* Cell styles */
+.table-view .cell {
+    -fx-border-color: #ddd; /* Cell borders */
+    -fx-padding: 0px; /* Padding inside cells */
+    -fx-alignment: CENTER; /* Center-align text */
+}
+
+
+/* Highlight row on hover */
+.table-view .row-cell:hover {
+    -fx-background-color: #f1f1f1; /* Light gray on hover */
+}
+
+

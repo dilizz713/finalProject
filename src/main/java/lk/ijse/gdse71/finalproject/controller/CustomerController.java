@@ -4,12 +4,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
 import lk.ijse.gdse71.finalproject.dto.tm.CustomerTM;
@@ -26,6 +33,8 @@ import java.util.ResourceBundle;
 public class CustomerController implements Initializable {
 
     public TextField searchBar;
+    @FXML
+    public Button btnSendMail;
     @FXML
     private Button btnDelete;
 
@@ -109,13 +118,15 @@ public class CustomerController implements Initializable {
         StringBuilder errorMessage = new StringBuilder("Please correct the following errors:\n");
 
         String errorStyle = "-fx-border-color: red; -fx-text-fill: white; -fx-background-color: transparent;";
-        String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent; -fx-border-width: 0 0 1 0";
+        String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
+
 
         // Check and apply error style if validation fails
         if (name.isEmpty() || !name.matches(namePattern)) {
             txtName.setStyle(errorStyle);
             errorMessage.append("- Name is empty or in an incorrect format\n");
             hasErrors = true;
+
         }else{
             txtName.setStyle(defaultStyle);
         }
@@ -123,6 +134,7 @@ public class CustomerController implements Initializable {
             txtAddress.setStyle(errorStyle);
             errorMessage.append("- Address is empty\n");
             hasErrors = true;
+
         }else{
             txtAddress.setStyle(defaultStyle);
         }
@@ -130,6 +142,7 @@ public class CustomerController implements Initializable {
             txtEmail.setStyle(errorStyle);
             errorMessage.append("- Email is empty or in an incorrect format\n");
             hasErrors = true;
+
         }else{
             txtEmail.setStyle(defaultStyle);
         }
@@ -148,6 +161,7 @@ public class CustomerController implements Initializable {
             txtNic.setStyle(errorStyle);
             errorMessage.append("- NIC is empty or in an incorrect format\n");
             hasErrors = true;
+
         }else{
             txtNic.setStyle(defaultStyle);
         }
@@ -233,13 +247,14 @@ public class CustomerController implements Initializable {
         StringBuilder errorMessage = new StringBuilder("Please correct the following errors:\n");
 
         String errorStyle = "-fx-border-color: red; -fx-text-fill: white; -fx-background-color: transparent;";
-        String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent; -fx-border-width: 0 0 1 0";
+        String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
 
-        // Check and apply error style if validation fails
+
         if (name.isEmpty() || !name.matches(namePattern)) {
             txtName.setStyle(errorStyle);
             errorMessage.append("- Name is empty or in an incorrect format\n");
             hasErrors = true;
+
         }else{
             txtName.setStyle(defaultStyle);
         }
@@ -247,6 +262,7 @@ public class CustomerController implements Initializable {
             txtAddress.setStyle(errorStyle);
             errorMessage.append("- Address is empty\n");
             hasErrors = true;
+
         }else{
             txtAddress.setStyle(defaultStyle);
         }
@@ -254,6 +270,7 @@ public class CustomerController implements Initializable {
             txtEmail.setStyle(errorStyle);
             errorMessage.append("- Email is empty or in an incorrect format\n");
             hasErrors = true;
+
         }else{
             txtEmail.setStyle(defaultStyle);
         }
@@ -272,6 +289,7 @@ public class CustomerController implements Initializable {
             txtNic.setStyle(errorStyle);
             errorMessage.append("- NIC is empty or in an incorrect format\n");
             hasErrors = true;
+
         }else{
             txtNic.setStyle(defaultStyle);
         }
@@ -307,11 +325,9 @@ public class CustomerController implements Initializable {
         txtEmail.setOnAction(event -> txtPhone.requestFocus());
         txtPhone.setOnAction(event -> txtNic.requestFocus());
 
-
-        // Define the default style (black border and transparent background)
         String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
 
-        // Apply the default style to all fields at the beginning of each save attempt
+
         txtName.setStyle(defaultStyle);
         txtAddress.setStyle(defaultStyle);
         txtEmail.setStyle(defaultStyle);
@@ -377,13 +393,6 @@ public class CustomerController implements Initializable {
         btnDelete.setDisable(true);
         btnUpdate.setDisable(true);
 
-        String defaultStyle = "-fx-border-color: white; -fx-text-fill: white; -fx-background-color: transparent; -fx-border-width: 0 0 1";
-
-        txtName.setStyle(defaultStyle);
-        txtAddress.setStyle(defaultStyle);
-        txtEmail.setStyle(defaultStyle);
-        txtPhone.setStyle(defaultStyle);
-        txtNic.setStyle(defaultStyle);
 
         txtName.setText("");
        txtAddress.setText("");
@@ -418,5 +427,39 @@ public class CustomerController implements Initializable {
 
     }
 
+    @FXML
+    public void openSendMailModel(ActionEvent event) {
+        CustomerTM selectedItem = customerTableView.getSelectionModel().getSelectedItem();
+        if (selectedItem == null) {
+            new Alert(Alert.AlertType.WARNING, "Please select customer..!");
+            return;
+        }
 
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/sendEmail.fxml"));
+            Parent load = loader.load();
+
+            SendMailController sendMailController = loader.getController();
+
+            String email = selectedItem.getEmail();
+            sendMailController.setCustomerEmail(email);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(load));
+            stage.setTitle("Send email");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/assets/email.png")));
+
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            Window underWindow = btnUpdate.getScene().getWindow();
+            stage.initOwner(underWindow);
+
+            stage.showAndWait();
+        } catch (IOException e) {
+            new Alert(Alert.AlertType.ERROR, "Fail to load ui..!");
+            e.printStackTrace();
+        }
+    }
 }

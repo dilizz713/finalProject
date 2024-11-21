@@ -29,6 +29,8 @@ public class ReservationTableController implements Initializable {
     @FXML
     public TableColumn<ReservationTM, Void> colAction;
     @FXML
+    public TableColumn<ReservationTM, Void> colAddMileage;
+    @FXML
     private Button btnBack;
 
     @FXML
@@ -41,9 +43,6 @@ public class ReservationTableController implements Initializable {
     private TableColumn<ReservationTM, String> colCustomer;
 
     @FXML
-    private TableColumn<ReservationTM, LocalDate> colEndDate;
-
-    @FXML
     private TableColumn<ReservationTM, String> colModel;
 
     @FXML
@@ -54,9 +53,6 @@ public class ReservationTableController implements Initializable {
 
     @FXML
     private TableColumn<ReservationTM, String> colReservationId;
-
-    @FXML
-    private TableColumn<ReservationTM, LocalDate> colStartDate;
 
     @FXML
     private TableColumn<ReservationTM, String> colStatus;
@@ -94,19 +90,17 @@ public class ReservationTableController implements Initializable {
             return;
         }
 
-        // Confirm with the user
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION,
                 "Are you sure you want to delete this reservation?", ButtonType.YES, ButtonType.NO);
         confirmationAlert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
                 try {
-                    // Delete the selected reservation from the database
                     boolean deleted = reservationModel.deleteReservation(selectedReservationTM.getId());
 
                     if (deleted) {
                         new Alert(Alert.AlertType.INFORMATION, "Reservation deleted successfully.").show();
                         try {
-                            refreshPage();  // Refresh the table to reflect changes
+                            refreshPage();
                         } catch (SQLException e) {
                             e.printStackTrace();
                             new Alert(Alert.AlertType.ERROR, "Failed to reload reservation data.").show();
@@ -124,9 +118,13 @@ public class ReservationTableController implements Initializable {
 
     @FXML
     void navigateToVehicleView(ActionEvent event) {
+       navigateTo("/view/newReservation.fxml");
+    }
+
+    public void navigateTo(String fxmlPath){
         try{
             reservationTableAnchorPane.getChildren().clear();
-            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/reservation-view.fxml"));
+            AnchorPane load = FXMLLoader.load(getClass().getResource(fxmlPath));
             reservationTableAnchorPane.getChildren().add(load);
         }catch (IOException e){
             e.printStackTrace();
@@ -138,30 +136,6 @@ public class ReservationTableController implements Initializable {
     void resetOnAction(ActionEvent event) throws SQLException {
         refreshPage();
     }
-    /*@FXML
-    public void updateOnAction(ActionEvent actionEvent) {
-        ReservationTM reservationTM = (ReservationTM) reservationTable.getSelectionModel().getSelectedItems();
-        if(reservationTM != null){
-            new Alert(Alert.AlertType.WARNING, "Please select a reservation to update!").show();
-            return;
-        }
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/reservation-view.fxml"));
-            AnchorPane reservationPane = loader.load();
-            ReservationController controller = loader.getController();
-
-            // Pass data to ReservationController
-            controller.loadReservationDetails(reservationTM);
-            controller.setReservationTableController(this);
-
-            reservationTableAnchorPane.getChildren().clear();
-            reservationTableAnchorPane.getChildren().add(reservationPane);
-        } catch (IOException e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Failed to load reservation view!").show();
-        }
-    }
-*/
 
     @FXML
     void updateOnAction(ActionEvent actionEvent) throws IOException, SQLException {
@@ -172,14 +146,14 @@ public class ReservationTableController implements Initializable {
 
         ReservationDTO selectedReservation = reservationModel.getReservationById(selectedReservationTM.getId());
 
-        // Open the Reservation UI and pass the reservation details for editing
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/reservation-view.fxml"));
-        AnchorPane reservationPane = loader.load();
-        ReservationController controller = loader.getController();
 
-        // Pass the reservation details to the ReservationController for displaying
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/newReservation.fxml"));
+        AnchorPane reservationPane = loader.load();
+        NewReservationController controller = loader.getController();
+
+
         controller.setReservationDetails(selectedReservation);
-        controller.setReservationTableController(this); // Allow it to update the table once the reservation is saved
+        controller.setReservationTableController(this);
 
         reservationTableAnchorPane.getChildren().clear();
         reservationTableAnchorPane.getChildren().add(reservationPane);
@@ -191,11 +165,10 @@ public class ReservationTableController implements Initializable {
         colCustomer.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         colVehicleId.setCellValueFactory(new PropertyValueFactory<>("numberPlate"));
         colModel.setCellValueFactory(new PropertyValueFactory<>("model"));
-        colStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-        colEndDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
         colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colAction.setCellValueFactory(new PropertyValueFactory<>("updateButton"));
+        colAddMileage.setCellValueFactory(new PropertyValueFactory<>("addMileageButton"));
 
         try {
             loadTableData();
@@ -243,6 +216,13 @@ public class ReservationTableController implements Initializable {
             }
 
             Button updateButton = new Button("Update");
+            Button addMileageButton = new Button("Add");
+
+            updateButton.setStyle("-fx-text-fill: black; -fx-font-weight: bold;-fx-background-color: white; -fx-border-radius: 1 1 1 1;-fx-start-margin:2;-fx-end-margin: 2;  -fx-background-radius: 1 1 1 1;-fx-border-color:#6b6e76;-fx-font-size: 12px; ");
+
+            addMileageButton.setStyle("-fx-text-fill: black; -fx-font-weight: bold;-fx-background-color: white; -fx-border-radius: 1 1 1 1;-fx-start-margin:2;-fx-end-margin: 2;  -fx-background-radius: 1 1 1 1;-fx-border-color:#6b6e76;-fx-font-size: 12px; ");
+
+
 
             updateButton.setOnAction(event -> {
                 try {
@@ -255,17 +235,27 @@ public class ReservationTableController implements Initializable {
                 }
             });
 
+            String status = reservationDTO.getStatus();
+
+            if(status.equals("Pending")){
+                addMileageButton.setDisable(true);
+            }
+            addMileageButton.setOnAction(event -> {
+                navigateTo("/view/mileage-tracking-view.fxml");
+
+            });
+
             ReservationTM reservationTM = new ReservationTM(
                     reservationDTO.getId(),
                     reservationDTO.getReservationDate(),
                     customerName,
                     numberPlate,
                     model,
-                    reservationDTO.getStartDate(),
-                    reservationDTO.getEndDate(),
                     vehiclePrice,
                     reservationDTO.getStatus(),
-                    updateButton
+                    updateButton,
+                    addMileageButton
+
             );
 
             reservationTMS.add(reservationTM);
@@ -274,41 +264,21 @@ public class ReservationTableController implements Initializable {
 
     }
     private void openReservationUpdateView(ReservationDTO reservationDTO) throws IOException, SQLException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/reservation-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/newReservation.fxml"));
         AnchorPane pane = loader.load();
 
-        ReservationController controller = loader.getController();
+        NewReservationController  controller = loader.getController();
         controller.setReservationDetails(reservationDTO);  // Set data to be edited
         controller.setReservationTableController(this);
 
         reservationTableAnchorPane.getChildren().clear();  // Display the view
         reservationTableAnchorPane.getChildren().add(pane);  // Display the view
     }
+
+    public void refreshTable() throws SQLException {
+        loadTableData();
+    }
 }
 
-   /* public  void refreshTable(){
-        try{
-            ArrayList<ReservationDTO> reservationDTOS = new ReservationModel().getAllReservations();
-            ObservableList<ReservationTM> reservationList = FXCollections.observableArrayList();
 
-            for(ReservationDTO reservationDTO : reservationDTOS){
-                reservationList.add(new ReservationTM(
-                        reservationDTO.getId(),
-                        reservationDTO.getReservationDate(),
-                        reservationDTO.getCustomerId(),
-                        new ReservationModel().getCustomerNameById(reservationDTO.getCustomerId()),
-                        reservationDTO.getVehicleId(),
-                        new ReservationModel().getVehicleNameById(reservationDTO.getVehicleId()),
-                        reservationDTO.getStartDate(),
-                        reservationDTO.getEndDate(),
-                        Double.parseDouble(new ReservationModel().getVehiclePriceById(Double.parseDouble(reservationDTO.getVehicleId()))),
-                        reservationDTO.getStatus()
-                ));
-            }
-            reservationTable.setItems(reservationList);
-        }catch (SQLException e){
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Failed to load reservations.").show();
-        }
-    }*/
 

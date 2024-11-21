@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
 import lk.ijse.gdse71.finalproject.model.LoginModel;
 
@@ -23,6 +24,10 @@ public class LoginPageController implements Initializable {
 
     @FXML
     public Button btnSignup;
+    @FXML
+    public VBox LoginVBox;
+    @FXML
+    public Label lblSignUp;
 
     @FXML
     private Button btnLogin;
@@ -69,36 +74,14 @@ public class LoginPageController implements Initializable {
             }else if(!loginDTO.getPassword().equals(pw)){
                 new Alert(Alert.AlertType.ERROR, "Incorrect password!. Please try again!").show();
             }else{
-                navigateTo("/view/home-page.fxml");
+               navigateTo("/view/home-page.fxml");
             }
         } catch (SQLException e) {
            e.printStackTrace();
            new Alert(Alert.AlertType.ERROR, "An error ocuured while logging in.").show();
         }
 
-        /*String userName = txtUserName.getText();
-        String pw = txtPassword.getText();
 
-        LoginDTO loginDTO = new LoginDTO();
-
-        boolean hasErrors = false;
-
-        if(userName.isEmpty() || pw.isEmpty()){
-            new Alert(Alert.AlertType.ERROR, "Please Enter User Name and Password");
-        }
-
-        if(!userName.equals(loginDTO.getUserName()) || !pw.equals(loginDTO.getPassword())){
-            new Alert(Alert.AlertType.ERROR,"Invalid Credentials! Please try again" );
-        }else{
-            navigateTo("/view/home-page.fxml");
-        }
-*/
-
-       /* if(userName.equals("dilini") && pw.equals("1234")){
-            navigateTo("/view/home-page.fxml");
-        }else{
-            new Alert(Alert.AlertType.INFORMATION, "user name or password is incorrect!").show();
-        }*/
 
     }
 
@@ -136,8 +119,15 @@ public class LoginPageController implements Initializable {
 
         txtUserName.setOnAction(event -> txtPassword.requestFocus());
 
+        txtPassword.setOnKeyPressed(this::handleKeyPress);
 
 
+
+    }
+    private void handleKeyPress(KeyEvent event){
+        if (event.getCode() == KeyCode.ENTER) {
+            LoginButtonOnAction(new ActionEvent(btnLogin, null));
+        }
     }
 
 }

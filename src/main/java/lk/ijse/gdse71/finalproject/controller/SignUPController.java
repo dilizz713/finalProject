@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
 import lk.ijse.gdse71.finalproject.model.LoginModel;
 
@@ -17,12 +18,15 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class SignUPController implements Initializable {
+    @FXML
+    public Button btnClose;
+    @FXML
+    public VBox signUpVBox;
 
+    @FXML
+    public AnchorPane signUpAnchorPane;
     @FXML
     private Button btnSignup;
-
-    @FXML
-    private AnchorPane signupAnchorPane;
 
     @FXML
     private TextField txtPassword;
@@ -67,12 +71,16 @@ public class SignUPController implements Initializable {
 
     public void navigateTo(String fxmlPath){
         try{
-            signupAnchorPane.getChildren().clear();
+            signUpAnchorPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource(fxmlPath));
-            signupAnchorPane.getChildren().add(load);
+            signUpAnchorPane.getChildren().add(load);
         }catch (IOException e){
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }
+    }
+
+    public void closeSignupAction(ActionEvent actionEvent) {
+       navigateTo("/view/login-page.fxml");
     }
 }

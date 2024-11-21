@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="reservationAnchorpane" prefHeight="726.0" prefWidth="1120.0" style="-fx-background-color: #27272d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.ReservationController">
+<AnchorPane fx:id="reservationAnchorpane" prefHeight="720.0" prefWidth="1064.0" style="-fx-background-color: #27272d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.ReservationController">
    <children>
-      <VBox prefHeight="726.0" prefWidth="1120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="720.0" prefWidth="1064.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="102.0" prefWidth="1120.0" style="-fx-border-color: white; -fx-border-width: 0 0 3;">
                <children>
@@ -92,7 +92,7 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Button>
-                  <RadioButton fx:id="rdbPending" mnemonicParsing="false" onAction="#handleStatus" prefHeight="22.0" prefWidth="133.0" text="Pending" textFill="#819dbc">
+                  <RadioButton fx:id="rdbPending" mnemonicParsing="false" onAction="#selectedPendingButton" prefHeight="22.0" prefWidth="133.0" text="Pending" textFill="#819dbc">
                      <HBox.margin>
                         <Insets left="50.0" />
                      </HBox.margin>
@@ -100,12 +100,12 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="rdbOngoing" layoutX="659.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleStatus" prefHeight="22.0" prefWidth="136.0" text="Ongoing" textFill="#819dbc">
+                  <RadioButton fx:id="rdbOngoing" layoutX="659.0" layoutY="40.0" mnemonicParsing="false" onAction="#selectedOngoingButton" prefHeight="22.0" prefWidth="136.0" text="Ongoing" textFill="#819dbc">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </RadioButton>
-                  <RadioButton fx:id="rdbDone" layoutX="754.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleStatus" text="Done" textFill="#819dbc">
+                  <RadioButton fx:id="rdbDone" layoutX="754.0" layoutY="40.0" mnemonicParsing="false" onAction="#selectedDoneButton" text="Done" textFill="#819dbc">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>

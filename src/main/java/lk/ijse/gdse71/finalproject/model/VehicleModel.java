@@ -128,5 +128,24 @@ public class VehicleModel {
     }
 
 
+    public ArrayList<String> getAllVehcileIds() throws SQLException {
+        ResultSet rst = CrudUtil.execute("select id from Vehicle");
+        ArrayList<String> vehilceId = new ArrayList<>();
+        while (rst.next()) {
+            vehilceId.add(rst.getString(1));
+        }
+        return vehilceId;
 
+    }
+
+    public String getVehicleModelById(String vehicleId) throws SQLException {
+        String sql = "select model from Vehicle where id = ?";
+        ResultSet resultSet = CrudUtil.execute(sql, vehicleId);
+
+        if (resultSet.next()) {
+            return resultSet.getString("model");
+        }
+        return null;
+
+    }
 }

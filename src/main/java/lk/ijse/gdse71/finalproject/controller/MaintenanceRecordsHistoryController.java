@@ -115,7 +115,7 @@ public class MaintenanceRecordsHistoryController implements Initializable {
     void navigateToMaintenanceRecordView(ActionEvent event) {
         try{
             recordHistoryAnchorPane.getChildren().clear();
-            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/reservation-view.fxml"));
+            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/vehicle-maintenance-records-view.fxml"));
             recordHistoryAnchorPane.getChildren().add(load);
         }catch (IOException e){
             e.printStackTrace();
@@ -142,6 +142,9 @@ public class MaintenanceRecordsHistoryController implements Initializable {
             String model = maintenanceRecordModel.getVehicleNameById(maintenanceRecordDTO.getVehicleId());
 
             Button updateButton = new Button("Update");
+
+            updateButton.setStyle("-fx-text-fill: black; -fx-font-weight: bold;-fx-background-color: white; -fx-border-radius: 1 1 1 1;-fx-start-margin:2;-fx-end-margin: 2;  -fx-background-radius: 1 1 1 1;-fx-border-color:#6b6e76;-fx-font-size: 12px; ");
+
 
             updateButton.setOnAction(event -> {
                 try {
@@ -185,14 +188,12 @@ public class MaintenanceRecordsHistoryController implements Initializable {
 
         MaintenanceRecordDTO selectedRecord = maintenanceRecordModel.getRecordsById(maintenanceRecordTM.getId());
 
-        // Open the Reservation UI and pass the reservation details for editing
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/reservation-view.fxml"));
         AnchorPane recordPane = loader.load();
         VehicleMaintenanceRecordsController controller = loader.getController();
 
-        // Pass the reservation details to the ReservationController for displaying
         controller.setRecordDetails(selectedRecord);
-        controller.setMaintenanceRecordsHistoryController(this); // Allow it to update the table once the reservation is saved
+        controller.setMaintenanceRecordsHistoryController(this);
 
         recordHistoryAnchorPane.getChildren().clear();
         recordHistoryAnchorPane.getChildren().add(recordPane);
@@ -204,7 +205,7 @@ public class MaintenanceRecordsHistoryController implements Initializable {
 
         VehicleMaintenanceRecordsController controller = loader.getController();
 
-       //controller.setRecordDetails(maintenanceRecordDTO);  // Set data to be edited
+
 
         controller.setRecordDetails(
                 maintenanceRecordDTO.getId(),

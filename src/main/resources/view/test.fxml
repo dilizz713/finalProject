@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="673.0" prefWidth="1279.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Test">
+   <children>
+      <Label fx:id="lblStartDate" layoutX="10.0" layoutY="10.0" prefHeight="22.0" prefWidth="802.0" text="StartDate" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblEndDate" alignment="CENTER_RIGHT" layoutX="20.0" layoutY="46.0" prefHeight="22.0" prefWidth="234.0" text="EndDate" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

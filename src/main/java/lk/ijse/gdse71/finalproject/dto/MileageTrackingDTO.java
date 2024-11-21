@@ -2,6 +2,8 @@ package lk.ijse.gdse71.finalproject.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,5 +19,8 @@ public class MileageTrackingDTO {
     private double startDateMileage;
     private double endDateMileage;
     private double estimatedMileageCost;
+    private LocalDate startDate;
+    private LocalDate endDate;
+
 
 }

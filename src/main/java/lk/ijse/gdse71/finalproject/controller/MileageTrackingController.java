@@ -17,11 +17,16 @@ import lk.ijse.gdse71.finalproject.model.ReservationModel;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MileageTrackingController implements Initializable {
+
+    @FXML
+    public Label label;
 
     @FXML
     private TableView<MileageTrackingTM> TrackingTable;
@@ -46,6 +51,12 @@ public class MileageTrackingController implements Initializable {
 
     @FXML
     private TableColumn<MileageTrackingDTO, Double> colEndMile;
+
+    @FXML
+    public TableColumn<MileageTrackingDTO, LocalDate> colStartDate;
+
+    @FXML
+    public TableColumn<MileageTrackingDTO, LocalDate> colEndDate;
 
     @FXML
     private TableColumn<MileageTrackingDTO, Double> colEstimatedMile;
@@ -98,22 +109,40 @@ public class MileageTrackingController implements Initializable {
     @FXML
     private TextField txtStartMile;
 
+    @FXML
+    private DatePicker startDatePicker;
+
+    @FXML
+    private DatePicker endDatePicker;
+
+
     MileageTrackingModel mileageTrackingModel = new MileageTrackingModel();
+
+
 
     @FXML
     void SaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String trackingId = lblTrackingId.getText();
         String reservationId = cmbReservationId.getValue();
+        LocalDate startDate = startDatePicker.getValue();
+        LocalDate endDate = endDatePicker.getValue();
+
+       if(endDate == null){
+           LocalDate.of(1990,01,01);
+       }
+
         String startDateMileageText = txtStartMile.getText();
-
-
         double startDateMileage = 0;
-        startDateMileage = Double.parseDouble(startDateMileageText);
 
+        try {
+            startDateMileage = Double.parseDouble(startDateMileageText);
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Please enter a valid number for start mileage!").show();
+            return;
+        }
 
+        MileageTrackingDTO mileageTrackingDTO = new MileageTrackingDTO(trackingId, 0,0, 0, 0, reservationId, startDateMileage, 0, 0,startDate,endDate);
 
-
-        MileageTrackingDTO mileageTrackingDTO = new MileageTrackingDTO(trackingId, 0,0, 0, 0, reservationId, startDateMileage, 0, 0);
         boolean isSaved = mileageTrackingModel.saveRecords(mileageTrackingDTO);
         if (isSaved) {
             refreshPage();
@@ -130,7 +159,11 @@ public class MileageTrackingController implements Initializable {
         if (mileageTrackingTM != null) {
             lblTrackingId.setText(mileageTrackingTM.getTrackingId());
             cmbReservationId.setValue(mileageTrackingTM.getReservationId());
+            startDatePicker.setValue(mileageTrackingTM.getStartDate());
+            endDatePicker.setValue(mileageTrackingTM.getEndDate());
+
             txtStartMile.setText(String.valueOf(mileageTrackingTM.getStartDateMileage()));
+
             txtEndMile.setText(String.valueOf(mileageTrackingTM.getEndDateMileage()));
             lblEstimatedMile.setText(String.valueOf(mileageTrackingTM.getEstimatedMileage()));
             lblActualMile.setText(String.valueOf(mileageTrackingTM.getActualMileage()));
@@ -149,9 +182,20 @@ public class MileageTrackingController implements Initializable {
 
     private void calculateAndDisplayLabels(MileageTrackingTM mileageTrackingTM) throws SQLException {
         try{
-            double estimatedMileage = calculateEstimatedMileage(mileageTrackingTM.getReservationId());
+            LocalDate startDate = mileageTrackingTM.getStartDate();
+            LocalDate endDate = mileageTrackingTM.getEndDate();
+            double estimatedMileage = 100.00;
+            if(!startDate.equals(endDate)){
+                estimatedMileage = calculateEstimatedMileage(mileageTrackingTM.getStartDate(), mileageTrackingTM.getEndDate());
+            }
+
             double actualMileage = mileageTrackingTM.getEndDateMileage() - mileageTrackingTM.getStartDateMileage();
-            double totalExtraCharges = (actualMileage - estimatedMileage) * mileageTrackingTM.getExtraChargePerKm();
+
+            double totalExtraCharges = 0;
+            if(actualMileage > estimatedMileage){
+                totalExtraCharges = (actualMileage - estimatedMileage) * mileageTrackingTM.getExtraChargePerKm();
+            }
+
 
             lblEstimatedMile.setText(String.format("%.2f", estimatedMileage));
             lblActualMile.setText(String.format("%.2f", actualMileage));
@@ -182,8 +226,8 @@ public class MileageTrackingController implements Initializable {
     }
 
     @FXML
-    void resetOnAction(ActionEvent event) {
-
+    void resetOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        refreshPage();
     }
 
     @FXML
@@ -194,21 +238,31 @@ public class MileageTrackingController implements Initializable {
         String endDateMileageText = txtEndMile.getText();
         String extraChargePerKmText = txtExtraChargesPerKm.getText();
 
-
         double startDateMileage = 0 , endDateMileage = 0, extraChargePerKm = 0 , estimatedMileage = 0 , actualMileage = 0, estimatedMileageCost = 0, totalExtraCharges = 0;
-
 
         try{
             startDateMileage = Double.parseDouble(startDateMileageText);
             endDateMileage = Double.parseDouble(endDateMileageText);
             extraChargePerKm = Double.parseDouble(extraChargePerKmText);
 
+            LocalDate startDate = startDatePicker.getValue();
+            LocalDate endDate = endDatePicker.getValue();
+
+            if(startDate.equals(endDate)){
+                estimatedMileage = 100.00;
+            }
+            else {
+                estimatedMileage = calculateEstimatedMileage(startDate,endDate);
+            }
 
 
-            estimatedMileage = calculateEstimatedMileage(reservationId);
             actualMileage = endDateMileage - startDateMileage;
-            estimatedMileageCost = calculateEstimatedMileageCost(reservationId, estimatedMileage);
-            totalExtraCharges = (actualMileage - estimatedMileage) * extraChargePerKm;
+            estimatedMileageCost = calculateEstimatedMileageCost(reservationId, startDate,endDate);
+
+            if(actualMileage > estimatedMileage){
+                totalExtraCharges = (actualMileage - estimatedMileage) * extraChargePerKm;
+            }
+
 
             System.out.println("estimated mileage : " + estimatedMileage);
             System.out.println("actual mileage : " + actualMileage);
@@ -224,7 +278,7 @@ public class MileageTrackingController implements Initializable {
 
 
 
-            MileageTrackingDTO mileageTrackingDTO = new MileageTrackingDTO(trackingId, estimatedMileage,actualMileage, extraChargePerKm, totalExtraCharges, reservationId, startDateMileage, endDateMileage, estimatedMileageCost);
+            MileageTrackingDTO mileageTrackingDTO = new MileageTrackingDTO(trackingId, estimatedMileage,actualMileage, extraChargePerKm, totalExtraCharges, reservationId, startDateMileage, endDateMileage, estimatedMileageCost, startDate,endDate);
             boolean isUpdated = mileageTrackingModel.updateRecords(mileageTrackingDTO);
             if (isUpdated) {
                 refreshPage();
@@ -238,37 +292,25 @@ public class MileageTrackingController implements Initializable {
 
     }
 
-    private double calculateEstimatedMileageCost(String reservationId, double estimatedMileage) throws SQLException {
-        ReservationModel reservationModel = new ReservationModel();
+    private double calculateEstimatedMileageCost(String reservationId, LocalDate startDate, LocalDate endDate) throws SQLException {
+        long  durationDays = endDate.toEpochDay() - startDate.toEpochDay();
+        System.out.println("duration days : " + durationDays);
 
-        ReservationDTO reservationDTO = reservationModel.getReservationDetails(reservationId);
-        long durationDays = 0;
-        if(reservationDTO != null){
-           durationDays = reservationDTO.getEndDate().toEpochDay() - reservationDTO.getStartDate().toEpochDay();
+        if(durationDays == 0){
+            ReservationModel reservationModel = new ReservationModel();
+            String vehiclePrice =(reservationModel.getVehiclePrice(reservationId));
+            return  Double.parseDouble(vehiclePrice);
         }
+        ReservationModel reservationModel = new ReservationModel();
         String vehiclePrice =(reservationModel.getVehiclePrice(reservationId));
-        double price = 0;
-        price = Double.parseDouble(vehiclePrice);
+        double price =  Double.parseDouble(vehiclePrice);
 
         return  durationDays * price;
     }
 
-    private double calculateEstimatedMileage(String reservationId) throws SQLException {
-        ReservationModel reservationModel = new ReservationModel();
-        ReservationDTO reservationDTO = reservationModel.getReservationDetails(reservationId);
-
-        if(reservationDTO != null){
-            System.out.println("Start Date: " + reservationDTO.getStartDate());
-            System.out.println("End Date: " + reservationDTO.getEndDate());
-            long durationDays = reservationDTO.getEndDate().toEpochDay() - reservationDTO.getStartDate().toEpochDay();
-            System.out.println("Duration Days: " + durationDays);
-
-            if(durationDays == 0){
-                System.out.println("start and end date are the same");
-            }
-            return durationDays * 100;
-        }
-        return 0;
+    private double calculateEstimatedMileage(LocalDate startDate,LocalDate endDate ) throws SQLException {
+        long durationDays = endDate.toEpochDay() - startDate.toEpochDay();
+        return durationDays * 100;
     }
 
 
@@ -284,30 +326,16 @@ public class MileageTrackingController implements Initializable {
         colExtraChargesPerKm.setCellValueFactory(new PropertyValueFactory<>("extraChargePerKm"));
         colTotalExtraCharges.setCellValueFactory(new PropertyValueFactory<>("totalExtraCharges"));
 
-        String defaultStyle = "-fx-border-color: white; -fx-text-fill: white; -fx-background-color: transparent;-fx-border-width: 0 0 1 0;";
-
-        txtStartMile.setStyle(defaultStyle);
-        txtEndMile.setStyle(defaultStyle);
-        txtExtraChargesPerKm.setStyle(defaultStyle);
-
-
 
         try {
+            loadNextTrackingId();
             loadComboBoxData();
+            startDatePicker.setValue(LocalDate.now());
+            endDatePicker.setValue(LocalDate.of(2024,01,01));
         } catch (SQLException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Error loading combobox data").show();
         }
-
-
-        /*searchBar.setOnAction(event ->{
-            try{
-                searchReservations();
-            }catch (SQLException | ClassNotFoundException e){
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Error searching reservation").show();
-            }
-        });*/
 
 
         try {
@@ -332,10 +360,18 @@ public class MileageTrackingController implements Initializable {
         btnDelete.setDisable(true);
         btnUpdate.setDisable(true);
 
-        txtStartMile.clear();
-        txtEndMile.clear();
-        txtExtraChargesPerKm.clear();
+        txtStartMile.setText("");
+        txtEndMile.setText("");
+        txtExtraChargesPerKm.setText("");
+        lblEstimatedMileCost.setText("");
+        lblEstimatedMile.setText("");
+        lblActualMile.setText("");
+        lblTotalExtraCharges.setText("");
 
+        startDatePicker.setValue(LocalDate.now());
+        endDatePicker.setValue(LocalDate.of(2024,01,01));
+
+        cmbReservationId.setValue("");
 
     }
 
@@ -352,13 +388,18 @@ public class MileageTrackingController implements Initializable {
             MileageTrackingTM mileageTrackingTM = new MileageTrackingTM(
                     mileageTrackingDTO.getId(),
                     mileageTrackingDTO.getReservationId(),
+                    mileageTrackingDTO.getStartDate(),
                     mileageTrackingDTO.getStartDateMileage(),
+                    mileageTrackingDTO.getEndDate(),
                     mileageTrackingDTO.getEndDateMileage(),
                     mileageTrackingDTO.getEstimatedMileage(),
                     mileageTrackingDTO.getActualMileage(),
                     mileageTrackingDTO.getEstimatedMileageCost(),
                     mileageTrackingDTO.getExtraChargePerKm(),
                     mileageTrackingDTO.getTotalExtraCharges()
+
+
+
             );
             mileageTrackingTMS.add(mileageTrackingTM);
         }

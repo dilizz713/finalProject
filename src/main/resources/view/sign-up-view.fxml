@@ -1,55 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="signupAnchorPane" prefHeight="726.0" prefWidth="1280.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.SignUPController">
+<AnchorPane fx:id="signUpAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.SignUPController">
    <children>
-      <HBox alignment="CENTER_LEFT" layoutX="104.0" layoutY="92.0" prefHeight="537.0" prefWidth="1072.0" style="-fx-border-color: white;">
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../assets/2.jpg" />
+         </image>
+      </ImageView>
+      <VBox layoutX="148.0" layoutY="146.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="422.0" style="-fx-border-color: #c23131; -fx-border-width: 2 2 2 2;" stylesheets="@../css/loginPage.css" AnchorPane.bottomAnchor="168.0" AnchorPane.leftAnchor="159.0" AnchorPane.rightAnchor="699.0" AnchorPane.topAnchor="84.0">
          <children>
-            <ImageView fitHeight="482.0" fitWidth="645.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../assets/signup.jpg" />
-               </image>
-            </ImageView>
-            <VBox prefHeight="535.0" prefWidth="424.0">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="115.0" prefWidth="424.0">
-                     <children>
-                        <TextField fx:id="txtUserName" prefHeight="26.0" prefWidth="361.0" promptText="username">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </TextField>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="118.0" prefWidth="424.0">
-                     <children>
-                        <TextField fx:id="txtPassword" prefHeight="26.0" prefWidth="361.0" promptText="password">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </TextField>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="10.0" layoutY="125.0" prefHeight="118.0" prefWidth="424.0">
-                     <children>
-                        <Button fx:id="btnSignup" mnemonicParsing="false" onAction="#SignupOnAction" prefHeight="35.0" prefWidth="103.0" text="SignUp">
-                           <font>
-                              <Font name="System Bold" size="16.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
+            <Button fx:id="btnClose" mnemonicParsing="false" onAction="#closeSignupAction" prefHeight="26.0" prefWidth="24.0" text="X">
+               <VBox.margin>
+                  <Insets left="380.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <TextField fx:id="txtUserName" prefHeight="30.0" prefWidth="422.0" promptText="username">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" top="50.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtPassword" prefHeight="26.0" prefWidth="361.0" promptText="password">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" top="50.0" />
+               </VBox.margin>
+            </TextField>
+            <Button fx:id="btnSignup" mnemonicParsing="false" onAction="#SignupOnAction" prefHeight="35.0" prefWidth="103.0" text="SignUp">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="160.0" top="50.0" />
+               </VBox.margin>
+            </Button>
          </children>
-      </HBox>
+      </VBox>
    </children>
 </AnchorPane>

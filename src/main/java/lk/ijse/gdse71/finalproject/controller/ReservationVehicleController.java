@@ -45,19 +45,16 @@ public class ReservationVehicleController implements Initializable {
     @FXML
     private AnchorPane ReservationVehiclesAnchorPane;
 
-    // Grid layout for vehicle cards
     private GridPane vehicleGrid;
 
-    private final int COLUMN_COUNT = 6;  // Number of columns in grid
-    private final int CARD_PADDING = 10;  // Padding around each card
+    private final int COLUMN_COUNT = 6;
+    private final int CARD_PADDING = 10;
 
-    // Initialize scene
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Create grid layout for organizing vehicle cards
         vehicleGrid = new GridPane();
-        vehicleGrid.setHgap(10);  // Horizontal gap between cards
-        vehicleGrid.setVgap(15);  // Vertical gap between cards
+        vehicleGrid.setHgap(10);
+        vehicleGrid.setVgap(15);
         vehicleGrid.setPadding(new Insets(CARD_PADDING));
 
 
@@ -74,12 +71,12 @@ public class ReservationVehicleController implements Initializable {
         try {
             VehicleModel vehicleModel = new VehicleModel();
             ArrayList<VehicleDTO> vehicles = vehicleModel.getAllVehicles();
-            int itemsPerPage = 12;  // Number of vehicles per page
-            int pageCount = (int) Math.ceil((double) vehicles.size() / itemsPerPage); // Calculate page count dynamically
+            int itemsPerPage = 12;
+            int pageCount = (int) Math.ceil((double) vehicles.size() / itemsPerPage); // Calculate page count
             pagination.setPageCount(pageCount);
             pagination.setPageFactory(this::createPage);  // Link the page factory to createPage method
 
-            // Add pagination and grid container to the anchor pane
+
             imageAnchorPane.getChildren().clear();
             imageAnchorPane.getChildren().add(gridContainer);
             imageAnchorPane.getChildren().add(pagination);
@@ -101,16 +98,17 @@ public class ReservationVehicleController implements Initializable {
         pageBox.setSpacing(10);
         pageBox.setPadding(new Insets(10));
 
-        pageBox.setPrefWidth(imageAnchorPane.getWidth() - 20); // Example: Set width to fit within the parent pane with padding
+
+        pageBox.setPrefWidth(imageAnchorPane.getWidth() - 20);
         pageBox.setPrefHeight(imageAnchorPane.getHeight() - 60);
 
-        vehicleGrid.getChildren().clear();  // Clear existing grid content
+        vehicleGrid.getChildren().clear();
 
         try {
             VehicleModel vehicleModel = new VehicleModel();
             ArrayList<VehicleDTO> vehicles = vehicleModel.getAllVehicles();
 
-            int itemsPerPage = 12;  // Number of cards per page
+            int itemsPerPage = 12;
             int start = pageIndex * itemsPerPage;  // Correct usage of pageIndex
             int end = Math.min(start + itemsPerPage, vehicles.size());
 
@@ -124,7 +122,7 @@ public class ReservationVehicleController implements Initializable {
                 String maintenanceStatus = getMaintenanceStatus(vehicleId);
 
                 if (("Pending".equals(vehicleStatus) || "Ongoing".equals(vehicleStatus)) || "Ongoing".equals(maintenanceStatus) ) {
-                    continue; // Skip "Pending" vehicles
+                    continue; // Skip pending vehicles
                 }
 
                 VBox vehicleCard = createCard(vehicle);
@@ -162,59 +160,17 @@ public class ReservationVehicleController implements Initializable {
             String status = resultSet.getString("status");
             Date endDate = resultSet.getDate("endDate");
 
-            // If maintenance is ongoing (status is 'Ongoing') and either no endDate is set or the endDate is in the future
+            // If maintenance is ongoing  and either no endDate is set or the endDate is in the future
             if ("Ongoing".equals(status) && (endDate == null || endDate.after(Date.valueOf(LocalDate.now())))) {
                 return "Ongoing";
             }
-            return status;  // If not ongoing, return the status (could be "Done" or something else)
+            return status;
         }
 
-        // If no maintenance record is found, assume it's not under maintenance
         return "Done";
     }
 
-    // Load vehicle cards from database and add them to the grid layout
-   /* public void loadVehicleCards() throws IOException, SQLException {
-        VehicleModel vehicleModel = new VehicleModel();
-        ArrayList<VehicleDTO> vehicles = vehicleModel.getAllVehicles();
 
-        int itemsPerPage = 12;
-        Pagination pagination = new Pagination();
-        pagination.setPageCount((int) Math.ceil((double) vehicles.size()/itemsPerPage));
-        pagination.setPageFactory(this::createPage);
-
-        vehicleGrid.getChildren().clear();  // Clear existing cards
-
-        int rowIndex = 0, colIndex = 0;
-        for (VehicleDTO vehicle : vehicles) {
-
-
-            String vehicleId = vehicle.getId();
-            String vehicleStatus = getVehicleStatus(vehicleId);
-
-            VBox vehicleCard = createCard(vehicle);
-
-            if("Pending".equals(vehicleStatus)){
-                continue;
-            }
-
-            if("Done".equals(vehicleStatus)){
-
-                vehicleGrid.add(vehicleCard, colIndex, rowIndex);
-
-                colIndex++;
-                if (colIndex >= COLUMN_COUNT) {
-                    colIndex = 0;
-                    rowIndex++;
-                }
-            }
-
-
-
-
-        }
-    }
-*/
     private String getVehicleStatus(String vehicleId) throws SQLException {
         String query = "select status from Reservation where vehicleId = ? order by reservationDate  desc, field(status, 'Pending', 'Done','Ongoing') limit 1";
         ResultSet resultSet = CrudUtil.execute(query,vehicleId);
@@ -225,16 +181,14 @@ public class ReservationVehicleController implements Initializable {
         return "Done";
     }
 
-    // Creates and styles an individual vehicle card
     private VBox createCard(VehicleDTO vehicle) {
         VBox vehicleCard = new VBox();
-        vehicleCard.setSpacing(5);  // Space between elements in the card
+        vehicleCard.setSpacing(5);
         vehicleCard.setPadding(new Insets(10));
-        vehicleCard.setStyle("-fx-border-color: lightgray; -fx-background-color: white; -fx-border-radius: 5; -fx-background-radius: 5;");
+        vehicleCard.setStyle("-fx-border-color: #ddd; -fx-background-color: lightblue; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);");
 
         vehicleCard.setAlignment(Pos.CENTER);
 
-        // Image for vehicle
         ImageView imageView = new ImageView();
         if (vehicle.getImage() != null) {
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(vehicle.getImage());
@@ -245,16 +199,18 @@ public class ReservationVehicleController implements Initializable {
         imageView.setFitWidth(140);
         vehicleCard.getChildren().add(imageView);
 
-        // Labels for vehicle details
-        Label modelLabel = new Label(vehicle.getModel());
-        Label numberPlateLabel = new Label(vehicle.getNumberPlate());
-        Label priceLabel = new Label("LKR " + String.valueOf(vehicle.getPrice()));
-        Label vehicleIdLabel = new Label(vehicle.getId());
 
-        modelLabel.setStyle("-fx-text-fill: black; -fx-font-weight: bold;");
-        numberPlateLabel.setStyle("-fx-text-fill: black; -fx-font-weight: bold;");
-        priceLabel.setStyle("-fx-text-fill: black; -fx-font-weight: bold;");
-        vehicleIdLabel.setStyle("-fx-text-fill: blue; -fx-font-weight: bold;");
+        Label modelLabel = new Label(vehicle.getModel());
+        modelLabel.setStyle("-fx-font-size: 15px; -fx-font-weight: bold;-fx-text-fill: black;");
+
+        Label numberPlateLabel = new Label(vehicle.getNumberPlate());
+        numberPlateLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: black;");
+
+        Label priceLabel = new Label("LKR " + String.valueOf(vehicle.getPrice()));
+        priceLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: black;");
+
+        Label vehicleIdLabel = new Label(vehicle.getId());
+        vehicleIdLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: white;-fx-effect: dropshadow(gaussian, darkred, 3, 1, 0, 0);");
 
 
         vehicleCard.getChildren().addAll(vehicleIdLabel,modelLabel, numberPlateLabel,priceLabel);
@@ -265,25 +221,25 @@ public class ReservationVehicleController implements Initializable {
 
         vehicleCard.getChildren().add(addButton);
 
-        addButton.setStyle("-fx-text-fill: white; -fx-font-weight: bold;-fx-background-color: #289a18; -fx-border-radius: 5; -fx-background-radius: 5;");
+       addButton.setStyle("-fx-text-fill: white; -fx-font-weight: bold;-fx-background-color: navy; -fx-border-radius: 2; -fx-background-radius: 2;-fx-font-size: 12px");
 
         return vehicleCard;
     }
 
-    // Action when "Add +" button is clicked for reserving the vehicle
+
     @FXML
     void addReservationOnAction(ActionEvent event, VehicleDTO vehicle) {
         try {
 
-            // Load the reservation view
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/reservation-view.fxml"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/newReservation.fxml"));
             AnchorPane load = loader.load();
 
-            // Access the ReservationController and set the vehicle details
-            ReservationController reservationController = loader.getController();
-            reservationController.setVehicleDetails(vehicle);  // Pass vehicle details to controller
 
-            // Clear current view and add the reservation view with populated data
+            NewReservationController reservationController = loader.getController();
+            reservationController.setVehicleDetails(vehicle);
+
+
             ReservationVehiclesAnchorPane.getChildren().clear();
             ReservationVehiclesAnchorPane.getChildren().add(load);
 
@@ -298,7 +254,7 @@ public class ReservationVehicleController implements Initializable {
 
     @FXML
     public void checkReservationHistory(ActionEvent actionEvent) {
-        try{
+       try{
             ReservationVehiclesAnchorPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource("/view/reservation-table.fxml"));
             ReservationVehiclesAnchorPane.getChildren().add(load);

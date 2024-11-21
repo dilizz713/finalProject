@@ -1,0 +1,198 @@
+#customerAnchorPane{
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+#label , #lblDate , #modelLabel, #numberPlateLabel,#priceLabel, #vehicleIdLabel {
+    -fx-text-fill: black; /* White text for better contrast */
+    -fx-font-size: 14px; /* Slightly larger for readability */
+    -fx-font-family: "Arial Bold";
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #s, 3, 1, 0, 0); /* Black border effect */
+    -fx-background-color: #d5ced0;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-width: 0px;
+    -fx-padding: 5 10 5 10;
+}
+#lblMAintenanceId, #lblStartDate1, #lblEndDate1, #lblModel{
+      -fx-text-fill: white; /* White text for better contrast */
+      -fx-font-size: 16px; /* Slightly larger for readability */
+      -fx-font-family: "Arial Bold";
+      -fx-font-weight: bold;
+      -fx-effect: dropshadow(gaussian, black, 3, 1, 0, 0); /* Black border effect */
+      -fx-background-radius: 20;
+      -fx-border-radius: 20;
+      -fx-border-width: 0px;
+      -fx-padding: 5 10 5 10;
+  }
+.button{
+    -fx-background-color: #6b6e76;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial Bold";
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 5 5;
+    -fx-background-radius: 50;
+    -fx-border-radius: 15;
+    -fx-border-color: #122d82;
+    -fx-border-width: 0px;
+    -fx-cursor: hand; /* Pointer cursor on hover */
+    -fx-effect: dropshadow(gaussian, #122d82, 3, 1, 0, 0); /* Black border effect */
+    -fx-transition: all 0.3s ease; /* Smooth transition for hover effects */
+
+}
+#addButton{
+    -fx-background-color: darkgreen;
+    -fx-text-fill: white;
+    -fx-font-family: "Arial Bold";
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 5 5;
+    -fx-background-radius: 50;
+    -fx-border-radius: 15;
+    -fx-border-color: #122d82;
+    -fx-border-width: 5 5 5 5px;
+    -fx-cursor: hand; /* Pointer cursor on hover */
+    -fx-effect: dropshadow(gaussian, #122d82, 3, 1, 0, 0); /* Black border effect */
+    -fx-transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+/*#btnSave:hover,  #btnReset:hover , #btnHistory:hover, #billBtn:hover ,#addPaymentBtn:hover, #btnUpdate:hover*/
+.button:hover{
+    -fx-background-color:  #fff; /* Red background on hover */
+    -fx-text-fill: black; /* White text on hover */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+#addButton:hover{
+    -fx-background-color:  #fff; /* Red background on hover */
+    -fx-text-fill: black; /* White text on hover */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+#addButton:pressed {
+    -fx-text-fill: black; /* Muted text color */
+    -fx-border-color: #3e3e3e; /* Darker border */
+    -fx-scale-x: 0.95; /* Slightly shrink button */
+    -fx-scale-y: 0.95;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 2, 0, 1, 1);
+}
+.button:pressed{
+    -fx-text-fill: black; /* Muted text color */
+    -fx-border-color: #3e3e3e; /* Darker border */
+    -fx-scale-x: 0.95; /* Slightly shrink button */
+    -fx-scale-y: 0.95;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 2, 0, 1, 1); /* Subtle shadow reduction */
+}
+
+
+#btnBack{
+    -fx-background-color:transparent ;
+    -fx-font-family: "Arial Bold";
+    -fx-font-size: 20px;
+    -fx-padding: 5 5;
+    -fx-background-radius: 50;
+    -fx-border-radius: 15;
+    -fx-border-color: #122d82;
+    -fx-border-width: 0px;
+    -fx-cursor: hand; /* Pointer cursor on hover */
+    -fx-effect: dropshadow(gaussian, antiquewhite, 3, 1, 0, 0); /* Black border effect */
+    -fx-transition: all 0.3s ease; /* Smooth transition for hover effects */
+
+}
+#btnBack:hover{
+        -fx-text-fill: black; /* White text on hover */
+        -fx-scale-x: 1.05;
+        -fx-scale-y: 1.05;
+
+}
+#btnBack:pressed{
+    -fx-text-fill: black; /* Muted text color */
+    -fx-border-color: #3e3e3e; /* Darker border */
+    -fx-scale-x: 0.95; /* Slightly shrink button */
+    -fx-scale-y: 0.95;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 2, 0, 1, 1); /* Subtle shadow reduction */
+}
+
+
+.text-field{
+    -fx-background-color:  transparent;
+    -fx-text-fill: white; /* White text on hover */
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color:#5aa0e3 ;
+    -fx-border-width: 0 0 2 0px;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-padding: 5 10 5 10;
+}
+
+.text-field:hover{
+    -fx-background-color:  #7a8794; /* Red background on hover */
+    -fx-text-fill: white; /* White text on hover */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.table-view {
+    -fx-font-family: Arial, sans-serif; /* Set font */
+    -fx-font-size: 12px; /* Set font size */
+    -fx-border-color: #122d82; /* Border around the table */
+    -fx-border-width: 2px; /* Border width */
+    -fx-background-color: #bbc9d6 ; /* White background */
+    -fx-table-cell-border-color: black; /* Cell borders */
+    -fx-text-fill: white;
+}
+
+/* Header row styles */
+.table-view .column-header {
+    -fx-background-color: #5f98ce ; /* Green header background */
+    -fx-font-size: 12px;
+    -fx-text-fill: black; /* White text */
+    -fx-font-weight: bold; /* Bold font */
+    -fx-alignment: CENTER; /* Center text */
+}
+
+/* Cell styles */
+.table-view .cell {
+    -fx-border-color: #ddd; /* Cell borders */
+    -fx-padding: 0px; /* Padding inside cells */
+    -fx-alignment: CENTER; /* Center-align text */
+}
+
+
+/* Highlight row on hover */
+.table-view .row-cell:hover {
+    -fx-background-color: #f1f1f1; /* Light gray on hover */
+}
+.combo-box{
+    -fx-background-color: #d5ced0;
+    -fx-text-fill: white; /* White text for better contrast */
+    -fx-font-size: 14px; /* Slightly larger for readability */
+    -fx-font-family: "Arial Bold";
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, #122d82, 3, 1, 0, 0); /* Black border effect */
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-width: 0px;
+    /* -fx-padding: 5 5 5 5;*/
+}
+.combo-box:hover{
+    -fx-background-color:  #fff; /* Red background on hover */
+    -fx-text-fill: #122d82; /* White text on hover */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+.combo-box .combo-box-popup .list-view .list-cell:filled:selected {
+    -fx-text-fill: #ff0000; /* Set the text color of selected item to red */
+    -fx-background-color: #5aa0e3; /* Optional: set a background color for selected item */
+}
+
+/* Optionally change the color of the selected item when the dropdown is open */
+.combo-box .combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #5aa0e3; /* Highlight background on hover */
+    -fx-text-fill: white;
+}
+
+
+

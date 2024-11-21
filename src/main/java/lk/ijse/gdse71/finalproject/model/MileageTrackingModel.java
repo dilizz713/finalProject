@@ -37,7 +37,9 @@ public class MileageTrackingModel {
                     rst.getString(6),       //reservation id
                     rst.getDouble(7),       //start date mileage
                     rst.getDouble(8),       //end date mileage
-                    rst.getDouble(9)       //estimated mileage cost
+                    rst.getDouble(9),       //estimated mileage cost
+                    rst.getDate(10).toLocalDate(),       //start date
+                    rst.getDate(11).toLocalDate()       //end date
 
             );
             mileageTrackingDTOS.add(mileageTrackingDTO);
@@ -56,7 +58,7 @@ public class MileageTrackingModel {
 
     public boolean saveRecords(MileageTrackingDTO mileageTrackingDTO) throws SQLException {
         return  CrudUtil.execute(
-                "insert into MileageTracking values (?,?,?,?,?,?,?,?,?)",
+                "insert into MileageTracking values (?,?,?,?,?,?,?,?,?,?,?)",
                 mileageTrackingDTO.getId(),
                 mileageTrackingDTO.getEstimatedMileage(),
                 mileageTrackingDTO.getActualMileage(),
@@ -65,26 +67,16 @@ public class MileageTrackingModel {
                 mileageTrackingDTO.getReservationId(),
                 mileageTrackingDTO.getStartDateMileage(),
                 mileageTrackingDTO.getEndDateMileage(),
-                mileageTrackingDTO.getEstimatedMileageCost()
+                mileageTrackingDTO.getEstimatedMileageCost(),
+                mileageTrackingDTO.getStartDate(),
+                mileageTrackingDTO.getEndDate()
         );
     }
 
 
 
     public boolean updateRecords(MileageTrackingDTO mileageTrackingDTO) throws SQLException {
-        String query = "update MileageTracking set " +
-                "estimatedMileage = ?, " +
-                "actualMileage = ?, " +
-                "extraChargesPerKm = ?, " +
-                "totalExtraCharges = ?, " +
-                "reservationId = ?, " +
-                "startDateMileage = ?, " +
-                "endDateMileage = ?, " +
-                "estimatedMileageCost = ? " +
-                "where id = ?";
-
-        // Execute the update query with the provided values
-        return CrudUtil.execute(query,
+       return CrudUtil.execute(" update MileageTracking set estimatedMileage=? , actualMileage=? , extraChargesPerKm=?, totalExtraCharges=?, reservationId=? , startDateMileage=?, endDateMileage=?, estimatedMileageCost=?, startDate=?,endDate=? where id=?",
                 mileageTrackingDTO.getEstimatedMileage(),
                 mileageTrackingDTO.getActualMileage(),
                 mileageTrackingDTO.getExtraChargePerKm(),
@@ -93,6 +85,8 @@ public class MileageTrackingModel {
                 mileageTrackingDTO.getStartDateMileage(),
                 mileageTrackingDTO.getEndDateMileage(),
                 mileageTrackingDTO.getEstimatedMileageCost(),
+                mileageTrackingDTO.getStartDate(),
+                mileageTrackingDTO.getEndDate(),
                 mileageTrackingDTO.getId()
         );
     }

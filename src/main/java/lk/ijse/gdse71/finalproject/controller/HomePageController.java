@@ -6,19 +6,26 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class HomePageController implements Initializable{
+    @FXML
+    public Button btnLogOut;
 
+    @FXML
+    public ImageView logoutImageView;
     @FXML
     private Button btnCustomer;
 
@@ -42,8 +49,6 @@ public class HomePageController implements Initializable{
 
     @FXML
     private AnchorPane homeAnchorPane;
-
-    private Button activeButton;
 
 
     @FXML
@@ -78,8 +83,17 @@ public class HomePageController implements Initializable{
     }
 
     @FXML
-    void vehicleOnAction(ActionEvent event) {
+     void vehicleOnAction(ActionEvent event) {
         navigateTo("/view/vehicle-view.fxml");
+    }
+    @FXML
+    void clickOnLogOut(MouseEvent mouseEvent){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to Logout from System?", ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> optionalButtonType = alert.showAndWait();
+
+        if(optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES){
+            System.exit(0);
+        }
     }
 
     public void navigateTo(String fxmlPath){

@@ -1,3 +1,4 @@
+/*
 package lk.ijse.gdse71.finalproject.controller;
 
 import javafx.collections.FXCollections;
@@ -8,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.StringConverter;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
 import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
@@ -145,21 +147,6 @@ public class ReservationController implements Initializable {
             return;
         }
 
-
-
-       /* LocalDate startDate = lblStartDate.getText().isEmpty() ? null : LocalDate.parse(lblStartDate.getText());
-        LocalDate endDate = lblEndDate.getText().isEmpty() ? null : LocalDate.parse(lblEndDate.getText());
-*/
-
-       /* LocalDate startDate = rdbOngoing.isSelected() ? LocalDate.now() : null;
-        LocalDate endDate = rdbDone.isSelected() ? LocalDate.now() : null;*/
-
-        /*currentReservation.setStatus(status);
-        currentReservation.setStartDate(startDate);
-        currentReservation.setEndDate(endDate);*/
-
-
-
         System.out.println("Reservation saved with status: " + status);
 
         ReservationDTO reservationDTO = new ReservationDTO(id, startDate, endDate, customerId, vehicleId, status,reservationDate);
@@ -214,25 +201,30 @@ public class ReservationController implements Initializable {
        navigateTo("/view/reservation-vehicle-view.fxml");
     }
 
+
     @FXML
-    void handleStatus(ActionEvent event) {
-        if(rdbPending.isSelected()){
-            lblStartDate.setText("");
-            lblEndDate.setText("");
+    void selectedDoneButton(ActionEvent event) {
+        rdbPending.setSelected(false);
+        rdbPending.setDisable(true);
+        rdbOngoing.setSelected(false);
+        rdbOngoing.setDisable(true);
 
-        }else if(rdbOngoing.isSelected()){
-            lblStartDate.setText(LocalDate.now().toString());
-            lblEndDate.setText("");
-            /*rdbPending.setDisable(true);
-            rdbPending.setDisable(false);*/
+    }
 
-        }else if(rdbDone.isSelected()){
-            lblEndDate.setText(LocalDate.now().toString());
-           /* rdbPending.setDisable(true);
-            rdbOngoing.setDisable(true);*/
+    @FXML
+    void selectedOngoingButton(ActionEvent event) {
+        rdbPending.setSelected(false);
+        rdbDone.setSelected(false);
+        rdbPending.setDisable(true);
+        rdbDone.setDisable(true);
+    }
 
-
-        }
+    @FXML
+    void selectedPendingButton(ActionEvent event) {
+        rdbOngoing.setSelected(false);
+        rdbOngoing.setSelected(false);
+        rdbOngoing.setDisable(true);
+        rdbOngoing.setDisable(true);
     }
 
     @FXML
@@ -255,18 +247,14 @@ public class ReservationController implements Initializable {
 
         lblCurrentDate.setText(LocalDate.now().toString());
 
-        // ****
         lblStartDate.setText("");
         lblEndDate.setText("");
-// ****
+
 
         rdbPending.setOnAction(event -> handleStatusChange());
         rdbOngoing.setOnAction(event -> handleStatusChange());
         rdbDone.setOnAction(event -> handleStatusChange());
 
-        /*rdbPending.setOnAction(event -> clearDates());
-        rdbOngoing.setOnAction(event -> lblStartDate.setText(LocalDate.now().toString()));
-        rdbDone.setOnAction(event -> lblEndDate.setText(LocalDate.now().toString()));*/
 
         loadCustomerNames();
 
@@ -276,6 +264,18 @@ public class ReservationController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load vehicle id").show();
         }
+
+        cmbCustomer.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(CustomerDTO customer) {
+                return customer == null ? "" : customer.getName(); // Display only the name
+            }
+
+            @Override
+            public CustomerDTO fromString(String string) {
+                return null; // Not required for this use case
+            }
+        });
     }
 
     private void handleStatusChange() {
@@ -332,7 +332,7 @@ public class ReservationController implements Initializable {
             status = "Done";
             endDate = LocalDate.now();
         }
-       // String status = rdbPending.isSelected() ? "Pending" : rdbOngoing.isSelected() ? "Ongoing" : "Done";
+
         LocalDate reservationDate = LocalDate.now();
 
         if (selectedCustomer == null) {
@@ -388,8 +388,6 @@ public class ReservationController implements Initializable {
 
        lblReservationId.setText(reservationDTO.getId());
 
-      /* lblStartDate.setText(String.valueOf(reservationDTO.getStartDate()));
-       lblEndDate.setText(String.valueOf(reservationDTO.getEndDate()));*/
 
        lblCurrentDate.setText(reservationDTO.getReservationDate() != null ? reservationDTO.getReservationDate().toString() : LocalDate.now().toString());
         lblStartDate.setText(reservationDTO.getStartDate() != null ? reservationDTO.getStartDate().toString() : "");
@@ -397,16 +395,12 @@ public class ReservationController implements Initializable {
 
         originalStartDate = reservationDTO.getStartDate();
 
-
-
         String customerId = reservationDTO.getCustomerId();
-        CustomerDTO selectedCustomer = reservationModel.getCustomerDTOsForReservation()
-                .stream()
-                .filter(customer -> customer.getId().equals(customerId))
-                .findFirst()
-                .orElse(null);
-        if (selectedCustomer != null) {
-            cmbCustomer.getSelectionModel().select(selectedCustomer);
+        for (CustomerDTO customer : reservationModel.getCustomerDTOsForReservation()) {
+            if (customer.getId().equals(customerId)) {
+                cmbCustomer.getSelectionModel().select(customer);
+                break;
+            }
         }
 
         String vehicleId = reservationDTO.getVehicleId();
@@ -442,42 +436,12 @@ public class ReservationController implements Initializable {
         lblStartDate.setText(String.valueOf(reservationDTO.getStartDate()));
         lblEndDate.setText(String.valueOf(reservationDTO.getEndDate()));
 
-       // manageRadioButton();
-
-
-
-       /* switch (reservationDTO.getStatus()){
-           case "Pending":
-               rdbPending.setSelected(true);
-               break;
-           case "Ongoing":
-               rdbOngoing.setSelected(true);
-               lblStartDate.setText(String.valueOf(reservationDTO.getStartDate()));
-               break;
-           case "Done":
-               rdbDone.setSelected(true);
-               lblEndDate.setText(String.valueOf(reservationDTO.getEndDate()));
-               break;*/
 
        btnSave.setText("Update");
 
     }
 
-   /* private void manageRadioButton() {
-        if (currentReservation.getStatus().equals("Pending")) {
-            rdbPending.setDisable(true);
-            rdbOngoing.setDisable(false);
-            rdbDone.setDisable(false);
-        } else if (currentReservation.getStatus().equals("Ongoing")) {
-            rdbPending.setDisable(true);
-            rdbOngoing.setDisable(true);
-            rdbDone.setDisable(false);
-        } else if (currentReservation.getStatus().equals("Done")) {
-            rdbPending.setDisable(true);
-            rdbOngoing.setDisable(true);
-            rdbDone.setDisable(false);
-        }
-    }*/
+
 
     private void loadCustomerNames() {
         try {
@@ -517,19 +481,7 @@ public class ReservationController implements Initializable {
         }
     }
 
-   /* public void setReservationData(ReservationTM reservation) {
-        lblReservationId.setText(reservation.getId());
-        cmbCustomer.getSelectionModel().select(new CustomerDTO(reservation.getCustomerId(), reservation.getCustomerName(), null, null, 0, null));
-        lblModel.setText(reservation.getModel());
-        lblNumberPlate.setText(reservation.getVehicleId());
-        lblPrice.setText(String.valueOf(reservation.getPrice()));
 
-        if ("Pending".equals(reservation.getStatus())) rdbPending.setSelected(true);
-        else if ("Ongoing".equals(reservation.getStatus())) rdbOngoing.setSelected(true);
-        else if ("Done".equals(reservation.getStatus())) rdbDone.setSelected(true);
-
-        btnSave.setText("update");
-    }*/
 
 
     public void setVehicleDetails(VehicleDTO vehicle) {
@@ -546,3 +498,4 @@ public class ReservationController implements Initializable {
 
     }
 }
+*/

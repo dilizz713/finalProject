@@ -1,0 +1,205 @@
+/* General Background */
+#LoginVBox {
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+
+/* Labels */
+.label {
+    -fx-text-fill: #ffffff; /* White text for better contrast */
+    -fx-font-size: 16px; /* Slightly larger for readability */
+    -fx-font-family: "Arial Bold";
+     -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, black, 3, 1, 0, 0); /* Black border effect */
+}
+
+/* TextFields and PasswordFields */
+#txtUserName,
+#txtPassword{
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: #122d82;
+    -fx-border-width: 1px;
+    -fx-font-size: 13px;
+    -fx-padding: 5 10 5 10;
+
+}
+
+#txtUserName:hover,
+#txtPassword:hover{
+    -fx-background-color:  #fff; /* Red background on hover */
+    -fx-text-fill: black; /* White text on hover */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+
+/* Buttons */
+#btnSignup ,  #btnLogin  {
+    -fx-background-color: #ffffff; /* White background */
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-text-fill:  black; /* Bold red font color */
+    -fx-font-family: "Arial Bold";
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 5 5 5 5;
+    -fx-cursor: hand;
+    -fx-border-color:  #122d82; /* Optional red border for emphasis */
+    -fx-border-width: 0 px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 2, 0, 2, 2);
+    -fx-transition: all 0.3s ease;
+}
+
+#btnSignup:hover, #btnLogin:hover {
+    -fx-background-color:  #fff; /* Red background on hover */
+    -fx-text-fill: #122d82; /* White text on hover */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+#btnSignup:pressed, #btnLogin:pressed, #btnShow:pressed{
+    -fx-text-fill: black; /* Muted text color */
+    -fx-border-color: #3e3e3e; /* Darker border */
+    -fx-scale-x: 0.95; /* Slightly shrink button */
+    -fx-scale-y: 0.95;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 2, 0, 1, 1); /* Subtle shadow reduction */
+}
+
+
+
+#btnClose {
+    -fx-background-color: #95938b; /* Button background color */
+    -fx-text-fill: #122d82; /* Button text color */
+    -fx-font-size: 14px; /* Adjust text size if needed */
+    -fx-font-weight: bold; /* Make text bold */
+    -fx-background-radius: 50%; /* Circular shape */
+    -fx-border-radius: 50%; /* Circular border */
+    -fx-border-color: #122d82; /* Optional: add a border */
+    -fx-border-width: 2px; /* Border thickness */
+    -fx-pref-width: 15px; /* Set button width */
+    -fx-pref-height: 15px; /* Set button height */
+    -fx-alignment: center; /* Center align text */
+    -fx-cursor: hand; /* Pointer cursor on hover */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 2, 0, 2, 2); /* Optional shadow */
+}
+
+/* Hover effect for #btnClose */
+#btnClose:hover {
+    -fx-background-color: #122d82; /* Change background color on hover */
+    -fx-text-fill: #ffffff; /* Change text color on hover */
+    -fx-scale-x: 1.1; /* Slightly enlarge button */
+    -fx-scale-y: 1.1; /* Slightly enlarge button */
+}
+
+
+
+#btnShow {
+    -fx-background-color: #ffffff; /* White background */
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-text-fill:  black; /* Bold red font color */
+    -fx-font-family: "Arial Bold";
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 5 5 5 5;
+    -fx-cursor: hand;
+    -fx-border-color:  #122d82; /* Optional red border for emphasis */
+    -fx-border-width: 0px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 2, 0, 2, 2);
+    -fx-transition: all 0.3s ease;
+}
+
+#btnShow:hover {
+    -fx-background-color:  #9c8b0e; /* Red background on hover */
+    -fx-text-fill: #855913; /* White text on hover */
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/*.button {
+    -fx-background-color: linear-gradient(to bottom, #0078d7, #0053a6);
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Arial Bold";
+    -fx-font-size: 16px;
+    -fx-padding: 10 20 10 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 2, 0, 2, 2);
+    -fx-transition: all 0.3s ease;
+}
+
+!* Button Hover Effects *!
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #0053a6, #003a75);
+    -fx-scale-x: 1.05; !* Slightly enlarge button *!
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 4, 0, 2, 4); !* Enhanced shadow *!
+}
+
+!* Button Pressed Effect *!
+.button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #003a75, #002850);
+    -fx-scale-x: 0.98; !* Slight shrink for a tactile effect *!
+    -fx-scale-y: 0.98;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 1, 0, 0, 1);
+}*/
+
+/* ToggleButton */
+/*.toggle-button {
+    -fx-background-color: rgba(0, 120, 215, 0.8);
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 12px;
+    -fx-font-family: "Arial Bold";
+    -fx-transition: all 0.3s ease;
+}
+
+.toggle-button:hover {
+    -fx-background-color: rgba(0, 120, 215, 1);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.toggle-button:pressed {
+    -fx-background-color: rgba(0, 90, 160, 1);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}*/
+
+/* VBox and HBox Spacing */
+.hbox {
+    -fx-spacing: 10;
+}
+
+.vbox {
+    -fx-spacing: 15;
+}
+
+/* ImageView */
+.image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 5, 5);
+    -fx-transition: all 0.3s ease;
+}
+
+/*.image-view:hover {
+    -fx-scale-x: 1.03; !* Enlarge image slightly on hover *!
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 15, 0, 7, 7);
+}*/
+
+/* Show Password Label */
+#shownPwLabel,#lblSignUp {
+    -fx-text-fill: #ffff; /* Light blue for a clean look */
+    -fx-font-style: italic;
+    -fx-font-size: 14px;
+}
+#lblSignUp {
+    -fx-text-fill: #ffff; /* Light blue for a clean look */
+    -fx-font-style: italic;
+    -fx-font-size: 16px;
+}

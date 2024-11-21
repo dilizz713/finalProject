@@ -13,98 +13,90 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="loginPageAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.LoginPageController">
+<AnchorPane fx:id="loginPageAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/loginPage.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.LoginPageController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="-2.0" prefHeight="720.0" prefWidth="1286.0" style="-fx-background-color: #090909;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="726.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../assets/2.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane prefHeight="720.0" prefWidth="1280.0">
          <children>
-            <HBox alignment="CENTER_RIGHT" prefHeight="722.0" prefWidth="1286.0" VBox.vgrow="ALWAYS">
+            <VBox fx:id="LoginVBox" layoutX="159.0" layoutY="84.0" prefHeight="468.0" prefWidth="422.0" style="-fx-border-color: #122d82; -fx-border-width: 2 2 2 2;" AnchorPane.bottomAnchor="168.0" AnchorPane.leftAnchor="159.0" AnchorPane.rightAnchor="699.0" AnchorPane.topAnchor="84.0">
                <children>
-                  <VBox prefHeight="720.0" prefWidth="624.0" HBox.hgrow="ALWAYS">
+                  <HBox alignment="CENTER" prefHeight="102.0" prefWidth="361.0">
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="295.0" prefWidth="623.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <Label text="User Name" textFill="#bab8b8">
-                                 <font>
-                                    <Font name="System Bold" size="23.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="40.0" right="40.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <TextField fx:id="txtUserName" prefHeight="26.0" prefWidth="317.0" style="-fx-background-color: #bab8b8;">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </TextField>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="82.0" prefWidth="623.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <Label text="Password" textFill="#bab8b8">
-                                 <font>
-                                    <Font name="System Bold" size="23.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="40.0" right="50.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <PasswordField fx:id="txtPassword" onKeyTyped="#passwordKeyFieldType" prefHeight="26.0" prefWidth="317.0" style="-fx-background-color: #bab8b8;">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </PasswordField>
-                           </children>
-                        </HBox>
-                        <HBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="175.0" prefHeight="139.0" prefWidth="623.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <Label fx:id="shownPwLabel" prefHeight="21.0" prefWidth="252.0" text="Label" textFill="WHITE">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </Label>
-                              <ToggleButton fx:id="btnShow" mnemonicParsing="false" onAction="#passwordShowButtonOnAction" prefHeight="26.0" prefWidth="46.0" style="-fx-background-color: #bab8b8;" text="Show">
-                                 <HBox.margin>
-                                    <Insets right="108.0" />
-                                 </HBox.margin>
-                                 <font>
-                                    <Font name="System Bold" size="11.0" />
-                                 </font>
-                              </ToggleButton>
-                           </children>
-                        </HBox>
-                        <HBox alignment="BOTTOM_LEFT" prefHeight="337.0" prefWidth="623.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <Button fx:id="btnSignup" mnemonicParsing="false" onAction="#SignupBtnOnAction" style="-fx-background-color: #bab8b8;" text="SignUp">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets bottom="25.0" left="40.0" right="50.0" top="100.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button fx:id="btnLogin" layoutX="50.0" layoutY="10.0" mnemonicParsing="false" onAction="#LoginButtonOnAction" style="-fx-background-color: #bab8b8;" text="Login">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets bottom="25.0" left="300.0" top="100.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
+                        <Label prefHeight="22.0" prefWidth="119.0" text="User Name" textFill="#bab8b8">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtUserName" prefHeight="38.0" prefWidth="261.0" style="-fx-background-color: #bab8b8;">
+                           <font>
+                              <Font size="5.0" />
+                           </font>
+                        </TextField>
                      </children>
-                  </VBox>
-                  <ImageView fx:id="loginImage" fitHeight="473.0" fitWidth="663.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
-                     <image>
-                        <Image url="@../assets/login.jpg" />
-                     </image>
-                  </ImageView>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="48.0" prefWidth="422.0">
+                     <children>
+                        <Label prefHeight="22.0" prefWidth="120.0" text="Password" textFill="#bab8b8">
+                           <font>
+                              <Font name="System Bold" size="23.0" />
+                           </font>
+                        </Label>
+                        <PasswordField fx:id="txtPassword" onKeyTyped="#passwordKeyFieldType" prefHeight="38.0" prefWidth="261.0" style="-fx-background-color: #bab8b8;">
+                           <font>
+                              <Font size="5.0" />
+                           </font>
+                        </PasswordField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="10.0" layoutY="112.0" prefHeight="28.0" prefWidth="422.0">
+                     <children>
+                        <Label fx:id="shownPwLabel" prefHeight="21.0" prefWidth="170.0" text="Label" textFill="WHITE">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="150.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ToggleButton fx:id="btnShow" mnemonicParsing="false" onAction="#passwordShowButtonOnAction" prefHeight="30.0" prefWidth="62.0" style="-fx-background-color: #bab8b8;" text="Show">
+                           <font>
+                              <Font name="System Bold" size="11.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ToggleButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="105.0" prefWidth="402.0">
+                     <children>
+                        <Label fx:id="lblSignUp" prefHeight="22.0" prefWidth="226.0" text="Don't you have Signup yet ?" />
+                        <Button fx:id="btnSignup" mnemonicParsing="false" onAction="#SignupBtnOnAction" prefHeight="33.0" prefWidth="99.0" style="-fx-background-color: #bab8b8;" text="SignUp">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="147.0" prefWidth="422.0">
+                     <children>
+                        <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#LoginButtonOnAction" prefHeight="35.0" prefWidth="121.0" style="-fx-background-color: #bab8b8;" text="Login">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+            </VBox>
          </children>
-      </VBox>
+      </AnchorPane>
    </children>
 </AnchorPane>

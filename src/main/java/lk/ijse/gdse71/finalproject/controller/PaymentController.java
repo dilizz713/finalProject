@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -17,6 +18,7 @@ import lk.ijse.gdse71.finalproject.dto.tm.PaymentTM;
 import lk.ijse.gdse71.finalproject.model.PaymentModel;
 import lk.ijse.gdse71.finalproject.model.ReservationModel;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -29,25 +31,22 @@ public class PaymentController implements Initializable {
     public ComboBox cmbReservationId;
 
     @FXML
+    public TableColumn<PaymentTM, Void> colAction;
+
+    @FXML
+    public TableColumn<PaymentTM, Double> colAdvanceAmount;
+
+    @FXML
+    public TableColumn<PaymentTM, Double> colFullAmount;
+
+    @FXML
     private Button btnBack;
 
     @FXML
     private Button btnDelete;
 
     @FXML
-    private Button btnInvoice;
-
-    @FXML
     private Button btnReset;
-
-    @FXML
-    private Button btnSave;
-
-    @FXML
-    private Button btnUpdate;
-
-    @FXML
-    private TableColumn<PaymentTM, Double> colAmount;
 
     @FXML
     private TableColumn<PaymentTM, String> colCutomer;
@@ -64,18 +63,6 @@ public class PaymentController implements Initializable {
     @FXML
     private TableColumn<PaymentTM, String> colStatus;
 
-    @FXML
-    private TableColumn<PaymentTM, String> colType;
-
-    @FXML
-    private Label lblCustomerName;
-
-    @FXML
-    private Label lblPaymentId;
-
-    @FXML
-    private Label lblcurrentDate;
-
 
     @FXML
     private AnchorPane paymentAnchorPane;
@@ -84,86 +71,65 @@ public class PaymentController implements Initializable {
     private TableView<PaymentTM> paymentTable;
 
     @FXML
-    private RadioButton rdbAdvancePAymentBtn;
-
-    @FXML
-    private RadioButton rdbFullyPayment;
-
-    @FXML
     private TextField txtSearchBar;
 
-    @FXML
-    private TextField txtAmount;
 
     PaymentModel paymentModel = new PaymentModel();
     ReservationModel reservationModel = new ReservationModel();
     ReservationDTO reservationDTO = new ReservationDTO();
 
-    @FXML
-    void SaveOnAction(ActionEvent event) {
-        String id = lblPaymentId.getText();
-        String reservationId = cmbReservationId.getValue() != null ? cmbReservationId.getValue().toString() : null; // Selected Reservation ID
-        String type = rdbAdvancePAymentBtn.isSelected() ? "Advance Payment" : "Full Payment";
-        LocalDate date = LocalDate.now();
-        String amountText = txtAmount.getText();
+    private PaymentTM selectedPaymentTM;
 
-        if (reservationId == null || txtAmount.getText().isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "Please select a reservation and enter an amount.").show();
-            return;
-        }
-        double amount =  0;
-        try{
-            amount = Double.parseDouble(amountText);
-        }catch (NumberFormatException e){
-            new Alert(Alert.AlertType.ERROR, "Invalid amount entered!").show();
-            return;
-        }
-
-        String status = rdbAdvancePAymentBtn.isSelected() ? "Pending " : "Done";
-
-        PaymentDTO paymentDTO = new PaymentDTO(id, amount, date, type, status, reservationId);
-
-        try {
-            boolean isSaved = paymentModel.savePayment(paymentDTO);
-
-            // Update Advance Payment status to "Done" if Full Payment is made
-            if (rdbFullyPayment.isSelected()) {
-                paymentModel.updateAdvancePaymentStatus(reservationId);
-            }
-
-            if (isSaved) {
-                new Alert(Alert.AlertType.INFORMATION, "Payment saved successfully.").show();
-                refreshPage();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Failed to save payment.").show();
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Error occurred: " + e.getMessage()).show();
-        }
-
-
-    }
 
     @FXML
     void clickedTable(MouseEvent event) {
+       selectedPaymentTM = paymentTable.getSelectionModel().getSelectedItem();
+       if(selectedPaymentTM != null){
+           btnDelete.setDisable(false);
+       }
+
 
     }
 
     @FXML
     void deleteOnAction(ActionEvent event) {
 
+        if (selectedPaymentTM == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select a record to delete.").show();
+            return;
+        }
+
+        try {
+            boolean isDeleted = paymentModel.deletePayment(selectedPaymentTM.getId());
+
+            if (isDeleted) {
+                new Alert(Alert.AlertType.INFORMATION, "Payment deleted successfully.").show();
+                refreshPage();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Failed to delete payment.").show();
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error occurred: " + e.getMessage()).show();
+        }
     }
 
-    @FXML
+   /* @FXML
     void navigateToInvoice(ActionEvent event) {
 
     }
-
+*/
     @FXML
     void navigateToReservationView(ActionEvent event) {
-
+        try{
+            paymentAnchorPane.getChildren().clear();
+            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/newReservation.fxml"));
+            paymentAnchorPane.getChildren().add(load);
+        }catch (IOException e){
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
+        }
     }
 
     @FXML
@@ -171,19 +137,28 @@ public class PaymentController implements Initializable {
         refreshPage();
     }
 
-    @FXML
-    void selectAdvancePaymentBtn(ActionEvent event) {
 
-    }
 
-    @FXML
-    void selectFullyPaymentBtn(ActionEvent event) {
 
-    }
 
     @FXML
-    void updateOnAction(ActionEvent event) {
+    void updateOnAction(ActionEvent event) throws IOException, SQLException {
+        if(selectedPaymentTM == null){
+            new Alert(Alert.AlertType.WARNING, "Please select a payment to update!").show();
+            return;
+        }
+        PaymentDTO selectedPayment = paymentModel.getPaymentById(selectedPaymentTM.getId());
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/newReservation.fxml"));
+        AnchorPane paymentPane = loader.load();
+        NewReservationController controller = loader.getController();
+
+
+        controller.setPaymentDetails(selectedPayment);
+        controller.setPaymentController(this);
+
+        paymentAnchorPane.getChildren().clear();
+        paymentAnchorPane.getChildren().add(paymentPane);
     }
 
 
@@ -192,26 +167,36 @@ public class PaymentController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colPaymentId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colCutomer.setCellValueFactory(new PropertyValueFactory<>("customer"));
-        colType.setCellValueFactory(new PropertyValueFactory<>("type"));
-        colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        colAdvanceAmount.setCellValueFactory(new PropertyValueFactory<>("advancePayment"));
+        colFullAmount.setCellValueFactory(new PropertyValueFactory<>("fullPayment"));
         colReservationId.setCellValueFactory(new PropertyValueFactory<>("reservationId"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colAction.setCellValueFactory(new PropertyValueFactory<>("updateButton"));
 
 
-
-
-
-        lblcurrentDate.setText(LocalDate.now().toString());
+        txtSearchBar.setOnAction(event ->{
+            //searchPaymentRecords();
+        });
 
         try {
-            loadReservationIds();
+            loadTableData();
             refreshPage();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load vehicle id").show();
         }
+        try {
+            refreshPage();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Fail to load vehicle id").show();
+        }
+
+        btnDelete.setDisable(true);
     }
+
+
 
     private void loadReservationIds() throws SQLException {
         ArrayList<String> reservationID = reservationModel.getAllReservationIds();
@@ -219,29 +204,10 @@ public class PaymentController implements Initializable {
     }
 
     private void refreshPage() throws SQLException, ClassNotFoundException {
-        loadNextPaymentId();
         loadTableData();
 
-        String defaultStyle = "-fx-border-color: white; -fx-text-fill: white; -fx-background-color: transparent; -fx-border-width:  0 0 1";
-
-        txtAmount.setStyle(defaultStyle);
-
-        lblCustomerName.setText("");
-        txtAmount.clear();
-        rdbAdvancePAymentBtn.setSelected(false);
-        rdbFullyPayment.setSelected(false);
-
-        btnSave.setDisable(false);
-        btnDelete.setDisable(true);
-        btnUpdate.setDisable(true);
-
-
     }
 
-    public void loadNextPaymentId() throws SQLException {
-        String nextPaymentID = paymentModel.getNextPaymentId();
-        lblPaymentId.setText(nextPaymentID);
-    }
 
     private void loadTableData() throws SQLException, ClassNotFoundException {
 
@@ -249,38 +215,71 @@ public class PaymentController implements Initializable {
         ObservableList<PaymentTM> paymentTMS = FXCollections.observableArrayList();
 
         for(PaymentDTO paymentDTO:paymentDTOS){
-            String customerName = reservationModel.getCustomerNameByReservationId(paymentDTO.getReservationId());
+            String customerName = reservationModel.getCustomerNameById(reservationDTO.getCustomerId());
             System.out.println(customerName);
 
-            PaymentTM paymentTM = new PaymentTM(
+            Button updateButton = new Button("Update");
+
+            updateButton.setStyle(" -fx-text-fill: black; -fx-font-weight: bold;-fx-background-color: white; -fx-border-radius: 1 1 1 1;-fx-start-margin:2;-fx-end-margin: 2;  -fx-background-radius: 1 1 1 1;-fx-border-color:#6b6e76;-fx-font-size: 12px;");
+
+
+            updateButton.setOnAction(event -> {
+                try {
+                    navigateToReservationDetails(paymentDTO.getReservationId(),paymentDTO);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+
+           PaymentTM paymentTM = new PaymentTM(
                     paymentDTO.getId(),
                     customerName,
-                    paymentDTO.getType(),
-                    paymentDTO.getAmount(),
+                    paymentDTO.getAdvancePayment(),
+                    paymentDTO.getFullPayment(),
                     paymentDTO.getReservationId(),
                     paymentDTO.getDate(),
-                    paymentDTO.getStatus()
+                    paymentDTO.getStatus(),
+                    updateButton
+
 
 
             );
-            paymentTMS.add(paymentTM);
+             paymentTMS.add(paymentTM);
         }
         paymentTable.setItems(paymentTMS);
 
     }
 
-    @FXML
-    public void selectReservationId(ActionEvent actionEvent) {
-        String selectedReservationId = cmbReservationId.getValue() != null ? cmbReservationId.getValue().toString() : null;
+    private void navigateToReservationDetails(String reservationId, PaymentDTO paymentDTO) throws IOException, SQLException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/newReservation.fxml"));
+        AnchorPane reservationAnchorPane = loader.load();
+        NewReservationController controller = loader.getController();
 
-        if(selectedReservationId != null){
-            try{
-                String customerName = reservationModel.getCustomerNameByReservationId(selectedReservationId);
-                lblCustomerName.setText(customerName);
-            }catch (SQLException e){
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Fail to load customer name").show();
-            }
-        }
+        ReservationDTO reservationDTO = reservationModel.getReservationById(reservationId);
+
+        controller.setReservationDetails(reservationDTO);
+        controller.setPaymentDetails(paymentDTO);
+
+        paymentAnchorPane.getChildren().clear();
+        paymentAnchorPane.getChildren().add(reservationAnchorPane);
+
+      /*  FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/new-reservation-view.fxml"));
+        AnchorPane pane = loader.load();
+
+        NewReservationController controller = loader.getController();
+        controller.setPaymentDetails(paymentDTO);
+        controller.setPaymentController(this);
+
+        paymentAnchorPane.getChildren().clear();
+        paymentAnchorPane.getChildren().add(pane);*/
+
+
+    }
+
+
+    public void refreshTable() throws SQLException, ClassNotFoundException {
+        loadTableData();
     }
 }

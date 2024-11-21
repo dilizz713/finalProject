@@ -5,28 +5,35 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="vehicleTableAnchorPane" prefHeight="726.0" prefWidth="1120.0" style="-fx-background-color: #27272d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.VehicleTableViewController">
+<AnchorPane fx:id="vehicleTableAnchorPane" prefHeight="720.0" prefWidth="1064.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.VehicleTableViewController">
    <children>
-      <VBox layoutY="-2.0" prefHeight="726.0" prefWidth="1120.0">
+      <ImageView fitHeight="720.0" fitWidth="1064.0" layoutX="7.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../assets/background.jpg" />
+         </image>
+      </ImageView>
+      <VBox layoutX="20.0" layoutY="18.0" prefHeight="720.0" prefWidth="1064.0" stylesheets="@../css/customer.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="TOP_RIGHT" prefHeight="49.0" prefWidth="1120.0">
+            <HBox prefHeight="49.0" prefWidth="1120.0">
                <children>
-                  <Button fx:id="btnBack" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navigateToVehicleView" prefHeight="32.0" prefWidth="60.0" style="-fx-background-color: #27272d;" text="&lt;&lt;" textFill="WHITE">
+                  <Button fx:id="btnBack" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navigateToVehicleView" prefHeight="29.0" prefWidth="46.0" text="&lt;&lt;" textFill="WHITE">
                      <HBox.margin>
-                        <Insets right="750.0" top="10.0" />
+                        <Insets left="30.0" right="600.0" top="20.0" />
                      </HBox.margin>
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Button>
-                  <TextField fx:id="searchBar" prefHeight="26.0" prefWidth="310.0" promptText="search">
+                  <TextField fx:id="searchBar" prefHeight="33.0" prefWidth="350.0" promptText="search">
                      <HBox.margin>
-                        <Insets right="30.0" top="10.0" />
+                        <Insets right="30.0" top="20.0" />
                      </HBox.margin>
                      <font>
                         <Font name="System Bold Italic" size="13.0" />
@@ -34,9 +41,9 @@
                   </TextField>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="49.0" prefWidth="1120.0">
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="41.0" prefWidth="1064.0">
                <children>
-                  <Button fx:id="btnDelete" layoutX="110.0" layoutY="22.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="26.0" prefWidth="151.0" style="-fx-background-color: #a63322;" text="Delete" textFill="WHITE">
+                  <Button fx:id="btnDelete" layoutX="110.0" layoutY="22.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="26.0" prefWidth="151.0" text="Delete" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="100.0" />
                      </HBox.margin>
@@ -44,7 +51,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnReset" layoutX="561.0" layoutY="20.0" mnemonicParsing="false" onAction="#resetOnAction" prefHeight="26.0" prefWidth="151.0" style="-fx-background-color: #5e39a4;" text="Reset" textFill="WHITE">
+                  <Button fx:id="btnReset" layoutX="561.0" layoutY="20.0" mnemonicParsing="false" onAction="#resetOnAction" prefHeight="26.0" prefWidth="151.0" text="Reset" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -53,6 +60,9 @@
                      </HBox.margin>
                   </Button>
                </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
             </HBox>
             <TableView fx:id="vehicleTableView" onMouseClicked="#clickedTable" prefHeight="635.0" prefWidth="1120.0" style="-fx-background-color: #a0b5c9;">
                <columns>
@@ -64,8 +74,11 @@
                   <TableColumn fx:id="colDate" prefWidth="120.0" text="Date" />
                   <TableColumn fx:id="colPrice" prefWidth="106.0" text="Price" />
                   <TableColumn fx:id="colImage" prefWidth="118.0" text="Image" />
-                  <TableColumn fx:id="colAction" prefWidth="199.0" text="Action" />
+                  <TableColumn fx:id="colAction" prefWidth="105.0" text="Action" />
                </columns>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
             </TableView>
          </children>
       </VBox>

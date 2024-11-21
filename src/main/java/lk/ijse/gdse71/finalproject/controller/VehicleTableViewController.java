@@ -224,10 +224,12 @@ public class VehicleTableViewController implements Initializable {
                 imageView.setFitHeight(50);  // Set the size for displaying
                 imageView.setFitWidth(50);   // Adjust the size to fit the table
             }
-            // Create the update button for each row
+
             Button updateButton = new Button("Update");
 
-            // Set up the action for the update button
+            updateButton.setStyle("-fx-text-fill: black; -fx-font-weight: bold;-fx-background-color: white; -fx-border-radius: 1 1 1 1;-fx-start-margin:2;-fx-end-margin: 2;  -fx-background-radius: 1 1 1 1;-fx-border-color:#6b6e76;-fx-font-size: 12px; ");
+
+
             updateButton.setOnAction(event -> {
                 try {
                     openVehicleUpdateView(vehicleDTO);
@@ -242,7 +244,7 @@ public class VehicleTableViewController implements Initializable {
                 registrationDate = vehicleDTO.getRegistrationDate();
             }
 
-            // Create VehicleTM with the update button included
+
             VehicleTM vehicleTM = new VehicleTM(
                     vehicleDTO.getId(),
                     vehicleDTO.getNumberPlate(),
@@ -252,7 +254,7 @@ public class VehicleTableViewController implements Initializable {
                     registrationDate,
                     vehicleDTO.getPrice(),
                     vehicleDTO.getImage(),
-                    updateButton  // Pass the update button here
+                    updateButton
             );
 
             vehicleTMS.add(vehicleTM);
@@ -266,9 +268,9 @@ public class VehicleTableViewController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/vehicle-view.fxml"));
         AnchorPane pane = loader.load();
         VehicleController controller = loader.getController();
-        controller.setVehicleData(vehicleDTO);  // Set data to be edited
+        controller.setVehicleData(vehicleDTO);
 
-        vehicleTableAnchorPane.getChildren().clear();  // Display the view
-        vehicleTableAnchorPane.getChildren().add(pane);  // Display the view
+        vehicleTableAnchorPane.getChildren().clear();
+        vehicleTableAnchorPane.getChildren().add(pane);
     }
 }

@@ -94,5 +94,36 @@ public class CustomerModel {
     }
 
 
+    public ArrayList<String> getAllCustomerNames() throws SQLException {
+        String query = "select name from Customer";
+        ResultSet rst = CrudUtil.execute(query);
 
+        ArrayList<String> customerNames = new ArrayList<>();
+
+        while (rst.next()){
+            customerNames.add(rst.getString("name"));
+        }
+        return customerNames;
+
+    }
+
+    public String getCustomerIdByName(String name) throws SQLException {
+        String sql = "select id from Customer where name = ?";
+        ResultSet resultSet = CrudUtil.execute(sql, name);
+
+        if (resultSet.next()) {
+            return resultSet.getString("id");
+        }
+        return null;
+    }
+
+    public String getCustomerNameById(String customerId) throws SQLException {
+        String sql = "select name from Customer where id = ?";
+        ResultSet resultSet = CrudUtil.execute(sql, customerId);
+
+        if (resultSet.next()) {
+            return resultSet.getString("name");
+        }
+        return null;
+    }
 }

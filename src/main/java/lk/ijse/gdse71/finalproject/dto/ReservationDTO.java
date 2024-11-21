@@ -12,17 +12,13 @@ import java.time.LocalDate;
 @ToString
 public class ReservationDTO {
     private String id;
-    private LocalDate startDate;
-    private LocalDate endDate;
     private String customerId;
     private String vehicleId;
     private String status;
     private LocalDate reservationDate;
 
-    public ReservationDTO(String id, LocalDate startDate, LocalDate endDate , String status) {
+    public ReservationDTO(String id,String status) {
         this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
         this.status = status;
     }
 
@@ -30,6 +26,7 @@ public class ReservationDTO {
         this.id = id;
 
     }
+
 
 
 }

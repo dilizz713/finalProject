@@ -12,10 +12,10 @@ import java.util.Date;
 @ToString
 public class PaymentDTO {
     private String id;
-    private double amount;
     private LocalDate date;
-    private String type;
     private String status;
     private String reservationId;
+    private double advancePayment;
+    private double fullPayment;
 
 }

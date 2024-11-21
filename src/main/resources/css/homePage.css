@@ -1,0 +1,42 @@
+
+
+.button{
+    -fx-background-color: #9a8f8f;
+    -fx-text-fill: black;
+    -fx-font-family: "Arial Bold";
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-padding: 10 15;
+    -fx-background-radius: 50;
+    -fx-border-radius: 15;
+    -fx-border-color: black;
+    -fx-border-width: 0px;
+    -fx-cursor: hand; /* Pointer cursor on hover */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0, 2, 2); /* Subtle shadow effect */
+    -fx-transition: all 0.3s ease; /* Smooth transition for hover effects */
+
+
+}
+
+
+
+/* Hover Style */
+.button:hover{
+    -fx-text-fill: #dcdcdc; /* Softer text color */
+    -fx-border-color: #5a5a5a; /* Lighter border on hover */
+    -fx-scale-x: 1.05; /* Slightly enlarge button */
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 3, 3); /* Enhanced shadow on hover */
+}
+
+/* Pressed Style */
+.button:pressed{
+    -fx-text-fill: #b3b3b3; /* Muted text color */
+    -fx-border-color: #3e3e3e; /* Darker border */
+    -fx-scale-x: 0.95; /* Slightly shrink button */
+    -fx-scale-y: 0.95;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 2, 0, 1, 1); /* Subtle shadow reduction */
+}
+
+
+

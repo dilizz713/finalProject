@@ -2,125 +2,56 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="paymentAnchorPane" prefHeight="726.0" prefWidth="1120.0" style="-fx-background-color: #27272d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.PaymentController">
+<AnchorPane fx:id="paymentAnchorPane" prefHeight="720.0" prefWidth="1064.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.PaymentController">
    <children>
-      <VBox prefHeight="720.0" prefWidth="1120.0">
+      <ImageView fitHeight="720.0" fitWidth="1064.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../assets/background.jpg" />
+         </image>
+      </ImageView>
+      <VBox layoutX="34.0" layoutY="22.0" prefHeight="720.0" prefWidth="1064.0" stylesheets="@../css/customer.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="1120.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="77.0" prefWidth="1064.0">
                <children>
-                  <Button fx:id="btnBack" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navigateToReservationView" prefHeight="32.0" prefWidth="481.0" style="-fx-background-color: #27272d;" text="&lt;&lt;" textFill="WHITE">
+                  <Button fx:id="btnBack" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#navigateToReservationView" prefHeight="39.0" prefWidth="46.0" text="&lt;&lt;" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets left="30.0" top="10.0" />
+                     </HBox.margin>
                   </Button>
-                  <Label fx:id="lblPaymentId" prefHeight="22.0" prefWidth="314.0" text="1" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtSearchBar" prefHeight="26.0" prefWidth="312.0" promptText="search">
+                  <TextField fx:id="txtSearchBar" prefHeight="33.0" prefWidth="448.0" promptText="search">
                      <font>
                         <Font name="System Bold Italic" size="13.0" />
                      </font>
                      <HBox.margin>
-                        <Insets right="30.0" />
+                        <Insets left="500.0" />
                      </HBox.margin>
                   </TextField>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="55.0" prefWidth="1120.0">
+            <HBox alignment="TOP_CENTER" prefHeight="64.0" prefWidth="1064.0">
                <children>
-                  <Label prefHeight="22.0" prefWidth="146.0" text="Reservation Id :" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Label>
-                  <ComboBox fx:id="cmbReservationId" onAction="#selectReservationId" prefHeight="26.0" prefWidth="182.0" />
-                  <Label fx:id="lblCustomerName" prefHeight="22.0" prefWidth="380.0" text="customerName" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="50.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label fx:id="lblcurrentDate" prefHeight="22.0" prefWidth="178.0" text="Date" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <RadioButton fx:id="rdbAdvancePAymentBtn" mnemonicParsing="false" onAction="#selectAdvancePaymentBtn" prefHeight="22.0" prefWidth="309.0" text="Advance Payment" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="50.0" />
-                     </HBox.margin>
-                  </RadioButton>
-                  <RadioButton fx:id="rdbFullyPayment" layoutX="60.0" layoutY="49.0" mnemonicParsing="false" onAction="#selectFullyPaymentBtn" prefHeight="22.0" prefWidth="495.0" text="Fully Payment" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </RadioButton>
-                  <Label prefHeight="22.0" prefWidth="44.0" text="LKR" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtAmount" prefHeight="26.0" prefWidth="201.0" style="-fx-background-color: #27272d; -fx-border-color: white; -fx-border-width: 0 0 1;">
-                     <font>
-                        <Font size="14.0" />
-                     </font></TextField>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="1120.0">
-               <children>
-                  <Button fx:id="btnSave" mnemonicParsing="false" onAction="#SaveOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #35068c;" text="Save" textFill="WHITE">
+                  <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="26.0" prefWidth="142.0" text="Delete" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="60.0" right="120.0" />
+                        <Insets right="400.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updateOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #4f80b8;" text="Update" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="120.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #a63322;" text="Delete" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="100.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="btnReset" mnemonicParsing="false" onAction="#resetOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #5e39a4;" text="Reset" textFill="WHITE">
+                  <Button fx:id="btnReset" mnemonicParsing="false" onAction="#resetOnAction" prefHeight="26.0" prefWidth="142.0" text="Reset" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -128,26 +59,25 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnInvoice" layoutX="70.0" layoutY="23.0" mnemonicParsing="false" onAction="#navigateToInvoice" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #e28743;" text="Bill" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="60.0" right="60.0" />
-                     </HBox.margin>
-                  </Button>
                </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </VBox.margin>
             </HBox>
-            <TableView fx:id="paymentTable" onMouseClicked="#clickedTable" prefHeight="461.0" prefWidth="1120.0" style="-fx-background-color: #a0b5c9;">
+            <TableView fx:id="paymentTable" onMouseClicked="#clickedTable" prefHeight="528.0" prefWidth="1004.0">
                <columns>
-                  <TableColumn fx:id="colPaymentId" prefWidth="132.0" text="Payment Id" />
-                  <TableColumn fx:id="colCutomer" prefWidth="150.0" text="Customer" />
-                  <TableColumn fx:id="colType" prefWidth="167.0" text="Type" />
-                  <TableColumn fx:id="colAmount" prefWidth="152.0" text="Amount" />
-                  <TableColumn fx:id="colReservationId" prefWidth="164.0" text="Reservation Id" />
-                  <TableColumn fx:id="colDate" prefWidth="159.0" text="Date" />
-                  <TableColumn fx:id="colStatus" prefWidth="195.0" text="Status" />
+                  <TableColumn fx:id="colPaymentId" prefWidth="109.0" text="Payment Id" />
+                  <TableColumn fx:id="colCutomer" prefWidth="115.0" text="Customer" />
+                  <TableColumn fx:id="colAdvanceAmount" prefWidth="111.0" text="Advance Amount" />
+                  <TableColumn fx:id="colFullAmount" prefWidth="145.0" text="Full Amount" />
+                  <TableColumn fx:id="colReservationId" prefWidth="115.0" text="Reservation Id" />
+                  <TableColumn fx:id="colDate" prefWidth="111.0" text="Date" />
+                  <TableColumn fx:id="colStatus" prefWidth="148.0" text="Status" />
+                  <TableColumn fx:id="colAction" prefWidth="148.0" text="Action" />
                </columns>
+               <VBox.margin>
+                  <Insets left="30.0" right="30.0" />
+               </VBox.margin>
             </TableView>
          </children>
       </VBox>

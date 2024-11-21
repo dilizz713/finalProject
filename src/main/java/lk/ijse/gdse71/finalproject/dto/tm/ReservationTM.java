@@ -17,11 +17,10 @@ public class ReservationTM {
     private String customerName;
     private String numberPlate;
     private String model;
-    private LocalDate startDate;
-    private LocalDate endDate;
     private double price;
     private String status;
     private Button updateButton;
+    private Button addMileageButton;
 
 
 }

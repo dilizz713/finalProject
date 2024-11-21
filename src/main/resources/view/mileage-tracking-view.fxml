@@ -3,22 +3,52 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mileageTrackingAnchorPane" prefHeight="726.0" prefWidth="1120.0" style="-fx-background-color: #27272d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.MileageTrackingController">
+<AnchorPane fx:id="mileageTrackingAnchorPane" prefHeight="720.0" prefWidth="1064.0" style="-fx-background-color: #d7dce2;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.MileageTrackingController">
    <children>
-      <VBox layoutY="-2.0" prefHeight="720.0" prefWidth="1120.0">
+      <ImageView fitHeight="720.0" fitWidth="1064.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../assets/background.jpg" />
+         </image>
+      </ImageView>
+      <VBox fx:id="vBox" layoutX="30.0" layoutY="29.0" prefHeight="720.0" prefWidth="1064.0" stylesheets="@../css/customer.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="1120.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="112.0" prefWidth="1064.0">
                <children>
-                  <Label fx:id="lblTrackingId" layoutX="40.0" layoutY="31.0" prefHeight="22.0" prefWidth="718.0" text="1" textFill="WHITE">
+                  <DatePicker fx:id="startDatePicker" prefHeight="33.0" prefWidth="207.0" promptText="Start Date" style="-fx-background-color: black;">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </DatePicker>
+                  <Label fx:id="lblTrackingId" alignment="CENTER" layoutX="40.0" layoutY="31.0" prefHeight="31.0" prefWidth="126.0" text="1" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="300.0" />
+                     </HBox.margin>
+                  </Label>
+                  <DatePicker fx:id="endDatePicker" layoutX="40.0" layoutY="26.0" prefHeight="33.0" prefWidth="207.0" promptText="End Date" style="-fx-background-color: black;">
+                     <HBox.margin>
+                        <Insets left="150.0" />
+                     </HBox.margin>
+                  </DatePicker>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="92.0" prefWidth="1064.0">
+               <children>
+                  <Label fx:id="label" prefHeight="18.0" prefWidth="140.0" text="Reservation Id" textFill="#819dbc">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -26,53 +56,47 @@
                         <Insets left="30.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="txtSearchBar" prefHeight="26.0" prefWidth="360.0" promptText="search">
+                  <ComboBox fx:id="cmbReservationId" prefHeight="20.0" prefWidth="148.0">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin></ComboBox>
+                  <Label fx:id="label" prefHeight="18.0" prefWidth="133.0" text="Start Mileage" textFill="#819dbc">
                      <font>
-                        <Font name="System Bold Italic" size="13.0" />
+                        <Font name="System Bold" size="16.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtStartMile" alignment="CENTER" prefHeight="27.0" prefWidth="171.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Label fx:id="label" layoutX="357.0" layoutY="25.0" prefHeight="18.0" prefWidth="122.0" text="End  Mileage" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtEndMile" alignment="CENTER" layoutX="490.0" layoutY="23.0" prefHeight="27.0" prefWidth="171.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
                   </TextField>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="52.0" prefWidth="1120.0">
+            <HBox fx:id="hBox" alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="106.0" prefWidth="1064.0">
                <children>
-                  <Label prefHeight="22.0" prefWidth="133.0" text="Reservation Id" textFill="#819dbc">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Label>
-                  <ComboBox fx:id="cmbReservationId" prefHeight="26.0" prefWidth="154.0" />
-                  <Label prefHeight="22.0" prefWidth="133.0" text="Start Mileage" textFill="#819dbc">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="100.0" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="txtStartMile" prefHeight="27.0" prefWidth="171.0" style="-fx-background-color: #27272d; -fx-border-color: white; -fx-border-width: 0 0 1;">
-                     <font>
-                        <Font size="14.0" />
-                     </font></TextField>
-                  <Label layoutX="357.0" layoutY="25.0" prefHeight="22.0" prefWidth="133.0" text="End  Mileage" textFill="#819dbc">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="txtEndMile" layoutX="490.0" layoutY="23.0" prefHeight="27.0" prefWidth="171.0" style="-fx-background-color: #27272d; -fx-border-color: white; -fx-border-width: 0 0 1;">
-                     <font>
-                        <Font size="14.0" />
-                     </font></TextField>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="52.0" prefWidth="1120.0">
-               <children>
-                  <Label prefHeight="22.0" prefWidth="198.0" text="Estimated Mileage" textFill="#819dbc">
+                  <Label fx:id="label" prefHeight="30.0" prefWidth="162.0" text="Estimated Mileage" textFill="#819dbc">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -84,35 +108,11 @@
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
-                  </Label>
-                  <Label prefHeight="22.0" prefWidth="170.0" text="Actual Mileage" textFill="#819dbc">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
                      <HBox.margin>
-                        <Insets left="50.0" />
+                        <Insets left="20.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="lblActualMile" layoutX="238.0" layoutY="25.0" prefHeight="22.0" prefWidth="169.0" text="mileage" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label prefHeight="22.0" prefWidth="230.0" text="Estimated Mileage Cost" textFill="#819dbc">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblEstimatedMileCost" layoutX="603.0" layoutY="25.0" prefHeight="22.0" prefWidth="153.0" text="cost" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="114.0" prefHeight="52.0" prefWidth="1120.0">
-               <children>
-                  <Label prefHeight="22.0" prefWidth="206.0" text="Extra Charges per km" textFill="#819dbc">
+                  <Label fx:id="label" prefHeight="30.0" prefWidth="134.0" text="Actual Mileage" textFill="#819dbc">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -120,28 +120,68 @@
                         <Insets left="30.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="txtExtraChargesPerKm" prefHeight="27.0" prefWidth="171.0" style="-fx-background-color: #27272d; -fx-border-color: white; -fx-border-width: 0 0 1;">
+                  <Label fx:id="lblActualMile" layoutX="238.0" layoutY="25.0" prefHeight="22.0" prefWidth="163.0" text="mileage" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="label" prefHeight="32.0" prefWidth="173.0" text="Extra Charges per km" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtExtraChargesPerKm" prefHeight="27.0" prefWidth="171.0">
                      <font>
                         <Font size="14.0" />
-                     </font></TextField>
-                  <Label prefHeight="22.0" prefWidth="180.0" text="Total Extra Charges" textFill="#819dbc">
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="114.0" prefHeight="99.0" prefWidth="1064.0">
+               <children>
+                  <Label fx:id="label" prefHeight="30.0" prefWidth="188.0" text="Estimated Mileage Cost" textFill="#819dbc">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="350.0" />
+                        <Insets left="30.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="lblTotalExtraCharges" prefHeight="23.0" prefWidth="181.0" text="0" textFill="WHITE">
+                  <Label fx:id="lblEstimatedMileCost" prefHeight="30.0" prefWidth="231.0" text="cost" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="label" prefHeight="30.0" prefWidth="166.0" text="Total Extra Charges" textFill="#819dbc">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="200.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblTotalExtraCharges" prefHeight="30.0" prefWidth="190.0" text="0" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="1120.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="1064.0">
                <children>
-                  <Button fx:id="btnSave" mnemonicParsing="false" onAction="#SaveOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #35068c;" text="Save" textFill="WHITE">
+                  <Button fx:id="btnSave" mnemonicParsing="false" onAction="#SaveOnAction" prefHeight="26.0" prefWidth="142.0" text="Save" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -149,7 +189,7 @@
                         <Insets left="60.0" right="150.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updateOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #4f80b8;" text="Update" textFill="WHITE">
+                  <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updateOnAction" prefHeight="26.0" prefWidth="142.0" text="Update" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -157,7 +197,7 @@
                         <Insets right="150.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #a63322;" text="Delete" textFill="WHITE">
+                  <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="26.0" prefWidth="142.0" text="Delete" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -165,29 +205,45 @@
                         <Insets right="150.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnReset" mnemonicParsing="false" onAction="#resetOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #5e39a4;" text="Reset" textFill="WHITE">
+                  <Button fx:id="btnReset" mnemonicParsing="false" onAction="#resetOnAction" prefHeight="26.0" prefWidth="142.0" text="Reset" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                      <HBox.margin>
-                        <Insets />
+                        <Insets right="30.0" />
                      </HBox.margin>
                   </Button>
                </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
             </HBox>
-            <TableView fx:id="TrackingTable" onMouseClicked="#clickedTable" prefHeight="469.0" prefWidth="1120.0" style="-fx-background-color: #a0b5c9;">
+            <TableView fx:id="TrackingTable" onMouseClicked="#clickedTable" prefHeight="401.0" prefWidth="1024.0">
                <columns>
-                  <TableColumn fx:id="colTrackingId" prefWidth="87.0" text="Tracking Id" />
-                  <TableColumn fx:id="colReservationId" prefWidth="100.0" text="Reservation Id" />
-                  <TableColumn fx:id="colStartMile" prefWidth="111.0" text="Start Mileage" />
-                  <TableColumn fx:id="colEndMile" prefWidth="106.0" text="End Mileage" />
-                  <TableColumn fx:id="colEstimatedMile" prefWidth="141.0" text="Estimated Mileage" />
-                  <TableColumn fx:id="colActualMileage" prefWidth="113.0" text="Actual Mileage" />
-                  <TableColumn fx:id="colEstimatedMileageCost" minWidth="0.0" prefWidth="161.0" text="Estimated Mileage Cost" />
-                  <TableColumn fx:id="colExtraChargesPerKm" prefWidth="153.0" text="Extra Charges per km" />
-                  <TableColumn fx:id="colTotalExtraCharges" prefWidth="154.0" text="Total Extra Charges" />
+                  <TableColumn fx:id="colTrackingId" prefWidth="97.0" text="Tracking Id" />
+                  <TableColumn fx:id="colReservationId" prefWidth="125.0" text="Reservation Id" />
+                  <TableColumn fx:id="colStartDate" prefWidth="130.0" text="Start Date" />
+                  <TableColumn fx:id="colStartMile" prefWidth="130.0" text="Start Mileage" />
+                  <TableColumn fx:id="colEndDate" prefWidth="130.0" text="End Date" />
+                  <TableColumn fx:id="colEndMile" prefWidth="108.0" text="End Mileage" />
+                  <TableColumn fx:id="colEstimatedMile" prefWidth="142.0" text="Estimated Mileage" />
+                  <TableColumn fx:id="colActualMileage" prefWidth="121.0" text="Actual Mileage" />
+                  <TableColumn fx:id="colEstimatedMileageCost" minWidth="0.0" prefWidth="181.0" text="Estimated Mileage Cost" />
+                  <TableColumn fx:id="colExtraChargesPerKm" prefWidth="134.0" text="Extra Charges per km" />
+                  <TableColumn fx:id="colTotalExtraCharges" prefWidth="150.0" text="Total Extra Charges" />
                </columns>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
             </TableView>
+            <TextField fx:id="txtSearchBar" prefHeight="30.0" prefWidth="1016.0" promptText="search">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="30.0" right="30.0" />
+               </VBox.margin>
+            </TextField>
          </children>
       </VBox>
    </children>

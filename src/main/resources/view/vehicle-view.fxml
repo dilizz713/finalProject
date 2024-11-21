@@ -6,15 +6,21 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="VehicleAnchorPane" prefHeight="726.0" prefWidth="1120.0" style="-fx-background-color: #27272d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.VehicleController">
+<AnchorPane fx:id="VehicleAnchorPane" prefHeight="720.0" prefWidth="1064.0" style="-fx-background-color: #27272d;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.VehicleController">
    <children>
-      <VBox layoutX="-1.0" layoutY="-2.0" prefHeight="726.0" prefWidth="1120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-2.0">
+      <ImageView fitHeight="720.0" fitWidth="1064.0" layoutX="98.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../assets/ve.jpg" />
+         </image>
+      </ImageView>
+      <VBox layoutX="19.0" layoutY="18.0" prefHeight="720.0" prefWidth="1064.0" stylesheets="@../css/customer.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox prefHeight="26.0" prefWidth="1116.0">
                <children>
@@ -27,6 +33,9 @@
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
                   </Label>
                </children>
                <VBox.margin>
@@ -37,7 +46,7 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="91.0" prefWidth="1074.0">
                      <children>
-                        <Label prefHeight="24.0" prefWidth="195.0" text="Number Plate" textFill="#819dbc">
+                        <Label fx:id="label" prefHeight="24.0" prefWidth="195.0" text="Number Plate" textFill="#819dbc">
                            <font>
                               <Font name="System Bold" size="17.0" />
                            </font>
@@ -45,12 +54,15 @@
                               <Insets left="30.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txtNumberPlate" alignment="TOP_CENTER" prefHeight="32.0" prefWidth="266.0" promptText="number plate" style="-fx-background-color: #27272d; -fx-border-color: white; -fx-border-width: 0 0 2;">
+                        <TextField fx:id="txtNumberPlate" alignment="TOP_CENTER" prefHeight="32.0" prefWidth="266.0" style="-fx-border-color: #122d82;">
                            <font>
                               <Font size="14.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
                         </TextField>
-                        <Label layoutX="40.0" layoutY="39.0" prefHeight="24.0" prefWidth="114.0" text="Price" textFill="#819dbc">
+                        <Label fx:id="label" layoutX="40.0" layoutY="39.0" prefHeight="24.0" prefWidth="114.0" text="Price" textFill="#819dbc">
                            <font>
                               <Font name="System Bold" size="17.0" />
                            </font>
@@ -62,8 +74,11 @@
                            <font>
                               <Font name="System Bold" size="17.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
                         </Label>
-                        <TextField fx:id="txtPrice" alignment="TOP_CENTER" layoutX="235.0" layoutY="35.0" prefHeight="32.0" prefWidth="266.0" promptText="price" style="-fx-background-color: #27272d; -fx-border-color: white; -fx-border-width: 0 0 2;">
+                        <TextField fx:id="txtPrice" alignment="TOP_CENTER" layoutX="235.0" layoutY="35.0" prefHeight="32.0" prefWidth="266.0">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -75,7 +90,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="191.0" prefHeight="90.0" prefWidth="1056.0">
                      <children>
-                        <Label prefHeight="24.0" prefWidth="195.0" text="Company Name" textFill="#819dbc">
+                        <Label fx:id="label" prefHeight="24.0" prefWidth="195.0" text="Company Name" textFill="#819dbc">
                            <font>
                               <Font name="System Bold" size="17.0" />
                            </font>
@@ -83,12 +98,12 @@
                               <Insets left="30.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txtCompanyName" alignment="TOP_CENTER" prefHeight="32.0" prefWidth="266.0" promptText="company name" style="-fx-background-color: #27272d; -fx-border-color: white; -fx-border-width: 0 0 2;">
+                        <TextField fx:id="txtCompanyName" alignment="TOP_CENTER" prefHeight="32.0" prefWidth="266.0" style="-fx-border-color: #122d82;">
                            <font>
                               <Font size="14.0" />
                            </font>
                            <HBox.margin>
-                              <Insets />
+                              <Insets left="30.0" />
                            </HBox.margin>
                         </TextField>
                      </children>
@@ -98,7 +113,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="225.0" prefHeight="85.0" prefWidth="1126.0">
                      <children>
-                        <Label prefHeight="24.0" prefWidth="195.0" text="Model" textFill="#819dbc">
+                        <Label fx:id="label" prefHeight="24.0" prefWidth="195.0" text="Model" textFill="#819dbc">
                            <font>
                               <Font name="System Bold" size="17.0" />
                            </font>
@@ -106,10 +121,13 @@
                               <Insets left="30.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="txtModel" alignment="TOP_CENTER" prefHeight="32.0" prefWidth="266.0" promptText="model" style="-fx-background-color: #27272d; -fx-border-color: white; -fx-border-width: 0 0 2;">
+                        <TextField fx:id="txtModel" alignment="TOP_CENTER" prefHeight="32.0" prefWidth="266.0" style="-fx-border-color: #122d82;">
                            <font>
                               <Font size="14.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
                         </TextField>
                      </children>
                      <VBox.margin>
@@ -118,7 +136,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="259.0" prefHeight="107.0" prefWidth="1126.0">
                      <children>
-                        <Label prefHeight="24.0" prefWidth="195.0" text="Type" textFill="#819dbc">
+                        <Label fx:id="label" prefHeight="24.0" prefWidth="195.0" text="Type" textFill="#819dbc">
                            <font>
                               <Font name="System Bold" size="17.0" />
                            </font>
@@ -126,7 +144,11 @@
                               <Insets left="30.0" />
                            </HBox.margin>
                         </Label>
-                        <ComboBox fx:id="cmbType" prefHeight="20.0" prefWidth="272.0" style="-fx-background-color: white; -fx-border-color: black;" />
+                        <ComboBox fx:id="cmbType" prefHeight="17.0" prefWidth="182.0">
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </ComboBox>
                      </children>
                      <VBox.margin>
                         <Insets />
@@ -142,28 +164,28 @@
                   <Insets />
                </VBox.margin>
                <children>
-                  <Button fx:id="btnSave" mnemonicParsing="false" onAction="#SaveOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #35068c;" text="Save" textFill="WHITE">
+                  <Button fx:id="btnSave" mnemonicParsing="false" onAction="#SaveOnAction" prefHeight="26.0" prefWidth="142.0" text="Save" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="50.0" right="40.0" top="150.0" />
+                        <Insets left="50.0" right="40.0" top="180.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnHistory" mnemonicParsing="false" onAction="#watchHistory" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #154c79;" text="History" textFill="WHITE">
+                  <Button fx:id="btnHistory" mnemonicParsing="false" onAction="#watchHistory" prefHeight="26.0" prefWidth="142.0" text="History" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                      <HBox.margin>
-                        <Insets right="40.0" top="150.0" />
+                        <Insets right="40.0" top="180.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnReset" mnemonicParsing="false" onAction="#resetOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #5e39a4;" text="Reset" textFill="WHITE">
+                  <Button fx:id="btnReset" mnemonicParsing="false" onAction="#resetOnAction" prefHeight="26.0" prefWidth="142.0" text="Reset" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                      <HBox.margin>
-                        <Insets right="40.0" top="150.0" />
+                        <Insets right="40.0" top="180.0" />
                      </HBox.margin>
                   </Button>
                   <VBox alignment="TOP_CENTER" prefHeight="231.0" prefWidth="182.0" style="-fx-border-color: white; -fx-border-width: 2 2 2 2;">
@@ -185,7 +207,7 @@
             </HBox>
             <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnUploadImage" mnemonicParsing="false" onAction="#selectImageOnAction" prefHeight="6.0" prefWidth="126.0" style="-fx-background-color: #819dbc;" text="Upload Image">
+                  <Button fx:id="btnUploadImage" mnemonicParsing="false" onAction="#selectImageOnAction" prefHeight="6.0" prefWidth="126.0" text="Upload Image">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
