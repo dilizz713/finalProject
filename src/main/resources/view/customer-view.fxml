@@ -24,7 +24,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="1064.0">
                <children>
-                  <Label fx:id="label1" prefHeight="30.0" prefWidth="150.0" text="Customer Id" textFill="#819dbc">
+                  <Label prefHeight="30.0" prefWidth="150.0" text="Customer Id" textFill="#819dbc">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -54,7 +54,7 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="1064.0">
                      <children>
-                        <Label fx:id="label2" prefHeight="22.0" prefWidth="150.0" text="Name" textFill="#819dbc">
+                        <Label prefHeight="22.0" prefWidth="150.0" text="Name" textFill="#819dbc">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -76,7 +76,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="1064.0">
                <children>
-                  <Label fx:id="label3" prefHeight="22.0" prefWidth="150.0" text="Address" textFill="#819dbc">
+                  <Label prefHeight="22.0" prefWidth="150.0" text="Address" textFill="#819dbc">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>

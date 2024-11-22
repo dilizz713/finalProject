@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -15,6 +16,7 @@ import lk.ijse.gdse71.finalproject.dto.tm.MileageTrackingTM;
 import lk.ijse.gdse71.finalproject.model.MileageTrackingModel;
 import lk.ijse.gdse71.finalproject.model.ReservationModel;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -27,6 +29,8 @@ public class MileageTrackingController implements Initializable {
 
     @FXML
     public Label label;
+    @FXML
+    public Button btnBack;
 
     @FXML
     private TableView<MileageTrackingTM> TrackingTable;
@@ -409,5 +413,15 @@ public class MileageTrackingController implements Initializable {
 
     }
 
-
+ @FXML
+    public void backOnAction(ActionEvent event) {
+     try{
+         mileageTrackingAnchorPane.getChildren().clear();
+         AnchorPane load = FXMLLoader.load(getClass().getResource("/view/reservation-table.fxml"));
+         mileageTrackingAnchorPane.getChildren().add(load);
+     }catch (IOException e){
+         e.printStackTrace();
+         new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
+     }
+    }
 }

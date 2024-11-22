@@ -28,7 +28,7 @@
   }
 #label1, #label2, #label3, label45{
     -fx-text-fill: black; /* White text for better contrast */
-    -fx-font-size: 25px; /* Slightly larger for readability */
+    -fx-font-size: 14px; /* Slightly larger for readability */
     -fx-font-family: "Arial Bold";
     -fx-font-weight: bold;
     -fx-effect: dropshadow(gaussian, white, 3, 1, 0, 0); /* Black border effect */

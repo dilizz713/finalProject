@@ -319,10 +319,11 @@ public class CustomerController implements Initializable {
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         colNic.setCellValueFactory(new PropertyValueFactory<>("nic"));
 
-
+        txtName.setOnAction(event -> txtAddress.requestFocus());
         txtAddress.setOnAction(event -> txtEmail.requestFocus());
         txtEmail.setOnAction(event -> txtPhone.requestFocus());
         txtPhone.setOnAction(event -> txtNic.requestFocus());
+
 
         String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
 

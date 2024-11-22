@@ -26,6 +26,11 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="112.0" prefWidth="1064.0">
                <children>
+                  <Button fx:id="btnBack" mnemonicParsing="false" onAction="#backOnAction" text="&lt;&lt;">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Button>
                   <DatePicker fx:id="startDatePicker" prefHeight="33.0" prefWidth="207.0" promptText="Start Date" style="-fx-background-color: black;">
                      <HBox.margin>
                         <Insets left="30.0" />
@@ -36,7 +41,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="300.0" />
+                        <Insets left="180.0" />
                      </HBox.margin>
                   </Label>
                   <DatePicker fx:id="endDatePicker" layoutX="40.0" layoutY="26.0" prefHeight="33.0" prefWidth="207.0" promptText="End Date" style="-fx-background-color: black;">

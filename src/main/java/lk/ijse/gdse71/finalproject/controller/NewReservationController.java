@@ -125,7 +125,6 @@ public class NewReservationController implements Initializable {
     void SaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         if(isEditMode){
             if(btnSave.getText().equals("Update Reservation")) {
-                updatePAymentButton.isDisabled();
                 updateReservation();
             }
         }else{
@@ -218,11 +217,11 @@ public class NewReservationController implements Initializable {
                 connection.setAutoCommit(true);
             }
         }
+        updatePAymentButton.setDisable(false);
 
     }
 
     private void updateReservation() throws SQLException {
-
         String status = rdbPending.isSelected() ? "Pending" : "Ongoing";
         LocalDate reservationDate = originalStartDate;
         String customerId = cmbCustomer.getValue().getId();
@@ -328,6 +327,7 @@ public class NewReservationController implements Initializable {
         lblCurrentDate.setText(LocalDate.now().toString());
         txtfullPayment.setText("0");
 
+        updatePAymentButton.setDisable(true);
 
         loadCustomerNames();
 
@@ -351,6 +351,8 @@ public class NewReservationController implements Initializable {
                 return null;
             }
         });
+
+
 
 
 
@@ -492,8 +494,11 @@ public class NewReservationController implements Initializable {
     public void selectStatusOnAction(ActionEvent event) throws SQLException {
         String status = cmbStatus.getValue().toString();
         String reservationId = lblReservationId.getText();
+        btnSave.setDisable(true);
 
         if(status.equals("Done")){
+            updatePAymentButton.setDisable(false);
+
             double endMilegae = reservationModel.getEndMileageForReservation(reservationId);
             if(endMilegae == 0){
                 new Alert(Alert.AlertType.WARNING, "Please fill the end date mileage before calculating full payment!").show();
@@ -532,6 +537,8 @@ public class NewReservationController implements Initializable {
 
     @FXML
     public void updatePaymentOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
+        btnSave.setDisable(true);
+
         String advancePaymentText = txtAdvancePayment.getText();
         String fullPaymentText = txtfullPayment.getText();
         String status = cmbStatus.getValue().toString();
@@ -567,10 +574,11 @@ public class NewReservationController implements Initializable {
 
             connection.commit();
 
-            new Alert(Alert.AlertType.INFORMATION, "Payment and reservation status updated successfully!").show();
-            Stage currentStage = (Stage) updatePAymentButton.getScene().getWindow();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/bill-view.fxml"));
+            new Alert(Alert.AlertType.INFORMATION, "Payment and reservation status updated successfully!").show();
+            Stage currentStage = (Stage) billBtn.getScene().getWindow();
+
+        /* //   FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/bill-view.fxml"));
             Parent load = loader.load();
 
             GenerateBillController billController = loader.getController();
@@ -588,7 +596,7 @@ public class NewReservationController implements Initializable {
             Window underWindow = updatePAymentButton.getScene().getWindow();
             stage.initOwner(underWindow);
 
-            stage.showAndWait();
+            stage.showAndWait();*/
 
         }
         catch (Exception e) {
