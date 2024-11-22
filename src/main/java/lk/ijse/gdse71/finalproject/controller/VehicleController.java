@@ -87,12 +87,10 @@ public class VehicleController implements Initializable {
 
     @FXML
     void selectImageOnAction(ActionEvent event) throws IOException {
-        // Initialize a FileChooser to select an image file
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Vehicle Image");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
 
-        // Show the file chooser dialog
         File selectedFile = fileChooser.showOpenDialog(VehicleAnchorPane.getScene().getWindow());
         if (selectedFile != null) {
             try {
@@ -165,7 +163,6 @@ public class VehicleController implements Initializable {
             return;
         }
 
-        // Create a VehicleDTO with imageBytes as the image data
         VehicleDTO vehicleDTO = new VehicleDTO(id, make, model, vehicleType, imageBytes, numberPlate, vehiclePrice,date);
         boolean isSaved ;
         if(btnSave.getText().equals("Update")){
@@ -269,7 +266,7 @@ public class VehicleController implements Initializable {
         String price = txtPrice.getText();
         LocalDate date = LocalDate.now();
 
-        // Validate input fields and show errors if needed
+
         if (make.isEmpty() || model.isEmpty() || vehicleType == null || numberPlate.isEmpty() || price == null) {
             new Alert(Alert.AlertType.ERROR, "Please fill all fields!").show();
             return;
@@ -278,14 +275,14 @@ public class VehicleController implements Initializable {
         double vehiclePrice = 0;
         vehiclePrice = Double.parseDouble(price);
 
-        // Create a VehicleDTO and update vehicle information
+
         VehicleDTO vehicleDTO = new VehicleDTO(id, make, model, vehicleType, imageBytes, numberPlate,vehiclePrice,date);
         boolean isUpdated = vehicleModel.updateVehicle(vehicleDTO);
         if (isUpdated) {
             new Alert(Alert.AlertType.INFORMATION, "Vehicle updated successfully!").show();
             isEditMode = false;
             editingVehicleId = null;
-            refreshPage();  // Clear the fields after updating
+            refreshPage();
         } else {
             new Alert(Alert.AlertType.ERROR, "Failed to update vehicle!").show();
         }
@@ -305,7 +302,7 @@ public class VehicleController implements Initializable {
            Image image = new Image(new ByteArrayInputStream(vehicleDTO.getImage()));
            imageView.setImage(image);
         }
-        btnSave.setText("Update");  // Change button text to indicate update
+        btnSave.setText("Update");
     }
 
 }

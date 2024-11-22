@@ -18,7 +18,6 @@ import lk.ijse.gdse71.finalproject.model.ReservationModel;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -176,6 +175,14 @@ public class ReservationTableController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load vehicle data").show();
         }
+        searchBar.setOnAction(event ->{
+            try{
+                searchReservation();
+            }catch (SQLException e){
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Error searching reservation").show();
+            }
+        });
 
         try {
             refreshPage();
@@ -187,6 +194,83 @@ public class ReservationTableController implements Initializable {
         btnDelete.setDisable(true);
 
 
+
+    }
+
+    private void searchReservation() throws SQLException {
+        String searchText = searchBar.getText().trim();
+
+        if(searchText.isEmpty()){
+            loadTableData();
+            return;
+        }
+
+        ArrayList<ReservationDTO> reservationDTOS = reservationModel.getReservationsBySearch(searchText);
+        ObservableList<ReservationTM> reservationTMS = FXCollections.observableArrayList();
+
+        for(ReservationDTO reservationDTO : reservationDTOS){
+
+            String customerName = reservationModel.getCustomerNameById(reservationDTO.getCustomerId());
+            String model = reservationModel.getVehicleNameById(reservationDTO.getVehicleId());
+            String price = reservationModel.getVehiclePriceById(reservationDTO.getVehicleId());
+            String numberPlate = reservationModel.getNumberPlateById(reservationDTO.getVehicleId());
+
+            double vehiclePrice = 0;
+            if (price != null && !price.isEmpty()) {
+                try {
+                    vehiclePrice = Double.parseDouble(price);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    new Alert(Alert.AlertType.WARNING, "Invalid price format for vehicle ID: " + reservationDTO.getVehicleId()).show();
+                }
+            }
+
+            Button updateButton = new Button("Update");
+            Button addMileageButton = new Button("Add");
+
+            updateButton.setStyle("-fx-text-fill: black; -fx-font-weight: bold;-fx-background-color: white; -fx-border-radius: 1 1 1 1;-fx-start-margin:2;-fx-end-margin: 2;  -fx-background-radius: 1 1 1 1;-fx-border-color:#6b6e76;-fx-font-size: 12px; ");
+
+            addMileageButton.setStyle("-fx-text-fill: black; -fx-font-weight: bold;-fx-background-color: white; -fx-border-radius: 1 1 1 1;-fx-start-margin:2;-fx-end-margin: 2;  -fx-background-radius: 1 1 1 1;-fx-border-color:#6b6e76;-fx-font-size: 12px; ");
+
+
+
+            updateButton.setOnAction(event -> {
+                try {
+                    openReservationUpdateView(reservationDTO);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    new Alert(Alert.AlertType.ERROR, "Failed to load update view").show();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            String status = reservationDTO.getStatus();
+
+            if(status.equals("Pending")){
+                addMileageButton.setDisable(true);
+            }
+            addMileageButton.setOnAction(event -> {
+                navigateTo("/view/mileage-tracking-view.fxml");
+
+            });
+
+            ReservationTM reservationTM = new ReservationTM(
+                    reservationDTO.getId(),
+                    reservationDTO.getReservationDate(),
+                    customerName,
+                    numberPlate,
+                    model,
+                    vehiclePrice,
+                    reservationDTO.getStatus(),
+                    updateButton,
+                    addMileageButton
+
+            );
+
+            reservationTMS.add(reservationTM);
+        }
+        reservationTable.setItems(reservationTMS);
 
     }
 
@@ -263,16 +347,19 @@ public class ReservationTableController implements Initializable {
         reservationTable.setItems(reservationTMS);
 
     }
+
     private void openReservationUpdateView(ReservationDTO reservationDTO) throws IOException, SQLException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/newReservation.fxml"));
         AnchorPane pane = loader.load();
 
         NewReservationController  controller = loader.getController();
-        controller.setReservationDetails(reservationDTO);  // Set data to be edited
+
+        controller.setReservationDetails(reservationDTO);
         controller.setReservationTableController(this);
 
-        reservationTableAnchorPane.getChildren().clear();  // Display the view
-        reservationTableAnchorPane.getChildren().add(pane);  // Display the view
+
+        reservationTableAnchorPane.getChildren().clear();
+        reservationTableAnchorPane.getChildren().add(pane);
     }
 
     public void refreshTable() throws SQLException {

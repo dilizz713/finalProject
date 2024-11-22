@@ -25,79 +25,14 @@ public class HomeMenuController implements Initializable {
     private AnchorPane homeMenuAnchorPane;
 
     @FXML
-    private Label lblCustomersCount;
-
-    @FXML
-    private Label lblWelcome;
-
-    @FXML
-    private Label label1;
-
-    @FXML
-    private Label lblReservationCount;
-
-    @FXML
-    private Label lblVehicleCount;
+    private Label label45;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        autoTypeText(lblWelcome, "Welcome");
 
-        try{
-            lblCustomersCount.setText(String.valueOf(getCustomerCount()));
-            lblVehicleCount.setText(String.valueOf(getVehcileCount()));
-            lblReservationCount.setText(String.valueOf(getReservationCount()));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    private void autoTypeText(Label lblWelcome, String text) {
-        final StringBuilder displayedText = new StringBuilder();
-        Timeline timeline = new Timeline(
-                new KeyFrame(
-                        Duration.millis(100), // Typing speed
-                        event -> {
-                            if (displayedText.length() < text.length()) {
-                                displayedText.append(text.charAt(displayedText.length()));
-                                lblWelcome.setText(displayedText.toString());
-                            }
-                        }
-                )
-        );
-        timeline.setCycleCount(text.length());
-        timeline.play();
+        label45.setStyle("-fx-font-size: 100px; -fx-font-family: \"Arial Bold\"; -fx-font-weight: bold; -fx-text-fill: white;-fx-effect: dropshadow(gaussian, darkred, 3, 2, 0, 5);");
+
 
     }
 
-
-
-    private int getReservationCount() throws SQLException {
-        String query = "select count(*) as reservationCount from Reservation";
-        ResultSet rst = CrudUtil.execute(query);
-
-        if(rst.next()){
-            return rst.getInt("reservationCount");
-        }
-        return 0;
-    }
-
-    private int getVehcileCount() throws SQLException {
-        String query = "select count(*) as vehicleCount from Vehicle";
-        ResultSet rst = CrudUtil.execute(query);
-
-        if(rst.next()){
-            return rst.getInt("vehicleCount");
-        }
-        return 0;
-    }
-
-    private int getCustomerCount() throws SQLException {
-        String query = "select count(*) as customerCount from Customer";
-        ResultSet rst = CrudUtil.execute(query);
-
-        if(rst.next()){
-            return rst.getInt("customerCount");
-        }
-        return 0;
-    }
 }

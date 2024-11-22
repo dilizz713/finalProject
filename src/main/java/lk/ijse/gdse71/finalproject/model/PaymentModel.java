@@ -89,10 +89,10 @@ public class PaymentModel {
                 on p.reservationId = r.id
                 join Customer c
                 on r.customerId = c.id
-                where p.id Like ? or p.type Like ? or p.reservationId Like ? or c.name Like ?;
+                where p.id Like ? or p.date Like ? or p.reservationId Like ? or p.status Like ? or c.name Like ?;
                 """;
 
-        ResultSet rst = CrudUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%","%" + keyword + "%");
+        ResultSet rst = CrudUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%","%" + keyword + "%","%" + keyword + "%");
 
 
         ArrayList<PaymentDTO> paymentDTOS = new ArrayList<>();
@@ -141,4 +141,6 @@ public class PaymentModel {
         }
         return null;
     }
+
+
 }

@@ -336,7 +336,6 @@ public class VehicleDamageController implements Initializable {
             vehicleDamageTMS.add(vehicleDamageTM);
         }
 
-        // Set the items of the table
         DamageRecordsTable.setItems(vehicleDamageTMS);
     }
 

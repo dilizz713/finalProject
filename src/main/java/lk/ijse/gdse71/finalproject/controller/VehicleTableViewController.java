@@ -146,14 +146,14 @@ public class VehicleTableViewController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Fail to load vehicle data").show();
         }
 
-      /* searchBar.setOnAction(event ->{
+      searchBar.setOnAction(event ->{
             try{
                 searchVehicle();
             }catch (SQLException | ClassNotFoundException e){
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Error searching reservation").show();
             }
-        });*/
+        });
 
         try {
             refreshPage();
@@ -169,7 +169,7 @@ public class VehicleTableViewController implements Initializable {
 
 
 
-   /* private void searchVehicle() throws SQLException, ClassNotFoundException {
+   private void searchVehicle() throws SQLException, ClassNotFoundException {
         String searchText = searchBar.getText().trim();
 
         if(searchText.isEmpty()){
@@ -180,11 +180,23 @@ public class VehicleTableViewController implements Initializable {
         ArrayList<VehicleDTO> vehicleDTOS = vehicleModel.getVehiclesBySearch(searchText);
         ObservableList<VehicleTM> vehicleTMS = FXCollections.observableArrayList();
 
-
-
-        LocalDate currentDate = LocalDate.now();  // Get the current date
+        LocalDate currentDate = LocalDate.now();
 
         for (VehicleDTO vehicleDTO : vehicleDTOS) {
+            Button updateButton = new Button("Update");
+
+            updateButton.setStyle("-fx-text-fill: black; -fx-font-weight: bold;-fx-background-color: white; -fx-border-radius: 1 1 1 1;-fx-start-margin:2;-fx-end-margin: 2;  -fx-background-radius: 1 1 1 1;-fx-border-color:#6b6e76;-fx-font-size: 12px; ");
+
+
+            updateButton.setOnAction(event -> {
+                try {
+                    openVehicleUpdateView(vehicleDTO);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    new Alert(Alert.AlertType.ERROR, "Failed to load update view").show();
+                }
+            });
+
             VehicleTM vehicleTM = new VehicleTM(
                     vehicleDTO.getId(),
                     vehicleDTO.getNumberPlate(),
@@ -194,16 +206,14 @@ public class VehicleTableViewController implements Initializable {
                     currentDate,
                     vehicleDTO.getPrice(),
                     vehicleDTO.getImage(),
-
-
-
+                    updateButton
 
             );
             vehicleTMS.add(vehicleTM);
         }
         vehicleTableView.setItems(vehicleTMS);
     }
-*/
+
 
     private void refreshPage() throws SQLException, ClassNotFoundException {
         loadTableData();
@@ -220,9 +230,9 @@ public class VehicleTableViewController implements Initializable {
             if (vehicleDTO.getImage() != null) {
                 ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(vehicleDTO.getImage());
                 Image image = new Image(byteArrayInputStream);
-                imageView.setImage(image); // Set the image in ImageView
-                imageView.setFitHeight(50);  // Set the size for displaying
-                imageView.setFitWidth(50);   // Adjust the size to fit the table
+                imageView.setImage(image);
+                imageView.setFitHeight(50);
+                imageView.setFitWidth(50);
             }
 
             Button updateButton = new Button("Update");

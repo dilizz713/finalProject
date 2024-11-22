@@ -100,7 +100,7 @@ public class CustomerController implements Initializable {
     @FXML
     void SaveCustomerOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
 
-        // Get field values
+
         String id = lblCustomerId.getText();
         String name = txtName.getText();
         String address = txtAddress.getText();
@@ -108,12 +108,12 @@ public class CustomerController implements Initializable {
         String phoneText = txtPhone.getText();
         String nic = txtNic.getText();
 
-        // Validation patterns
+
         String namePattern = "^[A-Za-z ]+$";
         String nicPattern = "^[0-9]{9}[vVxX]$|^[0-9]{12}$";
         String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
-        // Reset error indicators
+
         boolean hasErrors = false;
         StringBuilder errorMessage = new StringBuilder("Please correct the following errors:\n");
 
@@ -121,7 +121,6 @@ public class CustomerController implements Initializable {
         String defaultStyle = "-fx-border-color: black; -fx-text-fill: white; -fx-background-color: transparent;";
 
 
-        // Check and apply error style if validation fails
         if (name.isEmpty() || !name.matches(namePattern)) {
             txtName.setStyle(errorStyle);
             errorMessage.append("- Name is empty or in an incorrect format\n");
@@ -166,13 +165,13 @@ public class CustomerController implements Initializable {
             txtNic.setStyle(defaultStyle);
         }
 
-        // Show alert if there are validation errors and reset to default style
+
         if (hasErrors) {
             new Alert(Alert.AlertType.ERROR, errorMessage.toString()).show();
             return;
         }
 
-        // If validation is successful, proceed with saving the customer
+
         CustomerDTO customerDTO = new CustomerDTO(id, name, address, email, phone, nic);
         boolean isSaved = customerModel.saveCustomer(customerDTO);
         if (isSaved) {
@@ -242,7 +241,7 @@ public class CustomerController implements Initializable {
         String nicPattern = "^[0-9]{9}[vVxX]$|^[0-9]{12}$";
         String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
-        // Reset error indicators
+
         boolean hasErrors = false;
         StringBuilder errorMessage = new StringBuilder("Please correct the following errors:\n");
 
@@ -294,13 +293,13 @@ public class CustomerController implements Initializable {
             txtNic.setStyle(defaultStyle);
         }
 
-        // Show alert if there are validation errors and reset to default style
+
         if (hasErrors) {
             new Alert(Alert.AlertType.ERROR, errorMessage.toString()).show();
             return;
         }
 
-        // If validation is successful, proceed with saving the customer
+
         CustomerDTO customerDTO = new CustomerDTO(id, name, address, email, phone, nic);
         boolean isUpdate = customerModel.updateCustomer(customerDTO);
         if (isUpdate) {
@@ -364,7 +363,7 @@ public class CustomerController implements Initializable {
 
         ArrayList<CustomerDTO> customerDTOS = customerModel.getCustomersBySearch(searchText);
 
-        // Populate the table with filtered data
+
         ObservableList<CustomerTM> customerTMS = FXCollections.observableArrayList();
 
         for(CustomerDTO customerDTO:customerDTOS){

@@ -36,9 +36,6 @@ public class LoginPageController implements Initializable {
     private ToggleButton btnShow;
 
     @FXML
-    private ImageView loginImage;
-
-    @FXML
     private AnchorPane loginPageAnchorPane;
 
     @FXML
@@ -118,16 +115,11 @@ public class LoginPageController implements Initializable {
         shownPwLabel.setVisible(false);
 
         txtUserName.setOnAction(event -> txtPassword.requestFocus());
-
-        txtPassword.setOnKeyPressed(this::handleKeyPress);
+        txtPassword.setOnAction(this::LoginButtonOnAction);
 
 
 
     }
-    private void handleKeyPress(KeyEvent event){
-        if (event.getCode() == KeyCode.ENTER) {
-            LoginButtonOnAction(new ActionEvent(btnLogin, null));
-        }
-    }
+
 
 }

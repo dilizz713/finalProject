@@ -110,16 +110,9 @@ public class ReservationModel {
     }
 
     public ArrayList<ReservationDTO> getReservationsBySearch(String keyword) throws SQLException {
-        String searchQuery = """
-                select R.* , V.model 
-                from Reservation R
-                join Vehicle V 
-                on R.vehicleId = V.id
-                where R.id Like ? or R.vehicleId Like ?  or V.model Like ? or V.vehicleType Like ? 
-                """;
+        String searchQuery = "select * from Reservation where id like ? or vehicleId like ? or customerId like ? or reservationDate like ? or status like ?";
 
-        // Execute the query with the search keyword
-        ResultSet rst = CrudUtil.execute(searchQuery,  "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%");
+        ResultSet rst = CrudUtil.execute(searchQuery,  "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%", "%" + keyword + "%");
 
 
         ArrayList<ReservationDTO> reservationDTOS = new ArrayList<>();
@@ -277,4 +270,23 @@ public class ReservationModel {
     }
 
 
+    public double getEndMileageForReservation(String reservationId) throws SQLException {
+        String query = "select endDateMileage from MileageTracking where reservationId=?";
+        ResultSet rst = CrudUtil.execute(query,reservationId);
+
+        if(rst.next()){
+            return rst.getDouble("endDateMileage");
+        }
+        return 0;
+    }
+
+    public String getPaymentIdByReservation(String reservationId) throws SQLException {
+        String query = "select id from Payment where reservationId=?";
+        ResultSet rst = CrudUtil.execute(query,reservationId);
+
+        if(rst.next()){
+            return rst.getString("id");
+        }
+        return null;
+    }
 }

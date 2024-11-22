@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.GenerateBillController">
+   <children>
+      <VBox layoutX="11.0" layoutY="11.0" prefHeight="576.0" prefWidth="575.0" style="-fx-border-color: blue; -fx-border-width: 2 2 2 2;" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="11.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="45.0" prefWidth="574.0">
+               <children>
+                  <Label text="Invoice" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" layoutX="12.0" layoutY="12.0" prefHeight="25.0" prefWidth="574.0">
+               <children>
+                  <Label fx:id="lblDate" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="94.0" text="Date">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="12.0" layoutY="12.0" prefHeight="45.0" prefWidth="574.0">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="124.0" text="Reservation Id :" />
+                  <Label fx:id="lblReservationId" layoutX="250.0" layoutY="24.0" prefHeight="18.0" prefWidth="106.0" text="id" />
+                  <Label layoutX="297.0" layoutY="24.0" prefHeight="18.0" prefWidth="109.0" text="Payment Id :">
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblPaymentId" layoutX="345.0" layoutY="24.0" prefHeight="18.0" prefWidth="100.0" text="id" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="12.0" layoutY="12.0" prefHeight="45.0" prefWidth="574.0">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="153.0" text="Estimated Mileage ">
+                     <HBox.margin>
+                        <Insets left="150.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblEstimatedMileage" layoutX="239.0" layoutY="24.0" prefHeight="18.0" prefWidth="103.0" text="mile">
+                     <HBox.margin>
+                        <Insets left="40.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="12.0" layoutY="127.0" prefHeight="45.0" prefWidth="574.0">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="153.0" text="Actual Mileage">
+                     <HBox.margin>
+                        <Insets left="150.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblActualMileage" layoutX="239.0" layoutY="24.0" prefHeight="18.0" prefWidth="141.0" text="mile">
+                     <HBox.margin>
+                        <Insets left="40.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="12.0" layoutY="172.0" prefHeight="45.0" prefWidth="574.0">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="151.0" text="Estimated Mileage Cost">
+                     <HBox.margin>
+                        <Insets left="150.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblEstimatedMileageCost" layoutX="239.0" layoutY="24.0" prefHeight="18.0" prefWidth="132.0" text="0.00">
+                     <HBox.margin>
+                        <Insets left="40.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="12.0" layoutY="262.0" prefHeight="45.0" prefWidth="574.0">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="151.0" text="Extra Charges Per Km ">
+                     <HBox.margin>
+                        <Insets left="150.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblExtraChargesPerKm" layoutX="239.0" layoutY="24.0" prefHeight="18.0" prefWidth="132.0" text="0.00">
+                     <HBox.margin>
+                        <Insets left="40.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="574.0">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="295.0" text="Total Extra Charges">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblTotalExtraCharges" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="192.0" text="0.00" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="12.0" layoutY="352.0" prefHeight="39.0" prefWidth="574.0">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="295.0" text="Vehcile Damage Cost">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblDamageCost" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="192.0" text="0.00" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="12.0" layoutY="397.0" prefHeight="33.0" prefWidth="574.0">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="295.0">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lblTotal" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="192.0" text="0.00" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="12.0" layoutY="436.0" prefHeight="39.0" prefWidth="574.0">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="295.0" text="Advance Payment">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="lbladvancePayment" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="192.0" text="0.00" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="12.0" layoutY="475.0" prefHeight="51.0" prefWidth="574.0" style="-fx-border-color: black; -fx-border-width: 1 1 1 1;">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="295.0" text="Total Amount">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblFyllPayment" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="192.0" text="0.00">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

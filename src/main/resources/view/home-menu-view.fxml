@@ -5,66 +5,22 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="homeMenuAnchorPane" prefHeight="720.0" prefWidth="1064.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.finalproject.controller.HomeMenuController">
    <children>
-      <ImageView fitHeight="619.0" fitWidth="1064.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="619.0" fitWidth="1064.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="128.12649536132812" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="129.0">
          <image>
-            <Image url="@../assets/signup.jpg" />
+            <Image url="@../assets/homemenu.jpeg" />
          </image>
       </ImageView>
-      <VBox prefHeight="720.0" prefWidth="1064.0" stylesheets="@../css/homeMenu.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label fx:id="lblWelcome" alignment="CENTER" prefHeight="225.0" prefWidth="799.0" text="Welcome">
-               <VBox.margin>
-                  <Insets left="120.0" top="20.0" />
-               </VBox.margin>
-            </Label>
-         </children>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="80.0" layoutY="250.0" prefHeight="131.0" prefWidth="313.0">
-         <children>
-            <Label fx:id="label1" alignment="CENTER" prefHeight="22.0" prefWidth="208.0" text="Customers">
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Label>
-            <Label fx:id="lblCustomersCount" alignment="CENTER" prefHeight="62.0" prefWidth="158.0" text="0" textFill="#cd8094">
-               <font>
-                  <Font name="System Bold Italic" size="71.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="200.0" layoutY="380.0" prefHeight="131.0" prefWidth="313.0">
-         <children>
-            <Label fx:id="label1" alignment="CENTER" prefHeight="22.0" prefWidth="244.0" text="Vehicles">
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Label>
-            <Label fx:id="lblVehicleCount" alignment="CENTER" prefHeight="62.0" prefWidth="158.0" text="0" textFill="#cd8094">
-               <font>
-                  <Font name="System Bold Italic" size="71.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="320.0" layoutY="500.0" prefHeight="131.0" prefWidth="313.0">
-         <children>
-            <Label fx:id="label1" alignment="CENTER" prefHeight="22.0" prefWidth="236.0" text="Reservations">
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Label>
-            <Label fx:id="lblReservationCount" alignment="CENTER" prefHeight="62.0" prefWidth="158.0" text="0" textFill="#cd8094">
-               <font>
-                  <Font name="System Bold Italic" size="71.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
+      <Label fx:id="label45" layoutX="233.0" layoutY="32.0" text="AUTO RENT PRO" textFill="WHITE">
+         <font>
+            <Font size="68.0" />
+         </font>
+         <padding>
+            <Insets right="50.0" />
+         </padding>
+      </Label>
    </children>
 </AnchorPane>

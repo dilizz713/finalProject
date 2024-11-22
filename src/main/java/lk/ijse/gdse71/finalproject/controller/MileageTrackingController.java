@@ -128,7 +128,7 @@ public class MileageTrackingController implements Initializable {
         LocalDate endDate = endDatePicker.getValue();
 
        if(endDate == null){
-           LocalDate.of(1990,01,01);
+           LocalDate.of(2024,01,01);
        }
 
         String startDateMileageText = txtStartMile.getText();
@@ -318,7 +318,9 @@ public class MileageTrackingController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colTrackingId.setCellValueFactory(new PropertyValueFactory<>("trackingId"));
         colReservationId.setCellValueFactory(new PropertyValueFactory<>("reservationId"));
+        colStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         colStartMile.setCellValueFactory(new PropertyValueFactory<>("startDateMileage"));
+        colEndDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
         colEndMile.setCellValueFactory(new PropertyValueFactory<>("endDateMileage"));
         colEstimatedMile.setCellValueFactory(new PropertyValueFactory<>("estimatedMileage"));
         colActualMileage.setCellValueFactory(new PropertyValueFactory<>("actualMileage"));
@@ -406,5 +408,6 @@ public class MileageTrackingController implements Initializable {
         TrackingTable.setItems(mileageTrackingTMS);
 
     }
+
 
 }

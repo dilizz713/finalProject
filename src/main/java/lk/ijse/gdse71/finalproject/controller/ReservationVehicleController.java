@@ -160,7 +160,7 @@ public class ReservationVehicleController implements Initializable {
             String status = resultSet.getString("status");
             Date endDate = resultSet.getDate("endDate");
 
-            // If maintenance is ongoing  and either no endDate is set or the endDate is in the future
+
             if ("Ongoing".equals(status) && (endDate == null || endDate.after(Date.valueOf(LocalDate.now())))) {
                 return "Ongoing";
             }
@@ -201,13 +201,13 @@ public class ReservationVehicleController implements Initializable {
 
 
         Label modelLabel = new Label(vehicle.getModel());
-        modelLabel.setStyle("-fx-font-size: 15px; -fx-font-weight: bold;-fx-text-fill: black;");
+        modelLabel.setStyle("-fx-font-size: 15px; -fx-font-weight: bold;-fx-text-fill: white;");
 
         Label numberPlateLabel = new Label(vehicle.getNumberPlate());
-        numberPlateLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: black;");
+        numberPlateLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;");
 
         Label priceLabel = new Label("LKR " + String.valueOf(vehicle.getPrice()));
-        priceLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: black;");
+        priceLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: white;");
 
         Label vehicleIdLabel = new Label(vehicle.getId());
         vehicleIdLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: white;-fx-effect: dropshadow(gaussian, darkred, 3, 1, 0, 0);");

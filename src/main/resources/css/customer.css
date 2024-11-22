@@ -26,6 +26,17 @@
       -fx-border-width: 0px;
       -fx-padding: 5 10 5 10;
   }
+#label1, #label2, #label3, label45{
+    -fx-text-fill: black; /* White text for better contrast */
+    -fx-font-size: 25px; /* Slightly larger for readability */
+    -fx-font-family: "Arial Bold";
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, white, 3, 1, 0, 0); /* Black border effect */
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-width: 0px;
+    -fx-padding: 5 10 5 10;
+}
 .button{
     -fx-background-color: #6b6e76;
     -fx-text-fill: black;

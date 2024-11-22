@@ -5,6 +5,7 @@ import lk.ijse.gdse71.finalproject.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class MileageTrackingModel {
@@ -93,5 +94,41 @@ public class MileageTrackingModel {
 
     public boolean deleteRecords(String trackingId) throws SQLException {
         return CrudUtil.execute("delete from MileageTracking where id=?",trackingId );
+    }
+
+    public MileageTrackingDTO getMileageTrackingByReservationId(String reservationId) throws SQLException {
+        String query = "select * from MileageTracking where reservationId = ?";
+
+        ResultSet resultSet = CrudUtil.execute(query,reservationId);
+
+            if (resultSet.next()) {
+
+                String trackingId = resultSet.getString("tracking_id");
+                double startDateMileage = resultSet.getDouble("start_date_mileage");
+                double endDateMileage = resultSet.getDouble("end_date_mileage");
+                double estimatedMileage = resultSet.getDouble("estimated_mileage");
+                double actualMileage = resultSet.getDouble("actual_mileage");
+                double estimatedMileageCost = resultSet.getDouble("estimated_mileage_cost");
+                double extraChargePerKm = resultSet.getDouble("extra_charge_per_km");
+                double totalExtraCharges = resultSet.getDouble("total_extra_charges");
+                LocalDate startDate = resultSet.getDate("start_date").toLocalDate();
+                LocalDate endDate = resultSet.getDate("end_date").toLocalDate();
+
+                return new MileageTrackingDTO(
+                        trackingId,
+                        estimatedMileage,
+                        actualMileage,
+                        extraChargePerKm,
+                        totalExtraCharges,
+                        reservationId,
+                        startDateMileage,
+                        endDateMileage,
+                        estimatedMileageCost,
+                        startDate,
+                        endDate
+                );
+            }
+
+        return null;
     }
 }

@@ -9,7 +9,7 @@
     -fx-background-position: center;
 }
 
-#lblReservationId, #lblEndDate,  #lblStartDate, #lblTrackingId, #lblMAintenanceId ,#lblModel,#lblPaymentId{
+#lblReservationId, #lblEndDate,  #lblStartDate, #lblTrackingId, #lblMAintenanceId ,#lblModel,#lblPaymentId, #txtfullPayment{
     -fx-text-fill: black; /* White text for better contrast */
     -fx-font-size: 14px; /* Slightly larger for readability */
     -fx-font-family: "Arial Bold";

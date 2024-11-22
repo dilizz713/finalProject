@@ -115,11 +115,7 @@ public class PaymentController implements Initializable {
         }
     }
 
-   /* @FXML
-    void navigateToInvoice(ActionEvent event) {
 
-    }
-*/
     @FXML
     void navigateToReservationView(ActionEvent event) {
         try{
@@ -175,10 +171,6 @@ public class PaymentController implements Initializable {
         colAction.setCellValueFactory(new PropertyValueFactory<>("updateButton"));
 
 
-        txtSearchBar.setOnAction(event ->{
-            //searchPaymentRecords();
-        });
-
         try {
             loadTableData();
             refreshPage();
@@ -186,6 +178,15 @@ public class PaymentController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load vehicle id").show();
         }
+        txtSearchBar.setOnAction(event ->{
+            try {
+                searchPaymentRecords();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
         try {
             refreshPage();
         } catch (SQLException | ClassNotFoundException e) {
@@ -196,6 +197,62 @@ public class PaymentController implements Initializable {
         btnDelete.setDisable(true);
     }
 
+    private void searchPaymentRecords() throws SQLException, ClassNotFoundException {
+        String searchText = txtSearchBar.getText().trim();
+
+        if(searchText.isEmpty()){
+            loadTableData();
+            return;
+        }
+
+        ArrayList<PaymentDTO> paymentDTOS = paymentModel.getPaymentRecordsBySearch(searchText);
+        ObservableList<PaymentTM> paymentTMS = FXCollections.observableArrayList();
+
+        for(PaymentDTO paymentDTO:paymentDTOS){
+            ReservationDTO reservationDTO = reservationModel.getReservationById(paymentDTO.getReservationId());
+            String customerName = null;
+
+
+            if (reservationDTO != null) {
+                customerName = reservationModel.getCustomerNameById(reservationDTO.getCustomerId());
+            }
+
+
+            if (customerName == null) {
+                customerName = "Unknown Customer"; // Fallback name
+            }
+            Button updateButton = new Button("Update");
+
+            updateButton.setStyle(" -fx-text-fill: black; -fx-font-weight: bold;-fx-background-color: white; -fx-border-radius: 1 1 1 1;-fx-start-margin:2;-fx-end-margin: 2;  -fx-background-radius: 1 1 1 1;-fx-border-color:#6b6e76;-fx-font-size: 12px;");
+
+
+            updateButton.setOnAction(event -> {
+                try {
+                    navigateToReservationDetails(paymentDTO.getReservationId(),paymentDTO);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+
+            PaymentTM paymentTM = new PaymentTM(
+                    paymentDTO.getId(),
+                    customerName,
+                    paymentDTO.getAdvancePayment(),
+                    paymentDTO.getFullPayment(),
+                    paymentDTO.getReservationId(),
+                    paymentDTO.getDate(),
+                    paymentDTO.getStatus(),
+                    updateButton
+
+
+
+            );
+            paymentTMS.add(paymentTM);
+        }
+        paymentTable.setItems(paymentTMS);
+    }
 
 
     private void loadReservationIds() throws SQLException {
@@ -215,9 +272,18 @@ public class PaymentController implements Initializable {
         ObservableList<PaymentTM> paymentTMS = FXCollections.observableArrayList();
 
         for(PaymentDTO paymentDTO:paymentDTOS){
-            String customerName = reservationModel.getCustomerNameById(reservationDTO.getCustomerId());
-            System.out.println(customerName);
+            ReservationDTO reservationDTO = reservationModel.getReservationById(paymentDTO.getReservationId());
+            String customerName = null;
 
+
+            if (reservationDTO != null) {
+                customerName = reservationModel.getCustomerNameById(reservationDTO.getCustomerId());
+            }
+
+
+            if (customerName == null) {
+                customerName = "Unknown Customer"; // Fallback name
+            }
             Button updateButton = new Button("Update");
 
             updateButton.setStyle(" -fx-text-fill: black; -fx-font-weight: bold;-fx-background-color: white; -fx-border-radius: 1 1 1 1;-fx-start-margin:2;-fx-end-margin: 2;  -fx-background-radius: 1 1 1 1;-fx-border-color:#6b6e76;-fx-font-size: 12px;");
@@ -265,15 +331,7 @@ public class PaymentController implements Initializable {
         paymentAnchorPane.getChildren().clear();
         paymentAnchorPane.getChildren().add(reservationAnchorPane);
 
-      /*  FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/new-reservation-view.fxml"));
-        AnchorPane pane = loader.load();
 
-        NewReservationController controller = loader.getController();
-        controller.setPaymentDetails(paymentDTO);
-        controller.setPaymentController(this);
-
-        paymentAnchorPane.getChildren().clear();
-        paymentAnchorPane.getChildren().add(pane);*/
 
 
     }
