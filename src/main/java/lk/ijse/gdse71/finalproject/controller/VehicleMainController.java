@@ -17,21 +17,6 @@ public class VehicleMainController {
     private AnchorPane VehicleMainAnchorPane;
 
     @FXML
-    private Button btnBus;
-
-    @FXML
-    private Button btnCar;
-
-    @FXML
-    private Button btnLuxaryCar;
-
-    @FXML
-    private Button btnTrucks;
-
-    @FXML
-    private Button btnVan;
-
-    @FXML
     void navigateToBusUI(ActionEvent event) {
         navigateTo();
     }

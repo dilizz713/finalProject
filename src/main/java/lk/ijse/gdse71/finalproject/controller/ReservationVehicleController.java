@@ -151,7 +151,7 @@ public class ReservationVehicleController implements Initializable {
     private String getMaintenanceStatus(String vehicleId) throws SQLException {
         String query = "SELECT status, startDate, endDate FROM MaintenanceRecord " +
                 "WHERE vehicleId = ? " +
-                "AND startDate <= CURRENT_DATE " + // Ensure that the maintenance record's start date is before or on today's date
+                "AND startDate <= CURRENT_DATE " +
                 "ORDER BY startDate DESC LIMIT 1";
 
         ResultSet resultSet = CrudUtil.execute(query, vehicleId);

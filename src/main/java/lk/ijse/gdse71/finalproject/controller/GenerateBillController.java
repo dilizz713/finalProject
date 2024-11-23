@@ -63,7 +63,7 @@ public class GenerateBillController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (reservationId != null && paymentId != null) {
+        if (reservationId != null) {
             try {
                 populateBillDetails();
             } catch (Exception e) {
@@ -79,14 +79,14 @@ public class GenerateBillController implements Initializable {
         MileageTrackingDTO mileageTrackingDTO = mileageTrackingModel.getMileageTrackingByReservationId(reservationId);
 
 
-        if (reservationDTO == null || paymentDTO == null || mileageTrackingDTO == null) {
+        if (reservationDTO == null  || mileageTrackingDTO == null) {
             new Alert(Alert.AlertType.ERROR, "Data not found for this reservation/payment.").show();
             return;
         }
 
 
-        lblReservationId.setText(reservationDTO.getId());
-        lblPaymentId.setText(paymentDTO.getId());
+        lblReservationId.setText(reservationId);
+        lblPaymentId.setText(paymentId);
 
 
         lblDate.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
@@ -126,7 +126,7 @@ public class GenerateBillController implements Initializable {
 
     }
 
-    // Setter methods to pass reservationId and paymentId from another controller
+
     public void setReservationId(String reservationId) {
         this.reservationId = reservationId;
     }

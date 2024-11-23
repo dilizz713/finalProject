@@ -45,9 +45,6 @@ public class CustomerController implements Initializable {
     private Button btnSave;
 
     @FXML
-    private Button btnSearch;
-
-    @FXML
     private Button btnUpdate;
 
     @FXML
@@ -78,9 +75,6 @@ public class CustomerController implements Initializable {
     private Label lblCustomerId;
 
     @FXML
-    private Pane tablePane;
-
-    @FXML
     private TextField txtAddress;
 
     @FXML
@@ -99,8 +93,6 @@ public class CustomerController implements Initializable {
 
     @FXML
     void SaveCustomerOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-
-
         String id = lblCustomerId.getText();
         String name = txtName.getText();
         String address = txtAddress.getText();

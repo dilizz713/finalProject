@@ -28,3 +28,5 @@ public class DBConnection {
 
 
 }
+
+//jdbc:mysql://localhost:3306/VehicleRental

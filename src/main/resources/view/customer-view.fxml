@@ -211,7 +211,7 @@
                   <TableColumn fx:id="colAddress" prefWidth="169.0" text="Address" />
                   <TableColumn fx:id="colEmail" prefWidth="151.0" text="Email" />
                   <TableColumn fx:id="colPhone" prefWidth="190.0" text="Phone Number" />
-                  <TableColumn fx:id="colNic" prefWidth="194.0" text="Nic" />
+                  <TableColumn fx:id="colNic" prefWidth="193.0" text="Nic" />
                </columns>
                <VBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" />

@@ -179,6 +179,7 @@ public class NewReservationController implements Initializable {
             return;
         }
 
+        //transaction
         ReservationDTO reservationDTO = new ReservationDTO(id, customerId, vehicleId, status, reservationDate);
         PaymentDTO paymentDTO = new PaymentDTO(paymentId, reservationDate, paymentStatus, id, advancePayment, fullPayment);
 
@@ -206,6 +207,7 @@ public class NewReservationController implements Initializable {
             connection.commit();
             new Alert(Alert.AlertType.INFORMATION, "Reservation and payment saved successfully!").show();
         } catch (Exception e) {
+
             //rollback if transaction fail
             if (connection != null) {
                 connection.rollback();
@@ -394,6 +396,7 @@ public class NewReservationController implements Initializable {
                     }
                 }
             });
+
         } catch (SQLException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Failed to load customer names.").show();
@@ -576,27 +579,7 @@ public class NewReservationController implements Initializable {
 
 
             new Alert(Alert.AlertType.INFORMATION, "Payment and reservation status updated successfully!").show();
-            Stage currentStage = (Stage) billBtn.getScene().getWindow();
 
-        /* //   FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/bill-view.fxml"));
-            Parent load = loader.load();
-
-            GenerateBillController billController = loader.getController();
-
-
-            billController.setReservationId(reservationId);
-            billController.setPaymentId(paymentDTO.getId());
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(load));
-            stage.setTitle("");
-
-            stage.initModality(Modality.APPLICATION_MODAL);
-
-            Window underWindow = updatePAymentButton.getScene().getWindow();
-            stage.initOwner(underWindow);
-
-            stage.showAndWait();*/
 
         }
         catch (Exception e) {

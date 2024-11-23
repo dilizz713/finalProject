@@ -1,6 +1,7 @@
 package lk.ijse.gdse71.finalproject.model;
 
 import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
+import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
 import lk.ijse.gdse71.finalproject.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -130,5 +131,33 @@ public class MileageTrackingModel {
             }
 
         return null;
+    }
+
+    public ArrayList<MileageTrackingDTO> getRecordsBySearch(String keyword) throws SQLException {
+        String searchQuery = "select * from MileageTracking where id like ? or reservationId like ? or startDate like ? or endDate like ? ";
+
+        ResultSet rst = CrudUtil.execute(searchQuery,  "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%");
+
+
+        ArrayList<MileageTrackingDTO> mileageTrackingDTOS = new ArrayList<>();
+
+        while (rst.next()) {
+            MileageTrackingDTO mileageTrackingDTO = new MileageTrackingDTO(
+                    rst.getString(1),       //tracking id
+                    rst.getDouble(2),       //estimated mileage
+                    rst.getDouble(3),       //actual mileage
+                    rst.getDouble(4),       //extra charges per km
+                    rst.getDouble(5),       //total extra charges
+                    rst.getString(6),       //reservation id
+                    rst.getDouble(7),       //start date mileage
+                    rst.getDouble(8),       //end date mileage
+                    rst.getDouble(9),       //estimated mileage cost
+                    rst.getDate(10).toLocalDate(),       //start date
+                    rst.getDate(11).toLocalDate()       //end date
+
+            );
+            mileageTrackingDTOS.add(mileageTrackingDTO);
+        }
+        return mileageTrackingDTOS;
     }
 }

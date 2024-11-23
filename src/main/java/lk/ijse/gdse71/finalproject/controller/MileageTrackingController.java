@@ -343,6 +343,17 @@ public class MileageTrackingController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Error loading combobox data").show();
         }
 
+        txtSearchBar.setOnAction(event ->{
+            try{
+                searchMileageRecords();
+            }catch (SQLException e){
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Error searching reservation").show();
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
 
         try {
             refreshPage();
@@ -350,6 +361,40 @@ public class MileageTrackingController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load vehicle id").show();
         }
+    }
+
+    private void searchMileageRecords() throws SQLException, ClassNotFoundException {
+        String searchText = txtSearchBar.getText().trim();
+
+        if(searchText.isEmpty()){
+            loadTableData();
+            return;
+        }
+
+        ArrayList<MileageTrackingDTO> mileageTrackingDTOS = mileageTrackingModel.getRecordsBySearch(searchText);
+        ObservableList<MileageTrackingTM> mileageTrackingTMS = FXCollections.observableArrayList();
+
+        for (MileageTrackingDTO mileageTrackingDTO : mileageTrackingDTOS) {
+            MileageTrackingTM mileageTrackingTM = new MileageTrackingTM(
+                    mileageTrackingDTO.getId(),
+                    mileageTrackingDTO.getReservationId(),
+                    mileageTrackingDTO.getStartDate(),
+                    mileageTrackingDTO.getStartDateMileage(),
+                    mileageTrackingDTO.getEndDate(),
+                    mileageTrackingDTO.getEndDateMileage(),
+                    mileageTrackingDTO.getEstimatedMileage(),
+                    mileageTrackingDTO.getActualMileage(),
+                    mileageTrackingDTO.getEstimatedMileageCost(),
+                    mileageTrackingDTO.getExtraChargePerKm(),
+                    mileageTrackingDTO.getTotalExtraCharges()
+
+
+
+            );
+            mileageTrackingTMS.add(mileageTrackingTM);
+        }
+        TrackingTable.setItems(mileageTrackingTMS);
+
     }
 
     private void loadComboBoxData() throws SQLException {
