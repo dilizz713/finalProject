@@ -23,7 +23,7 @@
                   <Insets left="380.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <TextField fx:id="txtUserName" prefHeight="30.0" prefWidth="422.0" promptText="username">
+            <TextField fx:id="txtEMail" layoutX="52.0" layoutY="186.0" prefHeight="26.0" prefWidth="361.0" promptText="E mail">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -31,7 +31,23 @@
                   <Insets left="40.0" right="40.0" top="50.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="txtPassword" prefHeight="26.0" prefWidth="361.0" promptText="password">
+            <TextField fx:id="txtUserName" prefHeight="30.0" prefWidth="422.0" promptText="UserName">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" top="50.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtPassword" prefHeight="26.0" prefWidth="361.0" promptText="Password">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" top="50.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtConfirmPw" layoutX="52.0" layoutY="266.0" prefHeight="26.0" prefWidth="361.0" promptText="Confirm Password">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

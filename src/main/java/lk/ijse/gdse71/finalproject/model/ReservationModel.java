@@ -1,6 +1,7 @@
 package lk.ijse.gdse71.finalproject.model;
 
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
+import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
 import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
 import lk.ijse.gdse71.finalproject.util.CrudUtil;
 
@@ -288,5 +289,47 @@ public class ReservationModel {
             return rst.getString("id");
         }
         return null;
+    }
+
+    public MileageTrackingDTO getMileageDetails(String reservationId) throws SQLException {
+        String query = "SELECT estimatedMileage, actualMileage, extraChargesPerKm, totalExtraCharges, estimatedMileageCost FROM MileageTracking WHERE reservationId = ?" ;
+
+        ResultSet rst = CrudUtil.execute(query, reservationId);
+
+        if (rst.next()) {
+            return new MileageTrackingDTO(
+                    rst.getDouble("estimatedMileage"),
+                    rst.getDouble("actualMileage"),
+                    rst.getDouble("extraChargesPerKm"),
+                    rst.getDouble("totalExtraCharges"),
+                    rst.getDouble("estimatedMileageCost")
+
+            );
+        }
+        return null;
+    }
+
+    public CustomerDTO getCustomerDetailsByReservationId(String reservationId) throws SQLException {
+        String sql = """
+            SELECT c.id, c.name, c.email
+            FROM Customer c
+            JOIN Reservation r ON c.id = r.customerId
+            WHERE r.id = ?;
+        """;
+        try {
+            ResultSet rst = CrudUtil.execute(sql, reservationId);
+            if (rst.next()) {
+                return new CustomerDTO(
+                        rst.getString("id"),
+                        rst.getString("name"),
+                        rst.getString("email")
+                );
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching customer details: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+
     }
 }

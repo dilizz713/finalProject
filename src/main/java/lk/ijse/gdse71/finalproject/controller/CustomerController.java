@@ -18,10 +18,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
+import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
+import lk.ijse.gdse71.finalproject.dto.PaymentDTO;
 import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
 import lk.ijse.gdse71.finalproject.dto.tm.CustomerTM;
 import lk.ijse.gdse71.finalproject.dto.tm.ReservationTM;
 import lk.ijse.gdse71.finalproject.model.CustomerModel;
+import lk.ijse.gdse71.finalproject.model.ReservationModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -440,7 +443,6 @@ public class CustomerController implements Initializable {
             Stage stage = new Stage();
             stage.setScene(new Scene(load));
             stage.setTitle("Send email");
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/assets/email.png")));
 
 
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -454,4 +456,7 @@ public class CustomerController implements Initializable {
             e.printStackTrace();
         }
     }
+
+
+
 }

@@ -72,9 +72,9 @@ public class ReservationVehicleController implements Initializable {
             VehicleModel vehicleModel = new VehicleModel();
             ArrayList<VehicleDTO> vehicles = vehicleModel.getAllVehicles();
             int itemsPerPage = 12;
-            int pageCount = (int) Math.ceil((double) vehicles.size() / itemsPerPage); // Calculate page count
+            int pageCount = (int) Math.ceil((double) vehicles.size() / itemsPerPage);
             pagination.setPageCount(pageCount);
-            pagination.setPageFactory(this::createPage);  // Link the page factory to createPage method
+            pagination.setPageFactory(this::createPage);
 
 
             imageAnchorPane.getChildren().clear();
@@ -122,7 +122,7 @@ public class ReservationVehicleController implements Initializable {
                 String maintenanceStatus = getMaintenanceStatus(vehicleId);
 
                 if (("Pending".equals(vehicleStatus) || "Ongoing".equals(vehicleStatus)) || "Ongoing".equals(maintenanceStatus) ) {
-                    continue; // Skip pending vehicles
+                    continue;
                 }
 
                 VBox vehicleCard = createCard(vehicle);

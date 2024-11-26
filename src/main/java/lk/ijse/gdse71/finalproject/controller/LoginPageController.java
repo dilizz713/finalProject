@@ -6,12 +6,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
 import lk.ijse.gdse71.finalproject.model.LoginModel;
 
@@ -28,6 +33,9 @@ public class LoginPageController implements Initializable {
     public VBox LoginVBox;
     @FXML
     public Label lblSignUp;
+
+    @FXML
+    public Button btnForgetPw;
 
     @FXML
     private Button btnLogin;
@@ -117,9 +125,21 @@ public class LoginPageController implements Initializable {
         txtUserName.setOnAction(event -> txtPassword.requestFocus());
         txtPassword.setOnAction(this::LoginButtonOnAction);
 
-
-
     }
 
+    @FXML
+    public void forgetPWOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/forget-password.fxml"));
+        Parent load = loader.load();
 
+        Stage stage = new Stage();
+        stage.setScene(new Scene(load));
+
+        stage.initModality(Modality.APPLICATION_MODAL);
+
+        Window underWindow = btnForgetPw.getScene().getWindow();
+        stage.initOwner(underWindow);
+
+        stage.showAndWait();
+    }
 }

@@ -1,17 +1,24 @@
 package lk.ijse.gdse71.finalproject.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
-import lk.ijse.gdse71.finalproject.dto.PaymentDTO;
-import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import lk.ijse.gdse71.finalproject.dto.*;
 import lk.ijse.gdse71.finalproject.model.MileageTrackingModel;
 import lk.ijse.gdse71.finalproject.model.PaymentModel;
 import lk.ijse.gdse71.finalproject.model.ReservationModel;
+import lk.ijse.gdse71.finalproject.model.VehicleDamageModel;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -54,84 +61,59 @@ public class GenerateBillController implements Initializable {
     @FXML
     private Label lbladvancePayment;
 
+    @FXML
+    private Button btnEmail;
+
     private ReservationModel reservationModel = new ReservationModel();
     private PaymentModel paymentModel = new PaymentModel();
     private MileageTrackingModel mileageTrackingModel = new MileageTrackingModel();
 
+    private VehicleDamageModel vehicleDamageModel = new VehicleDamageModel();
+
     private String reservationId;
     private String paymentId;
+    private String vehicleId;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (reservationId != null) {
-            try {
-                populateBillDetails();
-            } catch (Exception e) {
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "Failed to load bill data").show();
-            }
-        }
+
     }
 
-    private void populateBillDetails() throws Exception {
-        ReservationDTO reservationDTO = reservationModel.getReservationById(reservationId);
-        PaymentDTO paymentDTO = paymentModel.getPaymentById(paymentId);
-        MileageTrackingDTO mileageTrackingDTO = mileageTrackingModel.getMileageTrackingByReservationId(reservationId);
-
-
-        if (reservationDTO == null  || mileageTrackingDTO == null) {
-            new Alert(Alert.AlertType.ERROR, "Data not found for this reservation/payment.").show();
-            return;
-        }
-
+    public void setBillDetails(String reservationId, String paymentId, PaymentDTO payment, MileageTrackingDTO mileage, String vehicleId) {
+        this.reservationId = reservationId;
+        this.paymentId = paymentId;
+        this.vehicleId = vehicleId;
 
         lblReservationId.setText(reservationId);
         lblPaymentId.setText(paymentId);
+        lblDate.setText(LocalDate.now().toString());
+
+        lblActualMileage.setText(String.format("%.2f km", mileage.getActualMileage()));
+        lblEstimatedMileage.setText(String.format("%.2f km", mileage.getEstimatedMileage()));
+        lblEstimatedMileageCost.setText(String.format("$%.2f", mileage.getEstimatedMileageCost()));
+        lblExtraChargesPerKm.setText(String.format("$%.2f/km", mileage.getExtraChargePerKm()));
+        lblTotalExtraCharges.setText(String.format("$%.2f", mileage.getTotalExtraCharges()));
+
+        lbladvancePayment.setText(String.format("$%.2f", payment.getAdvancePayment()));
+        lblFyllPayment.setText(String.format("$%.2f", payment.getFullPayment()));
+
+        try {
+
+            double repairCost = vehicleDamageModel.getRepairCostByVehicleId(vehicleId);
+            lblDamageCost.setText(String.format("$%.2f", repairCost));
 
 
-        lblDate.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            double total = mileage.getEstimatedMileageCost() + mileage.getTotalExtraCharges() + repairCost;
+            lbladvancePayment.setText(String.format("$%.2f", payment.getAdvancePayment()));
+            lblFyllPayment.setText(String.format("$%.2f", payment.getFullPayment()));
+            lblTotal.setText(String.format("$%.2f", total));
 
-
-
-        double estimatedMileage = 0, actualMilege = 0, estimatedMileageCost = 0, extrachargesPerKm = 0, totalExtraCharges = 0 , damageCost = 0, advance = 0, totalBeforeAdvance = 0, fullamount = 0;
-
-
-        estimatedMileage = mileageTrackingDTO.getEstimatedMileage();
-        actualMilege = mileageTrackingDTO.getActualMileage();
-        estimatedMileageCost = mileageTrackingDTO.getEstimatedMileageCost();
-        extrachargesPerKm = mileageTrackingDTO.getExtraChargePerKm();
-        totalExtraCharges = mileageTrackingDTO.getTotalExtraCharges();
-
-        String vehicleId = reservationModel.getVehicleIdByReservationId(reservationId);
-        damageCost = reservationModel.getRepairCostByVehicleId(vehicleId);
-        advance = paymentModel.getAdvancePayment(reservationId);
-
-
-       totalBeforeAdvance = estimatedMileageCost + totalExtraCharges + damageCost;
-       fullamount = totalBeforeAdvance - advance;
-
-
-        lblEstimatedMileage.setText(String.valueOf(estimatedMileage));
-        lblActualMileage.setText(String.valueOf(actualMilege));
-        lblEstimatedMileageCost.setText(String.valueOf(estimatedMileageCost));
-        lblExtraChargesPerKm.setText(String.valueOf(extrachargesPerKm));
-        lblTotalExtraCharges.setText(String.valueOf(totalExtraCharges));
-        lblDamageCost.setText(String.valueOf(damageCost));
-        lbladvancePayment.setText(String.valueOf(advance));
-        lblTotal.setText(String.valueOf(totalBeforeAdvance));
-        lblFyllPayment.setText(String.valueOf(fullamount));
-
-
-
-
+        } catch (SQLException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to retrieve repair cost!").show();
+        }
     }
 
 
-    public void setReservationId(String reservationId) {
-        this.reservationId = reservationId;
-    }
 
-    public void setPaymentId(String paymentId) {
-        this.paymentId = paymentId;
-    }
 }

@@ -20,6 +20,8 @@ public class CustomerModel {
                 customerDTO.getPhoneNumber(),
                 customerDTO.getNic()
         );
+
+
     }
     public boolean updateCustomer(CustomerDTO customerDTO) throws SQLException {
         return CrudUtil.execute(
@@ -72,7 +74,6 @@ public class CustomerModel {
     public ArrayList<CustomerDTO> getCustomersBySearch(String keyword) throws SQLException {
         String searchQuery = "select * from Customer where id Like ? or name Like ? ";
 
-        // Execute the query with the search keyword
         ResultSet rst = CrudUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%");
 
 

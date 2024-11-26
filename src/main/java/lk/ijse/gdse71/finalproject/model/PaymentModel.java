@@ -143,4 +143,20 @@ public class PaymentModel {
     }
 
 
+    public PaymentDTO getPaymentDetails(String paymentId) throws SQLException {
+        String query = "SELECT * FROM Payment WHERE id = ?";
+        ResultSet rst = CrudUtil.execute(query, paymentId);
+
+        if (rst.next()) {
+            return new PaymentDTO(
+                    rst.getString("id"),
+                    rst.getDate("date").toLocalDate(),
+                    rst.getString("status"),
+                    rst.getString("reservationId"),
+                    rst.getDouble("advancePayment"),
+                    rst.getDouble("fullPayment")
+            );
+        }
+        return null;
+    }
 }

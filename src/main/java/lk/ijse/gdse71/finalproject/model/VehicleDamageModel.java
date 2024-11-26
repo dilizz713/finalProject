@@ -89,4 +89,14 @@ public class VehicleDamageModel {
         return CrudUtil.execute("delete from VehicleDamage where id=?", damageId);
 
     }
+
+    public double getRepairCostByVehicleId(String vehicleId) throws SQLException {
+        String query = "SELECT SUM(repairCost) AS totalRepairCost FROM VehicleDamage WHERE vehicleId = ?";
+        ResultSet rst = CrudUtil.execute(query, vehicleId);
+
+        if (rst.next()) {
+            return rst.getDouble("totalRepairCost");
+        }
+        return 0.0;
+    }
 }

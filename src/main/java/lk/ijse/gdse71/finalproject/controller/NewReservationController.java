@@ -19,10 +19,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.StringConverter;
 import lk.ijse.gdse71.finalproject.db.DBConnection;
-import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
-import lk.ijse.gdse71.finalproject.dto.PaymentDTO;
-import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
-import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
+import lk.ijse.gdse71.finalproject.dto.*;
 import lk.ijse.gdse71.finalproject.model.PaymentModel;
 import lk.ijse.gdse71.finalproject.model.ReservationModel;
 import lk.ijse.gdse71.finalproject.util.CrudUtil;
@@ -179,7 +176,7 @@ public class NewReservationController implements Initializable {
             return;
         }
 
-        //transaction
+
         ReservationDTO reservationDTO = new ReservationDTO(id, customerId, vehicleId, status, reservationDate);
         PaymentDTO paymentDTO = new PaymentDTO(paymentId, reservationDate, paymentStatus, id, advancePayment, fullPayment);
 
@@ -208,7 +205,7 @@ public class NewReservationController implements Initializable {
             new Alert(Alert.AlertType.INFORMATION, "Reservation and payment saved successfully!").show();
         } catch (Exception e) {
 
-            //rollback if transaction fail
+
             if (connection != null) {
                 connection.rollback();
             }
@@ -577,7 +574,6 @@ public class NewReservationController implements Initializable {
 
             connection.commit();
 
-
             new Alert(Alert.AlertType.INFORMATION, "Payment and reservation status updated successfully!").show();
 
 
@@ -591,7 +587,37 @@ public class NewReservationController implements Initializable {
         } finally {
             if (connection != null) {
                 connection.setAutoCommit(true);
+                showBillUI(reservationId, paymentDTO.getId());
             }
+        }
+    }
+
+    private void showBillUI(String reservationId, String paymentId) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/bill-view.fxml"));
+            Parent root = loader.load();
+
+            GenerateBillController billController = loader.getController();
+
+            MileageTrackingDTO mileage = reservationModel.getMileageDetails(reservationId);
+            PaymentDTO payment = paymentModel.getPaymentDetails(paymentId);
+            String vehicleId = reservationModel.getVehicleIdByReservationId(reservationId);
+
+            billController.setBillDetails(reservationId, paymentId, payment, mileage, vehicleId);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            Window currentWindow = updatePAymentButton.getScene().getWindow();
+            stage.initOwner(currentWindow);
+
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to load the bill UI!").show();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

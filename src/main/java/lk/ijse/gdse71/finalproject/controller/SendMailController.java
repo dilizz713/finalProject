@@ -46,7 +46,7 @@ public class SendMailController {
 
     private void sendEmailWithSendgrid(String from, String to, String subject, String body) {
 
-        String USER_NAME = "apikey"; // don't change this
+        String USER_NAME = "apikey";
 
 
         String PASSWORD = "mvzc erln mzzd apxk";
@@ -148,7 +148,7 @@ public class SendMailController {
 
             // Replace with your email and app password
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(from, PASSWORD); // Replace with your email and password
+                return new PasswordAuthentication(from, PASSWORD);
             }
         });
 
@@ -179,4 +179,8 @@ public class SendMailController {
     }
 
 
+    public void setDefaultSubjectAndBody(String yourBillSummary, String billContent) {
+        txtSubject.setText(yourBillSummary);
+        txtBody.setText(billContent);
+    }
 }

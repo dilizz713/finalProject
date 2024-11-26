@@ -23,4 +23,11 @@ public class MileageTrackingDTO {
     private LocalDate endDate;
 
 
+    public MileageTrackingDTO(double estimatedMileage, double actualMileage, double extraChargePerKm, double totalExtraCharges, double estimatedMileageCost) {
+        this.estimatedMileage = estimatedMileage;
+        this.actualMileage = actualMileage;
+        this.extraChargePerKm = extraChargePerKm;
+        this.totalExtraCharges = totalExtraCharges;
+        this.estimatedMileageCost = estimatedMileageCost;
+    }
 }

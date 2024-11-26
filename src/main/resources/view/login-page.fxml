@@ -94,6 +94,11 @@
                         </Button>
                      </children>
                   </HBox>
+                  <Button fx:id="btnForgetPw" mnemonicParsing="false" onAction="#forgetPWOnAction" text="forget password?">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                  </Button>
                </children>
             </VBox>
          </children>

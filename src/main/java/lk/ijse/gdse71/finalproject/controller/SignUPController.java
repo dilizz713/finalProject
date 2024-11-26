@@ -25,6 +25,12 @@ public class SignUPController implements Initializable {
 
     @FXML
     public AnchorPane signUpAnchorPane;
+
+    @FXML
+    public TextField txtEMail;
+
+    @FXML
+    public TextField txtConfirmPw;
     @FXML
     private Button btnSignup;
 
@@ -37,17 +43,25 @@ public class SignUPController implements Initializable {
     LoginModel loginModel = new LoginModel();
     @FXML
     void SignupOnAction(ActionEvent event) throws SQLException {
+        String email = txtEMail.getText();
         String userName = txtUserName.getText();
         String password = txtPassword.getText();
+        String confirmPw = txtConfirmPw.getText();
+
+        if(!password.equals(confirmPw)){
+            new Alert(Alert.AlertType.WARNING, "Incorrect Password!").show();
+            txtConfirmPw.setStyle("-fx-border-color: red; -fx-text-fill: white; -fx-background-color: transparent;");
+        }
 
 
         boolean hasErrors = false;
 
-        if(userName.isEmpty() || password.isEmpty()){
-            new Alert(Alert.AlertType.ERROR, "Please enter user name and password for signup!").show();
+        if(userName.isEmpty() || password.isEmpty() || email.isEmpty() || confirmPw.isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Please fill all fields for signup!").show();
+
         }
 
-        LoginDTO loginDTO = new LoginDTO(userName,password);
+        LoginDTO loginDTO = new LoginDTO(userName,password,email);
         boolean isSaved = loginModel.saveSignupDetails(loginDTO);
 
         if(isSaved){
