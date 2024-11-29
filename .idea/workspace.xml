@@ -5,31 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a8f56836-dcbd-491c-9322-619cc95de4a1" name="Changes" comment="updated">
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/ForgetPasswordOController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/view/forget-password.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/view/forgetPasswordNext.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/GenerateBillController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/GenerateBillController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/LoginPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/LoginPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/NewReservationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/NewReservationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/ReservationVehicleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/ReservationVehicleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/SendMailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/SendMailController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/SignUPController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/SignUPController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/db/DBConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/db/DBConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dto/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dto/CustomerDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dto/LoginDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dto/LoginDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dto/MileageTrackingDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dto/MileageTrackingDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/CustomerModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/CustomerModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/LoginModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/LoginModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/PaymentModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/PaymentModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/ReservationModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/ReservationModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/VehicleDamageModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/model/VehicleDamageModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/css/loginPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/loginPage.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/bill-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/bill-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/login-page.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/login-page.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/sign-up-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/sign-up-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,7 +180,7 @@
       <workItem from="1732560501258" duration="2740000" />
       <workItem from="1732598262494" duration="4168000" />
       <workItem from="1732602581528" duration="68000" />
-      <workItem from="1732602675388" duration="2076000" />
+      <workItem from="1732602675388" duration="5402000" />
     </task>
     <task id="LOCAL-00001" summary="final project day1">
       <option name="closed" value="true" />
@@ -326,7 +302,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732336246564</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="updated">
+      <option name="closed" value="true" />
+      <created>1732604995444</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1732604995444</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

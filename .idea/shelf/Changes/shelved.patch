@@ -1,0 +1,35 @@
+Index: src/main/java/lk/ijse/gdse71/finalproject/model/CustomerModel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package lk.ijse.gdse71.finalproject.model;\n\nimport lk.ijse.gdse71.finalproject.dto.CustomerDTO;\nimport lk.ijse.gdse71.finalproject.util.CrudUtil;\n\nimport java.sql.ResultSet;\nimport java.sql.SQLException;\nimport java.util.ArrayList;\n\npublic class CustomerModel {\n    public boolean saveCustomer(CustomerDTO customerDTO) throws SQLException {\n        return CrudUtil.execute(\n                \"insert into Customer values (?,?,?,?,?,?)\",\n                customerDTO.getId(),\n                customerDTO.getName(),\n                customerDTO.getAddress(),\n                customerDTO.getEmail(),\n                customerDTO.getPhoneNumber(),\n                customerDTO.getNic()\n        );\n    }\n\n    public String getNextCustomerId() throws SQLException {\n        ResultSet resultSet =  CrudUtil.execute(\n                \"select id from Customer order by id desc limit 1\"\n        );\n\n        if(resultSet.next()){\n            String lastId = resultSet.getString(1);\n            String subString = lastId.substring(1);\n            int i = Integer.parseInt(subString);\n            int newId = i+1;\n            return String.format(\"C%03d\",newId);\n        }\n        return \"C001\";\n    }\n\n    public ArrayList<CustomerDTO> getAllCustomers() throws SQLException {\n        ResultSet rst = CrudUtil.execute(\"select * from Customer\");\n\n        ArrayList<CustomerDTO> customerDTOS = new ArrayList<>();\n\n        while (rst.next()) {\n            CustomerDTO customerDTO = new CustomerDTO(\n                   rst.getString(1),        //id\n                    rst.getString(2),       //name\n                    rst.getString(3),       //address\n                    rst.getString(4),       //email\n                    rst.getInt(5),          //phone\n                    rst.getString(6)        //nic\n\n            );\n            customerDTOS.add(customerDTO);\n        }\n        return customerDTOS;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/lk/ijse/gdse71/finalproject/model/CustomerModel.java b/src/main/java/lk/ijse/gdse71/finalproject/model/CustomerModel.java
+--- a/src/main/java/lk/ijse/gdse71/finalproject/model/CustomerModel.java	(revision d291784eb8c9f6159690281305581e1d011f25e0)
++++ b/src/main/java/lk/ijse/gdse71/finalproject/model/CustomerModel.java	(date 1730072870890)
+@@ -35,23 +35,5 @@
+         return "C001";
+     }
+ 
+-    public ArrayList<CustomerDTO> getAllCustomers() throws SQLException {
+-        ResultSet rst = CrudUtil.execute("select * from Customer");
+-
+-        ArrayList<CustomerDTO> customerDTOS = new ArrayList<>();
+-
+-        while (rst.next()) {
+-            CustomerDTO customerDTO = new CustomerDTO(
+-                   rst.getString(1),        //id
+-                    rst.getString(2),       //name
+-                    rst.getString(3),       //address
+-                    rst.getString(4),       //email
+-                    rst.getInt(5),          //phone
+-                    rst.getString(6)        //nic
+-
+-            );
+-            customerDTOS.add(customerDTO);
+-        }
+-        return customerDTOS;
+-    }
++    
+ }
