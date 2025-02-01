@@ -10,11 +10,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 import lk.ijse.gdse71.finalproject.dto.PaymentDTO;
 import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
-import lk.ijse.gdse71.finalproject.dto.tm.CustomerTM;
-import lk.ijse.gdse71.finalproject.dto.tm.PaymentTM;
+import lk.ijse.gdse71.finalproject.view.tdm.PaymentTM;
 import lk.ijse.gdse71.finalproject.model.PaymentModel;
 import lk.ijse.gdse71.finalproject.model.ReservationModel;
 
@@ -245,9 +243,6 @@ public class PaymentController implements Initializable {
                     paymentDTO.getDate(),
                     paymentDTO.getStatus(),
                     updateButton
-
-
-
             );
             paymentTMS.add(paymentTM);
         }
@@ -309,8 +304,6 @@ public class PaymentController implements Initializable {
                     paymentDTO.getStatus(),
                     updateButton
 
-
-
             );
              paymentTMS.add(paymentTM);
         }
@@ -330,8 +323,6 @@ public class PaymentController implements Initializable {
 
         paymentAnchorPane.getChildren().clear();
         paymentAnchorPane.getChildren().add(reservationAnchorPane);
-
-
 
 
     }

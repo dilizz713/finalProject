@@ -11,9 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
-import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
-import lk.ijse.gdse71.finalproject.dto.tm.ReservationTM;
-import lk.ijse.gdse71.finalproject.dto.tm.VehicleTM;
+import lk.ijse.gdse71.finalproject.view.tdm.ReservationTM;
 import lk.ijse.gdse71.finalproject.model.ReservationModel;
 
 import java.io.IOException;

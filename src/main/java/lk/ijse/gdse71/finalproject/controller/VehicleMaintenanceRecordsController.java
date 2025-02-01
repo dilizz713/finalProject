@@ -7,29 +7,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 import lk.ijse.gdse71.finalproject.dto.MaintenanceRecordDTO;
-import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
-import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
-import lk.ijse.gdse71.finalproject.dto.tm.MaintenanceRecordTM;
-import lk.ijse.gdse71.finalproject.dto.tm.ReservationTM;
+import lk.ijse.gdse71.finalproject.view.tdm.MaintenanceRecordTM;
 import lk.ijse.gdse71.finalproject.model.MaintenanceRecordModel;
-import lk.ijse.gdse71.finalproject.model.VehicleModel;
 import lk.ijse.gdse71.finalproject.util.CrudUtil;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.sql.Date;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class VehicleMaintenanceRecordsController implements Initializable {

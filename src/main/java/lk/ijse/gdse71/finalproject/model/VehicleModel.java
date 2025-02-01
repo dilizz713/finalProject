@@ -1,14 +1,10 @@
 package lk.ijse.gdse71.finalproject.model;
 
-import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
-import lk.ijse.gdse71.finalproject.dto.tm.VehicleTM;
 import lk.ijse.gdse71.finalproject.util.CrudUtil;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class VehicleModel {

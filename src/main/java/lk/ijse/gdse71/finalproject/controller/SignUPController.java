@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
-import lk.ijse.gdse71.finalproject.model.LoginModel;
 
 import java.io.IOException;
 import java.net.URL;

@@ -1,9 +1,8 @@
-package lk.ijse.gdse71.finalproject.dto.tm;
+package lk.ijse.gdse71.finalproject.view.tdm;
 
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Getter
 @Setter

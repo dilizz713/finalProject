@@ -10,21 +10,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lk.ijse.gdse71.finalproject.dao.custom.CustomerDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
-import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
-import lk.ijse.gdse71.finalproject.dto.PaymentDTO;
-import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
-import lk.ijse.gdse71.finalproject.dto.tm.CustomerTM;
-import lk.ijse.gdse71.finalproject.dto.tm.ReservationTM;
-import lk.ijse.gdse71.finalproject.model.CustomerModel;
-import lk.ijse.gdse71.finalproject.model.ReservationModel;
+import lk.ijse.gdse71.finalproject.view.tdm.CustomerTM;
 
 import java.io.IOException;
 import java.net.URL;
@@ -92,7 +86,7 @@ public class CustomerController implements Initializable {
     @FXML
     private TextField txtPhone;
 
-    CustomerModel customerModel = new CustomerModel();
+    CustomerDAO customerDAO = new CustomerDAOImpl();
 
     @FXML
     void SaveCustomerOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
@@ -168,7 +162,7 @@ public class CustomerController implements Initializable {
 
 
         CustomerDTO customerDTO = new CustomerDTO(id, name, address, email, phone, nic);
-        boolean isSaved = customerModel.saveCustomer(customerDTO);
+        boolean isSaved = customerDAO.save(customerDTO);
         if (isSaved) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Customer saved successfully!").show();
@@ -203,7 +197,7 @@ public class CustomerController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if(optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES){
-            boolean isDeleted = customerModel.deleteCustomer(customerId);
+            boolean isDeleted = customerDAO.delete(customerId);
             if(isDeleted){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Customer deleted!").show();
@@ -296,7 +290,7 @@ public class CustomerController implements Initializable {
 
 
         CustomerDTO customerDTO = new CustomerDTO(id, name, address, email, phone, nic);
-        boolean isUpdate = customerModel.updateCustomer(customerDTO);
+        boolean isUpdate = customerDAO.update(customerDTO);
         if (isUpdate) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully!").show();
@@ -357,7 +351,7 @@ public class CustomerController implements Initializable {
             return;
         }
 
-        ArrayList<CustomerDTO> customerDTOS = customerModel.getCustomersBySearch(searchText);
+        ArrayList<CustomerDTO> customerDTOS = customerDAO.search(searchText);
 
 
         ObservableList<CustomerTM> customerTMS = FXCollections.observableArrayList();
@@ -397,12 +391,12 @@ public class CustomerController implements Initializable {
 
     }
     public void loadNextCustomerId() throws SQLException {
-        String nextCustomerID = customerModel.getNextCustomerId();
+        String nextCustomerID = customerDAO.getNextId();
         lblCustomerId.setText(nextCustomerID);
     }
 
     private void loadTableData() throws SQLException, ClassNotFoundException {
-        ArrayList<CustomerDTO> customerDTOS = customerModel.getAllCustomers();
+        ArrayList<CustomerDTO> customerDTOS = customerDAO.getAll();
         ObservableList<CustomerTM> customerTMS = FXCollections.observableArrayList();
 
         for(CustomerDTO customerDTO:customerDTOS){

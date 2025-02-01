@@ -1,4 +1,4 @@
-package lk.ijse.gdse71.finalproject.dto.tm;
+package lk.ijse.gdse71.finalproject.view.tdm;
 
 import lombok.*;
 
@@ -7,11 +7,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class DriverTM {
+
+public class CustomerTM {
     private String id;
     private String name;
-    private String licenseNumber;
+    private String address;
+    private String email;
     private int phoneNumber;
     private String nic;
-
 }

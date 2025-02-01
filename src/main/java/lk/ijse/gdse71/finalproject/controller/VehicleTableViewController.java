@@ -12,10 +12,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
 import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
-import lk.ijse.gdse71.finalproject.dto.tm.ReservationTM;
-import lk.ijse.gdse71.finalproject.dto.tm.VehicleTM;
+import lk.ijse.gdse71.finalproject.view.tdm.VehicleTM;
 import lk.ijse.gdse71.finalproject.model.VehicleModel;
 
 import java.io.ByteArrayInputStream;
@@ -24,7 +22,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class VehicleTableViewController implements Initializable {

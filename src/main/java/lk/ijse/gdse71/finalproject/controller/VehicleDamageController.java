@@ -9,11 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.gdse71.finalproject.dto.PaymentDTO;
 import lk.ijse.gdse71.finalproject.dto.VehicleDamageDTO;
-import lk.ijse.gdse71.finalproject.dto.tm.PaymentTM;
-import lk.ijse.gdse71.finalproject.dto.tm.VehicleDamageTM;
-import lk.ijse.gdse71.finalproject.model.CustomerModel;
+import lk.ijse.gdse71.finalproject.view.tdm.VehicleDamageTM;
 import lk.ijse.gdse71.finalproject.model.VehicleDamageModel;
 import lk.ijse.gdse71.finalproject.model.VehicleModel;
 

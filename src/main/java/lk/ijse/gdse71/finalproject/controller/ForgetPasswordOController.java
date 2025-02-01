@@ -13,7 +13,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
-import lk.ijse.gdse71.finalproject.model.LoginModel;
 
 import java.io.IOException;
 import java.sql.SQLException;

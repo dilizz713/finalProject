@@ -1,26 +1,28 @@
-package lk.ijse.gdse71.finalproject.dto.tm;
+package lk.ijse.gdse71.finalproject.view.tdm;
 
 import javafx.scene.control.Button;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ReservationTM {
+public class VehicleTM {
     private String id;
-    private LocalDate reservationDate;
-    private String customerName;
     private String numberPlate;
+    private String make;
     private String model;
+    private String vehicleType;
+    private LocalDate date;
     private double price;
-    private String status;
+    private byte[] image;
     private Button updateButton;
-    private Button addMileageButton;
+
+
+
 
 
 }

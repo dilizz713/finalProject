@@ -11,8 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
-import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
-import lk.ijse.gdse71.finalproject.dto.tm.MileageTrackingTM;
+import lk.ijse.gdse71.finalproject.view.tdm.MileageTrackingTM;
 import lk.ijse.gdse71.finalproject.model.MileageTrackingModel;
 import lk.ijse.gdse71.finalproject.model.ReservationModel;
 
@@ -21,7 +20,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
