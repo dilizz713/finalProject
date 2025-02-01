@@ -1,18 +1,17 @@
-package lk.ijse.gdse71.finalproject.model;
+package lk.ijse.gdse71.finalproject.dao.custom.impl;
 
-import lk.ijse.gdse71.finalproject.controller.MileageTrackingController;
-import lk.ijse.gdse71.finalproject.dto.*;
-import lk.ijse.gdse71.finalproject.util.CrudUtil;
+import lk.ijse.gdse71.finalproject.dao.custom.MaintenanceRecordDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
+import lk.ijse.gdse71.finalproject.dto.MaintenanceRecordDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Optional;
 
-public class MaintenanceRecordModel {
-    public String getNextMaintenanceId() throws SQLException {
-        ResultSet resultSet = CrudUtil.execute("select id from MaintenanceRecord order by id desc limit 1");
+public class MaintenanceRecordDAOImpl implements MaintenanceRecordDAO {
+    public String getNextId() throws SQLException {
+        ResultSet resultSet = SQLUtil.execute("select id from MaintenanceRecord order by id desc limit 1");
 
         if(resultSet.next()){
             String lastId = resultSet.getString(1);
@@ -24,8 +23,8 @@ public class MaintenanceRecordModel {
         }
         return "MR001";
     }
-    public ArrayList<MaintenanceRecordDTO> getAllMaintenanceRecords() throws SQLException {
-        ResultSet rst = CrudUtil.execute("select * from MaintenanceRecord");
+    public ArrayList<MaintenanceRecordDTO> getAll() throws SQLException {
+        ResultSet rst = SQLUtil.execute("select * from MaintenanceRecord");
 
         ArrayList<MaintenanceRecordDTO> maintenanceRecordDTOS = new ArrayList<>();
 
@@ -47,7 +46,7 @@ public class MaintenanceRecordModel {
     }
 
     public ArrayList<String> getAllVehicleIds() throws SQLException {
-        ResultSet rst = CrudUtil.execute("select id from Vehicle");
+        ResultSet rst = SQLUtil.execute("select id from Vehicle");
         ArrayList<String> vehicleId = new ArrayList<>();
         while (rst.next()) {
             vehicleId.add(rst.getString(1));
@@ -56,12 +55,12 @@ public class MaintenanceRecordModel {
     }
 
     public String getVehicleNameById(String vehicleId) throws SQLException {
-        ResultSet rst = CrudUtil.execute("select model from Vehicle where id = ?", vehicleId);
+        ResultSet rst = SQLUtil.execute("select model from Vehicle where id = ?", vehicleId);
         return rst.next() ? rst.getString(1) : null;
     }
 
-    public boolean saveMaintenanceRecord(MaintenanceRecordDTO maintenanceRecordDTO) throws SQLException {
-        return CrudUtil.execute(
+    public boolean save(MaintenanceRecordDTO maintenanceRecordDTO) throws SQLException {
+        return SQLUtil.execute(
                 "insert into MaintenanceRecord values (?,?,?,?,?,?)",
                 maintenanceRecordDTO.getId(),
                 maintenanceRecordDTO.getStartDate(),
@@ -73,8 +72,8 @@ public class MaintenanceRecordModel {
     }
 
 
-    public boolean updateMaintenanceRecord(MaintenanceRecordDTO maintenanceRecordDTO) throws SQLException {
-        return CrudUtil.execute(
+    public boolean update(MaintenanceRecordDTO maintenanceRecordDTO) throws SQLException {
+        return SQLUtil.execute(
                 "update  MaintenanceRecord set startDate =?, endDate=?, description=?, vehicleId=?, status=?  where id=?",
                 maintenanceRecordDTO.getStartDate(),
                 maintenanceRecordDTO.getEndDate(),
@@ -85,10 +84,10 @@ public class MaintenanceRecordModel {
         );
     }
 
-    public boolean deleteRecord(String recordId) throws SQLException {
-        return CrudUtil.execute("delete from MaintenanceRecord where id=?",recordId );
+    public boolean delete(String recordId) throws SQLException {
+        return SQLUtil.execute("delete from MaintenanceRecord where id=?",recordId );
     }
-    public ArrayList<MaintenanceRecordDTO> getRecordsBySearch(String keyword) throws SQLException {
+    public ArrayList<MaintenanceRecordDTO> search(String keyword) throws SQLException {
         String searchQuery = """
                 select M.* , V.model 
                 from MaintenanceRecord M
@@ -96,7 +95,7 @@ public class MaintenanceRecordModel {
                 on M.vehicleId = V.id
                 where M.id Like ? or M.vehicleId Like ?  or V.model Like ? 
                 """;
-        ResultSet rst = CrudUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%");
+        ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%");
 
         ArrayList<MaintenanceRecordDTO> maintenanceRecordDTOS = new ArrayList<>();
 
@@ -118,7 +117,7 @@ public class MaintenanceRecordModel {
 
     public MaintenanceRecordDTO getRecordsById(String recordId) throws SQLException {
         String query = "select * from MaintenanceRecord where id=?";
-        ResultSet rst = CrudUtil.execute(query,recordId);
+        ResultSet rst = SQLUtil.execute(query,recordId);
 
         if(rst.next()){
             String id = rst.getString("id");

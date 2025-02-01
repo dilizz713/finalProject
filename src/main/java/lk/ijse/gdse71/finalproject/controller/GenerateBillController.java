@@ -1,18 +1,11 @@
 package lk.ijse.gdse71.finalproject.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import lk.ijse.gdse71.finalproject.dto.*;
-import lk.ijse.gdse71.finalproject.model.MileageTrackingModel;
 import lk.ijse.gdse71.finalproject.model.PaymentModel;
 import lk.ijse.gdse71.finalproject.model.ReservationModel;
 import lk.ijse.gdse71.finalproject.model.VehicleDamageModel;
@@ -20,7 +13,6 @@ import lk.ijse.gdse71.finalproject.model.VehicleDamageModel;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class GenerateBillController implements Initializable {
