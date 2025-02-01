@@ -1,18 +1,17 @@
-package lk.ijse.gdse71.finalproject.model;
+package lk.ijse.gdse71.finalproject.dao.custom.impl;
 
-import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
+import lk.ijse.gdse71.finalproject.dao.custom.PaymentDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
 import lk.ijse.gdse71.finalproject.dto.PaymentDTO;
-import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
-import lk.ijse.gdse71.finalproject.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class PaymentModel {
-    public String getNextPaymentId() throws SQLException {
-        ResultSet resultSet = CrudUtil.execute("select id from Payment order by id desc limit 1");
+public class PaymentDAOImpl implements PaymentDAO {
+    public String getNextId() throws SQLException {
+        ResultSet resultSet = SQLUtil.execute("select id from Payment order by id desc limit 1");
 
         if(resultSet.next()){
             String lastId = resultSet.getString(1);
@@ -24,8 +23,8 @@ public class PaymentModel {
         return "P001";
     }
 
-    public ArrayList<PaymentDTO> getAllPayments() throws SQLException {
-        ResultSet rst = CrudUtil.execute("select * from Payment");
+    public ArrayList<PaymentDTO> getAll() throws SQLException {
+        ResultSet rst = SQLUtil.execute("select * from Payment");
 
         ArrayList<PaymentDTO> paymentDTOS = new ArrayList<>();
 
@@ -44,8 +43,8 @@ public class PaymentModel {
         return paymentDTOS;
     }
 
-    public boolean savePayment(PaymentDTO paymentDTO) throws SQLException {
-        return CrudUtil.execute(
+    public boolean save(PaymentDTO paymentDTO) throws SQLException {
+        return SQLUtil.execute(
                 "insert into Payment values (?,?,?,?,?,?)",
                 paymentDTO.getId(),
                 paymentDTO.getDate(),
@@ -58,18 +57,23 @@ public class PaymentModel {
 
     }
 
+    @Override
+    public boolean update(PaymentDTO dto) throws SQLException {
+        return false;
+    }
+
 
     public void updateAdvancePaymentStatus(String reservationId) throws SQLException {
         String query = "update Payment set status = 'Done' where reservationId = ? and type = 'Advance Payment'";
-        CrudUtil.execute(query, reservationId);
+        SQLUtil.execute(query, reservationId);
     }
 
-    public boolean deletePayment(String id) throws SQLException {
-        return CrudUtil.execute("delete from Payment where id=?", id);
+    public boolean delete(String id) throws SQLException {
+        return SQLUtil.execute("delete from Payment where id=?", id);
     }
 
     public boolean updatePayment(PaymentDTO paymentDTO) throws SQLException {
-        return CrudUtil.execute(
+        return SQLUtil.execute(
                 "update Payment set  date=?,  status=?, reservationId=?,advancePayment=? , fullPayment=?  where id=?",
                 paymentDTO.getDate(),
                 paymentDTO.getStatus(),
@@ -81,7 +85,7 @@ public class PaymentModel {
         );
     }
 
-    public ArrayList<PaymentDTO> getPaymentRecordsBySearch(String keyword) throws SQLException {
+    public ArrayList<PaymentDTO> search(String keyword) throws SQLException {
         String searchQuery = """
                 select p.*, c.name 
                 from Payment p
@@ -92,7 +96,7 @@ public class PaymentModel {
                 where p.id Like ? or p.date Like ? or p.reservationId Like ? or p.status Like ? or c.name Like ?;
                 """;
 
-        ResultSet rst = CrudUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%","%" + keyword + "%","%" + keyword + "%");
+        ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%","%" + keyword + "%","%" + keyword + "%");
 
 
         ArrayList<PaymentDTO> paymentDTOS = new ArrayList<>();
@@ -114,7 +118,7 @@ public class PaymentModel {
 
     public double getAdvancePayment(String reservationId) throws SQLException {
         String query = "select sum(advancePayment) as totalAdvancePayment from Payment where reservationId = ?";
-        ResultSet resultSet = CrudUtil.execute(query, reservationId);
+        ResultSet resultSet = SQLUtil.execute(query, reservationId);
 
         if (resultSet.next()) {
             return resultSet.getDouble("totalAdvancePayment");
@@ -125,7 +129,7 @@ public class PaymentModel {
 
     public PaymentDTO getPaymentById(String paymentId) throws SQLException {
         String query = "select * from Payment where id=?";
-        ResultSet rst = CrudUtil.execute(query,paymentId);
+        ResultSet rst = SQLUtil.execute(query,paymentId);
 
         if(rst.next()){
             String id = rst.getString("id");
@@ -145,7 +149,7 @@ public class PaymentModel {
 
     public PaymentDTO getPaymentDetails(String paymentId) throws SQLException {
         String query = "SELECT * FROM Payment WHERE id = ?";
-        ResultSet rst = CrudUtil.execute(query, paymentId);
+        ResultSet rst = SQLUtil.execute(query, paymentId);
 
         if (rst.next()) {
             return new PaymentDTO(

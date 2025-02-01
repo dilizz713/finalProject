@@ -6,7 +6,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import lk.ijse.gdse71.finalproject.dto.*;
-import lk.ijse.gdse71.finalproject.model.PaymentModel;
 import lk.ijse.gdse71.finalproject.model.ReservationModel;
 import lk.ijse.gdse71.finalproject.model.VehicleDamageModel;
 

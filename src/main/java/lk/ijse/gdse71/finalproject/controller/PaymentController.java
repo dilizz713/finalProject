@@ -10,10 +10,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.dao.custom.PaymentDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.PaymentDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.PaymentDTO;
 import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
 import lk.ijse.gdse71.finalproject.view.tdm.PaymentTM;
-import lk.ijse.gdse71.finalproject.model.PaymentModel;
 import lk.ijse.gdse71.finalproject.model.ReservationModel;
 
 import java.io.IOException;
@@ -72,7 +73,7 @@ public class PaymentController implements Initializable {
     private TextField txtSearchBar;
 
 
-    PaymentModel paymentModel = new PaymentModel();
+   PaymentDAO paymentDAO = new PaymentDAOImpl();
     ReservationModel reservationModel = new ReservationModel();
     ReservationDTO reservationDTO = new ReservationDTO();
 
@@ -98,7 +99,7 @@ public class PaymentController implements Initializable {
         }
 
         try {
-            boolean isDeleted = paymentModel.deletePayment(selectedPaymentTM.getId());
+            boolean isDeleted = paymentDAO.delete(selectedPaymentTM.getId());
 
             if (isDeleted) {
                 new Alert(Alert.AlertType.INFORMATION, "Payment deleted successfully.").show();
@@ -141,7 +142,7 @@ public class PaymentController implements Initializable {
             new Alert(Alert.AlertType.WARNING, "Please select a payment to update!").show();
             return;
         }
-        PaymentDTO selectedPayment = paymentModel.getPaymentById(selectedPaymentTM.getId());
+        PaymentDTO selectedPayment = paymentDAO.getPaymentById(selectedPaymentTM.getId());
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/newReservation.fxml"));
         AnchorPane paymentPane = loader.load();
@@ -203,7 +204,7 @@ public class PaymentController implements Initializable {
             return;
         }
 
-        ArrayList<PaymentDTO> paymentDTOS = paymentModel.getPaymentRecordsBySearch(searchText);
+        ArrayList<PaymentDTO> paymentDTOS = paymentDAO.search(searchText);
         ObservableList<PaymentTM> paymentTMS = FXCollections.observableArrayList();
 
         for(PaymentDTO paymentDTO:paymentDTOS){
@@ -263,7 +264,7 @@ public class PaymentController implements Initializable {
 
     private void loadTableData() throws SQLException, ClassNotFoundException {
 
-        ArrayList<PaymentDTO> paymentDTOS = paymentModel.getAllPayments();
+        ArrayList<PaymentDTO> paymentDTOS = paymentDAO.getAll();
         ObservableList<PaymentTM> paymentTMS = FXCollections.observableArrayList();
 
         for(PaymentDTO paymentDTO:paymentDTOS){
