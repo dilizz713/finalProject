@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8f56836-dcbd-491c-9322-619cc95de4a1" name="Changes" comment="updated">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/ForgetPasswordOController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/ForgetPasswordOController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/LoginPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/controller/LoginPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dao/custom/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dao/custom/CustomerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dao/custom/LoginDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dao/custom/LoginDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dao/custom/impl/CustomerDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/gdse71/finalproject/dao/custom/impl/CustomerDAOImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="a8f56836-dcbd-491c-9322-619cc95de4a1" name="Changes" comment="updated" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -212,7 +205,7 @@
       <workItem from="1738377677496" duration="180000" />
       <workItem from="1738378114049" duration="1771000" />
       <workItem from="1738381965597" duration="2506000" />
-      <workItem from="1738431105884" duration="2239000" />
+      <workItem from="1738431105884" duration="3170000" />
     </task>
     <task id="LOCAL-00001" summary="final project day1">
       <option name="closed" value="true" />
