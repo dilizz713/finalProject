@@ -14,6 +14,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lk.ijse.gdse71.finalproject.dao.custom.LoginDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.LoginDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
 
 import java.io.IOException;
@@ -57,7 +59,7 @@ public class LoginPageController implements Initializable {
     }
 
 
-    LoginModel loginModel = new LoginModel();
+    LoginDAO loginDAO = new LoginDAOImpl();
     @FXML
     void LoginButtonOnAction(ActionEvent event) {
         String userName = txtUserName.getText().trim();
@@ -68,7 +70,7 @@ public class LoginPageController implements Initializable {
             return;
         }
         try{
-            LoginDTO loginDTO = loginModel.findByUserName(userName);
+            LoginDTO loginDTO = loginDAO.findByUserName(userName);
 
             if(loginDTO == null){
                 new Alert(Alert.AlertType.INFORMATION,"User name not found. Please signup first").show();

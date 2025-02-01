@@ -3,7 +3,7 @@ package lk.ijse.gdse71.finalproject.dao.custom.impl;
 import lk.ijse.gdse71.finalproject.dao.custom.CustomerDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
-import lk.ijse.gdse71.finalproject.util.CrudUtil;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
