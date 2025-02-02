@@ -16,10 +16,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.StringConverter;
+import lk.ijse.gdse71.finalproject.dao.custom.PaymentDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.PaymentDAOImpl;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.ReservationDAOImpl;
 import lk.ijse.gdse71.finalproject.db.DBConnection;
 import lk.ijse.gdse71.finalproject.dto.*;
-import lk.ijse.gdse71.finalproject.model.ReservationModel;
-import lk.ijse.gdse71.finalproject.util.CrudUtil;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -95,8 +99,13 @@ public class NewReservationController implements Initializable {
 
     private ReservationTableController reservationTableController;
     private PaymentController paymentController;
-    private ReservationModel reservationModel = new ReservationModel();
-    private PaymentModel paymentModel = new PaymentModel();
+
+
+  //  private PaymentModel paymentModel = new PaymentModel();
+
+    ReservationDAO reservationDAO = new ReservationDAOImpl();
+    PaymentDAO paymentDAO = new PaymentDAOImpl();
+
     private VehicleDTO selectedVehicle;
     private boolean isEditMode = false;
     private String editingReservationId;
@@ -183,7 +192,7 @@ public class NewReservationController implements Initializable {
             connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
 
-            boolean isReservationSaved = CrudUtil.execute(connection,
+            boolean isReservationSaved = SQLUtil.execute(connection,
                     "insert into Reservation (id, customerId, vehicleId, status, reservationDate) values (?, ?, ?, ?, ?)",
                     reservationDTO.getId(), reservationDTO.getCustomerId(), reservationDTO.getVehicleId(),
                     reservationDTO.getStatus(), reservationDTO.getReservationDate());
@@ -191,7 +200,7 @@ public class NewReservationController implements Initializable {
                 throw new SQLException("Failed to save reservation.");
             }
 
-            boolean isPaymentSaved = CrudUtil.execute(connection,
+            boolean isPaymentSaved = SQLUtil.execute(connection,
                     "insert into Payment (id, date, status, reservationId, advancePayment, fullPayment) values (?, ?, ?, ?, ?, ?)",
                     paymentDTO.getId(), paymentDTO.getDate(), paymentDTO.getStatus(), paymentDTO.getReservationId(),
                     paymentDTO.getAdvancePayment(), paymentDTO.getFullPayment());
@@ -225,7 +234,7 @@ public class NewReservationController implements Initializable {
         String reservationId = lblReservationId.getText();
 
         ReservationDTO reservationDTO = new ReservationDTO(reservationId, customerId, vehicleId, status, originalStartDate);
-        reservationModel.updateReservation(reservationDTO);
+        reservationDAO.update(reservationDTO);
 
         reservationTableController.refreshTable();
 
@@ -236,7 +245,7 @@ public class NewReservationController implements Initializable {
 
     private LocalDate getOriginalReservationDate(String reservationId) throws SQLException {
         String query = "select reservationDate from Reservation where id=?";
-        ResultSet rst = CrudUtil.execute(query, reservationId);
+        ResultSet rst = SQLUtil.execute(query, reservationId);
 
         if(rst.next()){
             return rst.getDate("reservationDate").toLocalDate();
@@ -361,7 +370,7 @@ public class NewReservationController implements Initializable {
 
     private void loadCustomerNames() {
         try {
-            ArrayList<CustomerDTO> customers = reservationModel.getCustomerDTOsForReservation();
+            ArrayList<CustomerDTO> customers = reservationDAO.getCustomerDTOsForReservation();
 
             ObservableList<CustomerDTO> customerList = FXCollections.observableArrayList(customers);
             cmbCustomer.setItems(customerList);
@@ -421,11 +430,11 @@ public class NewReservationController implements Initializable {
     }
 
     public void loadNextId() throws SQLException {
-        String nextId =reservationModel.getNextReservationId();
+        String nextId =reservationDAO.getNextId();
        lblReservationId.setText(nextId);
     }
     public void loadPaymentId() throws SQLException {
-        String nextPaymentId = paymentModel.getNextPaymentId();
+        String nextPaymentId = paymentDAO.getNextId();
        lblPaymentId.setText(nextPaymentId);
     }
 
@@ -441,7 +450,7 @@ public class NewReservationController implements Initializable {
         lblCurrentDate.setText(originalStartDate != null ? originalStartDate.toString() : LocalDate.now().toString());
 
         String customerId = reservationDTO.getCustomerId();
-        for (CustomerDTO customer : reservationModel.getCustomerDTOsForReservation()) {
+        for (CustomerDTO customer : reservationDAO.getCustomerDTOsForReservation()) {
             if (customer.getId().equals(customerId)) {
                 cmbCustomer.getSelectionModel().select(customer);
                 break;
@@ -450,7 +459,7 @@ public class NewReservationController implements Initializable {
 
         String vehicleId = reservationDTO.getVehicleId();
 
-        ResultSet vehicleDetailsResultSet = CrudUtil.execute("select id, model, numberPlate, price from Vehicle where id = ?", vehicleId);
+        ResultSet vehicleDetailsResultSet = SQLUtil.execute("select id, model, numberPlate, price from Vehicle where id = ?", vehicleId);
         if (vehicleDetailsResultSet.next()) {
             String vId = vehicleDetailsResultSet.getString("id");
             String model = vehicleDetailsResultSet.getString("model");
@@ -496,7 +505,7 @@ public class NewReservationController implements Initializable {
         if(status.equals("Done")){
             updatePAymentButton.setDisable(false);
 
-            double endMilegae = reservationModel.getEndMileageForReservation(reservationId);
+            double endMilegae = reservationDAO.getEndMileageForReservation(reservationId);
             if(endMilegae == 0){
                 new Alert(Alert.AlertType.WARNING, "Please fill the end date mileage before calculating full payment!").show();
                 cmbStatus.setValue("Pending");
@@ -509,12 +518,12 @@ public class NewReservationController implements Initializable {
         updateSaveButtonStatus();
     }
     private double calculateFullPaymentAmount(String reservationId) throws SQLException {
-        String vehicleId = reservationModel.getVehicleIdByReservationId(reservationId);
+        String vehicleId = reservationDAO.getVehicleIdByReservationId(reservationId);
 
-        double estimatedMileageCost = reservationModel.getEstimatedMileageCost(reservationId);
-        double totalExtraCharges = reservationModel.getTotalExtraCharges(reservationId);
-        double repairCost = reservationModel.getRepairCostByVehicleId(vehicleId);
-        double advancePayment = paymentModel.getAdvancePayment(reservationId);
+        double estimatedMileageCost = reservationDAO.getEstimatedMileageCost(reservationId);
+        double totalExtraCharges = reservationDAO.getTotalExtraCharges(reservationId);
+        double repairCost = reservationDAO.getRepairCostByVehicleId(vehicleId);
+        double advancePayment = paymentDAO.getAdvancePayment(reservationId);
 
         return estimatedMileageCost + totalExtraCharges + repairCost - advancePayment;
 
@@ -552,7 +561,7 @@ public class NewReservationController implements Initializable {
         try{
             connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
-            boolean isPaymentUpdated = CrudUtil.execute(connection,
+            boolean isPaymentUpdated = SQLUtil.execute(connection,
                     "update Payment set date=?, status=?, reservationId=?, advancePayment=?, fullPayment=? where id=?",
                     paymentDTO.getDate(), paymentDTO.getStatus(), paymentDTO.getReservationId(), paymentDTO.getAdvancePayment(),
                     paymentDTO.getFullPayment(), paymentDTO.getId());
@@ -561,7 +570,7 @@ public class NewReservationController implements Initializable {
                 throw new SQLException("Failed to update payment");
             }
             if(status.equalsIgnoreCase("Done")){
-                boolean isReservationUpdated = CrudUtil.execute(connection,
+                boolean isReservationUpdated = SQLUtil.execute(connection,
                         "update Reservation set status=? where id=?", "Done",reservationId
                         );
                 if(!isReservationUpdated){
@@ -596,9 +605,9 @@ public class NewReservationController implements Initializable {
 
             GenerateBillController billController = loader.getController();
 
-            MileageTrackingDTO mileage = reservationModel.getMileageDetails(reservationId);
-            PaymentDTO payment = paymentModel.getPaymentDetails(paymentId);
-            String vehicleId = reservationModel.getVehicleIdByReservationId(reservationId);
+            MileageTrackingDTO mileage = reservationDAO.getMileageDetails(reservationId);
+            PaymentDTO payment = paymentDAO.getPaymentDetails(paymentId);
+            String vehicleId = reservationDAO.getVehicleIdByReservationId(reservationId);
 
             billController.setBillDetails(reservationId, paymentId, payment, mileage, vehicleId);
 

@@ -11,8 +11,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
-import lk.ijse.gdse71.finalproject.model.VehicleModel;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -75,7 +76,7 @@ public class VehicleController implements Initializable {
     private String editingVehicleId;
 
     private VehicleTableViewController vehicleTableViewController;
-    VehicleModel vehicleModel = new VehicleModel();
+    VehicleDAO vehicleDAO = new VehicleDAOImpl();
 
     public void setVehicleTableViewController(VehicleTableViewController controller){
         this.vehicleTableViewController = controller;
@@ -162,9 +163,9 @@ public class VehicleController implements Initializable {
         VehicleDTO vehicleDTO = new VehicleDTO(id, make, model, vehicleType, imageBytes, numberPlate, vehiclePrice,date);
         boolean isSaved ;
         if(btnSave.getText().equals("Update")){
-            isSaved = vehicleModel.updateVehicle(vehicleDTO);
+            isSaved = vehicleDAO.update(vehicleDTO);
         }else{
-            isSaved = vehicleModel.saveVehicle(vehicleDTO);
+            isSaved = vehicleDAO.save(vehicleDTO);
         }
 
         if (isSaved) {
@@ -243,7 +244,7 @@ public class VehicleController implements Initializable {
     }
 
     public void loadNextId() throws SQLException {
-        String nextId = vehicleModel.getNextVehicleId();
+        String nextId = vehicleDAO.getNextId();
         lblVehicleId.setText(nextId);
     }
 
@@ -273,7 +274,7 @@ public class VehicleController implements Initializable {
 
 
         VehicleDTO vehicleDTO = new VehicleDTO(id, make, model, vehicleType, imageBytes, numberPlate,vehiclePrice,date);
-        boolean isUpdated = vehicleModel.updateVehicle(vehicleDTO);
+        boolean isUpdated = vehicleDAO.update(vehicleDTO);
         if (isUpdated) {
             new Alert(Alert.AlertType.INFORMATION, "Vehicle updated successfully!").show();
             isEditMode = false;

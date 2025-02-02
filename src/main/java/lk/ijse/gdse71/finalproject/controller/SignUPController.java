@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import lk.ijse.gdse71.finalproject.dao.custom.LoginDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.LoginDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
 
 import java.io.IOException;
@@ -39,7 +41,7 @@ public class SignUPController implements Initializable {
     @FXML
     private TextField txtUserName;
 
-    LoginModel loginModel = new LoginModel();
+    LoginDAO loginDAO = new LoginDAOImpl();
     @FXML
     void SignupOnAction(ActionEvent event) throws SQLException {
         String email = txtEMail.getText();
@@ -61,7 +63,7 @@ public class SignUPController implements Initializable {
         }
 
         LoginDTO loginDTO = new LoginDTO(userName,password,email);
-        boolean isSaved = loginModel.saveSignupDetails(loginDTO);
+        boolean isSaved = loginDAO.save(loginDTO);
 
         if(isSaved){
             refreshPage();

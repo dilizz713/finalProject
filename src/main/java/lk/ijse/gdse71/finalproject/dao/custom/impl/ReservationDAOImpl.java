@@ -1,18 +1,19 @@
-package lk.ijse.gdse71.finalproject.model;
+package lk.ijse.gdse71.finalproject.dao.custom.impl;
 
+import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
 import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
-import lk.ijse.gdse71.finalproject.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class ReservationModel {
-    public String getNextReservationId() throws SQLException {
-        ResultSet resultSet = CrudUtil.execute("select id from Reservation order by id desc limit 1");
+public class ReservationDAOImpl implements ReservationDAO {
+    public String getNextId() throws SQLException {
+        ResultSet resultSet = SQLUtil.execute("select id from Reservation order by id desc limit 1");
 
         if(resultSet.next()){
             String lastId = resultSet.getString(1);
@@ -23,8 +24,8 @@ public class ReservationModel {
         }
         return "R001";
     }
-    public ArrayList<ReservationDTO> getAllReservations() throws SQLException {
-        ResultSet rst = CrudUtil.execute("select * from Reservation");
+    public ArrayList<ReservationDTO> getAll() throws SQLException {
+        ResultSet rst = SQLUtil.execute("select * from Reservation");
 
         ArrayList<ReservationDTO> reservationDTOS = new ArrayList<>();
 
@@ -48,7 +49,7 @@ public class ReservationModel {
     }
 
     public ArrayList<String> getAllCustomerIds() throws SQLException {
-        ResultSet rst = CrudUtil.execute("select id from Customer");
+        ResultSet rst = SQLUtil.execute("select id from Customer");
         ArrayList<String> customerIds = new ArrayList<>();
         while (rst.next()) {
             customerIds.add(rst.getString(1));
@@ -57,7 +58,7 @@ public class ReservationModel {
     }
 
     public ArrayList<String> getAllVehicleIds() throws SQLException {
-        ResultSet rst = CrudUtil.execute("select id from Vehicle");
+        ResultSet rst = SQLUtil.execute("select id from Vehicle");
         ArrayList<String> vehilceId = new ArrayList<>();
         while (rst.next()) {
             vehilceId.add(rst.getString(1));
@@ -66,24 +67,24 @@ public class ReservationModel {
     }
 
     public String getCustomerNameById(String customerId) throws SQLException {
-        ResultSet rst = CrudUtil.execute("select name from Customer where id=?",customerId);
+        ResultSet rst = SQLUtil.execute("select name from Customer where id=?",customerId);
         return rst.next() ? rst.getString(1) : null;
     }
 
     public String getVehiclePriceById(String vehicleID) throws SQLException {
-        ResultSet rst = CrudUtil.execute("select price from Vehicle where id = ?", vehicleID);
+        ResultSet rst = SQLUtil.execute("select price from Vehicle where id = ?", vehicleID);
         return rst.next() ? rst.getString(1) : null;
     }
 
 
     public String getVehicleNameById(String vehicleId) throws SQLException {
-        ResultSet rst = CrudUtil.execute("select model from Vehicle where id = ?", vehicleId);
+        ResultSet rst = SQLUtil.execute("select model from Vehicle where id = ?", vehicleId);
         return rst.next() ? rst.getString(1) : null;
     }
 
 
-    public boolean saveReservation(ReservationDTO reservationDTO) throws SQLException {
-       return CrudUtil.execute(
+    public boolean save(ReservationDTO reservationDTO) throws SQLException {
+        return SQLUtil.execute(
                 "insert into Reservation values (?,?,?,?,?)",
                 reservationDTO.getId(),
                 reservationDTO.getCustomerId(),
@@ -95,8 +96,8 @@ public class ReservationModel {
     }
 
 
-    public boolean updateReservation(ReservationDTO reservationDTO) throws SQLException {
-        return CrudUtil.execute(
+    public boolean update(ReservationDTO reservationDTO) throws SQLException {
+        return SQLUtil.execute(
                 "update  Reservation set customerId=?, vehicleId=?,  status=?, reservationDate=? where id=?",
                 reservationDTO.getCustomerId(),
                 reservationDTO.getVehicleId(),
@@ -106,14 +107,14 @@ public class ReservationModel {
         );
     }
 
-    public boolean deleteReservation(String reservationId) throws SQLException {
-        return CrudUtil.execute("delete from Reservation where id=?",reservationId );
+    public boolean delete(String reservationId) throws SQLException {
+        return SQLUtil.execute("delete from Reservation where id=?",reservationId );
     }
 
-    public ArrayList<ReservationDTO> getReservationsBySearch(String keyword) throws SQLException {
+    public ArrayList<ReservationDTO> search(String keyword) throws SQLException {
         String searchQuery = "select * from Reservation where id like ? or vehicleId like ? or customerId like ? or reservationDate like ? or status like ?";
 
-        ResultSet rst = CrudUtil.execute(searchQuery,  "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%", "%" + keyword + "%");
+        ResultSet rst = SQLUtil.execute(searchQuery,  "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%", "%" + keyword + "%");
 
 
         ArrayList<ReservationDTO> reservationDTOS = new ArrayList<>();
@@ -137,12 +138,12 @@ public class ReservationModel {
 
         String sql = "select id,name from Customer";
 
-        try (ResultSet rst = CrudUtil.execute(sql)) {
+        try (ResultSet rst = SQLUtil.execute(sql)) {
             while (rst.next()) {
-               customers.add(new CustomerDTO(
-                       rst.getString("id"),
-                       rst.getString("name")       // name
-               ));
+                customers.add(new CustomerDTO(
+                        rst.getString("id"),
+                        rst.getString("name")       // name
+                ));
             }
         }
 
@@ -153,19 +154,19 @@ public class ReservationModel {
 
 
     public String getNumberPlateById(String vehicleId) throws SQLException {
-        ResultSet rst = CrudUtil.execute("select numberPlate from Vehicle where id = ?", vehicleId);
+        ResultSet rst = SQLUtil.execute("select numberPlate from Vehicle where id = ?", vehicleId);
         return rst.next() ? rst.getString(1) : null;
     }
 
 
     public String getAllVehicleDetails(String vehicleId) throws SQLException {
-        ResultSet rst = CrudUtil.execute("select model,numberPlate,price from Vehicle where id = ?", vehicleId);
+        ResultSet rst = SQLUtil.execute("select model,numberPlate,price from Vehicle where id = ?", vehicleId);
         return rst.next() ? rst.getString(1) : null;
     }
 
     public ReservationDTO getReservationById(String reservationId) throws SQLException {
         String query = "select * from Reservation where id=?";
-        ResultSet rst = CrudUtil.execute(query,reservationId);
+        ResultSet rst = SQLUtil.execute(query,reservationId);
 
         if(rst.next()){
             String id = rst.getString("id");
@@ -182,7 +183,7 @@ public class ReservationModel {
 
 
     public ReservationDTO getReservationDetails(String reservationId) throws SQLException {
-        ResultSet rst = CrudUtil.execute("select status from Reservation where id=?", reservationId);
+        ResultSet rst = SQLUtil.execute("select status from Reservation where id=?", reservationId);
         if(rst.next()){
             return  new ReservationDTO(
                     reservationId,
@@ -195,7 +196,7 @@ public class ReservationModel {
     }
 
     public String getVehiclePrice(String reservationId) throws SQLException {
-        ResultSet rst = CrudUtil.execute(
+        ResultSet rst = SQLUtil.execute(
                 """
                 select v.price
                 from Reservation r
@@ -211,7 +212,7 @@ public class ReservationModel {
 
     public ArrayList<String> getAllReservationIds() throws SQLException {
         String query = "select id from Reservation";
-        ResultSet rst = CrudUtil.execute(query);
+        ResultSet rst = SQLUtil.execute(query);
 
         ArrayList<String> reservationID = new ArrayList<>();
         while (rst.next()){
@@ -222,7 +223,7 @@ public class ReservationModel {
 
     public String getCustomerNameByReservationId(String reservationId) throws SQLException {
         String query = "select c.name from Customer c inner join Reservation r on c.id = r.customerId where r.id = ?";
-        ResultSet resultSet = CrudUtil.execute(query, reservationId);
+        ResultSet resultSet = SQLUtil.execute(query, reservationId);
 
         return resultSet.next() ? resultSet.getString(1) : null;
     }
@@ -230,9 +231,9 @@ public class ReservationModel {
     public String getVehicleIdByReservationId(String reservationId) throws SQLException {
         String query = "select vehicleId from Reservation where id = ?";
 
-        ResultSet rst = CrudUtil.execute(query,reservationId);
+        ResultSet rst = SQLUtil.execute(query,reservationId);
         if (rst.next()) {
-             return rst.getString("vehicleId");
+            return rst.getString("vehicleId");
         }
 
         return null;
@@ -241,7 +242,7 @@ public class ReservationModel {
     public double getEstimatedMileageCost(String reservationId) throws SQLException {
         String query = "select estimatedMileageCost from MileageTracking where reservationId=?";
 
-        ResultSet resultSet = CrudUtil.execute(query, reservationId);
+        ResultSet resultSet = SQLUtil.execute(query, reservationId);
 
         if (resultSet.next()) {
             return resultSet.getDouble("estimatedMileageCost");
@@ -252,7 +253,7 @@ public class ReservationModel {
     public double getTotalExtraCharges(String reservationId) throws SQLException {
         String query = "select totalExtraCharges from MileageTracking where reservationId=?";
 
-        ResultSet resultSet = CrudUtil.execute(query, reservationId);
+        ResultSet resultSet = SQLUtil.execute(query, reservationId);
 
         if (resultSet.next()) {
             return resultSet.getDouble("totalExtraCharges");
@@ -262,7 +263,7 @@ public class ReservationModel {
 
     public double getRepairCostByVehicleId(String vehicleId) throws SQLException {
         String query = "select repairCost from VehicleDamage where vehicleId = ?";
-        ResultSet resultSet = CrudUtil.execute(query, vehicleId);
+        ResultSet resultSet = SQLUtil.execute(query, vehicleId);
 
         if (resultSet.next()) {
             return resultSet.getDouble("repairCost");
@@ -273,7 +274,7 @@ public class ReservationModel {
 
     public double getEndMileageForReservation(String reservationId) throws SQLException {
         String query = "select endDateMileage from MileageTracking where reservationId=?";
-        ResultSet rst = CrudUtil.execute(query,reservationId);
+        ResultSet rst = SQLUtil.execute(query,reservationId);
 
         if(rst.next()){
             return rst.getDouble("endDateMileage");
@@ -283,7 +284,7 @@ public class ReservationModel {
 
     public String getPaymentIdByReservation(String reservationId) throws SQLException {
         String query = "select id from Payment where reservationId=?";
-        ResultSet rst = CrudUtil.execute(query,reservationId);
+        ResultSet rst = SQLUtil.execute(query,reservationId);
 
         if(rst.next()){
             return rst.getString("id");
@@ -294,7 +295,7 @@ public class ReservationModel {
     public MileageTrackingDTO getMileageDetails(String reservationId) throws SQLException {
         String query = "SELECT estimatedMileage, actualMileage, extraChargesPerKm, totalExtraCharges, estimatedMileageCost FROM MileageTracking WHERE reservationId = ?" ;
 
-        ResultSet rst = CrudUtil.execute(query, reservationId);
+        ResultSet rst = SQLUtil.execute(query, reservationId);
 
         if (rst.next()) {
             return new MileageTrackingDTO(
@@ -317,7 +318,7 @@ public class ReservationModel {
             WHERE r.id = ?;
         """;
         try {
-            ResultSet rst = CrudUtil.execute(sql, reservationId);
+            ResultSet rst = SQLUtil.execute(sql, reservationId);
             if (rst.next()) {
                 return new CustomerDTO(
                         rst.getString("id"),

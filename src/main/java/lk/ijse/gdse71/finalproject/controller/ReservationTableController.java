@@ -10,9 +10,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.ReservationDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
 import lk.ijse.gdse71.finalproject.view.tdm.ReservationTM;
-import lk.ijse.gdse71.finalproject.model.ReservationModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -68,7 +69,7 @@ public class ReservationTableController implements Initializable {
 
     private ReservationTM selectedReservationTM;
 
-    ReservationModel reservationModel = new ReservationModel();
+    ReservationDAO reservationDAO = new ReservationDAOImpl();
 
     @FXML
     void clickedTable(MouseEvent event) {
@@ -92,7 +93,7 @@ public class ReservationTableController implements Initializable {
         confirmationAlert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
                 try {
-                    boolean deleted = reservationModel.deleteReservation(selectedReservationTM.getId());
+                    boolean deleted = reservationDAO.delete(selectedReservationTM.getId());
 
                     if (deleted) {
                         new Alert(Alert.AlertType.INFORMATION, "Reservation deleted successfully.").show();
@@ -141,7 +142,7 @@ public class ReservationTableController implements Initializable {
             return;
         }
 
-        ReservationDTO selectedReservation = reservationModel.getReservationById(selectedReservationTM.getId());
+        ReservationDTO selectedReservation = reservationDAO.getReservationById(selectedReservationTM.getId());
 
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/newReservation.fxml"));
@@ -203,15 +204,15 @@ public class ReservationTableController implements Initializable {
             return;
         }
 
-        ArrayList<ReservationDTO> reservationDTOS = reservationModel.getReservationsBySearch(searchText);
+        ArrayList<ReservationDTO> reservationDTOS = reservationDAO.search(searchText);
         ObservableList<ReservationTM> reservationTMS = FXCollections.observableArrayList();
 
         for(ReservationDTO reservationDTO : reservationDTOS){
 
-            String customerName = reservationModel.getCustomerNameById(reservationDTO.getCustomerId());
-            String model = reservationModel.getVehicleNameById(reservationDTO.getVehicleId());
-            String price = reservationModel.getVehiclePriceById(reservationDTO.getVehicleId());
-            String numberPlate = reservationModel.getNumberPlateById(reservationDTO.getVehicleId());
+            String customerName = reservationDAO.getCustomerNameById(reservationDTO.getCustomerId());
+            String model = reservationDAO.getVehicleNameById(reservationDTO.getVehicleId());
+            String price = reservationDAO.getVehiclePriceById(reservationDTO.getVehicleId());
+            String numberPlate = reservationDAO.getNumberPlateById(reservationDTO.getVehicleId());
 
             double vehiclePrice = 0;
             if (price != null && !price.isEmpty()) {
@@ -277,15 +278,15 @@ public class ReservationTableController implements Initializable {
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<ReservationDTO> reservationDTOS = reservationModel.getAllReservations();
+        ArrayList<ReservationDTO> reservationDTOS = reservationDAO.getAll();
         ObservableList<ReservationTM> reservationTMS = FXCollections.observableArrayList();
 
         for(ReservationDTO reservationDTO : reservationDTOS){
 
-            String customerName = reservationModel.getCustomerNameById(reservationDTO.getCustomerId());
-            String model = reservationModel.getVehicleNameById(reservationDTO.getVehicleId());
-            String price = reservationModel.getVehiclePriceById(reservationDTO.getVehicleId());
-            String numberPlate = reservationModel.getNumberPlateById(reservationDTO.getVehicleId());
+            String customerName = reservationDAO.getCustomerNameById(reservationDTO.getCustomerId());
+            String model = reservationDAO.getVehicleNameById(reservationDTO.getVehicleId());
+            String price = reservationDAO.getVehiclePriceById(reservationDTO.getVehicleId());
+            String numberPlate = reservationDAO.getNumberPlateById(reservationDTO.getVehicleId());
 
             double vehiclePrice = 0;
             if (price != null && !price.isEmpty()) {

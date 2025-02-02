@@ -15,10 +15,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
+import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
-import lk.ijse.gdse71.finalproject.model.VehicleModel;
 import javafx.geometry.Pos;
-import lk.ijse.gdse71.finalproject.util.CrudUtil;
+
 
 
 import java.io.ByteArrayInputStream;
@@ -47,6 +49,8 @@ public class ReservationVehicleController implements Initializable {
 
     private GridPane vehicleGrid;
 
+    VehicleDAO vehicleDAO = new VehicleDAOImpl();
+
     private final int COLUMN_COUNT = 6;
     private final int CARD_PADDING = 10;
 
@@ -69,8 +73,7 @@ public class ReservationVehicleController implements Initializable {
         pagination.setStyle("-fx-background-color: black;");
 
         try {
-            VehicleModel vehicleModel = new VehicleModel();
-            ArrayList<VehicleDTO> vehicles = vehicleModel.getAllVehicles();
+            ArrayList<VehicleDTO> vehicles = vehicleDAO.getAll();
             int itemsPerPage = 12;
             int pageCount = (int) Math.ceil((double) vehicles.size() / itemsPerPage);
             pagination.setPageCount(pageCount);
@@ -105,8 +108,7 @@ public class ReservationVehicleController implements Initializable {
         vehicleGrid.getChildren().clear();
 
         try {
-            VehicleModel vehicleModel = new VehicleModel();
-            ArrayList<VehicleDTO> vehicles = vehicleModel.getAllVehicles();
+            ArrayList<VehicleDTO> vehicles = vehicleDAO.getAll();
 
             int itemsPerPage = 12;
             int start = pageIndex * itemsPerPage;  // Correct usage of pageIndex
@@ -154,7 +156,7 @@ public class ReservationVehicleController implements Initializable {
                 "AND startDate <= CURRENT_DATE " +
                 "ORDER BY startDate DESC LIMIT 1";
 
-        ResultSet resultSet = CrudUtil.execute(query, vehicleId);
+        ResultSet resultSet = SQLUtil.execute(query, vehicleId);
 
         if (resultSet.next()) {
             String status = resultSet.getString("status");
@@ -173,7 +175,7 @@ public class ReservationVehicleController implements Initializable {
 
     private String getVehicleStatus(String vehicleId) throws SQLException {
         String query = "select status from Reservation where vehicleId = ? order by reservationDate  desc, field(status, 'Pending', 'Done','Ongoing') limit 1";
-        ResultSet resultSet = CrudUtil.execute(query,vehicleId);
+        ResultSet resultSet = SQLUtil.execute(query,vehicleId);
 
         if(resultSet.next()){
             return resultSet.getString("status");

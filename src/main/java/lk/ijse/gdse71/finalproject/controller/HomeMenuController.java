@@ -10,8 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
-import lk.ijse.gdse71.finalproject.util.CrudUtil;
+
 
 import java.net.URL;
 import java.sql.ResultSet;

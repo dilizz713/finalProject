@@ -11,10 +11,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.gdse71.finalproject.dao.custom.MileageTrackingDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.MileageTrackingDAOImpl;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.ReservationDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
 import lk.ijse.gdse71.finalproject.view.tdm.MileageTrackingTM;
-import lk.ijse.gdse71.finalproject.model.ReservationModel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -120,6 +121,7 @@ public class MileageTrackingController implements Initializable {
 
 
    MileageTrackingDAO mileageTrackingDAO = new MileageTrackingDAOImpl();
+    ReservationDAO reservationDAO = new ReservationDAOImpl();
 
 
 
@@ -300,12 +302,11 @@ public class MileageTrackingController implements Initializable {
         System.out.println("duration days : " + durationDays);
 
         if(durationDays == 0){
-            ReservationModel reservationModel = new ReservationModel();
-            String vehiclePrice =(reservationModel.getVehiclePrice(reservationId));
+
+            String vehiclePrice =(reservationDAO.getVehiclePrice(reservationId));
             return  Double.parseDouble(vehiclePrice);
         }
-        ReservationModel reservationModel = new ReservationModel();
-        String vehiclePrice =(reservationModel.getVehiclePrice(reservationId));
+        String vehiclePrice =(reservationDAO.getVehiclePrice(reservationId));
         double price =  Double.parseDouble(vehiclePrice);
 
         return  durationDays * price;

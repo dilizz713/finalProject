@@ -12,9 +12,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
 import lk.ijse.gdse71.finalproject.view.tdm.VehicleTM;
-import lk.ijse.gdse71.finalproject.model.VehicleModel;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -72,6 +73,8 @@ public class VehicleTableViewController implements Initializable {
     private TableView<VehicleTM> vehicleTableView;
 
     private VehicleTM selectedVehicleTM;
+
+    VehicleDAO vehicleDAO = new VehicleDAOImpl();
     @FXML
     void clickedTable(MouseEvent event) {
         selectedVehicleTM = vehicleTableView.getSelectionModel().getSelectedItem();
@@ -85,7 +88,7 @@ public class VehicleTableViewController implements Initializable {
         if(selectedVehicleTM != null){
             try{
                 String vehicleID = selectedVehicleTM.getId();
-                boolean isDeleted = vehicleModel.deleteVehicle(vehicleID);
+                boolean isDeleted = vehicleDAO.delete(vehicleID);
                 if(isDeleted){
                     vehicleTableView.getItems().remove(selectedVehicleTM);
                     selectedVehicleTM = null;
@@ -121,7 +124,6 @@ public class VehicleTableViewController implements Initializable {
         refreshPage();
     }
 
-    VehicleModel vehicleModel = new VehicleModel();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -174,7 +176,7 @@ public class VehicleTableViewController implements Initializable {
             return;
         }
 
-        ArrayList<VehicleDTO> vehicleDTOS = vehicleModel.getVehiclesBySearch(searchText);
+        ArrayList<VehicleDTO> vehicleDTOS = vehicleDAO.search(searchText);
         ObservableList<VehicleTM> vehicleTMS = FXCollections.observableArrayList();
 
         LocalDate currentDate = LocalDate.now();
@@ -217,7 +219,7 @@ public class VehicleTableViewController implements Initializable {
 
     }
     private void loadTableData() throws SQLException, ClassNotFoundException {
-        ArrayList<VehicleDTO> vehicleDTOS = vehicleModel.getAllVehicles();
+        ArrayList<VehicleDTO> vehicleDTOS = vehicleDAO.getAll();
         ObservableList<VehicleTM> vehicleTMS = FXCollections.observableArrayList();
 
         for (VehicleDTO vehicleDTO : vehicleDTOS) {

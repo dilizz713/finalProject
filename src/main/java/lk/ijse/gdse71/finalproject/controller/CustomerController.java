@@ -160,9 +160,7 @@ public class CustomerController implements Initializable {
             return;
         }
 
-
-        CustomerDTO customerDTO = new CustomerDTO(id, name, address, email, phone, nic);
-        boolean isSaved = customerDAO.save(customerDTO);
+        boolean isSaved = customerDAO.save(new CustomerDTO(id, name, address, email, phone, nic));
         if (isSaved) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Customer saved successfully!").show();

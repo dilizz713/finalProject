@@ -9,10 +9,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.dao.custom.CustomerDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.VehicleDamageDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.CustomerDAOImpl;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDAOImpl;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDamageDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.VehicleDamageDTO;
 import lk.ijse.gdse71.finalproject.view.tdm.VehicleDamageTM;
-import lk.ijse.gdse71.finalproject.model.VehicleDamageModel;
-import lk.ijse.gdse71.finalproject.model.VehicleModel;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -92,9 +96,9 @@ public class VehicleDamageController implements Initializable {
     @FXML
     private TextField txtSearchBar;
 
-    VehicleModel vehicleModel = new VehicleModel();
-    CustomerModel customerModel = new CustomerModel();
-    VehicleDamageModel vehicleDamageModel = new VehicleDamageModel();
+    VehicleDAO vehicleDAO = new VehicleDAOImpl();
+    CustomerDAO customerDAO = new CustomerDAOImpl();
+    VehicleDamageDAO vehicleDamageDAO = new VehicleDamageDAOImpl();
 
     @FXML
     void SaveOnAction(ActionEvent event) {
@@ -126,7 +130,7 @@ public class VehicleDamageController implements Initializable {
         VehicleDamageDTO vehicleDamageDTO = new VehicleDamageDTO(id, desc, reportedDate, amount, vehicleId);
 
         try {
-            boolean isSaved = vehicleDamageModel.saveVehicleDamage(vehicleDamageDTO);
+            boolean isSaved = vehicleDamageDAO.save(vehicleDamageDTO);
 
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "Vehicle Damage record saved successfully.").show();
@@ -173,7 +177,7 @@ public class VehicleDamageController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if(optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES){
-            boolean isDeleted = vehicleDamageModel.deleteRecord(damageId);
+            boolean isDeleted = vehicleDamageDAO.delete(damageId);
             if(isDeleted){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Record deleted!").show();
@@ -196,7 +200,7 @@ public class VehicleDamageController implements Initializable {
             String selectedVehicleId = cmbVehicleId.getSelectionModel().getSelectedItem();
             if (selectedVehicleId != null) {
 
-                String vehicleModelStr = vehicleModel.getVehicleModelById(selectedVehicleId);
+                String vehicleModelStr = vehicleDAO.getVehicleModelById(selectedVehicleId);
                 lblModel.setText(vehicleModelStr);
             }
         } catch (SQLException e) {
@@ -210,7 +214,7 @@ public class VehicleDamageController implements Initializable {
             String selectedCustomerName = cmbCustomerName.getSelectionModel().getSelectedItem();
             if (selectedCustomerName != null) {
                 // Retrieve the customer ID for the selected customer name and set it to lblCustomerId
-                String customerId = customerModel.getCustomerIdByName(selectedCustomerName);
+                String customerId = customerDAO.getCustomerIdByName(selectedCustomerName);
                 lblCustomerId.setText(customerId);
             }
         } catch (SQLException e) {
@@ -249,7 +253,7 @@ public class VehicleDamageController implements Initializable {
         VehicleDamageDTO vehicleDamageDTO = new VehicleDamageDTO(id, desc, reportedDate, amount, vehicleId);
 
         try {
-            boolean isUpdated = vehicleDamageModel.updateVehicleDamage(vehicleDamageDTO);
+            boolean isUpdated = vehicleDamageDAO.update(vehicleDamageDTO);
 
             if (isUpdated) {
                 new Alert(Alert.AlertType.INFORMATION, "Vehicle Damage record updated successfully.").show();
@@ -308,15 +312,15 @@ public class VehicleDamageController implements Initializable {
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<VehicleDamageDTO> vehicleDamageDTOS = vehicleDamageModel.getAllDamageVehicles();
+        ArrayList<VehicleDamageDTO> vehicleDamageDTOS = vehicleDamageDAO.getAll();
         ObservableList<VehicleDamageTM> vehicleDamageTMS = FXCollections.observableArrayList();
 
         for(VehicleDamageDTO vehicleDamageDTO : vehicleDamageDTOS){
-          String model = vehicleModel.getVehicleModelById(vehicleDamageDTO.getVehicleId());
+          String model = vehicleDAO.getVehicleModelById(vehicleDamageDTO.getVehicleId());
 
-          String customerId = vehicleDamageModel.getCustomerIdByVehicleId(vehicleDamageDTO.getVehicleId());
+          String customerId = vehicleDamageDAO.getCustomerIdByVehicleId(vehicleDamageDTO.getVehicleId());
 
-          String customerName = customerModel.getCustomerNameById(customerId);
+          String customerName = customerDAO.getCustomerNameById(customerId);
 
 
             VehicleDamageTM vehicleDamageTM = new VehicleDamageTM(
@@ -337,18 +341,18 @@ public class VehicleDamageController implements Initializable {
     }
 
     private void loadNextDamageId() throws SQLException {
-        String nextDamageID = vehicleDamageModel.getNextDamageId();
+        String nextDamageID = vehicleDamageDAO.getNextId();
         lblId.setText(nextDamageID);
     }
 
     private void loadCustomerName() throws SQLException {
-        ArrayList<String> customerName = customerModel.getAllCustomerNames();
+        ArrayList<String> customerName = customerDAO.getAllCustomerNames();
         cmbCustomerName.setItems(FXCollections.observableArrayList(customerName));
     }
 
 
     private void loadVehicleIds() throws SQLException {
-        ArrayList<String> vehicleId = vehicleModel.getAllVehcileIds();
+        ArrayList<String> vehicleId = vehicleDAO.getAllVehcileIds();
         cmbVehicleId.setItems(FXCollections.observableArrayList(vehicleId));
     }
 

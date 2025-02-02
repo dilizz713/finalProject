@@ -5,9 +5,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import lk.ijse.gdse71.finalproject.dao.custom.MileageTrackingDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.PaymentDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.VehicleDamageDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.MileageTrackingDAOImpl;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.PaymentDAOImpl;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.ReservationDAOImpl;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDamageDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.*;
-import lk.ijse.gdse71.finalproject.model.ReservationModel;
-import lk.ijse.gdse71.finalproject.model.VehicleDamageModel;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -55,11 +61,8 @@ public class GenerateBillController implements Initializable {
     @FXML
     private Button btnEmail;
 
-    private ReservationModel reservationModel = new ReservationModel();
-    private PaymentModel paymentModel = new PaymentModel();
-    private MileageTrackingModel mileageTrackingModel = new MileageTrackingModel();
 
-    private VehicleDamageModel vehicleDamageModel = new VehicleDamageModel();
+    private VehicleDamageDAO vehicleDamageDAO = new VehicleDamageDAOImpl();
 
     private String reservationId;
     private String paymentId;
@@ -90,7 +93,7 @@ public class GenerateBillController implements Initializable {
 
         try {
 
-            double repairCost = vehicleDamageModel.getRepairCostByVehicleId(vehicleId);
+            double repairCost = vehicleDamageDAO.getRepairCostByVehicleId(vehicleId);
             lblDamageCost.setText(String.format("$%.2f", repairCost));
 
 
