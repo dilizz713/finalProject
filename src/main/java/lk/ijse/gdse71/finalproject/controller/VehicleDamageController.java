@@ -17,14 +17,6 @@ import lk.ijse.gdse71.finalproject.bo.custom.impl.CustomerBOImpl;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.ReservationBOImpl;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleBOImpl;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleDamageBOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.CustomerDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.VehicleDamageDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.CustomerDAOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.ReservationDAOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDAOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDamageDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.VehicleDamageDTO;
 import lk.ijse.gdse71.finalproject.view.tdm.VehicleDamageTM;
 

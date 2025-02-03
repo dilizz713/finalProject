@@ -1,11 +1,12 @@
 package lk.ijse.gdse71.finalproject.bo.custom;
 
+import lk.ijse.gdse71.finalproject.bo.SuperBO;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface CustomerBO {
+public interface CustomerBO extends SuperBO {
     boolean saveCustomer(CustomerDTO customerDTO) throws SQLException;
     boolean updateCustomer(CustomerDTO customerDTO) throws SQLException;
     boolean deleteCustomer(String customerId) throws SQLException;

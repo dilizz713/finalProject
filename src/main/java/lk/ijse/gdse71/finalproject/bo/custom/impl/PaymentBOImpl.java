@@ -2,13 +2,10 @@ package lk.ijse.gdse71.finalproject.bo.custom.impl;
 
 import lk.ijse.gdse71.finalproject.bo.custom.PaymentBO;
 import lk.ijse.gdse71.finalproject.dao.custom.PaymentDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.PaymentDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.PaymentDTO;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class PaymentBOImpl implements PaymentBO {

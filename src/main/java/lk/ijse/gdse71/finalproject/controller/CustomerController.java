@@ -17,8 +17,6 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import lk.ijse.gdse71.finalproject.bo.custom.CustomerBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.CustomerBOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.CustomerDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 import lk.ijse.gdse71.finalproject.view.tdm.CustomerTM;
 

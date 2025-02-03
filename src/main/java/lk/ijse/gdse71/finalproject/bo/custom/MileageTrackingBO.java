@@ -1,11 +1,12 @@
 package lk.ijse.gdse71.finalproject.bo.custom;
 
+import lk.ijse.gdse71.finalproject.bo.SuperBO;
 import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface MileageTrackingBO {
+public interface MileageTrackingBO extends SuperBO {
     String getNextId() throws SQLException;
     ArrayList<MileageTrackingDTO> getAllMileageTracking() throws SQLException;
     boolean saveMileageTracking(MileageTrackingDTO mileageTrackingDTO) throws SQLException;

@@ -1,11 +1,12 @@
 package lk.ijse.gdse71.finalproject.bo.custom;
 
+import lk.ijse.gdse71.finalproject.bo.SuperBO;
 import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface ReservationBO {
+public interface ReservationBO extends SuperBO {
     String getNextId() throws SQLException;
     ArrayList<ReservationDTO> getAllReservations() throws SQLException;
     boolean saveReservations(ReservationDTO reservationDTO) throws SQLException;

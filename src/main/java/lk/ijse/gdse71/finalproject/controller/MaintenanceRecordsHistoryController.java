@@ -14,10 +14,6 @@ import lk.ijse.gdse71.finalproject.bo.custom.MaintenanceRecordBO;
 import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.MaintenanceRecordBOImpl;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleBOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.MaintenanceRecordDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.MaintenanceRecordDAOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.MaintenanceRecordDTO;
 import lk.ijse.gdse71.finalproject.view.tdm.MaintenanceRecordTM;
 

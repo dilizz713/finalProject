@@ -1,9 +1,7 @@
 package lk.ijse.gdse71.finalproject.dao.custom.impl;
 
 import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
-import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
-import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
+import lk.ijse.gdse71.finalproject.dao.SQLUtil;
 import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
 
 import java.sql.ResultSet;

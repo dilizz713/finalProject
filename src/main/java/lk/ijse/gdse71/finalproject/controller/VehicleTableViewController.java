@@ -14,8 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleBOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
 import lk.ijse.gdse71.finalproject.view.tdm.VehicleTM;
 

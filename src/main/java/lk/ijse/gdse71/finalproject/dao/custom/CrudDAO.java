@@ -1,6 +1,6 @@
 package lk.ijse.gdse71.finalproject.dao.custom;
 
-import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
+import lk.ijse.gdse71.finalproject.dao.SuperDAO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

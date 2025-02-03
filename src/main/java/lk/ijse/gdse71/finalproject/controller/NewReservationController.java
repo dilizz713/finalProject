@@ -18,8 +18,7 @@ import javafx.stage.Window;
 import javafx.util.StringConverter;
 import lk.ijse.gdse71.finalproject.bo.custom.*;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.*;
-import lk.ijse.gdse71.finalproject.dao.custom.*;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.*;
+import lk.ijse.gdse71.finalproject.dao.SQLUtil;
 import lk.ijse.gdse71.finalproject.db.DBConnection;
 import lk.ijse.gdse71.finalproject.dto.*;
 

@@ -16,8 +16,6 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import lk.ijse.gdse71.finalproject.bo.custom.LoginBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.LoginBOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.LoginDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.LoginDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
 
 import java.io.IOException;

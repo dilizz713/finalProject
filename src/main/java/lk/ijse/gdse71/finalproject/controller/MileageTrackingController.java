@@ -16,10 +16,6 @@ import lk.ijse.gdse71.finalproject.bo.custom.ReservationBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.MileageTrackingBOImpl;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.QueryBOImpl;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.ReservationBOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.MileageTrackingDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.MileageTrackingDAOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.ReservationDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
 import lk.ijse.gdse71.finalproject.view.tdm.MileageTrackingTM;
 

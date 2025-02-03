@@ -11,8 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import lk.ijse.gdse71.finalproject.bo.custom.LoginBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.LoginBOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.LoginDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.LoginDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
 
 import java.io.IOException;

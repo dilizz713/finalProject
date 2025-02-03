@@ -2,11 +2,9 @@ package lk.ijse.gdse71.finalproject.bo.custom.impl;
 
 import lk.ijse.gdse71.finalproject.bo.custom.CustomerBO;
 import lk.ijse.gdse71.finalproject.dao.custom.CustomerDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 

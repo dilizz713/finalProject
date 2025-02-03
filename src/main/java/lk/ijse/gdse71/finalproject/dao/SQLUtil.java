@@ -1,4 +1,4 @@
-package lk.ijse.gdse71.finalproject.dao.custom;
+package lk.ijse.gdse71.finalproject.dao;
 
 import lk.ijse.gdse71.finalproject.db.DBConnection;
 

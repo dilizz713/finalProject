@@ -2,13 +2,10 @@ package lk.ijse.gdse71.finalproject.bo.custom.impl;
 
 import lk.ijse.gdse71.finalproject.bo.custom.MileageTrackingBO;
 import lk.ijse.gdse71.finalproject.dao.custom.MileageTrackingDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.MileageTrackingDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class MileageTrackingBOImpl implements MileageTrackingBO {

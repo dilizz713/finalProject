@@ -17,9 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleBOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
-import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDAOImpl;
+import lk.ijse.gdse71.finalproject.dao.SQLUtil;
 import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
 import javafx.geometry.Pos;
 

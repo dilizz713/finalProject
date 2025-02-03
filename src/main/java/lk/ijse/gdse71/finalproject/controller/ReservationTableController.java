@@ -16,12 +16,6 @@ import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.CustomerBOImpl;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.ReservationBOImpl;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleBOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.CustomerDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.CustomerDAOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.ReservationDAOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
 import lk.ijse.gdse71.finalproject.view.tdm.ReservationTM;
 

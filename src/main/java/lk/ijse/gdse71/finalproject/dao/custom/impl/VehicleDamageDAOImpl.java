@@ -1,6 +1,6 @@
 package lk.ijse.gdse71.finalproject.dao.custom.impl;
 
-import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
+import lk.ijse.gdse71.finalproject.dao.SQLUtil;
 import lk.ijse.gdse71.finalproject.dao.custom.VehicleDamageDAO;
 import lk.ijse.gdse71.finalproject.dto.VehicleDamageDTO;
 

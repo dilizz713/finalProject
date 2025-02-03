@@ -1,12 +1,10 @@
 package lk.ijse.gdse71.finalproject.bo.custom.impl;
 
 import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
-import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
 import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 

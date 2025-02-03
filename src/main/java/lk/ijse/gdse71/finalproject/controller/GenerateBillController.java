@@ -7,14 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import lk.ijse.gdse71.finalproject.bo.custom.VehicleDamageBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleDamageBOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.MileageTrackingDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.PaymentDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.VehicleDamageDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.MileageTrackingDAOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.PaymentDAOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.ReservationDAOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDamageDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.*;
 
 import java.net.URL;
