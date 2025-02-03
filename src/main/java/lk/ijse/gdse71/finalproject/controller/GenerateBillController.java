@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import lk.ijse.gdse71.finalproject.bo.BOFactory;
 import lk.ijse.gdse71.finalproject.bo.custom.VehicleDamageBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleDamageBOImpl;
 import lk.ijse.gdse71.finalproject.dto.*;
@@ -56,7 +57,7 @@ public class GenerateBillController implements Initializable {
     private Button btnEmail;
 
 
-    private VehicleDamageBO vehicleDamageBO = new VehicleDamageBOImpl();
+    private VehicleDamageBO vehicleDamageBO = (VehicleDamageBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.VEHICLEDAMAGE);
 
     private String reservationId;
     private String paymentId;

@@ -15,8 +15,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lk.ijse.gdse71.finalproject.bo.BOFactory;
 import lk.ijse.gdse71.finalproject.bo.custom.CustomerBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.CustomerBOImpl;
+import lk.ijse.gdse71.finalproject.dao.DAOFactory;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 import lk.ijse.gdse71.finalproject.view.tdm.CustomerTM;
 
@@ -86,7 +88,8 @@ public class CustomerController implements Initializable {
     @FXML
     private TextField txtPhone;
 
-    CustomerBO customerBO = new CustomerBOImpl();
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+
 
     @FXML
     void SaveCustomerOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {

@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.bo.BOFactory;
 import lk.ijse.gdse71.finalproject.bo.custom.CustomerBO;
 import lk.ijse.gdse71.finalproject.bo.custom.PaymentBO;
 import lk.ijse.gdse71.finalproject.bo.custom.ReservationBO;
@@ -76,9 +77,9 @@ public class PaymentController implements Initializable {
     private TextField txtSearchBar;
 
 
-   PaymentBO paymentBO = new PaymentBOImpl();
-   ReservationBO reservationBO = new ReservationBOImpl();
-   CustomerBO customerBO = new CustomerBOImpl();
+   PaymentBO paymentBO = (PaymentBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.PAYMENT);
+   ReservationBO reservationBO = (ReservationBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.RESERVATION);
+   CustomerBO customerBO = (CustomerBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.CUSTOMER);
     ReservationDTO reservationDTO = new ReservationDTO();
 
     private PaymentTM selectedPaymentTM;

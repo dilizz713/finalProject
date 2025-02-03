@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.bo.BOFactory;
 import lk.ijse.gdse71.finalproject.bo.custom.CustomerBO;
 import lk.ijse.gdse71.finalproject.bo.custom.ReservationBO;
 import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
@@ -98,10 +99,10 @@ public class VehicleDamageController implements Initializable {
     @FXML
     private TextField txtSearchBar;
 
-    VehicleBO vehicleBO = new VehicleBOImpl();
-    CustomerBO customerBO = new CustomerBOImpl();
-    VehicleDamageBO vehicleDamageBO = new VehicleDamageBOImpl();
-    ReservationBO reservationBO = new ReservationBOImpl();
+    VehicleBO vehicleBO = (VehicleBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.VEHICLE);
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+    VehicleDamageBO vehicleDamageBO = (VehicleDamageBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.VEHICLEDAMAGE);
+    ReservationBO reservationBO = (ReservationBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.RESERVATION);
 
     @FXML
     void SaveOnAction(ActionEvent event) {

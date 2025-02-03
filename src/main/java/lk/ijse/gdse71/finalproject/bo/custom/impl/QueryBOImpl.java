@@ -1,6 +1,7 @@
 package lk.ijse.gdse71.finalproject.bo.custom.impl;
 
 import lk.ijse.gdse71.finalproject.bo.custom.QueryBO;
+import lk.ijse.gdse71.finalproject.dao.DAOFactory;
 import lk.ijse.gdse71.finalproject.dao.custom.QueryDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.QueryDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class QueryBOImpl implements QueryBO {
-    QueryDAO queryDAO = new QueryDAOImpl();
+    QueryDAO queryDAO = (QueryDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.QUERY);
     public ArrayList<MaintenanceRecordDTO> searchMaintenanceRecordDetails(String keyword) throws SQLException {
         return null;
     }

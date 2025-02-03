@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import lk.ijse.gdse71.finalproject.bo.BOFactory;
 import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleBOImpl;
 import lk.ijse.gdse71.finalproject.dao.SQLUtil;
@@ -49,7 +50,7 @@ public class ReservationVehicleController implements Initializable {
 
     private GridPane vehicleGrid;
 
-   VehicleBO vehicleBO = new VehicleBOImpl();
+   VehicleBO vehicleBO = (VehicleBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.VEHICLE);
 
     private final int COLUMN_COUNT = 6;
     private final int CARD_PADDING = 10;

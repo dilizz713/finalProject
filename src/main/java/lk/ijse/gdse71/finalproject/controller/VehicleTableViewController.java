@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.bo.BOFactory;
 import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleBOImpl;
 import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
@@ -74,7 +75,7 @@ public class VehicleTableViewController implements Initializable {
 
     private VehicleTM selectedVehicleTM;
 
-   VehicleBO vehicleBO = new VehicleBOImpl();
+   VehicleBO vehicleBO = (VehicleBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.VEHICLE);
     @FXML
     void clickedTable(MouseEvent event) {
         selectedVehicleTM = vehicleTableView.getSelectionModel().getSelectedItem();

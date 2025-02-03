@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import lk.ijse.gdse71.finalproject.bo.BOFactory;
 import lk.ijse.gdse71.finalproject.bo.custom.LoginBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.LoginBOImpl;
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
@@ -41,7 +42,7 @@ public class SignUPController implements Initializable {
     @FXML
     private TextField txtUserName;
 
-    LoginBO loginBO = new LoginBOImpl();
+    LoginBO loginBO = (LoginBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.LOGIN);
 
     @FXML
     void SignupOnAction(ActionEvent event) throws SQLException {

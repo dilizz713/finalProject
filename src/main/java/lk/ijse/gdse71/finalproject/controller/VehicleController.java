@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import lk.ijse.gdse71.finalproject.bo.BOFactory;
 import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleBOImpl;
 import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
@@ -76,7 +77,9 @@ public class VehicleController implements Initializable {
     private String editingVehicleId;
 
     private VehicleTableViewController vehicleTableViewController;
-    VehicleBO vehicleBO = new VehicleBOImpl();
+
+    VehicleBO vehicleBO = (VehicleBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.VEHICLE);
+
     public void setVehicleTableViewController(VehicleTableViewController controller){
         this.vehicleTableViewController = controller;
     }

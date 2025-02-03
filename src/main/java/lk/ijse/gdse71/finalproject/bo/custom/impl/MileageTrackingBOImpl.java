@@ -1,6 +1,7 @@
 package lk.ijse.gdse71.finalproject.bo.custom.impl;
 
 import lk.ijse.gdse71.finalproject.bo.custom.MileageTrackingBO;
+import lk.ijse.gdse71.finalproject.dao.DAOFactory;
 import lk.ijse.gdse71.finalproject.dao.custom.MileageTrackingDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.MileageTrackingDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 
 public class MileageTrackingBOImpl implements MileageTrackingBO {
 
-    MileageTrackingDAO mileageTrackingDAO = new MileageTrackingDAOImpl();
+    MileageTrackingDAO mileageTrackingDAO = (MileageTrackingDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.MILEAGETRACKING);
 
     public String getNextId() throws SQLException {
        return mileageTrackingDAO.getNextId();

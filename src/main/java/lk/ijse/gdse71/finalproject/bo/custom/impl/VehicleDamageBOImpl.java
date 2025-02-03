@@ -1,6 +1,7 @@
 package lk.ijse.gdse71.finalproject.bo.custom.impl;
 
 import lk.ijse.gdse71.finalproject.bo.custom.VehicleDamageBO;
+import lk.ijse.gdse71.finalproject.dao.DAOFactory;
 import lk.ijse.gdse71.finalproject.dao.custom.VehicleDamageDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDamageDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.VehicleDamageDTO;
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class VehicleDamageBOImpl implements VehicleDamageBO {
-    VehicleDamageDAO vehicleDamageDAO = new VehicleDamageDAOImpl();
+    VehicleDamageDAO vehicleDamageDAO = (VehicleDamageDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.VEHICLEDAMAGE);
 
     public String getNextId() throws SQLException {
        return vehicleDamageDAO.getNextId();

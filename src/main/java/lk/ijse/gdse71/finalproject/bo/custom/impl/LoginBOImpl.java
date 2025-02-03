@@ -1,6 +1,7 @@
 package lk.ijse.gdse71.finalproject.bo.custom.impl;
 
 import lk.ijse.gdse71.finalproject.bo.custom.LoginBO;
+import lk.ijse.gdse71.finalproject.dao.DAOFactory;
 import lk.ijse.gdse71.finalproject.dao.custom.LoginDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.LoginDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
@@ -9,7 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class LoginBOImpl implements LoginBO {
-    LoginDAO loginDAO = new LoginDAOImpl();
+    LoginDAO loginDAO = (LoginDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.LOGIN);
+
     @Override
     public boolean saveLogin(LoginDTO loginDTO) throws SQLException {
         return loginDAO.save(loginDTO);

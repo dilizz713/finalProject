@@ -16,6 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.StringConverter;
+import lk.ijse.gdse71.finalproject.bo.BOFactory;
 import lk.ijse.gdse71.finalproject.bo.custom.*;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.*;
 import lk.ijse.gdse71.finalproject.dao.SQLUtil;
@@ -101,11 +102,11 @@ public class NewReservationController implements Initializable {
 
   //  private PaymentModel paymentModel = new PaymentModel();
 
-    ReservationBO reservationBO = new ReservationBOImpl();
-    PaymentBO paymentBO = new PaymentBOImpl();
-    CustomerBO customerBO = new CustomerBOImpl();
-    MileageTrackingBO mileageTrackingBO = new MileageTrackingBOImpl();
-    VehicleDamageBO vehicleDamageBO = new VehicleDamageBOImpl();
+    ReservationBO reservationBO = (ReservationBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.RESERVATION);
+    PaymentBO paymentBO = (PaymentBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.PAYMENT);
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+    MileageTrackingBO mileageTrackingBO = (MileageTrackingBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.MILEAGETRACKING);
+    VehicleDamageBO vehicleDamageBO = (VehicleDamageBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.VEHICLEDAMAGE);
 
     private VehicleDTO selectedVehicle;
     private boolean isEditMode = false;

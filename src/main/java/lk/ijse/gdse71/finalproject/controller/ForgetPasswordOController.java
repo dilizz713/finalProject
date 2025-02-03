@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lk.ijse.gdse71.finalproject.bo.BOFactory;
 import lk.ijse.gdse71.finalproject.bo.custom.LoginBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.LoginBOImpl;
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
@@ -41,7 +42,7 @@ public class ForgetPasswordOController {
 
     String emailText;
 
-   LoginBO loginBO = new LoginBOImpl();
+   LoginBO loginBO = (LoginBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.LOGIN);
 
     @FXML
     void navigateToChangePW(ActionEvent event) throws IOException {

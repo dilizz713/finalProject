@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.bo.BOFactory;
 import lk.ijse.gdse71.finalproject.bo.custom.CustomerBO;
 import lk.ijse.gdse71.finalproject.bo.custom.ReservationBO;
 import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
@@ -73,9 +74,9 @@ public class ReservationTableController implements Initializable {
 
     private ReservationTM selectedReservationTM;
 
-    ReservationBO reservationBO = new ReservationBOImpl();
-    CustomerBO customerBO = new CustomerBOImpl();
-    VehicleBO vehicleBO = new VehicleBOImpl();
+    ReservationBO reservationBO = (ReservationBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.RESERVATION);
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+    VehicleBO vehicleBO = (VehicleBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.VEHICLE);
 
     @FXML
     void clickedTable(MouseEvent event) {

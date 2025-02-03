@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.bo.BOFactory;
 import lk.ijse.gdse71.finalproject.bo.custom.MaintenanceRecordBO;
 import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.MaintenanceRecordBOImpl;
@@ -65,8 +66,8 @@ public class VehicleMaintenanceRecordsController implements Initializable {
     @FXML
     private TextField txtDesc;
 
-    MaintenanceRecordBO maintenanceRecordBO = new MaintenanceRecordBOImpl();
-    VehicleBO vehicleBO = new VehicleBOImpl();
+    MaintenanceRecordBO maintenanceRecordBO = (MaintenanceRecordBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.MAINTENANCERECORD);
+    VehicleBO vehicleBO = (VehicleBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.VEHICLE);
 
     private LocalDate originalStartDate;
     private boolean isEditMode = false;

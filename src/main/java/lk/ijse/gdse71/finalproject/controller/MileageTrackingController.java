@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.bo.BOFactory;
 import lk.ijse.gdse71.finalproject.bo.custom.MileageTrackingBO;
 import lk.ijse.gdse71.finalproject.bo.custom.QueryBO;
 import lk.ijse.gdse71.finalproject.bo.custom.ReservationBO;
@@ -122,9 +123,9 @@ public class MileageTrackingController implements Initializable {
     private DatePicker endDatePicker;
 
 
-    MileageTrackingBO mileageTrackingBO = new MileageTrackingBOImpl();
-    ReservationBO reservationBO = new ReservationBOImpl();
-    QueryBO queryBO = new QueryBOImpl();
+    MileageTrackingBO mileageTrackingBO = (MileageTrackingBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.MILEAGETRACKING);
+    ReservationBO reservationBO = (ReservationBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.RESERVATION);
+    QueryBO queryBO = (QueryBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.QUERY);
 
 
     @FXML
