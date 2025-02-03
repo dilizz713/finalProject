@@ -23,7 +23,6 @@ public class ReservationBOImpl implements ReservationBO {
 
     }
 
-
     public boolean updateReservations(ReservationDTO reservationDTO) throws SQLException {
        return reservationDAO.update(reservationDTO);
     }
