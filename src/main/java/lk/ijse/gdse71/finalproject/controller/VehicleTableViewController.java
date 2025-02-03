@@ -12,6 +12,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleBOImpl;
 import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
@@ -74,7 +76,7 @@ public class VehicleTableViewController implements Initializable {
 
     private VehicleTM selectedVehicleTM;
 
-    VehicleDAO vehicleDAO = new VehicleDAOImpl();
+   VehicleBO vehicleBO = new VehicleBOImpl();
     @FXML
     void clickedTable(MouseEvent event) {
         selectedVehicleTM = vehicleTableView.getSelectionModel().getSelectedItem();
@@ -88,7 +90,7 @@ public class VehicleTableViewController implements Initializable {
         if(selectedVehicleTM != null){
             try{
                 String vehicleID = selectedVehicleTM.getId();
-                boolean isDeleted = vehicleDAO.delete(vehicleID);
+                boolean isDeleted = vehicleBO.deleteVehicles(vehicleID);
                 if(isDeleted){
                     vehicleTableView.getItems().remove(selectedVehicleTM);
                     selectedVehicleTM = null;
@@ -176,7 +178,7 @@ public class VehicleTableViewController implements Initializable {
             return;
         }
 
-        ArrayList<VehicleDTO> vehicleDTOS = vehicleDAO.search(searchText);
+        ArrayList<VehicleDTO> vehicleDTOS = vehicleBO.searchVehicles(searchText);
         ObservableList<VehicleTM> vehicleTMS = FXCollections.observableArrayList();
 
         LocalDate currentDate = LocalDate.now();
@@ -219,7 +221,7 @@ public class VehicleTableViewController implements Initializable {
 
     }
     private void loadTableData() throws SQLException, ClassNotFoundException {
-        ArrayList<VehicleDTO> vehicleDTOS = vehicleDAO.getAll();
+        ArrayList<VehicleDTO> vehicleDTOS = vehicleBO.getAllVehicles();
         ObservableList<VehicleTM> vehicleTMS = FXCollections.observableArrayList();
 
         for (VehicleDTO vehicleDTO : vehicleDTOS) {

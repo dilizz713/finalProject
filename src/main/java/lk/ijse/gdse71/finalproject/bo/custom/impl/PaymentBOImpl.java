@@ -15,7 +15,7 @@ public class PaymentBOImpl implements PaymentBO {
     PaymentDAO paymentDAO = new PaymentDAOImpl();
 
     public String getNextId() throws SQLException {
-
+        return paymentDAO.getNextId();
     }
 
     public ArrayList<PaymentDTO> getAllPayments() throws SQLException {
@@ -28,7 +28,7 @@ public class PaymentBOImpl implements PaymentBO {
     }
 
     public boolean savePayments(PaymentDTO paymentDTO) throws SQLException {
-
+        return false;
 
     }
 
@@ -43,7 +43,7 @@ public class PaymentBOImpl implements PaymentBO {
     }
 
     public boolean updatePayments(PaymentDTO paymentDTO) throws SQLException {
-
+        return false;
     }
 
    /* public ArrayList<PaymentDTO> search(String keyword) throws SQLException {

@@ -9,7 +9,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.gdse71.finalproject.bo.custom.MaintenanceRecordBO;
+import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.MaintenanceRecordBOImpl;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleBOImpl;
 import lk.ijse.gdse71.finalproject.dao.custom.MaintenanceRecordDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
 import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
@@ -67,8 +69,8 @@ public class VehicleMaintenanceRecordsController implements Initializable {
     @FXML
     private TextField txtDesc;
 
-   MaintenanceRecordBO maintenanceRecordBO = new MaintenanceRecordBOImpl();
-   VehicleDAO vehicleDAO = new VehicleDAOImpl();
+    MaintenanceRecordBO maintenanceRecordBO = new MaintenanceRecordBOImpl();
+    VehicleBO vehicleBO = new VehicleBOImpl();
 
     private LocalDate originalStartDate;
     private boolean isEditMode = false;
@@ -80,7 +82,7 @@ public class VehicleMaintenanceRecordsController implements Initializable {
 
     private MaintenanceRecordDTO currentRecord;
 
-    public void setMaintenanceRecordsHistoryController(MaintenanceRecordsHistoryController controller){
+    public void setMaintenanceRecordsHistoryController(MaintenanceRecordsHistoryController controller) {
         this.maintenanceRecordsHistoryController = controller;
     }
 
@@ -108,9 +110,9 @@ public class VehicleMaintenanceRecordsController implements Initializable {
         boolean isSaved = false;
         boolean isUpdated = false;
 
-        if(btnSave.getText().equals("Update")){
+        if (btnSave.getText().equals("Update")) {
             isUpdated = maintenanceRecordBO.updateMaintenanceRecords(maintenanceRecordDTO);
-        }else{
+        } else {
             isSaved = maintenanceRecordBO.saveMaintenanceRecords(maintenanceRecordDTO);
         }
 
@@ -132,15 +134,16 @@ public class VehicleMaintenanceRecordsController implements Initializable {
 
         }
     }
-    @FXML
-    void selectStartDateOnAction(ActionEvent event){
 
-    }
     @FXML
-    void selectEndDateOnAction(ActionEvent event){
+    void selectStartDateOnAction(ActionEvent event) {
 
     }
 
+    @FXML
+    void selectEndDateOnAction(ActionEvent event) {
+
+    }
 
 
     @FXML
@@ -150,14 +153,14 @@ public class VehicleMaintenanceRecordsController implements Initializable {
         txtDesc.clear();
         cmbVehicleId.setValue(null);
         lblModel.setText("");
-        isEditMode= false;
+        isEditMode = false;
     }
 
     @FXML
     void selectVehicleId(ActionEvent event) {
         String selectedVehicleID = cmbVehicleId.getValue();
         try {
-            lblModel.setText(vehicleDAO.getVehicleModelById(selectedVehicleID));
+            lblModel.setText(vehicleBO.getVehicleModelById(selectedVehicleID));
         } catch (SQLException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load vehicle model!").show();
@@ -165,12 +168,11 @@ public class VehicleMaintenanceRecordsController implements Initializable {
     }
 
 
-
     private LocalDate getOriginalStartDate(String recordId) throws SQLException {
         String query = "select startDate from MaintenanceRecord where id=?";
         ResultSet rst = SQLUtil.execute(query, recordId);
 
-        if(rst.next()){
+        if (rst.next()) {
             return rst.getDate("startDate").toLocalDate();
         }
         return null;
@@ -210,14 +212,12 @@ public class VehicleMaintenanceRecordsController implements Initializable {
         }
 
 
-        
         cmbVehicleId.setOnAction(event -> {
             String selectedVehicleID = cmbVehicleId.getValue();
             if (selectedVehicleID != null) {
                 updateVehicleModel(selectedVehicleID);
             }
         });
-
 
 
     }
@@ -227,13 +227,13 @@ public class VehicleMaintenanceRecordsController implements Initializable {
     }
 
     private void handleOngoinSelected() {
-      rdbDone.setSelected(false);
+        rdbDone.setSelected(false);
     }
 
 
     private void updateVehicleModel(String vehicleId) {
         try {
-            String vehicleModel = vehicleDAO.getVehicleModelById(vehicleId);
+            String vehicleModel = vehicleBO.getVehicleModelById(vehicleId);
             lblModel.setText(vehicleModel != null ? vehicleModel : "Unknown Model");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -242,10 +242,9 @@ public class VehicleMaintenanceRecordsController implements Initializable {
     }
 
     private void loadVehicleIds() throws SQLException {
-        ObservableList<String> vehicleIds = FXCollections.observableArrayList(vehicleDAO.getAllVehcileIds());
+        ObservableList<String> vehicleIds = FXCollections.observableArrayList(vehicleBO.getAllVehcileIds());
         cmbVehicleId.setItems(vehicleIds);
     }
-
 
 
     private void refreshPage() throws SQLException, ClassNotFoundException {
@@ -260,11 +259,12 @@ public class VehicleMaintenanceRecordsController implements Initializable {
         startDatePicker.setValue(null);
         endDatePicker.setValue(null);
 
-       lblModel.setText("");
+        lblModel.setText("");
         txtDesc.setText("");
 
 
     }
+
     public void loadNextMaintenanceId() throws SQLException {
         String nextMaintenanceId = maintenanceRecordBO.getNextId();
         lblMAintenanceId.setText(nextMaintenanceId);
@@ -272,18 +272,18 @@ public class VehicleMaintenanceRecordsController implements Initializable {
 
 
     private void loadComboBoxData() throws SQLException {
-        ObservableList<String> vehicleId = FXCollections.observableArrayList(vehicleDAO.getAllVehcileIds());
+        ObservableList<String> vehicleId = FXCollections.observableArrayList(vehicleBO.getAllVehcileIds());
         cmbVehicleId.setItems(vehicleId);
     }
 
 
     @FXML
     public void watchHistory(ActionEvent actionEvent) {
-        try{
+        try {
             maintenanceAnchorPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource("/view/maintenance-records-history.fxml"));
             maintenanceAnchorPane.getChildren().add(load);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }
@@ -313,27 +313,26 @@ public class VehicleMaintenanceRecordsController implements Initializable {
             lblModel.setText("Model not found");
         }
 
-        if(maintenanceRecordDTO.getStatus().equals("Ongoing")){
+        if (maintenanceRecordDTO.getStatus().equals("Ongoing")) {
             rdbOngoing.setSelected(true);
-        }else if(maintenanceRecordDTO.getStatus().equals("Done")){
+        } else if (maintenanceRecordDTO.getStatus().equals("Done")) {
             rdbDone.setSelected(true);
             endDatePicker.setValue(maintenanceRecordDTO.getEndDate());
         }
-
 
 
         btnSave.setText("Update");
 
     }
 
-    public void setRecordDetails(String recordId, String description, String vehicleId, String model, String status, LocalDate startDate,LocalDate endDate) throws SQLException {
+    public void setRecordDetails(String recordId, String description, String vehicleId, String model, String status, LocalDate startDate, LocalDate endDate) throws SQLException {
         lblMAintenanceId.setText(recordId);
         txtDesc.setText(description);
         lblModel.setText(model);
 
-        if(status.equals("Ongoing")){
+        if (status.equals("Ongoing")) {
             rdbOngoing.setSelected(true);
-        }else if(status.equals("Done")){
+        } else if (status.equals("Done")) {
             rdbDone.setSelected(true);
         }
 
@@ -351,8 +350,9 @@ public class VehicleMaintenanceRecordsController implements Initializable {
     public void ongoingBtnOnAction(ActionEvent event) {
 
     }
+
     @FXML
-    public void doneButtonOnAction(ActionEvent event){
+    public void doneButtonOnAction(ActionEvent event) {
 
     }
 }

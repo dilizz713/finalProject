@@ -41,11 +41,11 @@ public class CustomerBOImpl implements CustomerBO {
 
     public String getNextId() throws SQLException {
         return customerDAO.getNextId();
-    }git add
+    }
 
     public ArrayList<CustomerDTO> getAllCustomer() throws SQLException {
        return customerDAO.getAll();
-    }`
+    }
 
     public ArrayList<CustomerDTO> searchCustomer(String keyword) throws SQLException {
         return customerDAO.search(keyword);
@@ -64,5 +64,8 @@ public class CustomerBOImpl implements CustomerBO {
     public String getCustomerNameById(String customerId) throws SQLException {
         return customerDAO.getCustomerNameById(customerId);
     }
+
+    public ArrayList<CustomerDTO> getCustomerDTOsForReservation() throws SQLException {
+       return customerDAO.getCustomerDTOsForReservation();
+    }
 }
-git add .

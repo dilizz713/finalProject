@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class PaymentDAOImpl implements PaymentDAO {
+
     public String getNextId() throws SQLException {
         ResultSet resultSet = SQLUtil.execute("select id from Payment order by id desc limit 1");
 
@@ -62,12 +63,6 @@ public class PaymentDAOImpl implements PaymentDAO {
 
     }
 
-    @Override
-    public boolean update(PaymentDTO dto) throws SQLException {
-        return false;
-    }
-
-
     public void updateAdvancePaymentStatus(String reservationId) throws SQLException {
         String query = "update Payment set status = 'Done' where reservationId = ? and type = 'Advance Payment'";
         SQLUtil.execute(query, reservationId);
@@ -77,7 +72,7 @@ public class PaymentDAOImpl implements PaymentDAO {
         return SQLUtil.execute("delete from Payment where id=?", id);
     }
 
-    public boolean updatePayment(PaymentDTO paymentDTO) throws SQLException {
+    public boolean update(PaymentDTO paymentDTO) throws SQLException {
         return SQLUtil.execute(
                 "update Payment set  date=?,  status=?, reservationId=?,advancePayment=? , fullPayment=?  where id=?",
                 paymentDTO.getDate(),

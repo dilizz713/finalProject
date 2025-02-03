@@ -15,6 +15,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleBOImpl;
 import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
 import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDAOImpl;
@@ -49,7 +51,7 @@ public class ReservationVehicleController implements Initializable {
 
     private GridPane vehicleGrid;
 
-    VehicleDAO vehicleDAO = new VehicleDAOImpl();
+   VehicleBO vehicleBO = new VehicleBOImpl();
 
     private final int COLUMN_COUNT = 6;
     private final int CARD_PADDING = 10;
@@ -73,7 +75,7 @@ public class ReservationVehicleController implements Initializable {
         pagination.setStyle("-fx-background-color: black;");
 
         try {
-            ArrayList<VehicleDTO> vehicles = vehicleDAO.getAll();
+            ArrayList<VehicleDTO> vehicles = vehicleBO.getAllVehicles();
             int itemsPerPage = 12;
             int pageCount = (int) Math.ceil((double) vehicles.size() / itemsPerPage);
             pagination.setPageCount(pageCount);
@@ -108,7 +110,7 @@ public class ReservationVehicleController implements Initializable {
         vehicleGrid.getChildren().clear();
 
         try {
-            ArrayList<VehicleDTO> vehicles = vehicleDAO.getAll();
+            ArrayList<VehicleDTO> vehicles = vehicleBO.getAllVehicles();
 
             int itemsPerPage = 12;
             int start = pageIndex * itemsPerPage;  // Correct usage of pageIndex

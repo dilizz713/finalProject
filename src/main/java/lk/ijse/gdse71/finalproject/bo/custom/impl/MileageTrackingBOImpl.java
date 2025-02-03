@@ -47,7 +47,7 @@ public class MileageTrackingBOImpl implements MileageTrackingBO {
     }
 
     public MileageTrackingDTO getMileageTrackingByReservationId(String reservationId) throws SQLException {
-
+        return null;
     }
 
     public ArrayList<MileageTrackingDTO> searchMileageTracking(String keyword) throws SQLException {
@@ -55,7 +55,7 @@ public class MileageTrackingBOImpl implements MileageTrackingBO {
     }
 
     public double getEstimatedMileageCost(String reservationId) throws SQLException {
-        return  mileageTrackingDAO.getEstimatedMileageCost(reservationId);;
+        return  mileageTrackingDAO.getEstimatedMileageCost(reservationId);
     }
 
     public double getTotalExtraCharges(String reservationId) throws SQLException {

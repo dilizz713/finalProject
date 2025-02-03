@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public interface PaymentDAO extends CrudDAO<PaymentDTO> {
     void updateAdvancePaymentStatus(String reservationId) throws SQLException;
-    boolean updatePayment(PaymentDTO paymentDTO) throws SQLException;
+    //boolean updatePayment(PaymentDTO paymentDTO) throws SQLException;
     double getAdvancePayment(String reservationId) throws SQLException;
     PaymentDTO getPaymentById(String paymentId) throws SQLException;
     PaymentDTO getPaymentDetails(String paymentId) throws SQLException;

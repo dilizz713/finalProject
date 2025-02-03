@@ -10,8 +10,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.gdse71.finalproject.bo.custom.CustomerBO;
+import lk.ijse.gdse71.finalproject.bo.custom.ReservationBO;
+import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
 import lk.ijse.gdse71.finalproject.bo.custom.VehicleDamageBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.CustomerBOImpl;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.ReservationBOImpl;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleBOImpl;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleDamageBOImpl;
 import lk.ijse.gdse71.finalproject.dao.custom.CustomerDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
@@ -102,10 +106,10 @@ public class VehicleDamageController implements Initializable {
     @FXML
     private TextField txtSearchBar;
 
-    VehicleDAO vehicleDAO = new VehicleDAOImpl();
+    VehicleBO vehicleBO = new VehicleBOImpl();
     CustomerBO customerBO = new CustomerBOImpl();
     VehicleDamageBO vehicleDamageBO = new VehicleDamageBOImpl();
-    ReservationDAO reservationDAO = new ReservationDAOImpl();
+    ReservationBO reservationBO = new ReservationBOImpl();
 
     @FXML
     void SaveOnAction(ActionEvent event) {
@@ -210,7 +214,7 @@ public class VehicleDamageController implements Initializable {
             if (selectedVehicleId != null) {
 
                 //*****
-                String vehicleModelStr = vehicleDAO.getVehicleModelById(selectedVehicleId);
+                String vehicleModelStr = vehicleBO.getVehicleModelById(selectedVehicleId);
                 lblModel.setText(vehicleModelStr);
             }
         } catch (SQLException e) {
@@ -330,10 +334,10 @@ public class VehicleDamageController implements Initializable {
 
         for(VehicleDamageDTO vehicleDamageDTO : vehicleDamageDTOS){
             //*****
-          String model = vehicleDAO.getVehicleModelById(vehicleDamageDTO.getVehicleId());
+          String model = vehicleBO.getVehicleModelById(vehicleDamageDTO.getVehicleId());
 
           //*****
-          String customerId = reservationDAO.getCustomerIdByVehicleId(vehicleDamageDTO.getVehicleId());
+          String customerId = reservationBO.getCustomerIdByVehicleId(vehicleDamageDTO.getVehicleId());
 
           //*****
           String customerName = customerBO.getCustomerNameById(customerId);
@@ -371,7 +375,7 @@ public class VehicleDamageController implements Initializable {
 
     private void loadVehicleIds() throws SQLException {
         //****
-        ArrayList<String> vehicleId = vehicleDAO.getAllVehcileIds();
+        ArrayList<String> vehicleId = vehicleBO.getAllVehcileIds();
         cmbVehicleId.setItems(FXCollections.observableArrayList(vehicleId));
     }
 

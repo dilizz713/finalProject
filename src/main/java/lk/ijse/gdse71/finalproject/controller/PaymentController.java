@@ -226,7 +226,7 @@ public class PaymentController implements Initializable {
 
 
             if (reservationDTO != null) {
-                customerName = customerDAO.getCustomerNameById(reservationDTO.getCustomerId());
+                customerName = customerBO.getCustomerNameById(reservationDTO.getCustomerId());
             }
 
 
@@ -265,7 +265,7 @@ public class PaymentController implements Initializable {
 
 
     private void loadReservationIds() throws SQLException {
-        ArrayList<String> reservationID = reservationDAO.getAllReservationIds();
+        ArrayList<String> reservationID = reservationBO.getAllReservationIds();
         cmbReservationId.setItems(FXCollections.observableArrayList(reservationID));
     }
 
@@ -281,12 +281,12 @@ public class PaymentController implements Initializable {
         ObservableList<PaymentTM> paymentTMS = FXCollections.observableArrayList();
 
         for(PaymentDTO paymentDTO:paymentDTOS){
-            ReservationDTO reservationDTO = reservationDAO.getReservationById(paymentDTO.getReservationId());
+            ReservationDTO reservationDTO = reservationBO.getReservationById(paymentDTO.getReservationId());
             String customerName = null;
 
 
             if (reservationDTO != null) {
-                customerName = customerDAO.getCustomerNameById(reservationDTO.getCustomerId());
+                customerName = customerBO.getCustomerNameById(reservationDTO.getCustomerId());
             }
 
 
@@ -330,7 +330,7 @@ public class PaymentController implements Initializable {
         AnchorPane reservationAnchorPane = loader.load();
         NewReservationController controller = loader.getController();
 
-        ReservationDTO reservationDTO = reservationDAO.getReservationById(reservationId);
+        ReservationDTO reservationDTO = reservationBO.getReservationById(reservationId);
 
         controller.setReservationDetails(reservationDTO);
         controller.setPaymentDetails(paymentDTO);

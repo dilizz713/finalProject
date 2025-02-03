@@ -11,8 +11,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.gdse71.finalproject.bo.custom.MileageTrackingBO;
+import lk.ijse.gdse71.finalproject.bo.custom.QueryBO;
 import lk.ijse.gdse71.finalproject.bo.custom.ReservationBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.MileageTrackingBOImpl;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.QueryBOImpl;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.ReservationBOImpl;
 import lk.ijse.gdse71.finalproject.dao.custom.MileageTrackingDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
@@ -126,6 +128,7 @@ public class MileageTrackingController implements Initializable {
 
     MileageTrackingBO mileageTrackingBO = new MileageTrackingBOImpl();
     ReservationBO reservationBO = new ReservationBOImpl();
+    QueryBO queryBO = new QueryBOImpl();
 
 
     @FXML
@@ -309,11 +312,11 @@ public class MileageTrackingController implements Initializable {
         if(durationDays == 0){
 
             //join
-            String vehiclePrice = reservationDAO.getVehiclePrice(reservationId);
+            String vehiclePrice = queryBO.getVehiclePrice(reservationId);
             return  Double.parseDouble(vehiclePrice);
         }
         //join
-        String vehiclePrice =(reservationDAO.getVehiclePrice(reservationId));
+        String vehiclePrice =(queryBO.getVehiclePrice(reservationId));
         double price =  Double.parseDouble(vehiclePrice);
 
         return  durationDays * price;

@@ -21,7 +21,7 @@ public class ReservationBOImpl implements ReservationBO {
         return reservationDAO.getAll();
     }
     public boolean saveReservations(ReservationDTO reservationDTO) throws SQLException {
-
+        return false;
 
     }
 
@@ -38,12 +38,12 @@ public class ReservationBOImpl implements ReservationBO {
        return reservationDAO.search(keyword);
     }
     public ReservationDTO getReservationById(String reservationId) throws SQLException {
-       return reservationDAO.getReservationById(reservationId);;
+       return reservationDAO.getReservationById(reservationId);
     }
 
 
     public ReservationDTO getReservationDetails(String reservationId) throws SQLException {
-
+        return null;
     }
 
     public ArrayList<String> getAllReservationIds() throws SQLException {
@@ -55,6 +55,6 @@ public class ReservationBOImpl implements ReservationBO {
     }
 
     public String getCustomerIdByVehicleId(String vehicleId) throws SQLException {
-
+        return reservationDAO.getCustomerIdByVehicleId(vehicleId);
     }
 }

@@ -21,6 +21,10 @@ public class MaintenanceRecordBOImpl implements MaintenanceRecordBO {
         return maintenanceRecordDAO.getAll();
     }
 
+    public ArrayList<MaintenanceRecordDTO> searchMaintenanceRecordDetails(String keyword) throws SQLException {
+
+    }
+
 
 
 

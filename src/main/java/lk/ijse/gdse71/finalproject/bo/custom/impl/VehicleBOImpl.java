@@ -16,11 +16,11 @@ public class VehicleBOImpl implements VehicleBO {
         return vehicleDAO.getNextId();
     }
     public ArrayList<VehicleDTO> getAllVehicles() throws SQLException {
-
+        return vehicleDAO.getAll();
     }
 
     public ArrayList<VehicleDTO> getVehiclesForPage(int start, int end) throws SQLException {
-
+        return null;
     }
 
     public boolean saveVehicles(VehicleDTO vehicleDTO) throws SQLException {
@@ -33,16 +33,16 @@ public class VehicleBOImpl implements VehicleBO {
 
 
     public boolean deleteVehicles(String vehicleId) throws SQLException {
-
+        return vehicleDAO.delete(vehicleId);
     }
 
     public ArrayList<VehicleDTO> searchVehicles(String keyword) throws SQLException {
-
+        return vehicleDAO.search(keyword);
     }
 
 
     public ArrayList<String> getAllVehcileIds() throws SQLException {
-
+        return vehicleDAO.getAllVehcileIds();
 
     }
 
@@ -51,10 +51,10 @@ public class VehicleBOImpl implements VehicleBO {
 
     }
     public String getVehiclePriceById(String vehicleID) throws SQLException {
-
+        return vehicleDAO.getVehiclePriceById(vehicleID);
     }
 
     public String getNumberPlateById(String vehicleId) throws SQLException {
-
+        return vehicleDAO.getNumberPlateById(vehicleId);
     }
 }

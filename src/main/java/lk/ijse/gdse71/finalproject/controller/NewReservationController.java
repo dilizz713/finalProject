@@ -372,8 +372,8 @@ public class NewReservationController implements Initializable {
 
     private void loadCustomerNames() {
         try {
-            //join
-            ArrayList<CustomerDTO> customers =customerDAO.getCustomerDTOsForReservation();
+
+            ArrayList<CustomerDTO> customers = customerBO.getCustomerDTOsForReservation();
 
             ObservableList<CustomerDTO> customerList = FXCollections.observableArrayList(customers);
             cmbCustomer.setItems(customerList);
@@ -455,8 +455,7 @@ public class NewReservationController implements Initializable {
         lblCurrentDate.setText(originalStartDate != null ? originalStartDate.toString() : LocalDate.now().toString());
 
         String customerId = reservationDTO.getCustomerId();
-        //join
-        for (CustomerDTO customer : customerDAO.getCustomerDTOsForReservation()) {
+        for (CustomerDTO customer : customerBO.getCustomerDTOsForReservation()) {
             if (customer.getId().equals(customerId)) {
                 cmbCustomer.getSelectionModel().select(customer);
                 break;

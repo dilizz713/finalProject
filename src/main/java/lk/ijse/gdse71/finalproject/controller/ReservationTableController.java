@@ -10,8 +10,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.bo.custom.CustomerBO;
 import lk.ijse.gdse71.finalproject.bo.custom.ReservationBO;
+import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.CustomerBOImpl;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.ReservationBOImpl;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleBOImpl;
 import lk.ijse.gdse71.finalproject.dao.custom.CustomerDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
@@ -75,9 +79,9 @@ public class ReservationTableController implements Initializable {
 
     private ReservationTM selectedReservationTM;
 
-   ReservationBO reservationBO = new ReservationBOImpl();
-    CustomerDAO customerDAO = new CustomerDAOImpl();
-    VehicleDAO vehicleDAO = new VehicleDAOImpl();
+    ReservationBO reservationBO = new ReservationBOImpl();
+    CustomerBO customerBO = new CustomerBOImpl();
+    VehicleBO vehicleBO = new VehicleBOImpl();
 
     @FXML
     void clickedTable(MouseEvent event) {
@@ -217,10 +221,10 @@ public class ReservationTableController implements Initializable {
 
         for(ReservationDTO reservationDTO : reservationDTOS){
 
-            String customerName = customerDAO.getCustomerNameById(reservationDTO.getCustomerId());
-            String model = vehicleDAO.getVehicleModelById(reservationDTO.getVehicleId());
-            String price = vehicleDAO.getVehiclePriceById(reservationDTO.getVehicleId());
-            String numberPlate = vehicleDAO.getNumberPlateById(reservationDTO.getVehicleId());
+            String customerName = customerBO.getCustomerNameById(reservationDTO.getCustomerId());
+            String model = vehicleBO.getVehicleModelById(reservationDTO.getVehicleId());
+            String price = vehicleBO.getVehiclePriceById(reservationDTO.getVehicleId());
+            String numberPlate = vehicleBO.getNumberPlateById(reservationDTO.getVehicleId());
 
             double vehiclePrice = 0;
             if (price != null && !price.isEmpty()) {
@@ -291,10 +295,10 @@ public class ReservationTableController implements Initializable {
 
         for(ReservationDTO reservationDTO : reservationDTOS){
 
-            String customerName = customerDAO.getCustomerNameById(reservationDTO.getCustomerId());
-            String model = vehicleDAO.getVehicleModelById(reservationDTO.getVehicleId());
-            String price = vehicleDAO.getVehiclePriceById(reservationDTO.getVehicleId());
-            String numberPlate = vehicleDAO.getNumberPlateById(reservationDTO.getVehicleId());
+            String customerName = customerBO.getCustomerNameById(reservationDTO.getCustomerId());
+            String model = vehicleBO.getVehicleModelById(reservationDTO.getVehicleId());
+            String price = vehicleBO.getVehiclePriceById(reservationDTO.getVehicleId());
+            String numberPlate = vehicleBO.getNumberPlateById(reservationDTO.getVehicleId());
 
             double vehiclePrice = 0;
             if (price != null && !price.isEmpty()) {

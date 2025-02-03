@@ -15,5 +15,6 @@ public interface CustomerBO {
     ArrayList<String> getAllCustomerNames() throws SQLException;
     String getCustomerIdByName(String name) throws SQLException;
     String getCustomerNameById(String customerId) throws SQLException;
+    ArrayList<CustomerDTO> getCustomerDTOsForReservation() throws SQLException;
 
 }
