@@ -43,6 +43,11 @@ public class PaymentDAOImpl implements PaymentDAO {
         return paymentDTOS;
     }
 
+    @Override
+    public ArrayList<PaymentDTO> search(String keyword) throws SQLException {
+        return null;
+    }
+
     public boolean save(PaymentDTO paymentDTO) throws SQLException {
         return SQLUtil.execute(
                 "insert into Payment values (?,?,?,?,?,?)",
@@ -85,7 +90,7 @@ public class PaymentDAOImpl implements PaymentDAO {
         );
     }
 
-    public ArrayList<PaymentDTO> search(String keyword) throws SQLException {
+   /* public ArrayList<PaymentDTO> search(String keyword) throws SQLException {
         String searchQuery = """
                 select p.*, c.name 
                 from Payment p
@@ -114,7 +119,7 @@ public class PaymentDAOImpl implements PaymentDAO {
             paymentDTOS.add(paymentDTO);
         }
         return paymentDTOS;
-    }
+    }*/
 
     public double getAdvancePayment(String reservationId) throws SQLException {
         String query = "select sum(advancePayment) as totalAdvancePayment from Payment where reservationId = ?";

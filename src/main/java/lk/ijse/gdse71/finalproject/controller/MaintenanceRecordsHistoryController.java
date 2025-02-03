@@ -10,8 +10,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.bo.custom.MaintenanceRecordBO;
+import lk.ijse.gdse71.finalproject.bo.custom.VehicleBO;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.MaintenanceRecordBOImpl;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleBOImpl;
 import lk.ijse.gdse71.finalproject.dao.custom.MaintenanceRecordDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.MaintenanceRecordDAOImpl;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.MaintenanceRecordDTO;
 import lk.ijse.gdse71.finalproject.view.tdm.MaintenanceRecordTM;
 
@@ -67,7 +73,9 @@ public class MaintenanceRecordsHistoryController implements Initializable {
     private TextField txtSearchBar;
 
     private MaintenanceRecordTM maintenanceRecordTM;
-    MaintenanceRecordDAO maintenanceRecordDAO = new MaintenanceRecordDAOImpl();
+
+    MaintenanceRecordBO maintenanceRecordBO = new MaintenanceRecordBOImpl();
+    VehicleBO vehicleBO = new VehicleBOImpl();
 
     @FXML
     void clickedTable(MouseEvent event) {
@@ -89,7 +97,8 @@ public class MaintenanceRecordsHistoryController implements Initializable {
         confirmationAlert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
                 try {
-                    boolean deleted = maintenanceRecordDAO.delete(maintenanceRecordTM.getId());
+                    //***
+                    boolean deleted = maintenanceRecordBO.deleteMaintenanceRecords(maintenanceRecordTM.getId());
 
                     if (deleted) {
                         new Alert(Alert.AlertType.INFORMATION, "Record deleted successfully.").show();
@@ -133,12 +142,13 @@ public class MaintenanceRecordsHistoryController implements Initializable {
     }
 
     private void loadTableData() throws SQLException {
-        ArrayList<MaintenanceRecordDTO> maintenanceRecordDTOS = maintenanceRecordDAO.getAll();
+        //****
+        ArrayList<MaintenanceRecordDTO> maintenanceRecordDTOS = maintenanceRecordBO.getAllMaintenanceRecords();
         ObservableList<MaintenanceRecordTM> maintenanceRecordTMS = FXCollections.observableArrayList();
 
         for(MaintenanceRecordDTO maintenanceRecordDTO : maintenanceRecordDTOS){
 
-            String model = maintenanceRecordDAO.getVehicleNameById(maintenanceRecordDTO.getVehicleId());
+            String model = vehicleBO.getVehicleModelById(maintenanceRecordDTO.getVehicleId());
 
             Button updateButton = new Button("Update");
 
@@ -174,8 +184,6 @@ public class MaintenanceRecordsHistoryController implements Initializable {
 
         MaintenanceTable.setItems(maintenanceRecordTMS);
 
-
-
     }
 
     @FXML
@@ -185,7 +193,8 @@ public class MaintenanceRecordsHistoryController implements Initializable {
             return;
         }
 
-        MaintenanceRecordDTO selectedRecord = maintenanceRecordDAO.getRecordsById(maintenanceRecordTM.getId());
+        //*****
+        MaintenanceRecordDTO selectedRecord = maintenanceRecordBO.getMaintenanceRecordsById(maintenanceRecordTM.getId());
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/reservation-view.fxml"));
         AnchorPane recordPane = loader.load();
@@ -210,7 +219,8 @@ public class MaintenanceRecordsHistoryController implements Initializable {
                 maintenanceRecordDTO.getId(),
                 maintenanceRecordDTO.getDescription(),
                 maintenanceRecordDTO.getVehicleId(),
-                maintenanceRecordDAO.getVehicleNameById(maintenanceRecordDTO.getVehicleId()),
+                //***
+                vehicleBO.getVehicleModelById(maintenanceRecordDTO.getVehicleId()),
                 maintenanceRecordDTO.getStatus(),
                 maintenanceRecordDTO.getStartDate(),
                 maintenanceRecordDTO.getEndDate()

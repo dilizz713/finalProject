@@ -10,8 +10,16 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.bo.custom.CustomerBO;
+import lk.ijse.gdse71.finalproject.bo.custom.PaymentBO;
+import lk.ijse.gdse71.finalproject.bo.custom.ReservationBO;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.CustomerBOImpl;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.PaymentBOImpl;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.ReservationBOImpl;
+import lk.ijse.gdse71.finalproject.dao.custom.CustomerDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.PaymentDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.PaymentDAOImpl;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.ReservationDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.PaymentDTO;
@@ -74,8 +82,9 @@ public class PaymentController implements Initializable {
     private TextField txtSearchBar;
 
 
-   PaymentDAO paymentDAO = new PaymentDAOImpl();
-   ReservationDAO reservationDAO = new ReservationDAOImpl();
+   PaymentBO paymentBO = new PaymentBOImpl();
+   ReservationBO reservationBO = new ReservationBOImpl();
+   CustomerBO customerBO = new CustomerBOImpl();
     ReservationDTO reservationDTO = new ReservationDTO();
 
     private PaymentTM selectedPaymentTM;
@@ -100,7 +109,8 @@ public class PaymentController implements Initializable {
         }
 
         try {
-            boolean isDeleted = paymentDAO.delete(selectedPaymentTM.getId());
+            //**
+            boolean isDeleted = paymentBO.deletePayments(selectedPaymentTM.getId());
 
             if (isDeleted) {
                 new Alert(Alert.AlertType.INFORMATION, "Payment deleted successfully.").show();
@@ -143,7 +153,8 @@ public class PaymentController implements Initializable {
             new Alert(Alert.AlertType.WARNING, "Please select a payment to update!").show();
             return;
         }
-        PaymentDTO selectedPayment = paymentDAO.getPaymentById(selectedPaymentTM.getId());
+
+        PaymentDTO selectedPayment = paymentBO.getPaymentById(selectedPaymentTM.getId());
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/newReservation.fxml"));
         AnchorPane paymentPane = loader.load();
@@ -205,16 +216,17 @@ public class PaymentController implements Initializable {
             return;
         }
 
-        ArrayList<PaymentDTO> paymentDTOS = paymentDAO.search(searchText);
+        //****
+        ArrayList<PaymentDTO> paymentDTOS = paymentBO.searchPayments(searchText);
         ObservableList<PaymentTM> paymentTMS = FXCollections.observableArrayList();
 
         for(PaymentDTO paymentDTO:paymentDTOS){
-            ReservationDTO reservationDTO = reservationDAO.getReservationById(paymentDTO.getReservationId());
+            ReservationDTO reservationDTO = reservationBO.getReservationById(paymentDTO.getReservationId());
             String customerName = null;
 
 
             if (reservationDTO != null) {
-                customerName = reservationDAO.getCustomerNameById(reservationDTO.getCustomerId());
+                customerName = customerDAO.getCustomerNameById(reservationDTO.getCustomerId());
             }
 
 
@@ -265,7 +277,7 @@ public class PaymentController implements Initializable {
 
     private void loadTableData() throws SQLException, ClassNotFoundException {
 
-        ArrayList<PaymentDTO> paymentDTOS = paymentDAO.getAll();
+        ArrayList<PaymentDTO> paymentDTOS = paymentBO.getAllPayments();
         ObservableList<PaymentTM> paymentTMS = FXCollections.observableArrayList();
 
         for(PaymentDTO paymentDTO:paymentDTOS){
@@ -274,7 +286,7 @@ public class PaymentController implements Initializable {
 
 
             if (reservationDTO != null) {
-                customerName = reservationDAO.getCustomerNameById(reservationDTO.getCustomerId());
+                customerName = customerDAO.getCustomerNameById(reservationDTO.getCustomerId());
             }
 
 

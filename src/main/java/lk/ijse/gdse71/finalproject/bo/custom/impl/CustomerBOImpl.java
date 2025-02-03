@@ -1,47 +1,68 @@
 package lk.ijse.gdse71.finalproject.bo.custom.impl;
 
+import lk.ijse.gdse71.finalproject.bo.custom.CustomerBO;
+import lk.ijse.gdse71.finalproject.dao.custom.CustomerDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CustomerBOImpl {
+
+public class CustomerBOImpl implements CustomerBO {
+    CustomerDAO customerDAO = new CustomerDAOImpl();
+
     public boolean saveCustomer(CustomerDTO customerDTO) throws SQLException {
-        CustomerDTO customerDTO = new CustomerDTO(customerDTO.getId(), name, address, email, phone, nic);
-        boolean isSaved = customerDAO.save(customerDTO);
+        return customerDAO.save(new CustomerDTO(
+                customerDTO.getId(),
+                customerDTO.getName(),
+                customerDTO.getAddress(),
+                customerDTO.getEmail(),
+                customerDTO.getPhoneNumber(),
+                customerDTO.getNic())
+        );
     }
     public boolean updateCustomer(CustomerDTO customerDTO) throws SQLException {
-
+        return customerDAO.update(new CustomerDTO(
+                customerDTO.getId(),
+                customerDTO.getName(),
+                customerDTO.getAddress(),
+                customerDTO.getEmail(),
+                customerDTO.getPhoneNumber(),
+                customerDTO.getNic())
+        );
     }
     public boolean deleteCustomer(String customerId) throws SQLException {
+        return customerDAO.delete(customerId);
 
     }
 
     public String getNextId() throws SQLException {
-
-    }
+        return customerDAO.getNextId();
+    }git add
 
     public ArrayList<CustomerDTO> getAllCustomer() throws SQLException {
-
-    }
+       return customerDAO.getAll();
+    }`
 
     public ArrayList<CustomerDTO> searchCustomer(String keyword) throws SQLException {
-
+        return customerDAO.search(keyword);
     }
 
 
     public ArrayList<String> getAllCustomerNames() throws SQLException {
-
+        return customerDAO.getAllCustomerNames();
 
     }
 
     public String getCustomerIdByName(String name) throws SQLException {
-
+        return customerDAO.getCustomerIdByName(name);
     }
 
     public String getCustomerNameById(String customerId) throws SQLException {
-
+        return customerDAO.getCustomerNameById(customerId);
     }
 }
+git add .

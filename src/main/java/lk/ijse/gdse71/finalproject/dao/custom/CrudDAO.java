@@ -5,7 +5,7 @@ import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface CrudDAO<T> {
+public interface CrudDAO<T> extends SuperDAO {
     boolean save(T dto) throws SQLException;
     boolean update(T dto) throws SQLException;
     boolean delete(String dto) throws SQLException;

@@ -5,6 +5,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import lk.ijse.gdse71.finalproject.bo.custom.VehicleDamageBO;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleDamageBOImpl;
 import lk.ijse.gdse71.finalproject.dao.custom.MileageTrackingDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.PaymentDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
@@ -62,7 +64,7 @@ public class GenerateBillController implements Initializable {
     private Button btnEmail;
 
 
-    private VehicleDamageDAO vehicleDamageDAO = new VehicleDamageDAOImpl();
+    private VehicleDamageBO vehicleDamageBO = new VehicleDamageBOImpl();
 
     private String reservationId;
     private String paymentId;
@@ -93,7 +95,7 @@ public class GenerateBillController implements Initializable {
 
         try {
 
-            double repairCost = vehicleDamageDAO.getRepairCostByVehicleId(vehicleId);
+            double repairCost = vehicleDamageBO.getRepairCostByVehicleId(vehicleId);
             lblDamageCost.setText(String.format("$%.2f", repairCost));
 
 

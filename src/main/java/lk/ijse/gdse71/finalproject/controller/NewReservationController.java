@@ -16,11 +16,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.StringConverter;
-import lk.ijse.gdse71.finalproject.dao.custom.PaymentDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
-import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.PaymentDAOImpl;
-import lk.ijse.gdse71.finalproject.dao.custom.impl.ReservationDAOImpl;
+import lk.ijse.gdse71.finalproject.bo.custom.*;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.*;
+import lk.ijse.gdse71.finalproject.dao.custom.*;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.*;
 import lk.ijse.gdse71.finalproject.db.DBConnection;
 import lk.ijse.gdse71.finalproject.dto.*;
 
@@ -103,8 +102,11 @@ public class NewReservationController implements Initializable {
 
   //  private PaymentModel paymentModel = new PaymentModel();
 
-    ReservationDAO reservationDAO = new ReservationDAOImpl();
-    PaymentDAO paymentDAO = new PaymentDAOImpl();
+    ReservationBO reservationBO = new ReservationBOImpl();
+    PaymentBO paymentBO = new PaymentBOImpl();
+    CustomerBO customerBO = new CustomerBOImpl();
+    MileageTrackingBO mileageTrackingBO = new MileageTrackingBOImpl();
+    VehicleDamageBO vehicleDamageBO = new VehicleDamageBOImpl();
 
     private VehicleDTO selectedVehicle;
     private boolean isEditMode = false;
@@ -234,7 +236,7 @@ public class NewReservationController implements Initializable {
         String reservationId = lblReservationId.getText();
 
         ReservationDTO reservationDTO = new ReservationDTO(reservationId, customerId, vehicleId, status, originalStartDate);
-        reservationDAO.update(reservationDTO);
+        reservationBO.updateReservations(reservationDTO);
 
         reservationTableController.refreshTable();
 
@@ -370,7 +372,8 @@ public class NewReservationController implements Initializable {
 
     private void loadCustomerNames() {
         try {
-            ArrayList<CustomerDTO> customers = reservationDAO.getCustomerDTOsForReservation();
+            //join
+            ArrayList<CustomerDTO> customers =customerDAO.getCustomerDTOsForReservation();
 
             ObservableList<CustomerDTO> customerList = FXCollections.observableArrayList(customers);
             cmbCustomer.setItems(customerList);
@@ -430,11 +433,13 @@ public class NewReservationController implements Initializable {
     }
 
     public void loadNextId() throws SQLException {
-        String nextId =reservationDAO.getNextId();
+        //**
+        String nextId =reservationBO.getNextId();
        lblReservationId.setText(nextId);
     }
     public void loadPaymentId() throws SQLException {
-        String nextPaymentId = paymentDAO.getNextId();
+        //**
+        String nextPaymentId = paymentBO.getNextId();
        lblPaymentId.setText(nextPaymentId);
     }
 
@@ -450,7 +455,8 @@ public class NewReservationController implements Initializable {
         lblCurrentDate.setText(originalStartDate != null ? originalStartDate.toString() : LocalDate.now().toString());
 
         String customerId = reservationDTO.getCustomerId();
-        for (CustomerDTO customer : reservationDAO.getCustomerDTOsForReservation()) {
+        //join
+        for (CustomerDTO customer : customerDAO.getCustomerDTOsForReservation()) {
             if (customer.getId().equals(customerId)) {
                 cmbCustomer.getSelectionModel().select(customer);
                 break;
@@ -505,7 +511,7 @@ public class NewReservationController implements Initializable {
         if(status.equals("Done")){
             updatePAymentButton.setDisable(false);
 
-            double endMilegae = reservationDAO.getEndMileageForReservation(reservationId);
+            double endMilegae = mileageTrackingBO.getEndMileageForReservation(reservationId);
             if(endMilegae == 0){
                 new Alert(Alert.AlertType.WARNING, "Please fill the end date mileage before calculating full payment!").show();
                 cmbStatus.setValue("Pending");
@@ -518,12 +524,13 @@ public class NewReservationController implements Initializable {
         updateSaveButtonStatus();
     }
     private double calculateFullPaymentAmount(String reservationId) throws SQLException {
-        String vehicleId = reservationDAO.getVehicleIdByReservationId(reservationId);
+        //**
+        String vehicleId = reservationBO.getVehicleIdByReservationId(reservationId);
 
-        double estimatedMileageCost = reservationDAO.getEstimatedMileageCost(reservationId);
-        double totalExtraCharges = reservationDAO.getTotalExtraCharges(reservationId);
-        double repairCost = reservationDAO.getRepairCostByVehicleId(vehicleId);
-        double advancePayment = paymentDAO.getAdvancePayment(reservationId);
+        double estimatedMileageCost = mileageTrackingBO.getEstimatedMileageCost(reservationId);
+        double totalExtraCharges = mileageTrackingBO.getTotalExtraCharges(reservationId);
+        double repairCost = vehicleDamageBO.getRepairCostByVehicleId(vehicleId);
+        double advancePayment = paymentBO.getAdvancePayment(reservationId);
 
         return estimatedMileageCost + totalExtraCharges + repairCost - advancePayment;
 
@@ -605,9 +612,9 @@ public class NewReservationController implements Initializable {
 
             GenerateBillController billController = loader.getController();
 
-            MileageTrackingDTO mileage = reservationDAO.getMileageDetails(reservationId);
-            PaymentDTO payment = paymentDAO.getPaymentDetails(paymentId);
-            String vehicleId = reservationDAO.getVehicleIdByReservationId(reservationId);
+            MileageTrackingDTO mileage = mileageTrackingBO.getMileageDetails(reservationId);
+            PaymentDTO payment = paymentBO.getPaymentDetails(paymentId);
+            String vehicleId = reservationBO.getVehicleIdByReservationId(reservationId);
 
             billController.setBillDetails(reservationId, paymentId, payment, mileage, vehicleId);
 

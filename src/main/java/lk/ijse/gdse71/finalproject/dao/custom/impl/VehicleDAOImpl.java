@@ -145,4 +145,13 @@ public class VehicleDAOImpl implements VehicleDAO {
         return null;
 
     }
+    public String getVehiclePriceById(String vehicleID) throws SQLException {
+        ResultSet rst = SQLUtil.execute("select price from Vehicle where id = ?", vehicleID);
+        return rst.next() ? rst.getString(1) : null;
+    }
+
+    public String getNumberPlateById(String vehicleId) throws SQLException {
+        ResultSet rst = SQLUtil.execute("select numberPlate from Vehicle where id = ?", vehicleId);
+        return rst.next() ? rst.getString(1) : null;
+    }
 }

@@ -12,6 +12,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lk.ijse.gdse71.finalproject.bo.custom.LoginBO;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.LoginBOImpl;
 import lk.ijse.gdse71.finalproject.dao.custom.LoginDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.LoginDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
@@ -41,14 +43,15 @@ public class ForgetPasswordOController {
 
     String emailText;
 
-   LoginDAO loginDAO = new LoginDAOImpl();
+   LoginBO loginBO = new LoginBOImpl();
 
     @FXML
     void navigateToChangePW(ActionEvent event) throws IOException {
         String email = txtEmail.getText();
 
        try{
-           LoginDTO userDetails = loginDAO.findByEmail(email);
+           //****
+           LoginDTO userDetails = loginBO.findByEmail(email);
 
            if(userDetails != null && email.equals(userDetails.getEmail())){
                emailText = email;
@@ -82,11 +85,13 @@ public class ForgetPasswordOController {
         String password = txtNewPw.getText();
         String confirmPW = txtConfirmNewPw.getText();
 
-        LoginDTO userDetails = loginDAO.findByEmail(emailText);
+        //****
+        LoginDTO userDetails = loginBO.findByEmail(emailText);
 
         if(password.equals(confirmPW)){
+            //****
             LoginDTO loginDTO = new LoginDTO(userDetails.getUserName(),userDetails.getPassword(),emailText);
-            boolean isUpdate = loginDAO.update(loginDTO);
+            boolean isUpdate = loginBO.updateLogin(loginDTO);
 
             if(isUpdate){
                 new Alert(Alert.AlertType.INFORMATION, "password update successfully!").show();
@@ -95,11 +100,6 @@ public class ForgetPasswordOController {
         }
 
     }
-
-
-
-
-
 
 
 }

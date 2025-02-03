@@ -48,39 +48,39 @@ public class ReservationDAOImpl implements ReservationDAO {
         return reservationDTOS;
     }
 
-    public ArrayList<String> getAllCustomerIds() throws SQLException {
+   /* public ArrayList<String> getAllCustomerIds() throws SQLException {
         ResultSet rst = SQLUtil.execute("select id from Customer");
         ArrayList<String> customerIds = new ArrayList<>();
         while (rst.next()) {
             customerIds.add(rst.getString(1));
         }
         return customerIds;
-    }
+    }*/
 
-    public ArrayList<String> getAllVehicleIds() throws SQLException {
+   /* public ArrayList<String> getAllVehicleIds() throws SQLException {
         ResultSet rst = SQLUtil.execute("select id from Vehicle");
         ArrayList<String> vehilceId = new ArrayList<>();
         while (rst.next()) {
             vehilceId.add(rst.getString(1));
         }
         return vehilceId;
-    }
+    }*/
 
-    public String getCustomerNameById(String customerId) throws SQLException {
+    /*public String getCustomerNameById(String customerId) throws SQLException {
         ResultSet rst = SQLUtil.execute("select name from Customer where id=?",customerId);
         return rst.next() ? rst.getString(1) : null;
-    }
+    }*/
 
-    public String getVehiclePriceById(String vehicleID) throws SQLException {
+   /* public String getVehiclePriceById(String vehicleID) throws SQLException {
         ResultSet rst = SQLUtil.execute("select price from Vehicle where id = ?", vehicleID);
         return rst.next() ? rst.getString(1) : null;
-    }
+    }*/
 
 
-    public String getVehicleNameById(String vehicleId) throws SQLException {
+   /* public String getVehicleNameById(String vehicleId) throws SQLException {
         ResultSet rst = SQLUtil.execute("select model from Vehicle where id = ?", vehicleId);
         return rst.next() ? rst.getString(1) : null;
-    }
+    }*/
 
 
     public boolean save(ReservationDTO reservationDTO) throws SQLException {
@@ -133,7 +133,7 @@ public class ReservationDAOImpl implements ReservationDAO {
         return reservationDTOS;
     }
 
-    public ArrayList<CustomerDTO> getCustomerDTOsForReservation() throws SQLException {
+   /* public ArrayList<CustomerDTO> getCustomerDTOsForReservation() throws SQLException {
         ArrayList<CustomerDTO> customers = new ArrayList<>();
 
         String sql = "select id,name from Customer";
@@ -148,21 +148,21 @@ public class ReservationDAOImpl implements ReservationDAO {
         }
 
         return customers;
-    }
+    }*/
 
 
 
 
-    public String getNumberPlateById(String vehicleId) throws SQLException {
+   /* public String getNumberPlateById(String vehicleId) throws SQLException {
         ResultSet rst = SQLUtil.execute("select numberPlate from Vehicle where id = ?", vehicleId);
         return rst.next() ? rst.getString(1) : null;
-    }
+    }*/
 
 
-    public String getAllVehicleDetails(String vehicleId) throws SQLException {
+   /* public String getAllVehicleDetails(String vehicleId) throws SQLException {
         ResultSet rst = SQLUtil.execute("select model,numberPlate,price from Vehicle where id = ?", vehicleId);
         return rst.next() ? rst.getString(1) : null;
-    }
+    }*/
 
     public ReservationDTO getReservationById(String reservationId) throws SQLException {
         String query = "select * from Reservation where id=?";
@@ -195,7 +195,7 @@ public class ReservationDAOImpl implements ReservationDAO {
         return null;
     }
 
-    public String getVehiclePrice(String reservationId) throws SQLException {
+   /* public String getVehiclePrice(String reservationId) throws SQLException {
         ResultSet rst = SQLUtil.execute(
                 """
                 select v.price
@@ -208,7 +208,7 @@ public class ReservationDAOImpl implements ReservationDAO {
             return rst.getString("price");
         }
         return reservationId;
-    }
+    }*/
 
     public ArrayList<String> getAllReservationIds() throws SQLException {
         String query = "select id from Reservation";
@@ -221,12 +221,12 @@ public class ReservationDAOImpl implements ReservationDAO {
         return reservationID;
     }
 
-    public String getCustomerNameByReservationId(String reservationId) throws SQLException {
+   /* public String getCustomerNameByReservationId(String reservationId) throws SQLException {
         String query = "select c.name from Customer c inner join Reservation r on c.id = r.customerId where r.id = ?";
         ResultSet resultSet = SQLUtil.execute(query, reservationId);
 
         return resultSet.next() ? resultSet.getString(1) : null;
-    }
+    }*/
 
     public String getVehicleIdByReservationId(String reservationId) throws SQLException {
         String query = "select vehicleId from Reservation where id = ?";
@@ -239,7 +239,7 @@ public class ReservationDAOImpl implements ReservationDAO {
         return null;
     }
 
-    public double getEstimatedMileageCost(String reservationId) throws SQLException {
+   /* public double getEstimatedMileageCost(String reservationId) throws SQLException {
         String query = "select estimatedMileageCost from MileageTracking where reservationId=?";
 
         ResultSet resultSet = SQLUtil.execute(query, reservationId);
@@ -248,9 +248,9 @@ public class ReservationDAOImpl implements ReservationDAO {
             return resultSet.getDouble("estimatedMileageCost");
         }
         return 0.0;
-    }
+    }*/
 
-    public double getTotalExtraCharges(String reservationId) throws SQLException {
+   /* public double getTotalExtraCharges(String reservationId) throws SQLException {
         String query = "select totalExtraCharges from MileageTracking where reservationId=?";
 
         ResultSet resultSet = SQLUtil.execute(query, reservationId);
@@ -259,9 +259,9 @@ public class ReservationDAOImpl implements ReservationDAO {
             return resultSet.getDouble("totalExtraCharges");
         }
         return 0.0;
-    }
+    }*/
 
-    public double getRepairCostByVehicleId(String vehicleId) throws SQLException {
+   /* public double getRepairCostByVehicleId(String vehicleId) throws SQLException {
         String query = "select repairCost from VehicleDamage where vehicleId = ?";
         ResultSet resultSet = SQLUtil.execute(query, vehicleId);
 
@@ -269,10 +269,10 @@ public class ReservationDAOImpl implements ReservationDAO {
             return resultSet.getDouble("repairCost");
         }
         return 0.0;
-    }
+    }*/
 
 
-    public double getEndMileageForReservation(String reservationId) throws SQLException {
+   /* public double getEndMileageForReservation(String reservationId) throws SQLException {
         String query = "select endDateMileage from MileageTracking where reservationId=?";
         ResultSet rst = SQLUtil.execute(query,reservationId);
 
@@ -280,9 +280,9 @@ public class ReservationDAOImpl implements ReservationDAO {
             return rst.getDouble("endDateMileage");
         }
         return 0;
-    }
+    }*/
 
-    public String getPaymentIdByReservation(String reservationId) throws SQLException {
+   /* public String getPaymentIdByReservation(String reservationId) throws SQLException {
         String query = "select id from Payment where reservationId=?";
         ResultSet rst = SQLUtil.execute(query,reservationId);
 
@@ -290,9 +290,9 @@ public class ReservationDAOImpl implements ReservationDAO {
             return rst.getString("id");
         }
         return null;
-    }
+    }*/
 
-    public MileageTrackingDTO getMileageDetails(String reservationId) throws SQLException {
+    /*public MileageTrackingDTO getMileageDetails(String reservationId) throws SQLException {
         String query = "SELECT estimatedMileage, actualMileage, extraChargesPerKm, totalExtraCharges, estimatedMileageCost FROM MileageTracking WHERE reservationId = ?" ;
 
         ResultSet rst = SQLUtil.execute(query, reservationId);
@@ -308,9 +308,9 @@ public class ReservationDAOImpl implements ReservationDAO {
             );
         }
         return null;
-    }
+    }*/
 
-    public CustomerDTO getCustomerDetailsByReservationId(String reservationId) throws SQLException {
+   /* public CustomerDTO getCustomerDetailsByReservationId(String reservationId) throws SQLException {
         String sql = """
             SELECT c.id, c.name, c.email
             FROM Customer c
@@ -332,5 +332,15 @@ public class ReservationDAOImpl implements ReservationDAO {
         }
         return null;
 
+    }*/
+
+    public String getCustomerIdByVehicleId(String vehicleId) throws SQLException {
+        String sql = "select customerId from Reservation where vehicleId = ?";
+        ResultSet resultSet = SQLUtil.execute(sql, vehicleId);
+
+        if (resultSet.next()) {
+            return resultSet.getString("customerId");
+        }
+        return null;
     }
 }

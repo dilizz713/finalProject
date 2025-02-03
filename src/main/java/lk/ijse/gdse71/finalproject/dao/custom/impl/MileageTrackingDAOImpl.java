@@ -48,14 +48,14 @@ public class MileageTrackingDAOImpl implements MileageTrackingDAO {
         return mileageTrackingDTOS;
     }
 
-    public ArrayList<String> getAllReservationIds() throws SQLException {
+   /* public ArrayList<String> getAllReservationIds() throws SQLException {
         ResultSet rst = SQLUtil.execute("select id from Reservation");
         ArrayList<String> reservationId = new ArrayList<>();
         while (rst.next()) {
             reservationId.add(rst.getString(1));
         }
         return reservationId;
-    }
+    }*/
 
     public boolean save(MileageTrackingDTO mileageTrackingDTO) throws SQLException {
         return  SQLUtil.execute(
@@ -158,5 +158,54 @@ public class MileageTrackingDAOImpl implements MileageTrackingDAO {
             mileageTrackingDTOS.add(mileageTrackingDTO);
         }
         return mileageTrackingDTOS;
+    }
+
+    public double getEstimatedMileageCost(String reservationId) throws SQLException {
+        String query = "select estimatedMileageCost from MileageTracking where reservationId=?";
+
+        ResultSet resultSet = SQLUtil.execute(query, reservationId);
+
+        if (resultSet.next()) {
+            return resultSet.getDouble("estimatedMileageCost");
+        }
+        return 0.0;
+    }
+
+    public double getTotalExtraCharges(String reservationId) throws SQLException {
+        String query = "select totalExtraCharges from MileageTracking where reservationId=?";
+
+        ResultSet resultSet = SQLUtil.execute(query, reservationId);
+
+        if (resultSet.next()) {
+            return resultSet.getDouble("totalExtraCharges");
+        }
+        return 0.0;
+    }
+
+    public double getEndMileageForReservation(String reservationId) throws SQLException {
+        String query = "select endDateMileage from MileageTracking where reservationId=?";
+        ResultSet rst = SQLUtil.execute(query,reservationId);
+
+        if(rst.next()){
+            return rst.getDouble("endDateMileage");
+        }
+        return 0;
+    }
+    public MileageTrackingDTO getMileageDetails(String reservationId) throws SQLException {
+        String query = "SELECT estimatedMileage, actualMileage, extraChargesPerKm, totalExtraCharges, estimatedMileageCost FROM MileageTracking WHERE reservationId = ?" ;
+
+        ResultSet rst = SQLUtil.execute(query, reservationId);
+
+        if (rst.next()) {
+            return new MileageTrackingDTO(
+                    rst.getDouble("estimatedMileage"),
+                    rst.getDouble("actualMileage"),
+                    rst.getDouble("extraChargesPerKm"),
+                    rst.getDouble("totalExtraCharges"),
+                    rst.getDouble("estimatedMileageCost")
+
+            );
+        }
+        return null;
     }
 }

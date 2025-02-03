@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface MaintenanceRecordDAO extends CrudDAO<MaintenanceRecordDTO> {
-    ArrayList<String> getAllVehicleIds() throws SQLException;
-    String getVehicleNameById(String vehicleId) throws SQLException;
+   // ArrayList<String> getAllVehicleIds() throws SQLException;
+  //  String getVehicleNameById(String vehicleId) throws SQLException;
     MaintenanceRecordDTO getRecordsById(String recordId) throws SQLException;
 
 }

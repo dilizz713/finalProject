@@ -127,4 +127,21 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
         return null;
     }
+
+    public ArrayList<CustomerDTO> getCustomerDTOsForReservation() throws SQLException {
+        ArrayList<CustomerDTO> customers = new ArrayList<>();
+
+        String sql = "select id,name from Customer";
+
+        try (ResultSet rst = SQLUtil.execute(sql)) {
+            while (rst.next()) {
+                customers.add(new CustomerDTO(
+                        rst.getString("id"),
+                        rst.getString("name")       // name
+                ));
+            }
+        }
+
+        return customers;
+    }
 }

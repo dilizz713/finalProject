@@ -33,8 +33,6 @@ public class VehicleDamageDAOImpl implements VehicleDamageDAO {
                     ? rst.getDate("reportedDate").toLocalDate()
                     : null;
 
-
-
             vehicleDamageDTOS.add(new VehicleDamageDTO(
                     rst.getString(1),                       //damage id
                     rst.getString(2),                       //description
@@ -55,7 +53,7 @@ public class VehicleDamageDAOImpl implements VehicleDamageDAO {
     }
 
 
-    public String getCustomerIdByVehicleId(String vehicleId) throws SQLException {
+   /* public String getCustomerIdByVehicleId(String vehicleId) throws SQLException {
         String sql = "select customerId from Reservation where vehicleId = ?";
         ResultSet resultSet = SQLUtil.execute(sql, vehicleId);
 
@@ -63,7 +61,7 @@ public class VehicleDamageDAOImpl implements VehicleDamageDAO {
             return resultSet.getString("customerId");
         }
         return null;
-    }
+    }*/
 
     public boolean save(VehicleDamageDTO vehicleDamageDTO) throws SQLException {
         return SQLUtil.execute(

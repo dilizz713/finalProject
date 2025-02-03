@@ -10,6 +10,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.bo.custom.MileageTrackingBO;
+import lk.ijse.gdse71.finalproject.bo.custom.ReservationBO;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.MileageTrackingBOImpl;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.ReservationBOImpl;
 import lk.ijse.gdse71.finalproject.dao.custom.MileageTrackingDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.MileageTrackingDAOImpl;
@@ -120,9 +124,8 @@ public class MileageTrackingController implements Initializable {
     private DatePicker endDatePicker;
 
 
-   MileageTrackingDAO mileageTrackingDAO = new MileageTrackingDAOImpl();
-    ReservationDAO reservationDAO = new ReservationDAOImpl();
-
+    MileageTrackingBO mileageTrackingBO = new MileageTrackingBOImpl();
+    ReservationBO reservationBO = new ReservationBOImpl();
 
 
     @FXML
@@ -148,7 +151,8 @@ public class MileageTrackingController implements Initializable {
 
         MileageTrackingDTO mileageTrackingDTO = new MileageTrackingDTO(trackingId, 0,0, 0, 0, reservationId, startDateMileage, 0, 0,startDate,endDate);
 
-        boolean isSaved = mileageTrackingDAO.save(mileageTrackingDTO);
+        //***
+        boolean isSaved = mileageTrackingBO.saveMileageTracking(mileageTrackingDTO);
         if (isSaved) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Tracking details saved successfully!").show();
@@ -220,7 +224,8 @@ public class MileageTrackingController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if(optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES){
-            boolean isDeleted = mileageTrackingDAO.delete(trackingId);
+            //****
+            boolean isDeleted = mileageTrackingBO.deleteMileageTracking(trackingId);
             if(isDeleted){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Record deleted!").show();
@@ -284,7 +289,7 @@ public class MileageTrackingController implements Initializable {
 
 
             MileageTrackingDTO mileageTrackingDTO = new MileageTrackingDTO(trackingId, estimatedMileage,actualMileage, extraChargePerKm, totalExtraCharges, reservationId, startDateMileage, endDateMileage, estimatedMileageCost, startDate,endDate);
-            boolean isUpdated = mileageTrackingDAO.update(mileageTrackingDTO);
+            boolean isUpdated = mileageTrackingBO.updateMileageTracking(mileageTrackingDTO);
             if (isUpdated) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Tracking details updated successfully!").show();
@@ -303,9 +308,11 @@ public class MileageTrackingController implements Initializable {
 
         if(durationDays == 0){
 
-            String vehiclePrice =(reservationDAO.getVehiclePrice(reservationId));
+            //join
+            String vehiclePrice = reservationDAO.getVehiclePrice(reservationId);
             return  Double.parseDouble(vehiclePrice);
         }
+        //join
         String vehiclePrice =(reservationDAO.getVehiclePrice(reservationId));
         double price =  Double.parseDouble(vehiclePrice);
 
@@ -371,7 +378,7 @@ public class MileageTrackingController implements Initializable {
             return;
         }
 
-        ArrayList<MileageTrackingDTO> mileageTrackingDTOS = mileageTrackingDAO.search(searchText);
+        ArrayList<MileageTrackingDTO> mileageTrackingDTOS = mileageTrackingBO.searchMileageTracking(searchText);
         ObservableList<MileageTrackingTM> mileageTrackingTMS = FXCollections.observableArrayList();
 
         for (MileageTrackingDTO mileageTrackingDTO : mileageTrackingDTOS) {
@@ -398,7 +405,7 @@ public class MileageTrackingController implements Initializable {
     }
 
     private void loadComboBoxData() throws SQLException {
-        ObservableList<String> reservationId = FXCollections.observableArrayList(mileageTrackingDAO.getAllReservationIds());
+        ObservableList<String> reservationId = FXCollections.observableArrayList(reservationBO.getAllReservationIds());
         cmbReservationId.setItems(reservationId);
 
     }
@@ -427,12 +434,12 @@ public class MileageTrackingController implements Initializable {
     }
 
     public void loadNextTrackingId() throws SQLException {
-        String nextTrackingId = mileageTrackingDAO.getNextId();
+        String nextTrackingId = mileageTrackingBO.getNextId();
         lblTrackingId.setText(nextTrackingId);
     }
 
     private void loadTableData() throws SQLException, ClassNotFoundException {
-        ArrayList<MileageTrackingDTO> mileageTrackingDTOS = mileageTrackingDAO.getAll();
+        ArrayList<MileageTrackingDTO> mileageTrackingDTOS = mileageTrackingBO.getAllMileageTracking();
         ObservableList<MileageTrackingTM> mileageTrackingTMS = FXCollections.observableArrayList();
 
         for (MileageTrackingDTO mileageTrackingDTO : mileageTrackingDTOS) {

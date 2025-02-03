@@ -8,9 +8,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.gdse71.finalproject.bo.custom.MaintenanceRecordBO;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.MaintenanceRecordBOImpl;
 import lk.ijse.gdse71.finalproject.dao.custom.MaintenanceRecordDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
+import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.MaintenanceRecordDAOImpl;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.MaintenanceRecordDTO;
 import lk.ijse.gdse71.finalproject.view.tdm.MaintenanceRecordTM;
 
@@ -63,7 +67,8 @@ public class VehicleMaintenanceRecordsController implements Initializable {
     @FXML
     private TextField txtDesc;
 
-   MaintenanceRecordDAO maintenanceRecordDAO = new MaintenanceRecordDAOImpl();
+   MaintenanceRecordBO maintenanceRecordBO = new MaintenanceRecordBOImpl();
+   VehicleDAO vehicleDAO = new VehicleDAOImpl();
 
     private LocalDate originalStartDate;
     private boolean isEditMode = false;
@@ -104,9 +109,9 @@ public class VehicleMaintenanceRecordsController implements Initializable {
         boolean isUpdated = false;
 
         if(btnSave.getText().equals("Update")){
-            isUpdated = maintenanceRecordDAO.update(maintenanceRecordDTO);
+            isUpdated = maintenanceRecordBO.updateMaintenanceRecords(maintenanceRecordDTO);
         }else{
-            isSaved = maintenanceRecordDAO.save(maintenanceRecordDTO);
+            isSaved = maintenanceRecordBO.saveMaintenanceRecords(maintenanceRecordDTO);
         }
 
         if (isSaved) {
@@ -152,7 +157,7 @@ public class VehicleMaintenanceRecordsController implements Initializable {
     void selectVehicleId(ActionEvent event) {
         String selectedVehicleID = cmbVehicleId.getValue();
         try {
-            lblModel.setText(maintenanceRecordDAO.getVehicleNameById(selectedVehicleID));
+            lblModel.setText(vehicleDAO.getVehicleModelById(selectedVehicleID));
         } catch (SQLException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load vehicle model!").show();
@@ -228,7 +233,7 @@ public class VehicleMaintenanceRecordsController implements Initializable {
 
     private void updateVehicleModel(String vehicleId) {
         try {
-            String vehicleModel = maintenanceRecordDAO.getVehicleNameById(vehicleId);
+            String vehicleModel = vehicleDAO.getVehicleModelById(vehicleId);
             lblModel.setText(vehicleModel != null ? vehicleModel : "Unknown Model");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -237,7 +242,7 @@ public class VehicleMaintenanceRecordsController implements Initializable {
     }
 
     private void loadVehicleIds() throws SQLException {
-        ObservableList<String> vehicleIds = FXCollections.observableArrayList(maintenanceRecordDAO.getAllVehicleIds());
+        ObservableList<String> vehicleIds = FXCollections.observableArrayList(vehicleDAO.getAllVehcileIds());
         cmbVehicleId.setItems(vehicleIds);
     }
 
@@ -261,13 +266,13 @@ public class VehicleMaintenanceRecordsController implements Initializable {
 
     }
     public void loadNextMaintenanceId() throws SQLException {
-        String nextMaintenanceId = maintenanceRecordDAO.getNextId();
+        String nextMaintenanceId = maintenanceRecordBO.getNextId();
         lblMAintenanceId.setText(nextMaintenanceId);
     }
 
 
     private void loadComboBoxData() throws SQLException {
-        ObservableList<String> vehicleId = FXCollections.observableArrayList(maintenanceRecordDAO.getAllVehicleIds());
+        ObservableList<String> vehicleId = FXCollections.observableArrayList(vehicleDAO.getAllVehcileIds());
         cmbVehicleId.setItems(vehicleId);
     }
 

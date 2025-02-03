@@ -45,19 +45,29 @@ public class MaintenanceRecordDAOImpl implements MaintenanceRecordDAO {
         return maintenanceRecordDTOS;
     }
 
-    public ArrayList<String> getAllVehicleIds() throws SQLException {
+    @Override
+    public ArrayList<MaintenanceRecordDTO> search(String keyword) throws SQLException {
+        return null;
+    }
+
+   /* @Override
+    public ArrayList<MaintenanceRecordDTO> search(String keyword) throws SQLException {
+        return null;
+    }*/
+
+  /*  public ArrayList<String> getAllVehicleIds() throws SQLException {
         ResultSet rst = SQLUtil.execute("select id from Vehicle");
         ArrayList<String> vehicleId = new ArrayList<>();
         while (rst.next()) {
             vehicleId.add(rst.getString(1));
         }
         return vehicleId;
-    }
+    }*/
 
-    public String getVehicleNameById(String vehicleId) throws SQLException {
+   /* public String getVehicleNameById(String vehicleId) throws SQLException {
         ResultSet rst = SQLUtil.execute("select model from Vehicle where id = ?", vehicleId);
         return rst.next() ? rst.getString(1) : null;
-    }
+    }*/
 
     public boolean save(MaintenanceRecordDTO maintenanceRecordDTO) throws SQLException {
         return SQLUtil.execute(
@@ -87,7 +97,7 @@ public class MaintenanceRecordDAOImpl implements MaintenanceRecordDAO {
     public boolean delete(String recordId) throws SQLException {
         return SQLUtil.execute("delete from MaintenanceRecord where id=?",recordId );
     }
-    public ArrayList<MaintenanceRecordDTO> search(String keyword) throws SQLException {
+   /* public ArrayList<MaintenanceRecordDTO> search(String keyword) throws SQLException {
         String searchQuery = """
                 select M.* , V.model 
                 from MaintenanceRecord M
@@ -112,7 +122,7 @@ public class MaintenanceRecordDAOImpl implements MaintenanceRecordDAO {
             maintenanceRecordDTOS.add(maintenanceRecordDTO);
         }
         return maintenanceRecordDTOS;
-    }
+    }*/
 
 
     public MaintenanceRecordDTO getRecordsById(String recordId) throws SQLException {

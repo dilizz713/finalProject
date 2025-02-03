@@ -15,6 +15,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import lk.ijse.gdse71.finalproject.bo.custom.CustomerBO;
+import lk.ijse.gdse71.finalproject.bo.custom.impl.CustomerBOImpl;
 import lk.ijse.gdse71.finalproject.dao.custom.CustomerDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
@@ -86,7 +88,7 @@ public class CustomerController implements Initializable {
     @FXML
     private TextField txtPhone;
 
-    CustomerDAO customerDAO = new CustomerDAOImpl();
+    CustomerBO customerBO = new CustomerBOImpl();
 
     @FXML
     void SaveCustomerOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
@@ -160,7 +162,8 @@ public class CustomerController implements Initializable {
             return;
         }
 
-        boolean isSaved = customerDAO.save(new CustomerDTO(id, name, address, email, phone, nic));
+        // *****
+        boolean isSaved = customerBO.saveCustomer(new CustomerDTO(id, name, address, email, phone, nic));
         if (isSaved) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Customer saved successfully!").show();
@@ -185,8 +188,6 @@ public class CustomerController implements Initializable {
         }
     }
 
-
-
     @FXML
     void deleteCustomerOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String customerId = lblCustomerId.getText();
@@ -195,7 +196,7 @@ public class CustomerController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if(optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES){
-            boolean isDeleted = customerDAO.delete(customerId);
+            boolean isDeleted = customerBO.deleteCustomer(customerId);
             if(isDeleted){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Customer deleted!").show();
@@ -285,10 +286,8 @@ public class CustomerController implements Initializable {
             new Alert(Alert.AlertType.ERROR, errorMessage.toString()).show();
             return;
         }
-
-
-        CustomerDTO customerDTO = new CustomerDTO(id, name, address, email, phone, nic);
-        boolean isUpdate = customerDAO.update(customerDTO);
+        // ****
+        boolean isUpdate = customerBO.updateCustomer(new CustomerDTO(id, name, address, email, phone, nic));
         if (isUpdate) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Customer updated successfully!").show();
@@ -349,8 +348,8 @@ public class CustomerController implements Initializable {
             return;
         }
 
-        ArrayList<CustomerDTO> customerDTOS = customerDAO.search(searchText);
-
+        //*****
+        ArrayList<CustomerDTO> customerDTOS = customerBO.searchCustomer(searchText);
 
         ObservableList<CustomerTM> customerTMS = FXCollections.observableArrayList();
 
@@ -389,12 +388,15 @@ public class CustomerController implements Initializable {
 
     }
     public void loadNextCustomerId() throws SQLException {
-        String nextCustomerID = customerDAO.getNextId();
+
+        //******
+        String nextCustomerID = customerBO.getNextId();
         lblCustomerId.setText(nextCustomerID);
     }
 
     private void loadTableData() throws SQLException, ClassNotFoundException {
-        ArrayList<CustomerDTO> customerDTOS = customerDAO.getAll();
+        //******
+        ArrayList<CustomerDTO> customerDTOS = customerBO.getAllCustomer();
         ObservableList<CustomerTM> customerTMS = FXCollections.observableArrayList();
 
         for(CustomerDTO customerDTO:customerDTOS){

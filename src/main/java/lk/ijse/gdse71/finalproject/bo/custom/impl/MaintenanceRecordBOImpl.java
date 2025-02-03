@@ -1,0 +1,45 @@
+package lk.ijse.gdse71.finalproject.bo.custom.impl;
+
+import lk.ijse.gdse71.finalproject.bo.custom.MaintenanceRecordBO;
+import lk.ijse.gdse71.finalproject.dao.custom.MaintenanceRecordDAO;
+import lk.ijse.gdse71.finalproject.dao.custom.SQLUtil;
+import lk.ijse.gdse71.finalproject.dao.custom.impl.MaintenanceRecordDAOImpl;
+import lk.ijse.gdse71.finalproject.dto.MaintenanceRecordDTO;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+
+public class MaintenanceRecordBOImpl implements MaintenanceRecordBO {
+    MaintenanceRecordDAO maintenanceRecordDAO = new MaintenanceRecordDAOImpl();
+
+    public String getNextId() throws SQLException {
+        return maintenanceRecordDAO.getNextId();
+    }
+    public ArrayList<MaintenanceRecordDTO> getAllMaintenanceRecords() throws SQLException {
+        return maintenanceRecordDAO.getAll();
+    }
+
+
+
+
+    public boolean saveMaintenanceRecords(MaintenanceRecordDTO maintenanceRecordDTO) throws SQLException {
+       return maintenanceRecordDAO.save(maintenanceRecordDTO);
+    }
+
+
+    public boolean updateMaintenanceRecords(MaintenanceRecordDTO maintenanceRecordDTO) throws SQLException {
+        return maintenanceRecordDAO.update(maintenanceRecordDTO);
+    }
+
+    public boolean deleteMaintenanceRecords(String recordId) throws SQLException {
+       return maintenanceRecordDAO.delete(recordId);
+    }
+
+
+    public MaintenanceRecordDTO getMaintenanceRecordsById(String recordId) throws SQLException {
+        return maintenanceRecordDAO.getRecordsById(recordId);
+
+    }
+}
