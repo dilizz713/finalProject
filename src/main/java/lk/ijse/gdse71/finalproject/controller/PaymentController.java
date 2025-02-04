@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import lk.ijse.gdse71.finalproject.bo.BOFactory;
 import lk.ijse.gdse71.finalproject.bo.custom.CustomerBO;
 import lk.ijse.gdse71.finalproject.bo.custom.PaymentBO;
+import lk.ijse.gdse71.finalproject.bo.custom.QueryBO;
 import lk.ijse.gdse71.finalproject.bo.custom.ReservationBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.CustomerBOImpl;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.PaymentBOImpl;
@@ -80,6 +81,7 @@ public class PaymentController implements Initializable {
     PaymentBO paymentBO = (PaymentBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.PAYMENT);
     ReservationBO reservationBO = (ReservationBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.RESERVATION);
     CustomerBO customerBO = (CustomerBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+    QueryBO queryBO = (QueryBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.QUERY);
     ReservationDTO reservationDTO = new ReservationDTO();
 
     private PaymentTM selectedPaymentTM;
@@ -208,7 +210,7 @@ public class PaymentController implements Initializable {
         }
 
         //****
-        ArrayList<PaymentDTO> paymentDTOS = paymentBO.searchPayments(searchText);
+        ArrayList<PaymentDTO> paymentDTOS = queryBO.searchPaymentDetils(searchText);
         ObservableList<PaymentTM> paymentTMS = FXCollections.observableArrayList();
 
         for (PaymentDTO paymentDTO : paymentDTOS) {

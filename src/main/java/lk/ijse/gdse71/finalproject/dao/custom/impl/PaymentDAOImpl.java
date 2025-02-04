@@ -3,6 +3,7 @@ package lk.ijse.gdse71.finalproject.dao.custom.impl;
 import lk.ijse.gdse71.finalproject.dao.custom.PaymentDAO;
 import lk.ijse.gdse71.finalproject.dao.SQLUtil;
 import lk.ijse.gdse71.finalproject.dto.PaymentDTO;
+import lk.ijse.gdse71.finalproject.entity.Payment;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,13 +25,13 @@ public class PaymentDAOImpl implements PaymentDAO {
         return "P001";
     }
 
-    public ArrayList<PaymentDTO> getAll() throws SQLException {
+    public ArrayList<Payment> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("select * from Payment");
 
-        ArrayList<PaymentDTO> paymentDTOS = new ArrayList<>();
+        ArrayList<Payment> paymentDTOS = new ArrayList<>();
 
         while (rst.next()) {
-            PaymentDTO paymentDTO = new PaymentDTO(
+            Payment entity = new Payment(
                     rst.getString(1),                    //id
                     rst.getDate(2).toLocalDate(),        //date
                     rst.getString(3),                    //status
@@ -39,25 +40,25 @@ public class PaymentDAOImpl implements PaymentDAO {
                     rst.getDouble(6)                     //full payment
 
             );
-            paymentDTOS.add(paymentDTO);
+            paymentDTOS.add(entity);
         }
         return paymentDTOS;
     }
 
     @Override
-    public ArrayList<PaymentDTO> search(String keyword) throws SQLException {
+    public ArrayList<Payment> search(String keyword) throws SQLException {
         return null;
     }
 
-    public boolean save(PaymentDTO paymentDTO) throws SQLException {
+    public boolean save(Payment entity) throws SQLException {
         return SQLUtil.execute(
                 "insert into Payment values (?,?,?,?,?,?)",
-                paymentDTO.getId(),
-                paymentDTO.getDate(),
-                paymentDTO.getStatus(),
-                paymentDTO.getReservationId(),
-                paymentDTO.getAdvancePayment(),
-                paymentDTO.getFullPayment()
+                entity.getId(),
+                entity.getDate(),
+                entity.getStatus(),
+                entity.getReservationId(),
+                entity.getAdvancePayment(),
+                entity.getFullPayment()
 
         );
 
@@ -72,15 +73,15 @@ public class PaymentDAOImpl implements PaymentDAO {
         return SQLUtil.execute("delete from Payment where id=?", id);
     }
 
-    public boolean update(PaymentDTO paymentDTO) throws SQLException {
+    public boolean update(Payment entity) throws SQLException {
         return SQLUtil.execute(
                 "update Payment set  date=?,  status=?, reservationId=?,advancePayment=? , fullPayment=?  where id=?",
-                paymentDTO.getDate(),
-                paymentDTO.getStatus(),
-                paymentDTO.getReservationId(),
-                paymentDTO.getAdvancePayment(),
-                paymentDTO.getFullPayment(),
-                paymentDTO.getId()
+                entity.getDate(),
+                entity.getStatus(),
+                entity.getReservationId(),
+                entity.getAdvancePayment(),
+                entity.getFullPayment(),
+                entity.getId()
 
         );
     }
@@ -127,7 +128,7 @@ public class PaymentDAOImpl implements PaymentDAO {
     }
 
 
-    public PaymentDTO getPaymentById(String paymentId) throws SQLException {
+    public Payment getPaymentById(String paymentId) throws SQLException {
         String query = "select * from Payment where id=?";
         ResultSet rst = SQLUtil.execute(query, paymentId);
 
@@ -140,19 +141,19 @@ public class PaymentDAOImpl implements PaymentDAO {
             double fullPayment = rst.getDouble("fullPayment");
 
 
-            return new PaymentDTO(id, date, status, reservationId, advancePayment, fullPayment);
+            return new Payment(id, date, status, reservationId, advancePayment, fullPayment);
 
         }
         return null;
     }
 
 
-    public PaymentDTO getPaymentDetails(String paymentId) throws SQLException {
+    public Payment getPaymentDetails(String paymentId) throws SQLException {
         String query = "SELECT * FROM Payment WHERE id = ?";
         ResultSet rst = SQLUtil.execute(query, paymentId);
 
         if (rst.next()) {
-            return new PaymentDTO(
+            return new Payment(
                     rst.getString("id"),
                     rst.getDate("date").toLocalDate(),
                     rst.getString("status"),

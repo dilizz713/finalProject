@@ -11,13 +11,13 @@ public interface PaymentBO extends SuperBO {
 
     ArrayList<PaymentDTO> getAllPayments() throws SQLException;
 
-    ArrayList<PaymentDTO> searchPayments(String keyword) throws SQLException;
+   // ArrayList<PaymentDTO> searchPayments(String keyword) throws SQLException;
 
-    boolean savePayments(PaymentDTO paymentDTO) throws SQLException;
+   // boolean savePayments(PaymentDTO paymentDTO) throws SQLException;
 
-    boolean updatePayments(PaymentDTO dto) throws SQLException;
+   // boolean updatePayments(PaymentDTO dto) throws SQLException;
 
-    void updateAdvancePaymentStatus(String reservationId) throws SQLException;
+    //void updateAdvancePaymentStatus(String reservationId) throws SQLException;
 
     boolean deletePayments(String id) throws SQLException;
 

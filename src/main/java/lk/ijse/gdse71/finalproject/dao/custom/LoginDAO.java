@@ -1,12 +1,13 @@
 package lk.ijse.gdse71.finalproject.dao.custom;
 
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
+import lk.ijse.gdse71.finalproject.entity.Login;
 
 import java.sql.SQLException;
 
-public interface LoginDAO extends CrudDAO<LoginDTO> {
-    LoginDTO findByEmail(String email) throws SQLException;
+public interface LoginDAO extends CrudDAO<Login> {
+    Login findByEmail(String email) throws SQLException;
 
-    LoginDTO findByUserName(String userName) throws SQLException;
+    Login findByUserName(String userName) throws SQLException;
 
 }

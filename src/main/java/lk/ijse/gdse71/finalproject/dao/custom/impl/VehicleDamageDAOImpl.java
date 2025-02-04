@@ -3,6 +3,7 @@ package lk.ijse.gdse71.finalproject.dao.custom.impl;
 import lk.ijse.gdse71.finalproject.dao.SQLUtil;
 import lk.ijse.gdse71.finalproject.dao.custom.VehicleDamageDAO;
 import lk.ijse.gdse71.finalproject.dto.VehicleDamageDTO;
+import lk.ijse.gdse71.finalproject.entity.VehicleDamage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,17 +24,17 @@ public class VehicleDamageDAOImpl implements VehicleDamageDAO {
         return "D001";
     }
 
-    public ArrayList<VehicleDamageDTO> getAll() throws SQLException {
+    public ArrayList<VehicleDamage> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("select * from VehicleDamage");
 
-        ArrayList<VehicleDamageDTO> vehicleDamageDTOS = new ArrayList<>();
+        ArrayList<VehicleDamage> entity = new ArrayList<>();
 
         while (rst.next()) {
             LocalDate date = rst.getDate("reportedDate") != null
                     ? rst.getDate("reportedDate").toLocalDate()
                     : null;
 
-            vehicleDamageDTOS.add(new VehicleDamageDTO(
+            entity.add(new VehicleDamage(
                     rst.getString(1),                       //damage id
                     rst.getString(2),                       //description
                     date,                                                //reported dated
@@ -44,11 +45,11 @@ public class VehicleDamageDAOImpl implements VehicleDamageDAO {
 
         }
 
-        return vehicleDamageDTOS;
+        return entity;
     }
 
     @Override
-    public ArrayList<VehicleDamageDTO> search(String keyword) throws SQLException {
+    public ArrayList<VehicleDamage> search(String keyword) throws SQLException {
         return null;
     }
 
@@ -63,26 +64,26 @@ public class VehicleDamageDAOImpl implements VehicleDamageDAO {
         return null;
     }*/
 
-    public boolean save(VehicleDamageDTO vehicleDamageDTO) throws SQLException {
+    public boolean save(VehicleDamage entity) throws SQLException {
         return SQLUtil.execute(
                 "insert into VehicleDamage values (?,?,?,?,?)",
-                vehicleDamageDTO.getId(),
-                vehicleDamageDTO.getDescription(),
-                vehicleDamageDTO.getReportedDate(),
-                vehicleDamageDTO.getRepairCost(),
-                vehicleDamageDTO.getVehicleId()
+                entity.getId(),
+                entity.getDescription(),
+                entity.getReportedDate(),
+                entity.getRepairCost(),
+                entity.getVehicleId()
 
         );
     }
 
-    public boolean update(VehicleDamageDTO vehicleDamageDTO) throws SQLException {
+    public boolean update(VehicleDamage entity) throws SQLException {
         return SQLUtil.execute(
                 "update VehicleDamage set description=?, reportedDate=?, repairCost=?, vehicleId=? where id=?",
-                vehicleDamageDTO.getDescription(),
-                vehicleDamageDTO.getReportedDate(),
-                vehicleDamageDTO.getRepairCost(),
-                vehicleDamageDTO.getVehicleId(),
-                vehicleDamageDTO.getId()
+                entity.getDescription(),
+                entity.getReportedDate(),
+                entity.getRepairCost(),
+                entity.getVehicleId(),
+                entity.getId()
 
         );
     }

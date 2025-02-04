@@ -3,6 +3,7 @@ package lk.ijse.gdse71.finalproject.dao.custom.impl;
 import lk.ijse.gdse71.finalproject.dao.custom.ReservationDAO;
 import lk.ijse.gdse71.finalproject.dao.SQLUtil;
 import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
+import lk.ijse.gdse71.finalproject.entity.Reservation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,10 +24,10 @@ public class ReservationDAOImpl implements ReservationDAO {
         return "R001";
     }
 
-    public ArrayList<ReservationDTO> getAll() throws SQLException {
+    public ArrayList<Reservation> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("select * from Reservation");
 
-        ArrayList<ReservationDTO> reservationDTOS = new ArrayList<>();
+        ArrayList<Reservation> entity = new ArrayList<>();
 
         while (rst.next()) {
             LocalDate reservationDate = rst.getDate("reservationDate") != null
@@ -34,7 +35,7 @@ public class ReservationDAOImpl implements ReservationDAO {
                     : null;
 
 
-            reservationDTOS.add(new ReservationDTO(
+            entity.add(new Reservation(
                     rst.getString(1),                       //reservation id
                     rst.getString(2),                       //customer id
                     rst.getString(3),                       //vehicle id
@@ -44,7 +45,7 @@ public class ReservationDAOImpl implements ReservationDAO {
 
         }
 
-        return reservationDTOS;
+        return entity;
     }
 
    /* public ArrayList<String> getAllCustomerIds() throws SQLException {
@@ -82,27 +83,27 @@ public class ReservationDAOImpl implements ReservationDAO {
     }*/
 
 
-    public boolean save(ReservationDTO reservationDTO) throws SQLException {
+    public boolean save(Reservation entity) throws SQLException {
         return SQLUtil.execute(
                 "insert into Reservation values (?,?,?,?,?)",
-                reservationDTO.getId(),
-                reservationDTO.getCustomerId(),
-                reservationDTO.getVehicleId(),
-                reservationDTO.getStatus(),
-                reservationDTO.getReservationDate()
+                entity.getId(),
+                entity.getCustomerId(),
+                entity.getVehicleId(),
+                entity.getStatus(),
+                entity.getReservationDate()
         );
 
     }
 
 
-    public boolean update(ReservationDTO reservationDTO) throws SQLException {
+    public boolean update(Reservation entity) throws SQLException {
         return SQLUtil.execute(
                 "update  Reservation set customerId=?, vehicleId=?,  status=?, reservationDate=? where id=?",
-                reservationDTO.getCustomerId(),
-                reservationDTO.getVehicleId(),
-                reservationDTO.getStatus(),
-                reservationDTO.getReservationDate(),
-                reservationDTO.getId()
+                entity.getCustomerId(),
+                entity.getVehicleId(),
+                entity.getStatus(),
+                entity.getReservationDate(),
+                entity.getId()
         );
     }
 
@@ -110,16 +111,16 @@ public class ReservationDAOImpl implements ReservationDAO {
         return SQLUtil.execute("delete from Reservation where id=?", reservationId);
     }
 
-    public ArrayList<ReservationDTO> search(String keyword) throws SQLException {
+    public ArrayList<Reservation> search(String keyword) throws SQLException {
         String searchQuery = "select * from Reservation where id like ? or vehicleId like ? or customerId like ? or reservationDate like ? or status like ?";
 
         ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%");
 
 
-        ArrayList<ReservationDTO> reservationDTOS = new ArrayList<>();
+        ArrayList<Reservation> reservationDTOS = new ArrayList<>();
 
         while (rst.next()) {
-            ReservationDTO reservationDTO = new ReservationDTO(
+            Reservation entity = new Reservation(
                     rst.getString(1),                       //reservation id
                     rst.getString(2),                       //customer id
                     rst.getString(3),                       //vehicle id
@@ -127,7 +128,7 @@ public class ReservationDAOImpl implements ReservationDAO {
                     rst.getDate(5).toLocalDate()             //reservation date
 
             );
-            reservationDTOS.add(reservationDTO);
+            reservationDTOS.add(entity);
         }
         return reservationDTOS;
     }
@@ -163,7 +164,7 @@ public class ReservationDAOImpl implements ReservationDAO {
         return rst.next() ? rst.getString(1) : null;
     }*/
 
-    public ReservationDTO getReservationById(String reservationId) throws SQLException {
+    public Reservation getReservationById(String reservationId) throws SQLException {
         String query = "select * from Reservation where id=?";
         ResultSet rst = SQLUtil.execute(query, reservationId);
 
@@ -174,7 +175,7 @@ public class ReservationDAOImpl implements ReservationDAO {
             String status = rst.getString("status");
             LocalDate reservationDate = rst.getDate("reservationDate").toLocalDate();
 
-            return new ReservationDTO(id, customerId, vehicleId, status, reservationDate);
+            return new Reservation(id, customerId, vehicleId, status, reservationDate);
 
         }
         return null;

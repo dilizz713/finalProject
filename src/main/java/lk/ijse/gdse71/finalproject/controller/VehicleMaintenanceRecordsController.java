@@ -15,6 +15,7 @@ import lk.ijse.gdse71.finalproject.bo.custom.impl.MaintenanceRecordBOImpl;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleBOImpl;
 import lk.ijse.gdse71.finalproject.dao.SQLUtil;
 import lk.ijse.gdse71.finalproject.dto.MaintenanceRecordDTO;
+import lk.ijse.gdse71.finalproject.entity.MaintenanceRecord;
 import lk.ijse.gdse71.finalproject.view.tdm.MaintenanceRecordTM;
 
 
@@ -102,15 +103,15 @@ public class VehicleMaintenanceRecordsController implements Initializable {
 
         System.out.println("Maintenance record saved with status: " + status);
 
-        MaintenanceRecordDTO maintenanceRecordDTO = new MaintenanceRecordDTO(id, startDate, endDate, dec, vehicleId, status);
+        MaintenanceRecordDTO maintenanceRecord = new MaintenanceRecordDTO(id, startDate, endDate, dec, vehicleId, status);
 
         boolean isSaved = false;
         boolean isUpdated = false;
 
         if (btnSave.getText().equals("Update")) {
-            isUpdated = maintenanceRecordBO.updateMaintenanceRecords(maintenanceRecordDTO);
+            isUpdated = maintenanceRecordBO.updateMaintenanceRecords(maintenanceRecord);
         } else {
-            isSaved = maintenanceRecordBO.saveMaintenanceRecords(maintenanceRecordDTO);
+            isSaved = maintenanceRecordBO.saveMaintenanceRecords(maintenanceRecord);
         }
 
         if (isSaved) {

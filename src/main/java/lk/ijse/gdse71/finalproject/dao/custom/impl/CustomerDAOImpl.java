@@ -3,6 +3,7 @@ package lk.ijse.gdse71.finalproject.dao.custom.impl;
 import lk.ijse.gdse71.finalproject.dao.custom.CustomerDAO;
 import lk.ijse.gdse71.finalproject.dao.SQLUtil;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
+import lk.ijse.gdse71.finalproject.entity.Customer;
 
 
 import java.sql.ResultSet;
@@ -10,28 +11,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CustomerDAOImpl implements CustomerDAO {
-    public boolean save(CustomerDTO customerDTO) throws SQLException {
+    public boolean save(Customer entity) throws SQLException {
         return SQLUtil.execute(
                 "insert into Customer values (?,?,?,?,?,?)",
-                customerDTO.getId(),
-                customerDTO.getName(),
-                customerDTO.getAddress(),
-                customerDTO.getEmail(),
-                customerDTO.getPhoneNumber(),
-                customerDTO.getNic()
+                entity.getId(),
+                entity.getName(),
+                entity.getAddress(),
+                entity.getEmail(),
+                entity.getPhoneNumber(),
+                entity.getNic()
         );
 
 
     }
-    public boolean update(CustomerDTO customerDTO) throws SQLException {
+    public boolean update(Customer entity) throws SQLException {
         return SQLUtil.execute(
                 "update Customer set name=?, address=?, email=?, phoneNumber=?, nic=? where id=?",
-                customerDTO.getName(),
-                customerDTO.getAddress(),
-                customerDTO.getEmail(),
-                customerDTO.getPhoneNumber(),
-                customerDTO.getNic(),
-                customerDTO.getId()
+                entity.getName(),
+                entity.getAddress(),
+                entity.getEmail(),
+                entity.getPhoneNumber(),
+                entity.getNic(),
+                entity.getId()
         );
     }
     public boolean delete(String customerId) throws SQLException {
@@ -51,13 +52,13 @@ public class CustomerDAOImpl implements CustomerDAO {
         return "C001";
     }
 
-    public ArrayList<CustomerDTO> getAll() throws SQLException {
+    public ArrayList<Customer> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("select * from Customer");
 
-        ArrayList<CustomerDTO> customerDTOS = new ArrayList<>();
+        ArrayList<Customer> customerDTOS = new ArrayList<>();
 
         while (rst.next()) {
-            CustomerDTO customerDTO = new CustomerDTO(
+            Customer entity = new Customer(
                     rst.getString(1),        //id
                     rst.getString(2),        //name
                     rst.getString(3),        //address
@@ -66,21 +67,21 @@ public class CustomerDAOImpl implements CustomerDAO {
                     rst.getString(6)         //nic
 
             );
-            customerDTOS.add(customerDTO);
+            customerDTOS.add(entity);
         }
         return customerDTOS;
     }
 
-    public ArrayList<CustomerDTO> search(String keyword) throws SQLException {
+    public ArrayList<Customer> search(String keyword) throws SQLException {
         String searchQuery = "select * from Customer where id Like ? or name Like ? ";
 
         ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%");
 
 
-        ArrayList<CustomerDTO> customerDTOS = new ArrayList<>();
+        ArrayList<Customer> customerDTOS = new ArrayList<>();
 
         while (rst.next()) {
-            CustomerDTO customerDTO = new CustomerDTO(
+            Customer entity = new Customer(
                     rst.getString(1),        //id
                     rst.getString(2),        //name
                     rst.getString(3),        //address
@@ -89,7 +90,7 @@ public class CustomerDAOImpl implements CustomerDAO {
                     rst.getString(6)         //nic
 
             );
-            customerDTOS.add(customerDTO);
+            customerDTOS.add(entity);
         }
         return customerDTOS;
     }
@@ -128,14 +129,14 @@ public class CustomerDAOImpl implements CustomerDAO {
         return null;
     }
 
-    public ArrayList<CustomerDTO> getCustomerDTOsForReservation() throws SQLException {
-        ArrayList<CustomerDTO> customers = new ArrayList<>();
+    public ArrayList<Customer> getCustomerDTOsForReservation() throws SQLException {
+        ArrayList<Customer> customers = new ArrayList<>();
 
         String sql = "select id,name from Customer";
 
         try (ResultSet rst = SQLUtil.execute(sql)) {
             while (rst.next()) {
-                customers.add(new CustomerDTO(
+                customers.add(new Customer(
                         rst.getString("id"),
                         rst.getString("name")       // name
                 ));

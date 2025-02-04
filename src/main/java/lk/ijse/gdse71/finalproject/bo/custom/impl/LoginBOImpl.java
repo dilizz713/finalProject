@@ -4,7 +4,10 @@ import lk.ijse.gdse71.finalproject.bo.custom.LoginBO;
 import lk.ijse.gdse71.finalproject.dao.DAOFactory;
 import lk.ijse.gdse71.finalproject.dao.custom.LoginDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.LoginDAOImpl;
+import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
+import lk.ijse.gdse71.finalproject.entity.Customer;
+import lk.ijse.gdse71.finalproject.entity.Login;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,15 +17,24 @@ public class LoginBOImpl implements LoginBO {
 
     @Override
     public boolean saveLogin(LoginDTO loginDTO) throws SQLException {
-        return loginDAO.save(loginDTO);
+        return loginDAO.save(new Login(
+                loginDTO.getUserName(),
+                loginDTO.getPassword(),
+                loginDTO.getEmail()
+        ));
     }
 
     public LoginDTO findByUserName(String userName) throws SQLException {
-        return loginDAO.findByUserName(userName);
+       Login login = loginDAO.findByUserName(userName);
+       return new LoginDTO(login.getUserName(), login.getPassword(), login.getEmail());
     }
 
     public boolean updateLogin(LoginDTO loginDTO) throws SQLException {
-        return loginDAO.update(loginDTO);
+        return loginDAO.update(new Login(
+                loginDTO.getUserName(),
+                loginDTO.getPassword(),
+                loginDTO.getEmail()
+        ));
     }
 
     @Override
@@ -32,7 +44,7 @@ public class LoginBOImpl implements LoginBO {
 
     @Override
     public String getNextId() throws SQLException {
-        return null;
+        return " ";
     }
 
     @Override
@@ -46,6 +58,7 @@ public class LoginBOImpl implements LoginBO {
     }
 
     public LoginDTO findByEmail(String email) throws SQLException {
-        return loginDAO.findByEmail(email);
+        Login login =  loginDAO.findByEmail(email);
+        return new LoginDTO(login.getUserName(), login.getPassword(), login.getEmail());
     }
 }

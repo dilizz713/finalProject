@@ -7,6 +7,9 @@ import lk.ijse.gdse71.finalproject.dao.custom.impl.QueryDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 import lk.ijse.gdse71.finalproject.dto.MaintenanceRecordDTO;
 import lk.ijse.gdse71.finalproject.dto.PaymentDTO;
+import lk.ijse.gdse71.finalproject.entity.Customer;
+import lk.ijse.gdse71.finalproject.entity.MaintenanceRecord;
+import lk.ijse.gdse71.finalproject.entity.Payment;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

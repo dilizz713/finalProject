@@ -3,6 +3,7 @@ package lk.ijse.gdse71.finalproject.dao.custom.impl;
 import lk.ijse.gdse71.finalproject.dao.custom.LoginDAO;
 import lk.ijse.gdse71.finalproject.dao.SQLUtil;
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
+import lk.ijse.gdse71.finalproject.entity.Login;
 
 
 import java.sql.ResultSet;
@@ -10,22 +11,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class LoginDAOImpl implements LoginDAO {
-    public boolean save(LoginDTO loginDTO) throws SQLException {
+    public boolean save(Login entity) throws SQLException {
         return SQLUtil.execute(
                 "insert into Login values(?,?,?)",
-                loginDTO.getUserName(),
-                loginDTO.getPassword(),
-                loginDTO.getEmail()
+                entity.getUserName(),
+                entity.getPassword(),
+                entity.getEmail()
         );
     }
 
-    public LoginDTO findByUserName(String userName) throws SQLException {
+    public Login findByUserName(String userName) throws SQLException {
         String query = "select * from Login where userName=?";
         ResultSet rst = SQLUtil.execute(query, userName);
 
 
         if (rst.next()) {
-            return new LoginDTO(
+            return new Login(
                     rst.getString("userName"),
                     rst.getString("password"),
                     rst.getString("email")
@@ -36,12 +37,12 @@ public class LoginDAOImpl implements LoginDAO {
 
     }
 
-    public boolean update(LoginDTO loginDTO) throws SQLException {
+    public boolean update(Login entity) throws SQLException {
         return SQLUtil.execute(
                 "update  Login set  password = ? , email = ? where userName=?",
-                loginDTO.getPassword(),
-                loginDTO.getEmail(),
-                loginDTO.getUserName()
+                entity.getPassword(),
+                entity.getEmail(),
+                entity.getUserName()
         );
     }
 
@@ -56,22 +57,22 @@ public class LoginDAOImpl implements LoginDAO {
     }
 
     @Override
-    public ArrayList<LoginDTO> getAll() throws SQLException {
+    public ArrayList<Login> getAll() throws SQLException {
         return null;
     }
 
     @Override
-    public ArrayList<LoginDTO> search(String keyword) throws SQLException {
+    public ArrayList<Login> search(String keyword) throws SQLException {
         return null;
     }
 
-    public LoginDTO findByEmail(String email) throws SQLException {
+    public Login findByEmail(String email) throws SQLException {
         String query = "select * from Login where email=?";
         ResultSet rst = SQLUtil.execute(query, email);
 
 
         if (rst.next()) {
-            return new LoginDTO(
+            return new Login(
                     rst.getString("userName"),
                     rst.getString("password"),
                     rst.getString("email")

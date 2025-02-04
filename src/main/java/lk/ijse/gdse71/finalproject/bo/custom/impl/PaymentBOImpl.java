@@ -5,6 +5,7 @@ import lk.ijse.gdse71.finalproject.dao.DAOFactory;
 import lk.ijse.gdse71.finalproject.dao.custom.PaymentDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.PaymentDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.PaymentDTO;
+import lk.ijse.gdse71.finalproject.entity.Payment;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,30 +18,24 @@ public class PaymentBOImpl implements PaymentBO {
     }
 
     public ArrayList<PaymentDTO> getAllPayments() throws SQLException {
-        return paymentDAO.getAll();
-    }
+        ArrayList<Payment> payments =  paymentDAO.getAll();
+        ArrayList<PaymentDTO> paymentDTOs = new ArrayList<>();
 
-    @Override
-    public ArrayList<PaymentDTO> searchPayments(String keyword) throws SQLException {
-        return paymentDAO.search(keyword);
-    }
-
-    public boolean savePayments(PaymentDTO paymentDTO) throws SQLException {
-        return false;
-
-    }
-
-
-    public void updateAdvancePaymentStatus(String reservationId) throws SQLException {
-
+        for(Payment payment : payments){
+           paymentDTOs.add(new PaymentDTO(
+                   payment.getId(),
+                   payment.getDate(),
+                   payment.getStatus(),
+                   payment.getReservationId(),
+                   payment.getAdvancePayment(),
+                   payment.getFullPayment()
+           ));
+        }
+        return paymentDTOs;
     }
 
     public boolean deletePayments(String id) throws SQLException {
         return paymentDAO.delete(id);
-    }
-
-    public boolean updatePayments(PaymentDTO paymentDTO) throws SQLException {
-        return false;
     }
 
    /* public ArrayList<PaymentDTO> search(String keyword) throws SQLException {
@@ -80,11 +75,27 @@ public class PaymentBOImpl implements PaymentBO {
 
 
     public PaymentDTO getPaymentById(String paymentId) throws SQLException {
-        return paymentDAO.getPaymentById(paymentId);
+        Payment payment =  paymentDAO.getPaymentById(paymentId);
+        return new PaymentDTO(
+                payment.getId(),
+                payment.getDate(),
+                payment.getStatus(),
+                payment.getReservationId(),
+                payment.getAdvancePayment(),
+                payment.getFullPayment()
+        );
     }
 
 
     public PaymentDTO getPaymentDetails(String paymentId) throws SQLException {
-        return paymentDAO.getPaymentDetails(paymentId);
+        Payment payment =  paymentDAO.getPaymentDetails(paymentId);
+        return new PaymentDTO(
+                payment.getId(),
+                payment.getDate(),
+                payment.getStatus(),
+                payment.getReservationId(),
+                payment.getAdvancePayment(),
+                payment.getFullPayment()
+        );
     }
 }

@@ -5,13 +5,16 @@ import lk.ijse.gdse71.finalproject.dao.SQLUtil;
 import lk.ijse.gdse71.finalproject.dto.CustomerDTO;
 import lk.ijse.gdse71.finalproject.dto.MaintenanceRecordDTO;
 import lk.ijse.gdse71.finalproject.dto.PaymentDTO;
+import lk.ijse.gdse71.finalproject.entity.Customer;
+import lk.ijse.gdse71.finalproject.entity.MaintenanceRecord;
+import lk.ijse.gdse71.finalproject.entity.Payment;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class QueryDAOImpl implements QueryDAO {
-    public ArrayList<MaintenanceRecordDTO> searchMaintenanceRecordDetails(String keyword) throws SQLException {
+    public ArrayList<MaintenanceRecord> searchMaintenanceRecordDetails(String keyword) throws SQLException {
         String searchQuery = """
                 select M.* , V.model 
                 from MaintenanceRecord M
@@ -21,10 +24,10 @@ public class QueryDAOImpl implements QueryDAO {
                 """;
         ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%");
 
-        ArrayList<MaintenanceRecordDTO> maintenanceRecordDTOS = new ArrayList<>();
+        ArrayList<MaintenanceRecord> maintenanceRecordDTOS = new ArrayList<>();
 
         while (rst.next()) {
-            MaintenanceRecordDTO maintenanceRecordDTO = new MaintenanceRecordDTO(
+            MaintenanceRecord entity = new MaintenanceRecord(
                     rst.getString(1),                         //reservation id
                     rst.getDate(2).toLocalDate(),            // start date
                     rst.getDate(3).toLocalDate(),            // end date
@@ -33,12 +36,12 @@ public class QueryDAOImpl implements QueryDAO {
                     rst.getString(6)                       //status
 
             );
-            maintenanceRecordDTOS.add(maintenanceRecordDTO);
+            maintenanceRecordDTOS.add(entity);
         }
         return maintenanceRecordDTOS;
     }
 
-    public ArrayList<PaymentDTO> searchPaymentDetils(String keyword) throws SQLException {
+    public ArrayList<Payment> searchPaymentDetils(String keyword) throws SQLException {
         String searchQuery = """
                 select p.*, c.name 
                 from Payment p
@@ -52,10 +55,10 @@ public class QueryDAOImpl implements QueryDAO {
         ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%");
 
 
-        ArrayList<PaymentDTO> paymentDTOS = new ArrayList<>();
+        ArrayList<Payment> paymentDTOS = new ArrayList<>();
 
         while (rst.next()) {
-            PaymentDTO paymentDTO = new PaymentDTO(
+            Payment entity = new Payment(
                     rst.getString(1),                    //id
                     rst.getDate(2).toLocalDate(),        //date
                     rst.getString(3),                    //status
@@ -64,7 +67,7 @@ public class QueryDAOImpl implements QueryDAO {
                     rst.getDouble(6)                     //full payment
 
             );
-            paymentDTOS.add(paymentDTO);
+            paymentDTOS.add(entity);
         }
         return paymentDTOS;
     }
@@ -84,7 +87,7 @@ public class QueryDAOImpl implements QueryDAO {
         return reservationId;
     }
 
-    public CustomerDTO getCustomerDetailsByReservationId(String reservationId) throws SQLException {
+    public Customer getCustomerDetailsByReservationId(String reservationId) throws SQLException {
         String sql = """
                     SELECT c.id, c.name, c.email
                     FROM Customer c
@@ -94,7 +97,7 @@ public class QueryDAOImpl implements QueryDAO {
         try {
             ResultSet rst = SQLUtil.execute(sql, reservationId);
             if (rst.next()) {
-                return new CustomerDTO(
+                return new Customer(
                         rst.getString("id"),
                         rst.getString("name"),
                         rst.getString("email")

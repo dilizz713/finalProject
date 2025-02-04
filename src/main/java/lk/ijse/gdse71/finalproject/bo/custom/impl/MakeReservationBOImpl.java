@@ -22,6 +22,9 @@ import lk.ijse.gdse71.finalproject.db.DBConnection;
 import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
 import lk.ijse.gdse71.finalproject.dto.PaymentDTO;
 import lk.ijse.gdse71.finalproject.dto.ReservationDTO;
+import lk.ijse.gdse71.finalproject.entity.MileageTracking;
+import lk.ijse.gdse71.finalproject.entity.Payment;
+import lk.ijse.gdse71.finalproject.entity.Reservation;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -44,7 +47,13 @@ public class MakeReservationBOImpl implements MakeReservationBO {
                     reservationDTO.getId(), reservationDTO.getCustomerId(), reservationDTO.getVehicleId(),
                     reservationDTO.getStatus(), reservationDTO.getReservationDate());*/
 
-            boolean isReservationSaved = reservationDAO.save(reservationDTO);
+            boolean isReservationSaved = reservationDAO.save(new Reservation(
+                    reservationDTO.getId(),
+                    reservationDTO.getCustomerId(),
+                    reservationDTO.getVehicleId(),
+                    reservationDTO.getStatus(),
+                    reservationDTO.getReservationDate()
+            ));
             if (!isReservationSaved) {
                 throw new SQLException("Failed to save reservation.");
             }
@@ -54,7 +63,15 @@ public class MakeReservationBOImpl implements MakeReservationBO {
                     paymentDTO.getId(), paymentDTO.getDate(), paymentDTO.getStatus(), paymentDTO.getReservationId(),
                     paymentDTO.getAdvancePayment(), paymentDTO.getFullPayment());*/
 
-            boolean isPaymentSaved = paymentDAO.save(paymentDTO);
+            boolean isPaymentSaved = paymentDAO.save(new Payment(
+                    paymentDTO.getId(),
+                    paymentDTO.getDate(),
+                    paymentDTO.getStatus(),
+                    paymentDTO.getReservationId(),
+                    paymentDTO.getAdvancePayment(),
+                    paymentDTO.getFullPayment()
+            ));
+
             if (!isPaymentSaved) {
                 throw new SQLException("Failed to save payment.");
             }
@@ -76,7 +93,7 @@ public class MakeReservationBOImpl implements MakeReservationBO {
         updatePAymentButton.setDisable(false);
     }
 
-    public void updatePayment(PaymentDTO paymentDTO, String status, String reservationId, Button updatePAymentButton) throws SQLException {
+    public void updatePayment(Payment entity, String status, String reservationId, Button updatePAymentButton) throws SQLException {
         Connection connection = null;
         try {
             connection = DBConnection.getInstance().getConnection();
@@ -87,7 +104,7 @@ public class MakeReservationBOImpl implements MakeReservationBO {
                     paymentDTO.getDate(), paymentDTO.getStatus(), paymentDTO.getReservationId(), paymentDTO.getAdvancePayment(),
                     paymentDTO.getFullPayment(), paymentDTO.getId());*/
 
-            boolean isPaymentUpdated = paymentDAO.update(paymentDTO);
+            boolean isPaymentUpdated = paymentDAO.update(entity);
 
             if (!isPaymentUpdated) {
                 throw new SQLException("Failed to update payment");
@@ -115,7 +132,7 @@ public class MakeReservationBOImpl implements MakeReservationBO {
         } finally {
             if (connection != null) {
                 connection.setAutoCommit(true);
-                showBillUI(reservationId, paymentDTO.getId(), updatePAymentButton);
+                showBillUI(reservationId, entity.getId(), updatePAymentButton);
             }
         }
     }
@@ -127,8 +144,8 @@ public class MakeReservationBOImpl implements MakeReservationBO {
 
             GenerateBillController billController = loader.getController();
 
-            MileageTrackingDTO mileage = mileageTrackingDAO.getMileageDetails(reservationId);
-            PaymentDTO payment = paymentDAO.getPaymentDetails(paymentId);
+            MileageTracking mileage = mileageTrackingDAO.getMileageDetails(reservationId);
+            Payment payment = paymentDAO.getPaymentDetails(paymentId);
             String vehicleId = reservationDAO.getVehicleIdByReservationId(reservationId);
 
             billController.setBillDetails(reservationId, paymentId, payment, mileage, vehicleId);

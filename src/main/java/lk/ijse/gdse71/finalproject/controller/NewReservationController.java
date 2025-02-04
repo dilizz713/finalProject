@@ -22,6 +22,7 @@ import lk.ijse.gdse71.finalproject.bo.custom.impl.*;
 import lk.ijse.gdse71.finalproject.dao.SQLUtil;
 import lk.ijse.gdse71.finalproject.db.DBConnection;
 import lk.ijse.gdse71.finalproject.dto.*;
+import lk.ijse.gdse71.finalproject.entity.Payment;
 
 
 import java.io.IOException;
@@ -237,8 +238,7 @@ public class NewReservationController implements Initializable {
         String vehicleId = lblVehicleId.getText();
         String reservationId = lblReservationId.getText();
 
-        ReservationDTO reservationDTO = new ReservationDTO(reservationId, customerId, vehicleId, status, originalStartDate);
-        reservationBO.updateReservations(reservationDTO);
+        reservationBO.updateReservation(new ReservationDTO(reservationId, customerId, vehicleId, status, originalStartDate));
 
         reservationTableController.refreshTable();
 
@@ -246,7 +246,7 @@ public class NewReservationController implements Initializable {
     }
 
 
-    private LocalDate getOriginalReservationDate(String reservationId) throws SQLException {
+  /*  private LocalDate getOriginalReservationDate(String reservationId) throws SQLException {
         String query = "select reservationDate from Reservation where id=?";
         ResultSet rst = SQLUtil.execute(query, reservationId);
 
@@ -254,7 +254,7 @@ public class NewReservationController implements Initializable {
             return rst.getDate("reservationDate").toLocalDate();
         }
         return null;
-    }
+    }*/
 
     @FXML
     void generateBillOnAction(ActionEvent event) {
@@ -561,9 +561,9 @@ public class NewReservationController implements Initializable {
 
         btnSave.setDisable(true);
 
-        PaymentDTO paymentDTO = new PaymentDTO(currentPayment.getId(), LocalDate.now(), status, reservationId, advancePayment, fullPayment);
+        Payment payment= new Payment(currentPayment.getId(), LocalDate.now(), status, reservationId, advancePayment, fullPayment);
 
-        makeReservationBO.updatePayment(paymentDTO, status, reservationId, updatePAymentButton);
+        makeReservationBO.updatePayment(payment, status, reservationId, updatePAymentButton);
 
        /* Connection connection = null;
         try{

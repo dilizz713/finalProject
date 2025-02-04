@@ -65,8 +65,8 @@ public class SignUPController implements Initializable {
         }
 
         //****
-        LoginDTO loginDTO = new LoginDTO(userName, password, email);
-        boolean isSaved = loginBO.saveLogin(loginDTO);
+       /* LoginDTO loginDTO = new LoginDTO(userName, password, email);*/
+        boolean isSaved = loginBO.saveLogin(new LoginDTO(userName, password, email));
 
         if (isSaved) {
             refreshPage();

@@ -11,9 +11,9 @@ public interface ReservationBO extends SuperBO {
 
     ArrayList<ReservationDTO> getAllReservations() throws SQLException;
 
-    boolean saveReservations(ReservationDTO reservationDTO) throws SQLException;
+   //boolean saveReservations(ReservationDTO reservationDTO) throws SQLException;
 
-    boolean updateReservations(ReservationDTO reservationDTO) throws SQLException;
+    boolean updateReservation(ReservationDTO reservationDTO) throws SQLException;
 
     boolean deleteReservations(String reservationId) throws SQLException;
 

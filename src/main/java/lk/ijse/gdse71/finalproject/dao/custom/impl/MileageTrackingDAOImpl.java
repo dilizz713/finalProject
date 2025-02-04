@@ -3,6 +3,7 @@ package lk.ijse.gdse71.finalproject.dao.custom.impl;
 import lk.ijse.gdse71.finalproject.dao.custom.MileageTrackingDAO;
 import lk.ijse.gdse71.finalproject.dao.SQLUtil;
 import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
+import lk.ijse.gdse71.finalproject.entity.MileageTracking;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,13 +24,13 @@ public class MileageTrackingDAOImpl implements MileageTrackingDAO {
         return "M001";
     }
 
-    public ArrayList<MileageTrackingDTO> getAll() throws SQLException {
+    public ArrayList<MileageTracking> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("select * from MileageTracking");
 
-        ArrayList<MileageTrackingDTO> mileageTrackingDTOS = new ArrayList<>();
+        ArrayList<MileageTracking> mileageTrackingDTOS = new ArrayList<>();
 
         while (rst.next()) {
-            MileageTrackingDTO mileageTrackingDTO = new MileageTrackingDTO(
+            MileageTracking entity = new MileageTracking(
                     rst.getString(1),       //tracking id
                     rst.getDouble(2),       //estimated mileage
                     rst.getDouble(3),       //actual mileage
@@ -43,7 +44,7 @@ public class MileageTrackingDAOImpl implements MileageTrackingDAO {
                     rst.getDate(11).toLocalDate()       //end date
 
             );
-            mileageTrackingDTOS.add(mileageTrackingDTO);
+            mileageTrackingDTOS.add(entity);
         }
         return mileageTrackingDTOS;
     }
@@ -57,37 +58,37 @@ public class MileageTrackingDAOImpl implements MileageTrackingDAO {
         return reservationId;
     }*/
 
-    public boolean save(MileageTrackingDTO mileageTrackingDTO) throws SQLException {
+    public boolean save(MileageTracking entity) throws SQLException {
         return SQLUtil.execute(
                 "insert into MileageTracking values (?,?,?,?,?,?,?,?,?,?,?)",
-                mileageTrackingDTO.getId(),
-                mileageTrackingDTO.getEstimatedMileage(),
-                mileageTrackingDTO.getActualMileage(),
-                mileageTrackingDTO.getExtraChargePerKm(),
-                mileageTrackingDTO.getTotalExtraCharges(),
-                mileageTrackingDTO.getReservationId(),
-                mileageTrackingDTO.getStartDateMileage(),
-                mileageTrackingDTO.getEndDateMileage(),
-                mileageTrackingDTO.getEstimatedMileageCost(),
-                mileageTrackingDTO.getStartDate(),
-                mileageTrackingDTO.getEndDate()
+                entity.getId(),
+                entity.getEstimatedMileage(),
+                entity.getActualMileage(),
+                entity.getExtraChargePerKm(),
+                entity.getTotalExtraCharges(),
+                entity.getReservationId(),
+                entity.getStartDateMileage(),
+                entity.getEndDateMileage(),
+                entity.getEstimatedMileageCost(),
+                entity.getStartDate(),
+                entity.getEndDate()
         );
     }
 
 
-    public boolean update(MileageTrackingDTO mileageTrackingDTO) throws SQLException {
+    public boolean update(MileageTracking entity) throws SQLException {
         return SQLUtil.execute(" update MileageTracking set estimatedMileage=? , actualMileage=? , extraChargesPerKm=?, totalExtraCharges=?, reservationId=? , startDateMileage=?, endDateMileage=?, estimatedMileageCost=?, startDate=?,endDate=? where id=?",
-                mileageTrackingDTO.getEstimatedMileage(),
-                mileageTrackingDTO.getActualMileage(),
-                mileageTrackingDTO.getExtraChargePerKm(),
-                mileageTrackingDTO.getTotalExtraCharges(),
-                mileageTrackingDTO.getReservationId(),
-                mileageTrackingDTO.getStartDateMileage(),
-                mileageTrackingDTO.getEndDateMileage(),
-                mileageTrackingDTO.getEstimatedMileageCost(),
-                mileageTrackingDTO.getStartDate(),
-                mileageTrackingDTO.getEndDate(),
-                mileageTrackingDTO.getId()
+                entity.getEstimatedMileage(),
+                entity.getActualMileage(),
+                entity.getExtraChargePerKm(),
+                entity.getTotalExtraCharges(),
+                entity.getReservationId(),
+                entity.getStartDateMileage(),
+                entity.getEndDateMileage(),
+                entity.getEstimatedMileageCost(),
+                entity.getStartDate(),
+                entity.getEndDate(),
+                entity.getId()
         );
     }
 
@@ -131,16 +132,16 @@ public class MileageTrackingDAOImpl implements MileageTrackingDAO {
         return null;
     }
 
-    public ArrayList<MileageTrackingDTO> search(String keyword) throws SQLException {
+    public ArrayList<MileageTracking> search(String keyword) throws SQLException {
         String searchQuery = "select * from MileageTracking where id like ? or reservationId like ? or startDate like ? or endDate like ? ";
 
         ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%");
 
 
-        ArrayList<MileageTrackingDTO> mileageTrackingDTOS = new ArrayList<>();
+        ArrayList<MileageTracking> mileageTrackingDTOS = new ArrayList<>();
 
         while (rst.next()) {
-            MileageTrackingDTO mileageTrackingDTO = new MileageTrackingDTO(
+            MileageTracking entity = new MileageTracking(
                     rst.getString(1),       //tracking id
                     rst.getDouble(2),       //estimated mileage
                     rst.getDouble(3),       //actual mileage
@@ -154,7 +155,7 @@ public class MileageTrackingDAOImpl implements MileageTrackingDAO {
                     rst.getDate(11).toLocalDate()       //end date
 
             );
-            mileageTrackingDTOS.add(mileageTrackingDTO);
+            mileageTrackingDTOS.add(entity);
         }
         return mileageTrackingDTOS;
     }
@@ -191,13 +192,13 @@ public class MileageTrackingDAOImpl implements MileageTrackingDAO {
         return 0;
     }
 
-    public MileageTrackingDTO getMileageDetails(String reservationId) throws SQLException {
+    public MileageTracking getMileageDetails(String reservationId) throws SQLException {
         String query = "SELECT estimatedMileage, actualMileage, extraChargesPerKm, totalExtraCharges, estimatedMileageCost FROM MileageTracking WHERE reservationId = ?";
 
         ResultSet rst = SQLUtil.execute(query, reservationId);
 
         if (rst.next()) {
-            return new MileageTrackingDTO(
+            return new MileageTracking(
                     rst.getDouble("estimatedMileage"),
                     rst.getDouble("actualMileage"),
                     rst.getDouble("extraChargesPerKm"),

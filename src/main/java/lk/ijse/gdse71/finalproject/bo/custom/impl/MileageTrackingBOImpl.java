@@ -5,6 +5,7 @@ import lk.ijse.gdse71.finalproject.dao.DAOFactory;
 import lk.ijse.gdse71.finalproject.dao.custom.MileageTrackingDAO;
 import lk.ijse.gdse71.finalproject.dao.custom.impl.MileageTrackingDAOImpl;
 import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
+import lk.ijse.gdse71.finalproject.entity.MileageTracking;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,7 +19,26 @@ public class MileageTrackingBOImpl implements MileageTrackingBO {
     }
 
     public ArrayList<MileageTrackingDTO> getAllMileageTracking() throws SQLException {
-        return mileageTrackingDAO.getAll();
+        ArrayList<MileageTracking> mileageTrackings =  mileageTrackingDAO.getAll();
+        ArrayList<MileageTrackingDTO> mileageTrackingDTOS = new ArrayList<>();
+
+        for(MileageTracking mileageTracking : mileageTrackings){
+            mileageTrackingDTOS.add(new MileageTrackingDTO(
+                    mileageTracking.getId(),
+                    mileageTracking.getEstimatedMileage(),
+                    mileageTracking.getActualMileage(),
+                    mileageTracking.getExtraChargePerKm(),
+                    mileageTracking.getTotalExtraCharges(),
+                    mileageTracking.getReservationId(),
+                    mileageTracking.getStartDateMileage(),
+                    mileageTracking.getEndDateMileage(),
+                    mileageTracking.getEstimatedMileageCost(),
+                    mileageTracking.getStartDate(),
+                    mileageTracking.getEndDate()
+
+            ));
+        }
+        return mileageTrackingDTOS;
     }
 
    /* public ArrayList<String> getAllReservationIds() throws SQLException {
@@ -31,12 +51,36 @@ public class MileageTrackingBOImpl implements MileageTrackingBO {
     }*/
 
     public boolean saveMileageTracking(MileageTrackingDTO mileageTrackingDTO) throws SQLException {
-        return mileageTrackingDAO.save(mileageTrackingDTO);
+        return mileageTrackingDAO.save(new MileageTracking(
+                mileageTrackingDTO.getId(),
+                mileageTrackingDTO.getEstimatedMileage(),
+                mileageTrackingDTO.getActualMileage(),
+                mileageTrackingDTO.getExtraChargePerKm(),
+                mileageTrackingDTO.getTotalExtraCharges(),
+                mileageTrackingDTO.getReservationId(),
+                mileageTrackingDTO.getStartDateMileage(),
+                mileageTrackingDTO.getEndDateMileage(),
+                mileageTrackingDTO.getEstimatedMileageCost(),
+                mileageTrackingDTO.getStartDate(),
+                mileageTrackingDTO.getEndDate()
+        ));
     }
 
 
     public boolean updateMileageTracking(MileageTrackingDTO mileageTrackingDTO) throws SQLException {
-        return mileageTrackingDAO.update(mileageTrackingDTO);
+        return mileageTrackingDAO.update(new MileageTracking(
+                mileageTrackingDTO.getId(),
+                mileageTrackingDTO.getEstimatedMileage(),
+                mileageTrackingDTO.getActualMileage(),
+                mileageTrackingDTO.getExtraChargePerKm(),
+                mileageTrackingDTO.getTotalExtraCharges(),
+                mileageTrackingDTO.getReservationId(),
+                mileageTrackingDTO.getStartDateMileage(),
+                mileageTrackingDTO.getEndDateMileage(),
+                mileageTrackingDTO.getEstimatedMileageCost(),
+                mileageTrackingDTO.getStartDate(),
+                mileageTrackingDTO.getEndDate()
+        ));
     }
 
     public boolean deleteMileageTracking(String trackingId) throws SQLException {
@@ -48,7 +92,26 @@ public class MileageTrackingBOImpl implements MileageTrackingBO {
     }
 
     public ArrayList<MileageTrackingDTO> searchMileageTracking(String keyword) throws SQLException {
-        return mileageTrackingDAO.search(keyword);
+        ArrayList<MileageTracking> mileageTrackings =  mileageTrackingDAO.search(keyword);
+        ArrayList<MileageTrackingDTO> mileageTrackingDTOS = new ArrayList<>();
+
+        for(MileageTracking mileageTracking : mileageTrackings){
+            mileageTrackingDTOS.add(new MileageTrackingDTO(
+                    mileageTracking.getId(),
+                    mileageTracking.getEstimatedMileage(),
+                    mileageTracking.getActualMileage(),
+                    mileageTracking.getExtraChargePerKm(),
+                    mileageTracking.getTotalExtraCharges(),
+                    mileageTracking.getReservationId(),
+                    mileageTracking.getStartDateMileage(),
+                    mileageTracking.getEndDateMileage(),
+                    mileageTracking.getEstimatedMileageCost(),
+                    mileageTracking.getStartDate(),
+                    mileageTracking.getEndDate()
+
+            ));
+        }
+        return mileageTrackingDTOS;
     }
 
     public double getEstimatedMileageCost(String reservationId) throws SQLException {
@@ -64,6 +127,13 @@ public class MileageTrackingBOImpl implements MileageTrackingBO {
     }
 
     public MileageTrackingDTO getMileageDetails(String reservationId) throws SQLException {
-        return mileageTrackingDAO.getMileageDetails(reservationId);
+         MileageTracking mileageTracking = mileageTrackingDAO.getMileageDetails(reservationId);
+         return new MileageTrackingDTO(
+                 mileageTracking.getEstimatedMileage(),
+                 mileageTracking.getActualMileage(),
+                 mileageTracking.getExtraChargePerKm(),
+                 mileageTracking.getTotalExtraCharges(),
+                 mileageTracking.getEstimatedMileageCost()
+         );
     }
 }

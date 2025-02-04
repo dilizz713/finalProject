@@ -9,6 +9,8 @@ import lk.ijse.gdse71.finalproject.bo.BOFactory;
 import lk.ijse.gdse71.finalproject.bo.custom.VehicleDamageBO;
 import lk.ijse.gdse71.finalproject.bo.custom.impl.VehicleDamageBOImpl;
 import lk.ijse.gdse71.finalproject.dto.*;
+import lk.ijse.gdse71.finalproject.entity.MileageTracking;
+import lk.ijse.gdse71.finalproject.entity.Payment;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -68,7 +70,7 @@ public class GenerateBillController implements Initializable {
 
     }
 
-    public void setBillDetails(String reservationId, String paymentId, PaymentDTO payment, MileageTrackingDTO mileage, String vehicleId) {
+    public void setBillDetails(String reservationId, String paymentId, Payment payment, MileageTracking mileage, String vehicleId) {
         this.reservationId = reservationId;
         this.paymentId = paymentId;
         this.vehicleId = vehicleId;

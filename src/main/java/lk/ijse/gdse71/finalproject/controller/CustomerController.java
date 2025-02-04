@@ -345,6 +345,8 @@ public class CustomerController implements Initializable {
     private void searchCustomers() throws SQLException, ClassNotFoundException {
         String searchText = searchBar.getText().trim();
 
+        customerBO.searchCustomer(searchText);
+
         if (searchText.isEmpty()) {
             loadTableData();
             return;

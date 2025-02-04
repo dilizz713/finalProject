@@ -3,6 +3,7 @@ package lk.ijse.gdse71.finalproject.dao.custom.impl;
 import lk.ijse.gdse71.finalproject.dao.SQLUtil;
 import lk.ijse.gdse71.finalproject.dao.custom.VehicleDAO;
 import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
+import lk.ijse.gdse71.finalproject.entity.Vehicle;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,13 +23,13 @@ public class VehicleDAOImpl implements VehicleDAO {
         return "V001";
     }
 
-    public ArrayList<VehicleDTO> getAll() throws SQLException {
+    public ArrayList<Vehicle> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("select * from Vehicle");
 
-        ArrayList<VehicleDTO> vehicleDTOS = new ArrayList<>();
+        ArrayList<Vehicle> vehicleDTOS = new ArrayList<>();
 
         while (rst.next()) {
-            VehicleDTO vehicleDTO = new VehicleDTO(
+            Vehicle entity = new Vehicle(
                     rst.getString(1),     //id
                     rst.getString(2),     //company name
                     rst.getString(3),     // model
@@ -40,18 +41,18 @@ public class VehicleDAOImpl implements VehicleDAO {
 
 
             );
-            vehicleDTOS.add(vehicleDTO);
+            vehicleDTOS.add(entity);
         }
         return vehicleDTOS;
     }
 
-    public ArrayList<VehicleDTO> getVehiclesForPage(int start, int end) throws SQLException {
-        ArrayList<VehicleDTO> vehicles = new ArrayList<>();
+    public ArrayList<Vehicle> getVehiclesForPage(int start, int end) throws SQLException {
+        ArrayList<Vehicle> vehicles = new ArrayList<>();
         String query = "select * from Vehicle limit ?, ?";
         ResultSet resultSet = SQLUtil.execute(query, start, end - start); // end - start is the limit
 
         while (resultSet.next()) {
-            VehicleDTO vehicle = new VehicleDTO(
+            Vehicle entity = new Vehicle(
                     resultSet.getString("id"),
                     resultSet.getString("make"),
                     resultSet.getString("model"),
@@ -61,39 +62,39 @@ public class VehicleDAOImpl implements VehicleDAO {
                     resultSet.getDouble("price"),
                     resultSet.getDate("date").toLocalDate()
             );
-            vehicles.add(vehicle);
+            vehicles.add(entity);
         }
 
         return vehicles;
     }
 
-    public boolean save(VehicleDTO vehicleDTO) throws SQLException {
+    public boolean save(Vehicle entity) throws SQLException {
         return SQLUtil.execute(
                 "insert into Vehicle values (?,?,?,?,?,?,?,?)",
-                vehicleDTO.getId(),
-                vehicleDTO.getMake(),
-                vehicleDTO.getModel(),
-                vehicleDTO.getVehicleType(),
-                vehicleDTO.getImage(),
-                vehicleDTO.getNumberPlate(),
-                vehicleDTO.getPrice(),
-                vehicleDTO.getRegistrationDate()
+                entity.getId(),
+                entity.getMake(),
+                entity.getModel(),
+                entity.getVehicleType(),
+                entity.getImage(),
+                entity.getNumberPlate(),
+                entity.getPrice(),
+                entity.getRegistrationDate()
 
 
         );
     }
 
-    public boolean update(VehicleDTO vehicleDTO) throws SQLException {
+    public boolean update(Vehicle entity) throws SQLException {
         return SQLUtil.execute(
                 "update Vehicle set  make=?, model=?, vehicleType=?, image=?, numberPlate=?, price=?, registrationDate=? where id=?",
-                vehicleDTO.getMake(),
-                vehicleDTO.getModel(),
-                vehicleDTO.getVehicleType(),
-                vehicleDTO.getImage(),
-                vehicleDTO.getNumberPlate(),
-                vehicleDTO.getPrice(),
-                vehicleDTO.getRegistrationDate(),
-                vehicleDTO.getId()
+                entity.getMake(),
+                entity.getModel(),
+                entity.getVehicleType(),
+                entity.getImage(),
+                entity.getNumberPlate(),
+                entity.getPrice(),
+                entity.getRegistrationDate(),
+                entity.getId()
         );
     }
 
@@ -102,13 +103,13 @@ public class VehicleDAOImpl implements VehicleDAO {
         return SQLUtil.execute("delete from Vehicle where id=?", vehicleId);
     }
 
-    public ArrayList<VehicleDTO> search(String keyword) throws SQLException {
+    public ArrayList<Vehicle> search(String keyword) throws SQLException {
         String searchQuery = "select * from Vehicle where vehicleType Like ? or model Like ? or id Like ?";
         ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%");
 
-        ArrayList<VehicleDTO> vehicleDTOS = new ArrayList<>();
+        ArrayList<Vehicle> vehicleDTOS = new ArrayList<>();
         while (rst.next()) {
-            VehicleDTO vehicleDTO = new VehicleDTO(
+            Vehicle entity = new Vehicle(
                     rst.getString(1),     //id
                     rst.getString(2),     //company name
                     rst.getString(3),     // model
@@ -120,7 +121,7 @@ public class VehicleDAOImpl implements VehicleDAO {
 
 
             );
-            vehicleDTOS.add(vehicleDTO);
+            vehicleDTOS.add(entity);
         }
         return vehicleDTOS;
     }

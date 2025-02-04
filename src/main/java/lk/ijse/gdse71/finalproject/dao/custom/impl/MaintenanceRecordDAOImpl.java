@@ -3,6 +3,7 @@ package lk.ijse.gdse71.finalproject.dao.custom.impl;
 import lk.ijse.gdse71.finalproject.dao.custom.MaintenanceRecordDAO;
 import lk.ijse.gdse71.finalproject.dao.SQLUtil;
 import lk.ijse.gdse71.finalproject.dto.MaintenanceRecordDTO;
+import lk.ijse.gdse71.finalproject.entity.MaintenanceRecord;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,15 +25,15 @@ public class MaintenanceRecordDAOImpl implements MaintenanceRecordDAO {
         return "MR001";
     }
 
-    public ArrayList<MaintenanceRecordDTO> getAll() throws SQLException {
+    public ArrayList<MaintenanceRecord> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("select * from MaintenanceRecord");
 
-        ArrayList<MaintenanceRecordDTO> maintenanceRecordDTOS = new ArrayList<>();
+        ArrayList<MaintenanceRecord> maintenanceRecordDTOS = new ArrayList<>();
 
         while (rst.next()) {
             LocalDate endDate = rst.getDate(3) != null ? rst.getDate(3).toLocalDate() : null;
 
-            MaintenanceRecordDTO maintenanceRecordDTO = new MaintenanceRecordDTO(
+            MaintenanceRecord entity = new MaintenanceRecord(
                     rst.getString(1),                           //reservation id
                     rst.getDate(2).toLocalDate(),             // start date
                     endDate,                                            // end date
@@ -41,13 +42,13 @@ public class MaintenanceRecordDAOImpl implements MaintenanceRecordDAO {
                     rst.getString(6)                        //status
 
             );
-            maintenanceRecordDTOS.add(maintenanceRecordDTO);
+            maintenanceRecordDTOS.add(entity);
         }
         return maintenanceRecordDTOS;
     }
 
     @Override
-    public ArrayList<MaintenanceRecordDTO> search(String keyword) throws SQLException {
+    public ArrayList<MaintenanceRecord> search(String keyword) throws SQLException {
         return null;
     }
 
@@ -70,28 +71,28 @@ public class MaintenanceRecordDAOImpl implements MaintenanceRecordDAO {
         return rst.next() ? rst.getString(1) : null;
     }*/
 
-    public boolean save(MaintenanceRecordDTO maintenanceRecordDTO) throws SQLException {
+    public boolean save(MaintenanceRecord entity) throws SQLException {
         return SQLUtil.execute(
                 "insert into MaintenanceRecord values (?,?,?,?,?,?)",
-                maintenanceRecordDTO.getId(),
-                maintenanceRecordDTO.getStartDate(),
-                maintenanceRecordDTO.getEndDate(),
-                maintenanceRecordDTO.getDescription(),
-                maintenanceRecordDTO.getVehicleId(),
-                maintenanceRecordDTO.getStatus()
+                entity.getId(),
+                entity.getStartDate(),
+                entity.getEndDate(),
+                entity.getDescription(),
+                entity.getVehicleId(),
+                entity.getStatus()
         );
     }
 
 
-    public boolean update(MaintenanceRecordDTO maintenanceRecordDTO) throws SQLException {
+    public boolean update(MaintenanceRecord entity) throws SQLException {
         return SQLUtil.execute(
                 "update  MaintenanceRecord set startDate =?, endDate=?, description=?, vehicleId=?, status=?  where id=?",
-                maintenanceRecordDTO.getStartDate(),
-                maintenanceRecordDTO.getEndDate(),
-                maintenanceRecordDTO.getDescription(),
-                maintenanceRecordDTO.getVehicleId(),
-                maintenanceRecordDTO.getStatus(),
-                maintenanceRecordDTO.getId()
+                entity.getStartDate(),
+                entity.getEndDate(),
+                entity.getDescription(),
+                entity.getVehicleId(),
+                entity.getStatus(),
+                entity.getId()
         );
     }
 
@@ -126,7 +127,7 @@ public class MaintenanceRecordDAOImpl implements MaintenanceRecordDAO {
     }*/
 
 
-    public MaintenanceRecordDTO getRecordsById(String recordId) throws SQLException {
+    public MaintenanceRecord getRecordsById(String recordId) throws SQLException {
         String query = "select * from MaintenanceRecord where id=?";
         ResultSet rst = SQLUtil.execute(query, recordId);
 
@@ -139,7 +140,7 @@ public class MaintenanceRecordDAOImpl implements MaintenanceRecordDAO {
             String status = rst.getString("status");
 
 
-            return new MaintenanceRecordDTO(id, startDate, endDate, description, vehicleId, status);
+            return new MaintenanceRecord(id, startDate, endDate, description, vehicleId, status);
 
         }
         return null;
