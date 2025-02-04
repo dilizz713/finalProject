@@ -4,18 +4,21 @@ import lk.ijse.gdse71.finalproject.dao.custom.impl.*;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
-    private DAOFactory(){
-    }
-    public static DAOFactory getDaoFactory(){
-        return (daoFactory==null)?daoFactory
-                =new DAOFactory():daoFactory;
+
+    private DAOFactory() {
     }
 
-    public enum DAOTypes{
-        CUSTOMER,LOGIN,MAINTENANCERECORD,MILEAGETRACKING,PAYMENT,QUERY,RESERVATION,VEHICLEDAMAGE,VEHICLE
+    public static DAOFactory getDaoFactory() {
+        return (daoFactory == null) ? daoFactory
+                = new DAOFactory() : daoFactory;
     }
-    public SuperDAO getDAO(DAOTypes daoTypes){
-        switch (daoTypes){
+
+    public enum DAOTypes {
+        CUSTOMER, LOGIN, MAINTENANCERECORD, MILEAGETRACKING, PAYMENT, QUERY, RESERVATION, VEHICLEDAMAGE, VEHICLE
+    }
+
+    public SuperDAO getDAO(DAOTypes daoTypes) {
+        switch (daoTypes) {
             case CUSTOMER:
                 return new CustomerDAOImpl();
             case LOGIN:

@@ -21,10 +21,10 @@ public class LoginDAOImpl implements LoginDAO {
 
     public LoginDTO findByUserName(String userName) throws SQLException {
         String query = "select * from Login where userName=?";
-        ResultSet rst = SQLUtil.execute(query,userName);
+        ResultSet rst = SQLUtil.execute(query, userName);
 
 
-        if(rst.next()){
+        if (rst.next()) {
             return new LoginDTO(
                     rst.getString("userName"),
                     rst.getString("password"),
@@ -32,7 +32,6 @@ public class LoginDAOImpl implements LoginDAO {
             );
         }
         return null;
-
 
 
     }
@@ -68,10 +67,10 @@ public class LoginDAOImpl implements LoginDAO {
 
     public LoginDTO findByEmail(String email) throws SQLException {
         String query = "select * from Login where email=?";
-        ResultSet rst = SQLUtil.execute(query,email);
+        ResultSet rst = SQLUtil.execute(query, email);
 
 
-        if(rst.next()){
+        if (rst.next()) {
             return new LoginDTO(
                     rst.getString("userName"),
                     rst.getString("password"),

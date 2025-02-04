@@ -21,7 +21,6 @@ public class VehicleDTO {
     private LocalDate registrationDate;
 
 
-
 }
 
 

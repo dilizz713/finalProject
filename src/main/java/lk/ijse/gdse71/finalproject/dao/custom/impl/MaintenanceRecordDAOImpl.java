@@ -13,16 +13,17 @@ public class MaintenanceRecordDAOImpl implements MaintenanceRecordDAO {
     public String getNextId() throws SQLException {
         ResultSet resultSet = SQLUtil.execute("select id from MaintenanceRecord order by id desc limit 1");
 
-        if(resultSet.next()){
+        if (resultSet.next()) {
             String lastId = resultSet.getString(1);
             String subString = lastId.substring(2);
-            int i = Integer. parseInt(subString);
-            int newId = i+1;
-            return String.format("MR%03d",newId);
+            int i = Integer.parseInt(subString);
+            int newId = i + 1;
+            return String.format("MR%03d", newId);
 
         }
         return "MR001";
     }
+
     public ArrayList<MaintenanceRecordDTO> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("select * from MaintenanceRecord");
 
@@ -95,7 +96,7 @@ public class MaintenanceRecordDAOImpl implements MaintenanceRecordDAO {
     }
 
     public boolean delete(String recordId) throws SQLException {
-        return SQLUtil.execute("delete from MaintenanceRecord where id=?",recordId );
+        return SQLUtil.execute("delete from MaintenanceRecord where id=?", recordId);
     }
    /* public ArrayList<MaintenanceRecordDTO> search(String keyword) throws SQLException {
         String searchQuery = """
@@ -127,9 +128,9 @@ public class MaintenanceRecordDAOImpl implements MaintenanceRecordDAO {
 
     public MaintenanceRecordDTO getRecordsById(String recordId) throws SQLException {
         String query = "select * from MaintenanceRecord where id=?";
-        ResultSet rst = SQLUtil.execute(query,recordId);
+        ResultSet rst = SQLUtil.execute(query, recordId);
 
-        if(rst.next()){
+        if (rst.next()) {
             String id = rst.getString("id");
             LocalDate startDate = rst.getDate("startDate").toLocalDate();
             LocalDate endDate = rst.getDate("endDate") != null ? rst.getDate("EndDate").toLocalDate() : null;
@@ -138,7 +139,7 @@ public class MaintenanceRecordDAOImpl implements MaintenanceRecordDAO {
             String status = rst.getString("status");
 
 
-            return new MaintenanceRecordDTO(id,startDate,endDate,description,vehicleId,status);
+            return new MaintenanceRecordDTO(id, startDate, endDate, description, vehicleId, status);
 
         }
         return null;

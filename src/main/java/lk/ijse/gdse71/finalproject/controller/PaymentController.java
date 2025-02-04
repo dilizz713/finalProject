@@ -77,9 +77,9 @@ public class PaymentController implements Initializable {
     private TextField txtSearchBar;
 
 
-   PaymentBO paymentBO = (PaymentBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.PAYMENT);
-   ReservationBO reservationBO = (ReservationBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.RESERVATION);
-   CustomerBO customerBO = (CustomerBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+    PaymentBO paymentBO = (PaymentBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.PAYMENT);
+    ReservationBO reservationBO = (ReservationBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.RESERVATION);
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.CUSTOMER);
     ReservationDTO reservationDTO = new ReservationDTO();
 
     private PaymentTM selectedPaymentTM;
@@ -87,10 +87,10 @@ public class PaymentController implements Initializable {
 
     @FXML
     void clickedTable(MouseEvent event) {
-       selectedPaymentTM = paymentTable.getSelectionModel().getSelectedItem();
-       if(selectedPaymentTM != null){
-           btnDelete.setDisable(false);
-       }
+        selectedPaymentTM = paymentTable.getSelectionModel().getSelectedItem();
+        if (selectedPaymentTM != null) {
+            btnDelete.setDisable(false);
+        }
 
 
     }
@@ -123,11 +123,11 @@ public class PaymentController implements Initializable {
 
     @FXML
     void navigateToReservationView(ActionEvent event) {
-        try{
+        try {
             paymentAnchorPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource("/view/newReservation.fxml"));
             paymentAnchorPane.getChildren().add(load);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }
@@ -139,12 +139,9 @@ public class PaymentController implements Initializable {
     }
 
 
-
-
-
     @FXML
     void updateOnAction(ActionEvent event) throws IOException, SQLException {
-        if(selectedPaymentTM == null){
+        if (selectedPaymentTM == null) {
             new Alert(Alert.AlertType.WARNING, "Please select a payment to update!").show();
             return;
         }
@@ -162,7 +159,6 @@ public class PaymentController implements Initializable {
         paymentAnchorPane.getChildren().clear();
         paymentAnchorPane.getChildren().add(paymentPane);
     }
-
 
 
     @Override
@@ -184,7 +180,7 @@ public class PaymentController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load vehicle id").show();
         }
-        txtSearchBar.setOnAction(event ->{
+        txtSearchBar.setOnAction(event -> {
             try {
                 searchPaymentRecords();
             } catch (SQLException e) {
@@ -206,7 +202,7 @@ public class PaymentController implements Initializable {
     private void searchPaymentRecords() throws SQLException, ClassNotFoundException {
         String searchText = txtSearchBar.getText().trim();
 
-        if(searchText.isEmpty()){
+        if (searchText.isEmpty()) {
             loadTableData();
             return;
         }
@@ -215,7 +211,7 @@ public class PaymentController implements Initializable {
         ArrayList<PaymentDTO> paymentDTOS = paymentBO.searchPayments(searchText);
         ObservableList<PaymentTM> paymentTMS = FXCollections.observableArrayList();
 
-        for(PaymentDTO paymentDTO:paymentDTOS){
+        for (PaymentDTO paymentDTO : paymentDTOS) {
             ReservationDTO reservationDTO = reservationBO.getReservationById(paymentDTO.getReservationId());
             String customerName = null;
 
@@ -235,7 +231,7 @@ public class PaymentController implements Initializable {
 
             updateButton.setOnAction(event -> {
                 try {
-                    navigateToReservationDetails(paymentDTO.getReservationId(),paymentDTO);
+                    navigateToReservationDetails(paymentDTO.getReservationId(), paymentDTO);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 } catch (SQLException ex) {
@@ -275,7 +271,7 @@ public class PaymentController implements Initializable {
         ArrayList<PaymentDTO> paymentDTOS = paymentBO.getAllPayments();
         ObservableList<PaymentTM> paymentTMS = FXCollections.observableArrayList();
 
-        for(PaymentDTO paymentDTO:paymentDTOS){
+        for (PaymentDTO paymentDTO : paymentDTOS) {
             ReservationDTO reservationDTO = reservationBO.getReservationById(paymentDTO.getReservationId());
             String customerName = null;
 
@@ -295,7 +291,7 @@ public class PaymentController implements Initializable {
 
             updateButton.setOnAction(event -> {
                 try {
-                    navigateToReservationDetails(paymentDTO.getReservationId(),paymentDTO);
+                    navigateToReservationDetails(paymentDTO.getReservationId(), paymentDTO);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 } catch (SQLException ex) {
@@ -303,7 +299,7 @@ public class PaymentController implements Initializable {
                 }
             });
 
-           PaymentTM paymentTM = new PaymentTM(
+            PaymentTM paymentTM = new PaymentTM(
                     paymentDTO.getId(),
                     customerName,
                     paymentDTO.getAdvancePayment(),
@@ -314,7 +310,7 @@ public class PaymentController implements Initializable {
                     updateButton
 
             );
-             paymentTMS.add(paymentTM);
+            paymentTMS.add(paymentTM);
         }
         paymentTable.setItems(paymentTMS);
 

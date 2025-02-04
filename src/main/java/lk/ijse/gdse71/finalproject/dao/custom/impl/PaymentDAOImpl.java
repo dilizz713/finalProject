@@ -14,12 +14,12 @@ public class PaymentDAOImpl implements PaymentDAO {
     public String getNextId() throws SQLException {
         ResultSet resultSet = SQLUtil.execute("select id from Payment order by id desc limit 1");
 
-        if(resultSet.next()){
+        if (resultSet.next()) {
             String lastId = resultSet.getString(1);
             String subString = lastId.substring(1);
             int i = Integer.parseInt(subString);
-            int newId = i+1;
-            return String.format("P%03d",newId);
+            int newId = i + 1;
+            return String.format("P%03d", newId);
         }
         return "P001";
     }
@@ -129,9 +129,9 @@ public class PaymentDAOImpl implements PaymentDAO {
 
     public PaymentDTO getPaymentById(String paymentId) throws SQLException {
         String query = "select * from Payment where id=?";
-        ResultSet rst = SQLUtil.execute(query,paymentId);
+        ResultSet rst = SQLUtil.execute(query, paymentId);
 
-        if(rst.next()){
+        if (rst.next()) {
             String id = rst.getString("id");
             LocalDate date = rst.getDate("date").toLocalDate();
             String status = rst.getString("status");
@@ -140,7 +140,7 @@ public class PaymentDAOImpl implements PaymentDAO {
             double fullPayment = rst.getDouble("fullPayment");
 
 
-            return new PaymentDTO(id,date,status,reservationId,advancePayment,fullPayment);
+            return new PaymentDTO(id, date, status, reservationId, advancePayment, fullPayment);
 
         }
         return null;

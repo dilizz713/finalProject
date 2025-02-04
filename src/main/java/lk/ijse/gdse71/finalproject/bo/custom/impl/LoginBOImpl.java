@@ -22,12 +22,12 @@ public class LoginBOImpl implements LoginBO {
     }
 
     public boolean updateLogin(LoginDTO loginDTO) throws SQLException {
-       return loginDAO.update(loginDTO);
+        return loginDAO.update(loginDTO);
     }
 
     @Override
     public boolean deleteLogin(String dto) throws SQLException {
-       return false;
+        return false;
     }
 
     @Override
@@ -42,10 +42,10 @@ public class LoginBOImpl implements LoginBO {
 
     @Override
     public ArrayList<LoginDTO> searchLoginDetails(String keyword) throws SQLException {
-       return null;
+        return null;
     }
 
     public LoginDTO findByEmail(String email) throws SQLException {
-       return loginDAO.findByEmail(email);
+        return loginDAO.findByEmail(email);
     }
 }

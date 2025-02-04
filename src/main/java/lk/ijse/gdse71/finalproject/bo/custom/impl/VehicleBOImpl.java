@@ -11,9 +11,11 @@ import java.util.ArrayList;
 
 public class VehicleBOImpl implements VehicleBO {
     VehicleDAO vehicleDAO = (VehicleDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.VEHICLE);
+
     public String getNextId() throws SQLException {
         return vehicleDAO.getNextId();
     }
+
     public ArrayList<VehicleDTO> getAllVehicles() throws SQLException {
         return vehicleDAO.getAll();
     }
@@ -49,6 +51,7 @@ public class VehicleBOImpl implements VehicleBO {
         return vehicleDAO.getVehicleModelById(vehicleId);
 
     }
+
     public String getVehiclePriceById(String vehicleID) throws SQLException {
         return vehicleDAO.getVehiclePriceById(vehicleID);
     }

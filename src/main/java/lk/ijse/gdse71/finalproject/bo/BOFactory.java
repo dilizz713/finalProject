@@ -7,18 +7,21 @@ import lk.ijse.gdse71.finalproject.dao.custom.impl.*;
 
 public class BOFactory {
     private static BOFactory boFactory;
-    private BOFactory(){
-    }
-    public static BOFactory getBOFactory(){
-        return (boFactory==null)?boFactory
-                =new BOFactory():boFactory;
+
+    private BOFactory() {
     }
 
-    public enum BOTypes{
-        CUSTOMER,LOGIN,MAINTENANCERECORD,MILEAGETRACKING,PAYMENT,QUERY,RESERVATION,VEHICLEDAMAGE,VEHICLE
+    public static BOFactory getBOFactory() {
+        return (boFactory == null) ? boFactory
+                = new BOFactory() : boFactory;
     }
-    public SuperBO getBO(BOFactory.BOTypes boTypes){
-        switch (boTypes){
+
+    public enum BOTypes {
+        CUSTOMER, LOGIN, MAINTENANCERECORD, MILEAGETRACKING, PAYMENT, QUERY, RESERVATION, VEHICLEDAMAGE, VEHICLE, MAKERESERVATION
+    }
+
+    public SuperBO getBO(BOFactory.BOTypes boTypes) {
+        switch (boTypes) {
             case CUSTOMER:
                 return new CustomerBOImpl();
             case LOGIN:
@@ -37,6 +40,8 @@ public class BOFactory {
                 return new VehicleDamageBOImpl();
             case VEHICLE:
                 return new VehicleBOImpl();
+            case MAKERESERVATION:
+                return new MakeReservationBOImpl();
             default:
                 return null;
         }

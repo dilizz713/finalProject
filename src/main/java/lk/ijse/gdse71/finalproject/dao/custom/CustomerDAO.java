@@ -7,8 +7,11 @@ import java.util.ArrayList;
 
 public interface CustomerDAO extends CrudDAO<CustomerDTO> {
     ArrayList<String> getAllCustomerNames() throws SQLException;
+
     String getCustomerIdByName(String name) throws SQLException;
+
     String getCustomerNameById(String customerId) throws SQLException;
+
     ArrayList<CustomerDTO> getCustomerDTOsForReservation() throws SQLException;
 
 }

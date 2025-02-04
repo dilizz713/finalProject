@@ -14,7 +14,7 @@ public class MileageTrackingBOImpl implements MileageTrackingBO {
     MileageTrackingDAO mileageTrackingDAO = (MileageTrackingDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.MILEAGETRACKING);
 
     public String getNextId() throws SQLException {
-       return mileageTrackingDAO.getNextId();
+        return mileageTrackingDAO.getNextId();
     }
 
     public ArrayList<MileageTrackingDTO> getAllMileageTracking() throws SQLException {
@@ -35,13 +35,12 @@ public class MileageTrackingBOImpl implements MileageTrackingBO {
     }
 
 
-
     public boolean updateMileageTracking(MileageTrackingDTO mileageTrackingDTO) throws SQLException {
         return mileageTrackingDAO.update(mileageTrackingDTO);
     }
 
     public boolean deleteMileageTracking(String trackingId) throws SQLException {
-       return mileageTrackingDAO.delete(trackingId);
+        return mileageTrackingDAO.delete(trackingId);
     }
 
     public MileageTrackingDTO getMileageTrackingByReservationId(String reservationId) throws SQLException {
@@ -53,7 +52,7 @@ public class MileageTrackingBOImpl implements MileageTrackingBO {
     }
 
     public double getEstimatedMileageCost(String reservationId) throws SQLException {
-        return  mileageTrackingDAO.getEstimatedMileageCost(reservationId);
+        return mileageTrackingDAO.getEstimatedMileageCost(reservationId);
     }
 
     public double getTotalExtraCharges(String reservationId) throws SQLException {
@@ -63,6 +62,7 @@ public class MileageTrackingBOImpl implements MileageTrackingBO {
     public double getEndMileageForReservation(String reservationId) throws SQLException {
         return mileageTrackingDAO.getEndMileageForReservation(reservationId);
     }
+
     public MileageTrackingDTO getMileageDetails(String reservationId) throws SQLException {
         return mileageTrackingDAO.getMileageDetails(reservationId);
     }

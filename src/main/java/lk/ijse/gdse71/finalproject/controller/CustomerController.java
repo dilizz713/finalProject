@@ -118,7 +118,7 @@ public class CustomerController implements Initializable {
             errorMessage.append("- Name is empty or in an incorrect format\n");
             hasErrors = true;
 
-        }else{
+        } else {
             txtName.setStyle(defaultStyle);
         }
         if (address.isEmpty()) {
@@ -126,7 +126,7 @@ public class CustomerController implements Initializable {
             errorMessage.append("- Address is empty\n");
             hasErrors = true;
 
-        }else{
+        } else {
             txtAddress.setStyle(defaultStyle);
         }
         if (email.isEmpty() || !email.matches(emailPattern)) {
@@ -134,7 +134,7 @@ public class CustomerController implements Initializable {
             errorMessage.append("- Email is empty or in an incorrect format\n");
             hasErrors = true;
 
-        }else{
+        } else {
             txtEmail.setStyle(defaultStyle);
         }
 
@@ -153,7 +153,7 @@ public class CustomerController implements Initializable {
             errorMessage.append("- NIC is empty or in an incorrect format\n");
             hasErrors = true;
 
-        }else{
+        } else {
             txtNic.setStyle(defaultStyle);
         }
 
@@ -172,10 +172,11 @@ public class CustomerController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Failed to save customer!").show();
         }
     }
+
     @FXML
     void clickedTable(MouseEvent event) {
         CustomerTM customerTM = customerTableView.getSelectionModel().getSelectedItem();
-        if(customerTM != null){
+        if (customerTM != null) {
             lblCustomerId.setText(customerTM.getId());
             txtName.setText(customerTM.getName());
             txtAddress.setText(customerTM.getAddress());
@@ -196,12 +197,12 @@ public class CustomerController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to delete this customer?", ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
-        if(optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES){
+        if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
             boolean isDeleted = customerBO.deleteCustomer(customerId);
-            if(isDeleted){
+            if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Customer deleted!").show();
-            }else{
+            } else {
                 new Alert(Alert.AlertType.ERROR, "Fail to delete customer!").show();
             }
         }
@@ -243,7 +244,7 @@ public class CustomerController implements Initializable {
             errorMessage.append("- Name is empty or in an incorrect format\n");
             hasErrors = true;
 
-        }else{
+        } else {
             txtName.setStyle(defaultStyle);
         }
         if (address.isEmpty()) {
@@ -251,7 +252,7 @@ public class CustomerController implements Initializable {
             errorMessage.append("- Address is empty\n");
             hasErrors = true;
 
-        }else{
+        } else {
             txtAddress.setStyle(defaultStyle);
         }
         if (email.isEmpty() || !email.matches(emailPattern)) {
@@ -259,7 +260,7 @@ public class CustomerController implements Initializable {
             errorMessage.append("- Email is empty or in an incorrect format\n");
             hasErrors = true;
 
-        }else{
+        } else {
             txtEmail.setStyle(defaultStyle);
         }
 
@@ -278,7 +279,7 @@ public class CustomerController implements Initializable {
             errorMessage.append("- NIC is empty or in an incorrect format\n");
             hasErrors = true;
 
-        }else{
+        } else {
             txtNic.setStyle(defaultStyle);
         }
 
@@ -321,19 +322,19 @@ public class CustomerController implements Initializable {
         txtPhone.setStyle(defaultStyle);
         txtNic.setStyle(defaultStyle);
 
-        searchBar.setOnAction(event ->{
-            try{
+        searchBar.setOnAction(event -> {
+            try {
                 searchCustomers();
-            }catch (SQLException | ClassNotFoundException e){
+            } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Error searching customer").show();
             }
         });
 
 
-        try{
+        try {
             refreshPage();
-        }catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load customer id").show();
         }
@@ -344,7 +345,7 @@ public class CustomerController implements Initializable {
     private void searchCustomers() throws SQLException, ClassNotFoundException {
         String searchText = searchBar.getText().trim();
 
-        if(searchText.isEmpty()){
+        if (searchText.isEmpty()) {
             loadTableData();
             return;
         }
@@ -354,7 +355,7 @@ public class CustomerController implements Initializable {
 
         ObservableList<CustomerTM> customerTMS = FXCollections.observableArrayList();
 
-        for(CustomerDTO customerDTO:customerDTOS){
+        for (CustomerDTO customerDTO : customerDTOS) {
             CustomerTM customerTM = new CustomerTM(
                     customerDTO.getId(),
                     customerDTO.getName(),
@@ -371,7 +372,6 @@ public class CustomerController implements Initializable {
     }
 
 
-
     private void refreshPage() throws SQLException, ClassNotFoundException {
         loadNextCustomerId();
         loadTableData();
@@ -382,12 +382,13 @@ public class CustomerController implements Initializable {
 
 
         txtName.setText("");
-       txtAddress.setText("");
+        txtAddress.setText("");
         txtEmail.setText("");
         txtPhone.setText("");
         txtNic.setText("");
 
     }
+
     public void loadNextCustomerId() throws SQLException {
 
         //******
@@ -400,7 +401,7 @@ public class CustomerController implements Initializable {
         ArrayList<CustomerDTO> customerDTOS = customerBO.getAllCustomer();
         ObservableList<CustomerTM> customerTMS = FXCollections.observableArrayList();
 
-        for(CustomerDTO customerDTO:customerDTOS){
+        for (CustomerDTO customerDTO : customerDTOS) {
             CustomerTM customerTM = new CustomerTM(
                     customerDTO.getId(),
                     customerDTO.getName(),
@@ -451,7 +452,6 @@ public class CustomerController implements Initializable {
             e.printStackTrace();
         }
     }
-
 
 
 }

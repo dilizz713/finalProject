@@ -13,15 +13,16 @@ public class ReservationDAOImpl implements ReservationDAO {
     public String getNextId() throws SQLException {
         ResultSet resultSet = SQLUtil.execute("select id from Reservation order by id desc limit 1");
 
-        if(resultSet.next()){
+        if (resultSet.next()) {
             String lastId = resultSet.getString(1);
             String subString = lastId.substring(1);
             int i = Integer.parseInt(subString);
-            int newId = i+1;
-            return String.format("R%03d",newId);
+            int newId = i + 1;
+            return String.format("R%03d", newId);
         }
         return "R001";
     }
+
     public ArrayList<ReservationDTO> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("select * from Reservation");
 
@@ -106,13 +107,13 @@ public class ReservationDAOImpl implements ReservationDAO {
     }
 
     public boolean delete(String reservationId) throws SQLException {
-        return SQLUtil.execute("delete from Reservation where id=?",reservationId );
+        return SQLUtil.execute("delete from Reservation where id=?", reservationId);
     }
 
     public ArrayList<ReservationDTO> search(String keyword) throws SQLException {
         String searchQuery = "select * from Reservation where id like ? or vehicleId like ? or customerId like ? or reservationDate like ? or status like ?";
 
-        ResultSet rst = SQLUtil.execute(searchQuery,  "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%", "%" + keyword + "%");
+        ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%");
 
 
         ArrayList<ReservationDTO> reservationDTOS = new ArrayList<>();
@@ -164,16 +165,16 @@ public class ReservationDAOImpl implements ReservationDAO {
 
     public ReservationDTO getReservationById(String reservationId) throws SQLException {
         String query = "select * from Reservation where id=?";
-        ResultSet rst = SQLUtil.execute(query,reservationId);
+        ResultSet rst = SQLUtil.execute(query, reservationId);
 
-        if(rst.next()){
+        if (rst.next()) {
             String id = rst.getString("id");
             String customerId = rst.getString("customerId");
             String vehicleId = rst.getString("vehicleId");
             String status = rst.getString("status");
             LocalDate reservationDate = rst.getDate("reservationDate").toLocalDate();
 
-            return new ReservationDTO(id,customerId,vehicleId,status,reservationDate);
+            return new ReservationDTO(id, customerId, vehicleId, status, reservationDate);
 
         }
         return null;
@@ -182,8 +183,8 @@ public class ReservationDAOImpl implements ReservationDAO {
 
     public ReservationDTO getReservationDetails(String reservationId) throws SQLException {
         ResultSet rst = SQLUtil.execute("select status from Reservation where id=?", reservationId);
-        if(rst.next()){
-            return  new ReservationDTO(
+        if (rst.next()) {
+            return new ReservationDTO(
                     reservationId,
                     rst.getString("status")
 
@@ -213,7 +214,7 @@ public class ReservationDAOImpl implements ReservationDAO {
         ResultSet rst = SQLUtil.execute(query);
 
         ArrayList<String> reservationID = new ArrayList<>();
-        while (rst.next()){
+        while (rst.next()) {
             reservationID.add(rst.getString(1));
         }
         return reservationID;
@@ -229,7 +230,7 @@ public class ReservationDAOImpl implements ReservationDAO {
     public String getVehicleIdByReservationId(String reservationId) throws SQLException {
         String query = "select vehicleId from Reservation where id = ?";
 
-        ResultSet rst = SQLUtil.execute(query,reservationId);
+        ResultSet rst = SQLUtil.execute(query, reservationId);
         if (rst.next()) {
             return rst.getString("vehicleId");
         }

@@ -10,7 +10,6 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 
 
-
 public class VehicleMainController {
 
     @FXML
@@ -40,13 +39,14 @@ public class VehicleMainController {
     void navigateToVansUI(ActionEvent event) {
         navigateTo();
     }
-    public void navigateTo(){
 
-        try{
+    public void navigateTo() {
+
+        try {
             VehicleMainAnchorPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource("/view/vehicle-view.fxml"));
             VehicleMainAnchorPane.getChildren().add(load);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }

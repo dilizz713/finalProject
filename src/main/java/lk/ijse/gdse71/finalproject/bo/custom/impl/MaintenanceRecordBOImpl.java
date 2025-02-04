@@ -15,6 +15,7 @@ public class MaintenanceRecordBOImpl implements MaintenanceRecordBO {
     public String getNextId() throws SQLException {
         return maintenanceRecordDAO.getNextId();
     }
+
     public ArrayList<MaintenanceRecordDTO> getAllMaintenanceRecords() throws SQLException {
         return maintenanceRecordDAO.getAll();
     }
@@ -24,10 +25,8 @@ public class MaintenanceRecordBOImpl implements MaintenanceRecordBO {
     }
 
 
-
-
     public boolean saveMaintenanceRecords(MaintenanceRecordDTO maintenanceRecordDTO) throws SQLException {
-       return maintenanceRecordDAO.save(maintenanceRecordDTO);
+        return maintenanceRecordDAO.save(maintenanceRecordDTO);
     }
 
 
@@ -36,7 +35,7 @@ public class MaintenanceRecordBOImpl implements MaintenanceRecordBO {
     }
 
     public boolean deleteMaintenanceRecords(String recordId) throws SQLException {
-       return maintenanceRecordDAO.delete(recordId);
+        return maintenanceRecordDAO.delete(recordId);
     }
 
 

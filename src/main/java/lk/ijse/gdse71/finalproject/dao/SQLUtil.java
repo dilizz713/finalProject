@@ -8,17 +8,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SQLUtil {
-    public static <T>T execute(String sql, Object...obj) throws SQLException {
+    public static <T> T execute(String sql, Object... obj) throws SQLException {
         Connection connection = DBConnection.getInstance().getConnection();
         PreparedStatement pst = connection.prepareStatement(sql);
 
         for (int i = 0; i < obj.length; i++) {
-            pst.setObject((i+1),obj[i]);
+            pst.setObject((i + 1), obj[i]);
         }
-        if(sql.startsWith("select") || sql.startsWith("SELECT")){
+        if (sql.startsWith("select") || sql.startsWith("SELECT")) {
             ResultSet rst = pst.executeQuery();
             return (T) rst;
-        }else{
+        } else {
             int i = pst.executeUpdate();
             boolean isSaved = i > 0;
             return (T) ((Boolean) isSaved);
@@ -26,13 +26,13 @@ public class SQLUtil {
 
     }
 
-    public static <T> T execute(Connection connection, String sql, Object...obj) throws SQLException {
+    public static <T> T execute(Connection connection, String sql, Object... obj) throws SQLException {
         PreparedStatement pst = connection.prepareStatement(sql);
         for (int i = 0; i < obj.length; i++) {
             pst.setObject((i + 1), obj[i]);
         }
 
-        if(sql.startsWith("select") || sql.startsWith("SELECT")){
+        if (sql.startsWith("select") || sql.startsWith("SELECT")) {
             ResultSet rst = pst.executeQuery();
             return (T) rst;
         } else {

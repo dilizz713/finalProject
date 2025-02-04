@@ -13,7 +13,7 @@ public class VehicleDamageBOImpl implements VehicleDamageBO {
     VehicleDamageDAO vehicleDamageDAO = (VehicleDamageDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.VEHICLEDAMAGE);
 
     public String getNextId() throws SQLException {
-       return vehicleDamageDAO.getNextId();
+        return vehicleDamageDAO.getNextId();
     }
 
     public ArrayList<VehicleDamageDTO> getAllVehcileDamageDetails() throws SQLException {
@@ -27,15 +27,15 @@ public class VehicleDamageBOImpl implements VehicleDamageBO {
 
 
     public boolean saveVehcileDamageDetails(VehicleDamageDTO vehicleDamageDTO) throws SQLException {
-       return vehicleDamageDAO.save(vehicleDamageDTO);
+        return vehicleDamageDAO.save(vehicleDamageDTO);
     }
 
     public boolean updateVehcileDamageDetails(VehicleDamageDTO vehicleDamageDTO) throws SQLException {
-       return vehicleDamageDAO.update(vehicleDamageDTO);
+        return vehicleDamageDAO.update(vehicleDamageDTO);
     }
 
     public boolean deleteVehcileDamageDetails(String damageId) throws SQLException {
-       return vehicleDamageDAO.delete(damageId);
+        return vehicleDamageDAO.delete(damageId);
 
     }
 

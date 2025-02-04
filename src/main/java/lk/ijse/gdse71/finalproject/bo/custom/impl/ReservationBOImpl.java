@@ -15,27 +15,30 @@ public class ReservationBOImpl implements ReservationBO {
     public String getNextId() throws SQLException {
         return reservationDAO.getNextId();
     }
+
     public ArrayList<ReservationDTO> getAllReservations() throws SQLException {
         return reservationDAO.getAll();
     }
+
     public boolean saveReservations(ReservationDTO reservationDTO) throws SQLException {
         return false;
 
     }
 
     public boolean updateReservations(ReservationDTO reservationDTO) throws SQLException {
-       return reservationDAO.update(reservationDTO);
+        return reservationDAO.update(reservationDTO);
     }
 
     public boolean deleteReservations(String reservationId) throws SQLException {
-       return reservationDAO.delete(reservationId);
+        return reservationDAO.delete(reservationId);
     }
 
     public ArrayList<ReservationDTO> searchReservations(String keyword) throws SQLException {
-       return reservationDAO.search(keyword);
+        return reservationDAO.search(keyword);
     }
+
     public ReservationDTO getReservationById(String reservationId) throws SQLException {
-       return reservationDAO.getReservationById(reservationId);
+        return reservationDAO.getReservationById(reservationId);
     }
 
 
@@ -54,4 +57,6 @@ public class ReservationBOImpl implements ReservationBO {
     public String getCustomerIdByVehicleId(String vehicleId) throws SQLException {
         return reservationDAO.getCustomerIdByVehicleId(vehicleId);
     }
+
+
 }

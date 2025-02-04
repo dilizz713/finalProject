@@ -23,6 +23,7 @@ public class CustomerBOImpl implements CustomerBO {
                 customerDTO.getNic())
         );
     }
+
     public boolean updateCustomer(CustomerDTO customerDTO) throws SQLException {
         return customerDAO.update(new CustomerDTO(
                 customerDTO.getId(),
@@ -33,6 +34,7 @@ public class CustomerBOImpl implements CustomerBO {
                 customerDTO.getNic())
         );
     }
+
     public boolean deleteCustomer(String customerId) throws SQLException {
         return customerDAO.delete(customerId);
 
@@ -43,7 +45,7 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     public ArrayList<CustomerDTO> getAllCustomer() throws SQLException {
-       return customerDAO.getAll();
+        return customerDAO.getAll();
     }
 
     public ArrayList<CustomerDTO> searchCustomer(String keyword) throws SQLException {
@@ -65,6 +67,6 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     public ArrayList<CustomerDTO> getCustomerDTOsForReservation() throws SQLException {
-       return customerDAO.getCustomerDTOsForReservation();
+        return customerDAO.getCustomerDTOsForReservation();
     }
 }

@@ -13,12 +13,12 @@ public class MileageTrackingDAOImpl implements MileageTrackingDAO {
     public String getNextId() throws SQLException {
         ResultSet resultSet = SQLUtil.execute("select id from MileageTracking order by id desc limit 1");
 
-        if(resultSet.next()){
+        if (resultSet.next()) {
             String lastId = resultSet.getString(1);
             String subString = lastId.substring(1);
             int i = Integer.parseInt(subString);
-            int newId = i+1;
-            return String.format("M%03d",newId);
+            int newId = i + 1;
+            return String.format("M%03d", newId);
         }
         return "M001";
     }
@@ -58,7 +58,7 @@ public class MileageTrackingDAOImpl implements MileageTrackingDAO {
     }*/
 
     public boolean save(MileageTrackingDTO mileageTrackingDTO) throws SQLException {
-        return  SQLUtil.execute(
+        return SQLUtil.execute(
                 "insert into MileageTracking values (?,?,?,?,?,?,?,?,?,?,?)",
                 mileageTrackingDTO.getId(),
                 mileageTrackingDTO.getEstimatedMileage(),
@@ -73,7 +73,6 @@ public class MileageTrackingDAOImpl implements MileageTrackingDAO {
                 mileageTrackingDTO.getEndDate()
         );
     }
-
 
 
     public boolean update(MileageTrackingDTO mileageTrackingDTO) throws SQLException {
@@ -93,13 +92,13 @@ public class MileageTrackingDAOImpl implements MileageTrackingDAO {
     }
 
     public boolean delete(String trackingId) throws SQLException {
-        return SQLUtil.execute("delete from MileageTracking where id=?",trackingId );
+        return SQLUtil.execute("delete from MileageTracking where id=?", trackingId);
     }
 
     public MileageTrackingDTO getMileageTrackingByReservationId(String reservationId) throws SQLException {
         String query = "select * from MileageTracking where reservationId = ?";
 
-        ResultSet resultSet = SQLUtil.execute(query,reservationId);
+        ResultSet resultSet = SQLUtil.execute(query, reservationId);
 
         if (resultSet.next()) {
 
@@ -135,7 +134,7 @@ public class MileageTrackingDAOImpl implements MileageTrackingDAO {
     public ArrayList<MileageTrackingDTO> search(String keyword) throws SQLException {
         String searchQuery = "select * from MileageTracking where id like ? or reservationId like ? or startDate like ? or endDate like ? ";
 
-        ResultSet rst = SQLUtil.execute(searchQuery,  "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%");
+        ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%");
 
 
         ArrayList<MileageTrackingDTO> mileageTrackingDTOS = new ArrayList<>();
@@ -184,15 +183,16 @@ public class MileageTrackingDAOImpl implements MileageTrackingDAO {
 
     public double getEndMileageForReservation(String reservationId) throws SQLException {
         String query = "select endDateMileage from MileageTracking where reservationId=?";
-        ResultSet rst = SQLUtil.execute(query,reservationId);
+        ResultSet rst = SQLUtil.execute(query, reservationId);
 
-        if(rst.next()){
+        if (rst.next()) {
             return rst.getDouble("endDateMileage");
         }
         return 0;
     }
+
     public MileageTrackingDTO getMileageDetails(String reservationId) throws SQLException {
-        String query = "SELECT estimatedMileage, actualMileage, extraChargesPerKm, totalExtraCharges, estimatedMileageCost FROM MileageTracking WHERE reservationId = ?" ;
+        String query = "SELECT estimatedMileage, actualMileage, extraChargesPerKm, totalExtraCharges, estimatedMileageCost FROM MileageTracking WHERE reservationId = ?";
 
         ResultSet rst = SQLUtil.execute(query, reservationId);
 

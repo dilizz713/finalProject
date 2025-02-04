@@ -20,7 +20,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class HomePageController implements Initializable{
+public class HomePageController implements Initializable {
     @FXML
     public Button btnLogOut;
 
@@ -83,25 +83,26 @@ public class HomePageController implements Initializable{
     }
 
     @FXML
-     void vehicleOnAction(ActionEvent event) {
+    void vehicleOnAction(ActionEvent event) {
         navigateTo("/view/vehicle-view.fxml");
     }
+
     @FXML
-    void clickOnLogOut(MouseEvent mouseEvent){
+    void clickOnLogOut(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to Logout from System?", ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
-        if(optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES){
+        if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
             System.exit(0);
         }
     }
 
-    public void navigateTo(String fxmlPath){
-        try{
+    public void navigateTo(String fxmlPath) {
+        try {
             homeAnchorPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource(fxmlPath));
             homeAnchorPane.getChildren().add(load);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }

@@ -42,39 +42,37 @@ public class ForgetPasswordOController {
 
     String emailText;
 
-   LoginBO loginBO = (LoginBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.LOGIN);
+    LoginBO loginBO = (LoginBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.LOGIN);
 
     @FXML
     void navigateToChangePW(ActionEvent event) throws IOException {
         String email = txtEmail.getText();
 
-       try{
-           //****
-           LoginDTO userDetails = loginBO.findByEmail(email);
+        try {
+            //****
+            LoginDTO userDetails = loginBO.findByEmail(email);
 
-           if(userDetails != null && email.equals(userDetails.getEmail())){
-               emailText = email;
-               FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/forgetPasswordNext.fxml"));
-               Parent load = loader.load();
+            if (userDetails != null && email.equals(userDetails.getEmail())) {
+                emailText = email;
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/forgetPasswordNext.fxml"));
+                Parent load = loader.load();
 
-               Stage stage = new Stage();
-               stage.setScene(new Scene(load));
+                Stage stage = new Stage();
+                stage.setScene(new Scene(load));
 
-               stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initModality(Modality.APPLICATION_MODAL);
 
-               Window underWindow = btnNext.getScene().getWindow();
-               stage.initOwner(underWindow);
+                Window underWindow = btnNext.getScene().getWindow();
+                stage.initOwner(underWindow);
 
-               stage.showAndWait();
-           }
-           else{
-               new Alert(Alert.AlertType.ERROR, "Incorrect Email!").show();
-           }
-       }catch (SQLException e) {
-           e.printStackTrace();
-           new Alert(Alert.AlertType.ERROR, "An error occurred while validating the email.").show();
-       }
-
+                stage.showAndWait();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Incorrect Email!").show();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "An error occurred while validating the email.").show();
+        }
 
 
     }
@@ -87,12 +85,12 @@ public class ForgetPasswordOController {
         //****
         LoginDTO userDetails = loginBO.findByEmail(emailText);
 
-        if(password.equals(confirmPW)){
+        if (password.equals(confirmPW)) {
             //****
-            LoginDTO loginDTO = new LoginDTO(userDetails.getUserName(),userDetails.getPassword(),emailText);
+            LoginDTO loginDTO = new LoginDTO(userDetails.getUserName(), userDetails.getPassword(), emailText);
             boolean isUpdate = loginBO.updateLogin(loginDTO);
 
-            if(isUpdate){
+            if (isUpdate) {
                 new Alert(Alert.AlertType.INFORMATION, "password update successfully!").show();
                 changePWAnchorPane.getChildren().clear();
             }

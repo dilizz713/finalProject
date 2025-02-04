@@ -23,7 +23,6 @@ import lk.ijse.gdse71.finalproject.dto.VehicleDTO;
 import javafx.geometry.Pos;
 
 
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -50,7 +49,7 @@ public class ReservationVehicleController implements Initializable {
 
     private GridPane vehicleGrid;
 
-   VehicleBO vehicleBO = (VehicleBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.VEHICLE);
+    VehicleBO vehicleBO = (VehicleBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.VEHICLE);
 
     private final int COLUMN_COUNT = 6;
     private final int CARD_PADDING = 10;
@@ -124,7 +123,7 @@ public class ReservationVehicleController implements Initializable {
                 String vehicleStatus = getVehicleStatus(vehicleId);
                 String maintenanceStatus = getMaintenanceStatus(vehicleId);
 
-                if (("Pending".equals(vehicleStatus) || "Ongoing".equals(vehicleStatus)) || "Ongoing".equals(maintenanceStatus) ) {
+                if (("Pending".equals(vehicleStatus) || "Ongoing".equals(vehicleStatus)) || "Ongoing".equals(maintenanceStatus)) {
                     continue;
                 }
 
@@ -176,9 +175,9 @@ public class ReservationVehicleController implements Initializable {
 
     private String getVehicleStatus(String vehicleId) throws SQLException {
         String query = "select status from Reservation where vehicleId = ? order by reservationDate  desc, field(status, 'Pending', 'Done','Ongoing') limit 1";
-        ResultSet resultSet = SQLUtil.execute(query,vehicleId);
+        ResultSet resultSet = SQLUtil.execute(query, vehicleId);
 
-        if(resultSet.next()){
+        if (resultSet.next()) {
             return resultSet.getString("status");
         }
         return "Done";
@@ -216,7 +215,7 @@ public class ReservationVehicleController implements Initializable {
         vehicleIdLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: white;-fx-effect: dropshadow(gaussian, darkred, 3, 1, 0, 0);");
 
 
-        vehicleCard.getChildren().addAll(vehicleIdLabel,modelLabel, numberPlateLabel,priceLabel);
+        vehicleCard.getChildren().addAll(vehicleIdLabel, modelLabel, numberPlateLabel, priceLabel);
 
         // Button for adding vehicle to reservation
         Button addButton = new Button("Add +");
@@ -224,7 +223,7 @@ public class ReservationVehicleController implements Initializable {
 
         vehicleCard.getChildren().add(addButton);
 
-       addButton.setStyle("-fx-text-fill: white; -fx-font-weight: bold;-fx-background-color: navy; -fx-border-radius: 2; -fx-background-radius: 2;-fx-font-size: 12px");
+        addButton.setStyle("-fx-text-fill: white; -fx-font-weight: bold;-fx-background-color: navy; -fx-border-radius: 2; -fx-background-radius: 2;-fx-font-size: 12px");
 
         return vehicleCard;
     }
@@ -257,11 +256,11 @@ public class ReservationVehicleController implements Initializable {
 
     @FXML
     public void checkReservationHistory(ActionEvent actionEvent) {
-       try{
+        try {
             ReservationVehiclesAnchorPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource("/view/reservation-table.fxml"));
             ReservationVehiclesAnchorPane.getChildren().add(load);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }

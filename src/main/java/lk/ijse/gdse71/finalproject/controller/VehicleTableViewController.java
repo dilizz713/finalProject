@@ -75,45 +75,46 @@ public class VehicleTableViewController implements Initializable {
 
     private VehicleTM selectedVehicleTM;
 
-   VehicleBO vehicleBO = (VehicleBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.VEHICLE);
+    VehicleBO vehicleBO = (VehicleBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.VEHICLE);
+
     @FXML
     void clickedTable(MouseEvent event) {
         selectedVehicleTM = vehicleTableView.getSelectionModel().getSelectedItem();
-       if (selectedVehicleTM != null) {
+        if (selectedVehicleTM != null) {
             btnDelete.setDisable(false);
         }
     }
 
     @FXML
     void deleteOnAction(ActionEvent event) {
-        if(selectedVehicleTM != null){
-            try{
+        if (selectedVehicleTM != null) {
+            try {
                 String vehicleID = selectedVehicleTM.getId();
                 boolean isDeleted = vehicleBO.deleteVehicles(vehicleID);
-                if(isDeleted){
+                if (isDeleted) {
                     vehicleTableView.getItems().remove(selectedVehicleTM);
                     selectedVehicleTM = null;
 
                     new Alert(Alert.AlertType.INFORMATION, "Vehicle deleted successfully").show();
-                }else{
+                } else {
                     new Alert(Alert.AlertType.ERROR, "fail").show();
                 }
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Vehicle deleted successfully").show();
             }
-        }else{
+        } else {
             new Alert(Alert.AlertType.WARNING, "Please select a vehicle to delete.").show();
         }
     }
 
     @FXML
     void navigateToVehicleView(ActionEvent event) {
-        try{
+        try {
             vehicleTableAnchorPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource("/view/vehicle-view.fxml"));
             vehicleTableAnchorPane.getChildren().add(load);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }
@@ -146,10 +147,10 @@ public class VehicleTableViewController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Fail to load vehicle data").show();
         }
 
-      searchBar.setOnAction(event ->{
-            try{
+        searchBar.setOnAction(event -> {
+            try {
                 searchVehicle();
-            }catch (SQLException | ClassNotFoundException e){
+            } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Error searching reservation").show();
             }
@@ -167,12 +168,10 @@ public class VehicleTableViewController implements Initializable {
     }
 
 
-
-
-   private void searchVehicle() throws SQLException, ClassNotFoundException {
+    private void searchVehicle() throws SQLException, ClassNotFoundException {
         String searchText = searchBar.getText().trim();
 
-        if(searchText.isEmpty()){
+        if (searchText.isEmpty()) {
             loadTableData();
             return;
         }
@@ -219,6 +218,7 @@ public class VehicleTableViewController implements Initializable {
         loadTableData();
 
     }
+
     private void loadTableData() throws SQLException, ClassNotFoundException {
         ArrayList<VehicleDTO> vehicleDTOS = vehicleBO.getAllVehicles();
         ObservableList<VehicleTM> vehicleTMS = FXCollections.observableArrayList();

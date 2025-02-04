@@ -7,8 +7,12 @@ import java.util.ArrayList;
 
 public interface VehicleDAO extends CrudDAO<VehicleDTO> {
     ArrayList<VehicleDTO> getVehiclesForPage(int start, int end) throws SQLException;
+
     ArrayList<String> getAllVehcileIds() throws SQLException;
+
     String getVehicleModelById(String vehicleId) throws SQLException;
+
     String getVehiclePriceById(String vehicleID) throws SQLException;
+
     String getNumberPlateById(String vehicleId) throws SQLException;
 }

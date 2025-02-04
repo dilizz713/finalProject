@@ -122,10 +122,10 @@ public class VehicleDamageController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Please select a vehicle id, customer name and enter an amount.").show();
             return;
         }
-        double amount =  0;
-        try{
+        double amount = 0;
+        try {
             amount = Double.parseDouble(costText);
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             new Alert(Alert.AlertType.ERROR, "Invalid amount entered!").show();
             return;
         }
@@ -181,13 +181,13 @@ public class VehicleDamageController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to delete this record?", ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
-        if(optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES){
+        if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
             //****
             boolean isDeleted = vehicleDamageBO.deleteVehcileDamageDetails(damageId);
-            if(isDeleted){
+            if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Record deleted!").show();
-            }else{
+            } else {
                 new Alert(Alert.AlertType.ERROR, "Fail to delete record!").show();
             }
         }
@@ -215,6 +215,7 @@ public class VehicleDamageController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Failed to load vehicle model").show();
         }
     }
+
     @FXML
     public void selectCustomerName(ActionEvent actionEvent) {
         try {
@@ -230,7 +231,6 @@ public class VehicleDamageController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Failed to load customer ID").show();
         }
     }
-
 
 
     @FXML
@@ -249,10 +249,10 @@ public class VehicleDamageController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Please select a vehicle id, customer name and enter an amount.").show();
             return;
         }
-        double amount =  0;
-        try{
+        double amount = 0;
+        try {
             amount = Double.parseDouble(costText);
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             new Alert(Alert.AlertType.ERROR, "Invalid amount entered!").show();
             return;
         }
@@ -325,15 +325,15 @@ public class VehicleDamageController implements Initializable {
         ArrayList<VehicleDamageDTO> vehicleDamageDTOS = vehicleDamageBO.getAllVehcileDamageDetails();
         ObservableList<VehicleDamageTM> vehicleDamageTMS = FXCollections.observableArrayList();
 
-        for(VehicleDamageDTO vehicleDamageDTO : vehicleDamageDTOS){
+        for (VehicleDamageDTO vehicleDamageDTO : vehicleDamageDTOS) {
             //*****
-          String model = vehicleBO.getVehicleModelById(vehicleDamageDTO.getVehicleId());
+            String model = vehicleBO.getVehicleModelById(vehicleDamageDTO.getVehicleId());
 
-          //*****
-          String customerId = reservationBO.getCustomerIdByVehicleId(vehicleDamageDTO.getVehicleId());
+            //*****
+            String customerId = reservationBO.getCustomerIdByVehicleId(vehicleDamageDTO.getVehicleId());
 
-          //*****
-          String customerName = customerBO.getCustomerNameById(customerId);
+            //*****
+            String customerName = customerBO.getCustomerNameById(customerId);
 
 
             VehicleDamageTM vehicleDamageTM = new VehicleDamageTM(

@@ -54,7 +54,7 @@ public class MileageTrackingController implements Initializable {
     private ComboBox<String> cmbReservationId;
 
     @FXML
-    private TableColumn<MileageTrackingDTO, Double>colActualMileage;
+    private TableColumn<MileageTrackingDTO, Double> colActualMileage;
 
     @FXML
     private TableColumn<MileageTrackingDTO, Double> colEndMile;
@@ -135,9 +135,9 @@ public class MileageTrackingController implements Initializable {
         LocalDate startDate = startDatePicker.getValue();
         LocalDate endDate = endDatePicker.getValue();
 
-       if(endDate == null){
-           LocalDate.of(2024,01,01);
-       }
+        if (endDate == null) {
+            LocalDate.of(2024, 01, 01);
+        }
 
         String startDateMileageText = txtStartMile.getText();
         double startDateMileage = 0;
@@ -149,7 +149,7 @@ public class MileageTrackingController implements Initializable {
             return;
         }
 
-        MileageTrackingDTO mileageTrackingDTO = new MileageTrackingDTO(trackingId, 0,0, 0, 0, reservationId, startDateMileage, 0, 0,startDate,endDate);
+        MileageTrackingDTO mileageTrackingDTO = new MileageTrackingDTO(trackingId, 0, 0, 0, 0, reservationId, startDateMileage, 0, 0, startDate, endDate);
 
         //***
         boolean isSaved = mileageTrackingBO.saveMileageTracking(mileageTrackingDTO);
@@ -190,18 +190,18 @@ public class MileageTrackingController implements Initializable {
     }
 
     private void calculateAndDisplayLabels(MileageTrackingTM mileageTrackingTM) throws SQLException {
-        try{
+        try {
             LocalDate startDate = mileageTrackingTM.getStartDate();
             LocalDate endDate = mileageTrackingTM.getEndDate();
             double estimatedMileage = 100.00;
-            if(!startDate.equals(endDate)){
+            if (!startDate.equals(endDate)) {
                 estimatedMileage = calculateEstimatedMileage(mileageTrackingTM.getStartDate(), mileageTrackingTM.getEndDate());
             }
 
             double actualMileage = mileageTrackingTM.getEndDateMileage() - mileageTrackingTM.getStartDateMileage();
 
             double totalExtraCharges = 0;
-            if(actualMileage > estimatedMileage){
+            if (actualMileage > estimatedMileage) {
                 totalExtraCharges = (actualMileage - estimatedMileage) * mileageTrackingTM.getExtraChargePerKm();
             }
 
@@ -223,13 +223,13 @@ public class MileageTrackingController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to delete this record?", ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
-        if(optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES){
+        if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
             //****
             boolean isDeleted = mileageTrackingBO.deleteMileageTracking(trackingId);
-            if(isDeleted){
+            if (isDeleted) {
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION, "Record deleted!").show();
-            }else{
+            } else {
                 new Alert(Alert.AlertType.ERROR, "Fail to delete record!").show();
             }
         }
@@ -248,9 +248,9 @@ public class MileageTrackingController implements Initializable {
         String endDateMileageText = txtEndMile.getText();
         String extraChargePerKmText = txtExtraChargesPerKm.getText();
 
-        double startDateMileage = 0 , endDateMileage = 0, extraChargePerKm = 0 , estimatedMileage = 0 , actualMileage = 0, estimatedMileageCost = 0, totalExtraCharges = 0;
+        double startDateMileage = 0, endDateMileage = 0, extraChargePerKm = 0, estimatedMileage = 0, actualMileage = 0, estimatedMileageCost = 0, totalExtraCharges = 0;
 
-        try{
+        try {
             startDateMileage = Double.parseDouble(startDateMileageText);
             endDateMileage = Double.parseDouble(endDateMileageText);
             extraChargePerKm = Double.parseDouble(extraChargePerKmText);
@@ -258,18 +258,17 @@ public class MileageTrackingController implements Initializable {
             LocalDate startDate = startDatePicker.getValue();
             LocalDate endDate = endDatePicker.getValue();
 
-            if(startDate.equals(endDate)){
+            if (startDate.equals(endDate)) {
                 estimatedMileage = 100.00;
-            }
-            else {
-                estimatedMileage = calculateEstimatedMileage(startDate,endDate);
+            } else {
+                estimatedMileage = calculateEstimatedMileage(startDate, endDate);
             }
 
 
             actualMileage = endDateMileage - startDateMileage;
-            estimatedMileageCost = calculateEstimatedMileageCost(reservationId, startDate,endDate);
+            estimatedMileageCost = calculateEstimatedMileageCost(reservationId, startDate, endDate);
 
-            if(actualMileage > estimatedMileage){
+            if (actualMileage > estimatedMileage) {
                 totalExtraCharges = (actualMileage - estimatedMileage) * extraChargePerKm;
             }
 
@@ -286,9 +285,7 @@ public class MileageTrackingController implements Initializable {
             lblEstimatedMileCost.setText(String.format("%.2f", estimatedMileageCost));
 
 
-
-
-            MileageTrackingDTO mileageTrackingDTO = new MileageTrackingDTO(trackingId, estimatedMileage,actualMileage, extraChargePerKm, totalExtraCharges, reservationId, startDateMileage, endDateMileage, estimatedMileageCost, startDate,endDate);
+            MileageTrackingDTO mileageTrackingDTO = new MileageTrackingDTO(trackingId, estimatedMileage, actualMileage, extraChargePerKm, totalExtraCharges, reservationId, startDateMileage, endDateMileage, estimatedMileageCost, startDate, endDate);
             boolean isUpdated = mileageTrackingBO.updateMileageTracking(mileageTrackingDTO);
             if (isUpdated) {
                 refreshPage();
@@ -296,30 +293,30 @@ public class MileageTrackingController implements Initializable {
             } else {
                 new Alert(Alert.AlertType.ERROR, "Failed to update tracking details!").show();
             }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             new Alert(Alert.AlertType.ERROR, "please enter valid numbers for mileage and extra charges");
         }
 
     }
 
     private double calculateEstimatedMileageCost(String reservationId, LocalDate startDate, LocalDate endDate) throws SQLException {
-        long  durationDays = endDate.toEpochDay() - startDate.toEpochDay();
+        long durationDays = endDate.toEpochDay() - startDate.toEpochDay();
         System.out.println("duration days : " + durationDays);
 
-        if(durationDays == 0){
+        if (durationDays == 0) {
 
             //join
             String vehiclePrice = queryBO.getVehiclePrice(reservationId);
-            return  Double.parseDouble(vehiclePrice);
+            return Double.parseDouble(vehiclePrice);
         }
         //join
-        String vehiclePrice =(queryBO.getVehiclePrice(reservationId));
-        double price =  Double.parseDouble(vehiclePrice);
+        String vehiclePrice = (queryBO.getVehiclePrice(reservationId));
+        double price = Double.parseDouble(vehiclePrice);
 
-        return  durationDays * price;
+        return durationDays * price;
     }
 
-    private double calculateEstimatedMileage(LocalDate startDate,LocalDate endDate ) throws SQLException {
+    private double calculateEstimatedMileage(LocalDate startDate, LocalDate endDate) throws SQLException {
         long durationDays = endDate.toEpochDay() - startDate.toEpochDay();
         return durationDays * 100;
     }
@@ -344,16 +341,16 @@ public class MileageTrackingController implements Initializable {
             loadNextTrackingId();
             loadComboBoxData();
             startDatePicker.setValue(LocalDate.now());
-            endDatePicker.setValue(LocalDate.of(2024,01,01));
+            endDatePicker.setValue(LocalDate.of(2024, 01, 01));
         } catch (SQLException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Error loading combobox data").show();
         }
 
-        txtSearchBar.setOnAction(event ->{
-            try{
+        txtSearchBar.setOnAction(event -> {
+            try {
                 searchMileageRecords();
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Error searching reservation").show();
             } catch (ClassNotFoundException e) {
@@ -373,7 +370,7 @@ public class MileageTrackingController implements Initializable {
     private void searchMileageRecords() throws SQLException, ClassNotFoundException {
         String searchText = txtSearchBar.getText().trim();
 
-        if(searchText.isEmpty()){
+        if (searchText.isEmpty()) {
             loadTableData();
             return;
         }
@@ -394,7 +391,6 @@ public class MileageTrackingController implements Initializable {
                     mileageTrackingDTO.getEstimatedMileageCost(),
                     mileageTrackingDTO.getExtraChargePerKm(),
                     mileageTrackingDTO.getTotalExtraCharges()
-
 
 
             );
@@ -427,7 +423,7 @@ public class MileageTrackingController implements Initializable {
         lblTotalExtraCharges.setText("");
 
         startDatePicker.setValue(LocalDate.now());
-        endDatePicker.setValue(LocalDate.of(2024,01,01));
+        endDatePicker.setValue(LocalDate.of(2024, 01, 01));
 
         cmbReservationId.setValue("");
 
@@ -457,7 +453,6 @@ public class MileageTrackingController implements Initializable {
                     mileageTrackingDTO.getTotalExtraCharges()
 
 
-
             );
             mileageTrackingTMS.add(mileageTrackingTM);
         }
@@ -465,15 +460,15 @@ public class MileageTrackingController implements Initializable {
 
     }
 
- @FXML
+    @FXML
     public void backOnAction(ActionEvent event) {
-     try{
-         mileageTrackingAnchorPane.getChildren().clear();
-         AnchorPane load = FXMLLoader.load(getClass().getResource("/view/reservation-table.fxml"));
-         mileageTrackingAnchorPane.getChildren().add(load);
-     }catch (IOException e){
-         e.printStackTrace();
-         new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
-     }
+        try {
+            mileageTrackingAnchorPane.getChildren().clear();
+            AnchorPane load = FXMLLoader.load(getClass().getResource("/view/reservation-table.fxml"));
+            mileageTrackingAnchorPane.getChildren().add(load);
+        } catch (IOException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
+        }
     }
 }

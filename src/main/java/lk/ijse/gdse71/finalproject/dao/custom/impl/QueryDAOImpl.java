@@ -19,7 +19,7 @@ public class QueryDAOImpl implements QueryDAO {
                 on M.vehicleId = V.id
                 where M.id Like ? or M.vehicleId Like ?  or V.model Like ? 
                 """;
-        ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%");
+        ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%");
 
         ArrayList<MaintenanceRecordDTO> maintenanceRecordDTOS = new ArrayList<>();
 
@@ -49,7 +49,7 @@ public class QueryDAOImpl implements QueryDAO {
                 where p.id Like ? or p.date Like ? or p.reservationId Like ? or p.status Like ? or c.name Like ?;
                 """;
 
-        ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%","%" + keyword + "%","%" + keyword + "%");
+        ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%");
 
 
         ArrayList<PaymentDTO> paymentDTOS = new ArrayList<>();
@@ -72,11 +72,11 @@ public class QueryDAOImpl implements QueryDAO {
     public String getVehiclePrice(String reservationId) throws SQLException {
         ResultSet rst = SQLUtil.execute(
                 """
-                select v.price
-                from Reservation r
-                join Vehicle v
-                on r.vehicleId = v.id where r.id = ?
-                """, reservationId
+                        select v.price
+                        from Reservation r
+                        join Vehicle v
+                        on r.vehicleId = v.id where r.id = ?
+                        """, reservationId
         );
         if (rst.next()) {
             return rst.getString("price");
@@ -86,11 +86,11 @@ public class QueryDAOImpl implements QueryDAO {
 
     public CustomerDTO getCustomerDetailsByReservationId(String reservationId) throws SQLException {
         String sql = """
-            SELECT c.id, c.name, c.email
-            FROM Customer c
-            JOIN Reservation r ON c.id = r.customerId
-            WHERE r.id = ?;
-        """;
+                    SELECT c.id, c.name, c.email
+                    FROM Customer c
+                    JOIN Reservation r ON c.id = r.customerId
+                    WHERE r.id = ?;
+                """;
         try {
             ResultSet rst = SQLUtil.execute(sql, reservationId);
             if (rst.next()) {

@@ -29,12 +29,13 @@ public class MaintenanceMainController {
     void maintenanceOnAction(ActionEvent event) {
         navigateTo("/view/vehicle-maintenance-records-view.fxml");
     }
-    public void navigateTo(String fxmlPath){
-        try{
+
+    public void navigateTo(String fxmlPath) {
+        try {
             maintenanceMainAnchorPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource(fxmlPath));
             maintenanceMainAnchorPane.getChildren().add(load);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }

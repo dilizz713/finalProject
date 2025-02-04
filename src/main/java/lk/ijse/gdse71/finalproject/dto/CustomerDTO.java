@@ -17,8 +17,6 @@ public class CustomerDTO {
     private String nic;
 
 
-
-
     public CustomerDTO(String id, String name) {
         this.id = id;
         this.name = name;

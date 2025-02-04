@@ -80,7 +80,7 @@ public class VehicleController implements Initializable {
 
     VehicleBO vehicleBO = (VehicleBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.VEHICLE);
 
-    public void setVehicleTableViewController(VehicleTableViewController controller){
+    public void setVehicleTableViewController(VehicleTableViewController controller) {
         this.vehicleTableViewController = controller;
     }
 
@@ -105,6 +105,7 @@ public class VehicleController implements Initializable {
             }
         }
     }
+
     @FXML
     void SaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         String id = lblVehicleId.getText();
@@ -118,37 +119,37 @@ public class VehicleController implements Initializable {
         String errorStyle = "-fx-border-color: red; -fx-text-fill: white; -fx-background-color: transparent;-fx-border-width: 0 0 2 ";
         String defaultStyle = "-fx-border-color: white; -fx-text-fill: white; -fx-background-color: transparent; -fx-border-width: 0 0 2";
 
-        
+
         boolean hasErrors = false;
         StringBuilder errorMessage = new StringBuilder("Please correct the following errors:\n");
 
-        if(make.isEmpty()){
+        if (make.isEmpty()) {
             txtCompanyName.setStyle(errorStyle);
             errorMessage.append("- Company name is empty\n");
             hasErrors = true;
-        }else{
+        } else {
             txtCompanyName.setStyle(defaultStyle);
         }
-        if(model.isEmpty()){
+        if (model.isEmpty()) {
             txtModel.setStyle(errorStyle);
             errorMessage.append("- Model is empty\n");
             hasErrors = true;
-        }else{
+        } else {
             txtModel.setStyle(defaultStyle);
         }
-        if(numberPlate.isEmpty()){
+        if (numberPlate.isEmpty()) {
             txtNumberPlate.setStyle(errorStyle);
             errorMessage.append("- Number plate is empty\n");
             hasErrors = true;
-        }else{
+        } else {
             txtNumberPlate.setStyle(defaultStyle);
         }
 
-        if(price.isEmpty()){
+        if (price.isEmpty()) {
             txtPrice.setStyle(errorStyle);
             errorMessage.append("- Price is empty\n");
             hasErrors = true;
-        }else{
+        } else {
             txtPrice.setStyle(defaultStyle);
         }
 
@@ -162,11 +163,11 @@ public class VehicleController implements Initializable {
             return;
         }
 
-        VehicleDTO vehicleDTO = new VehicleDTO(id, make, model, vehicleType, imageBytes, numberPlate, vehiclePrice,date);
-        boolean isSaved ;
-        if(btnSave.getText().equals("Update")){
+        VehicleDTO vehicleDTO = new VehicleDTO(id, make, model, vehicleType, imageBytes, numberPlate, vehiclePrice, date);
+        boolean isSaved;
+        if (btnSave.getText().equals("Update")) {
             isSaved = vehicleBO.updateVehicles(vehicleDTO);
-        }else{
+        } else {
             isSaved = vehicleBO.saveVehicles(vehicleDTO);
         }
 
@@ -179,7 +180,6 @@ public class VehicleController implements Initializable {
     }
 
 
-
     @FXML
     void resetOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
         refreshPage();
@@ -189,17 +189,15 @@ public class VehicleController implements Initializable {
 
     @FXML
     void watchHistory(ActionEvent event) {
-        try{
+        try {
             VehicleAnchorPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource("/view/vehicle-table-view.fxml"));
             VehicleAnchorPane.getChildren().add(load);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }
     }
-
-
 
 
     @Override
@@ -219,7 +217,7 @@ public class VehicleController implements Initializable {
 
 
         ObservableList<String> vehicleTypes = FXCollections.observableArrayList(
-                "Car","Van","Bus","Pickup Trucks","Luxury Car"
+                "Car", "Van", "Bus", "Pickup Trucks", "Luxury Car"
         );
         cmbType.setItems(vehicleTypes);
 
@@ -240,7 +238,6 @@ public class VehicleController implements Initializable {
         txtCompanyName.setText("");
         txtModel.setText("");
         txtPrice.setText("0.00");
-
 
 
     }
@@ -275,7 +272,7 @@ public class VehicleController implements Initializable {
         vehiclePrice = Double.parseDouble(price);
 
 
-        VehicleDTO vehicleDTO = new VehicleDTO(id, make, model, vehicleType, imageBytes, numberPlate,vehiclePrice,date);
+        VehicleDTO vehicleDTO = new VehicleDTO(id, make, model, vehicleType, imageBytes, numberPlate, vehiclePrice, date);
         boolean isUpdated = vehicleBO.updateVehicles(vehicleDTO);
         if (isUpdated) {
             new Alert(Alert.AlertType.INFORMATION, "Vehicle updated successfully!").show();
@@ -298,8 +295,8 @@ public class VehicleController implements Initializable {
 
 
         if (vehicleDTO.getImage() != null) {
-           Image image = new Image(new ByteArrayInputStream(vehicleDTO.getImage()));
-           imageView.setImage(image);
+            Image image = new Image(new ByteArrayInputStream(vehicleDTO.getImage()));
+            imageView.setImage(image);
         }
         btnSave.setText("Update");
     }

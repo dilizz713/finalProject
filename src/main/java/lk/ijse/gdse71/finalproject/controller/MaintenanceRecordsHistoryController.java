@@ -77,7 +77,7 @@ public class MaintenanceRecordsHistoryController implements Initializable {
     @FXML
     void clickedTable(MouseEvent event) {
         maintenanceRecordTM = MaintenanceTable.getSelectionModel().getSelectedItem();
-        if(maintenanceRecordTM != null){
+        if (maintenanceRecordTM != null) {
             btnDelete.setDisable(false);
 
         }
@@ -118,11 +118,11 @@ public class MaintenanceRecordsHistoryController implements Initializable {
 
     @FXML
     void navigateToMaintenanceRecordView(ActionEvent event) {
-        try{
+        try {
             recordHistoryAnchorPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource("/view/vehicle-maintenance-records-view.fxml"));
             recordHistoryAnchorPane.getChildren().add(load);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }
@@ -143,7 +143,7 @@ public class MaintenanceRecordsHistoryController implements Initializable {
         ArrayList<MaintenanceRecordDTO> maintenanceRecordDTOS = maintenanceRecordBO.getAllMaintenanceRecords();
         ObservableList<MaintenanceRecordTM> maintenanceRecordTMS = FXCollections.observableArrayList();
 
-        for(MaintenanceRecordDTO maintenanceRecordDTO : maintenanceRecordDTOS){
+        for (MaintenanceRecordDTO maintenanceRecordDTO : maintenanceRecordDTOS) {
 
             String model = vehicleBO.getVehicleModelById(maintenanceRecordDTO.getVehicleId());
 
@@ -211,7 +211,6 @@ public class MaintenanceRecordsHistoryController implements Initializable {
         VehicleMaintenanceRecordsController controller = loader.getController();
 
 
-
         controller.setRecordDetails(
                 maintenanceRecordDTO.getId(),
                 maintenanceRecordDTO.getDescription(),
@@ -250,7 +249,7 @@ public class MaintenanceRecordsHistoryController implements Initializable {
 
         try {
             refreshPage();
-        } catch (SQLException  e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load vehicle id").show();
         }

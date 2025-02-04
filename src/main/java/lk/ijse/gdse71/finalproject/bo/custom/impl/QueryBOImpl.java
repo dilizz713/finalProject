@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class QueryBOImpl implements QueryBO {
     QueryDAO queryDAO = (QueryDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.QUERY);
+
     public ArrayList<MaintenanceRecordDTO> searchMaintenanceRecordDetails(String keyword) throws SQLException {
         return null;
     }
@@ -23,7 +24,7 @@ public class QueryBOImpl implements QueryBO {
     }
 
     public String getVehiclePrice(String reservationId) throws SQLException {
-       return  queryDAO.getVehiclePrice(reservationId);
+        return queryDAO.getVehiclePrice(reservationId);
     }
 
     public CustomerDTO getCustomerDetailsByReservationId(String reservationId) throws SQLException {

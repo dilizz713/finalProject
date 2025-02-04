@@ -31,7 +31,6 @@ public class PaymentBOImpl implements PaymentBO {
     }
 
 
-
     public void updateAdvancePaymentStatus(String reservationId) throws SQLException {
 
     }
@@ -81,7 +80,7 @@ public class PaymentBOImpl implements PaymentBO {
 
 
     public PaymentDTO getPaymentById(String paymentId) throws SQLException {
-       return paymentDAO.getPaymentById(paymentId);
+        return paymentDAO.getPaymentById(paymentId);
     }
 
 

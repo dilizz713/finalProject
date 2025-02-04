@@ -51,7 +51,7 @@ public class SignUPController implements Initializable {
         String password = txtPassword.getText();
         String confirmPw = txtConfirmPw.getText();
 
-        if(!password.equals(confirmPw)){
+        if (!password.equals(confirmPw)) {
             new Alert(Alert.AlertType.WARNING, "Incorrect Password!").show();
             txtConfirmPw.setStyle("-fx-border-color: red; -fx-text-fill: white; -fx-background-color: transparent;");
         }
@@ -59,16 +59,16 @@ public class SignUPController implements Initializable {
 
         boolean hasErrors = false;
 
-        if(userName.isEmpty() || password.isEmpty() || email.isEmpty() || confirmPw.isEmpty()){
+        if (userName.isEmpty() || password.isEmpty() || email.isEmpty() || confirmPw.isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "Please fill all fields for signup!").show();
 
         }
 
         //****
-        LoginDTO loginDTO = new LoginDTO(userName,password,email);
+        LoginDTO loginDTO = new LoginDTO(userName, password, email);
         boolean isSaved = loginBO.saveLogin(loginDTO);
 
-        if(isSaved){
+        if (isSaved) {
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Signup details saved successfully!").show();
             navigateTo("/view/login-page.fxml");
@@ -87,18 +87,18 @@ public class SignUPController implements Initializable {
         txtPassword.setOnAction(event -> btnSignup.requestFocus());
     }
 
-    public void navigateTo(String fxmlPath){
-        try{
+    public void navigateTo(String fxmlPath) {
+        try {
             signUpAnchorPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource(fxmlPath));
             signUpAnchorPane.getChildren().add(load);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }
     }
 
     public void closeSignupAction(ActionEvent actionEvent) {
-       navigateTo("/view/login-page.fxml");
+        navigateTo("/view/login-page.fxml");
     }
 }

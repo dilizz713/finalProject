@@ -67,26 +67,25 @@ public class LoginPageController implements Initializable {
         String userName = txtUserName.getText().trim();
         String pw = txtPassword.getText().trim();
 
-        if(userName.isEmpty() || pw.isEmpty()){
+        if (userName.isEmpty() || pw.isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "Please enter both username and password").show();
             return;
         }
-        try{
+        try {
             //*****
             LoginDTO loginDTO = loginBO.findByUserName(userName);
 
-            if(loginDTO == null){
-                new Alert(Alert.AlertType.INFORMATION,"User name not found. Please signup first").show();
-            }else if(!loginDTO.getPassword().equals(pw)){
+            if (loginDTO == null) {
+                new Alert(Alert.AlertType.INFORMATION, "User name not found. Please signup first").show();
+            } else if (!loginDTO.getPassword().equals(pw)) {
                 new Alert(Alert.AlertType.ERROR, "Incorrect password!. Please try again!").show();
-            }else{
-               navigateTo("/view/home-page.fxml");
+            } else {
+                navigateTo("/view/home-page.fxml");
             }
         } catch (SQLException e) {
-           e.printStackTrace();
-           new Alert(Alert.AlertType.ERROR, "An error ocuured while logging in.").show();
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "An error ocuured while logging in.").show();
         }
-
 
 
     }
@@ -99,21 +98,22 @@ public class LoginPageController implements Initializable {
 
     @FXML
     void passwordShowButtonOnAction(ActionEvent event) {
-        if(btnShow.isSelected()){
+        if (btnShow.isSelected()) {
             shownPwLabel.setVisible(true);
             shownPwLabel.textProperty().bind(Bindings.concat(txtPassword.getText()));
             btnShow.setText("Hide");
-        }else{
+        } else {
             shownPwLabel.setVisible(false);
             btnShow.setText("Show");
         }
     }
-    public void navigateTo(String fxmlPath){
-        try{
+
+    public void navigateTo(String fxmlPath) {
+        try {
             loginPageAnchorPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource(fxmlPath));
             loginPageAnchorPane.getChildren().add(load);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }

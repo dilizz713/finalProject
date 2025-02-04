@@ -13,12 +13,12 @@ public class VehicleDamageDAOImpl implements VehicleDamageDAO {
     public String getNextId() throws SQLException {
         ResultSet resultSet = SQLUtil.execute("select id from VehicleDamage order by id desc limit 1");
 
-        if(resultSet.next()){
+        if (resultSet.next()) {
             String lastId = resultSet.getString(1);
             String subString = lastId.substring(1);
             int i = Integer.parseInt(subString);
-            int newId = i+1;
-            return String.format("D%03d",newId);
+            int newId = i + 1;
+            return String.format("D%03d", newId);
         }
         return "D001";
     }

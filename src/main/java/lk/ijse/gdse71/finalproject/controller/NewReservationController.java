@@ -100,13 +100,14 @@ public class NewReservationController implements Initializable {
     private PaymentController paymentController;
 
 
-  //  private PaymentModel paymentModel = new PaymentModel();
+    //  private PaymentModel paymentModel = new PaymentModel();
 
     ReservationBO reservationBO = (ReservationBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.RESERVATION);
     PaymentBO paymentBO = (PaymentBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.PAYMENT);
     CustomerBO customerBO = (CustomerBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.CUSTOMER);
     MileageTrackingBO mileageTrackingBO = (MileageTrackingBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.MILEAGETRACKING);
     VehicleDamageBO vehicleDamageBO = (VehicleDamageBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.VEHICLEDAMAGE);
+    MakeReservationBOImpl makeReservationBO = (MakeReservationBOImpl) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.MAKERESERVATION);
 
     private VehicleDTO selectedVehicle;
     private boolean isEditMode = false;
@@ -116,23 +117,22 @@ public class NewReservationController implements Initializable {
     private ReservationDTO currentReservation;
     private PaymentDTO currentPayment;
 
-    public void setReservationTableController(ReservationTableController controller){
+    public void setReservationTableController(ReservationTableController controller) {
         this.reservationTableController = controller;
     }
-    public void setPaymentController(PaymentController controller){
+
+    public void setPaymentController(PaymentController controller) {
         this.paymentController = controller;
     }
 
 
-
-
     @FXML
     void SaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        if(isEditMode){
-            if(btnSave.getText().equals("Update Reservation")) {
+        if (isEditMode) {
+            if (btnSave.getText().equals("Update Reservation")) {
                 updateReservation();
             }
-        }else{
+        } else {
             saveReservationAndPAyment();
         }
 
@@ -168,18 +168,18 @@ public class NewReservationController implements Initializable {
             return;
         }
 
-        double advancePayment = 0 , fullPayment = 0;
-       try{
+        double advancePayment = 0, fullPayment = 0;
+        try {
             advancePayment = Double.parseDouble(advancePaymentText);
 
-       }catch (NumberFormatException e){
-           e.printStackTrace();
-           new Alert(Alert.AlertType.ERROR,"Please enter valid number").show();
-           return;
-       }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Please enter valid number").show();
+            return;
+        }
         fullPayment = Double.parseDouble(fullPaymentText);
 
-        if(advancePayment <= 0 || paymentStatus == null || paymentStatus.isEmpty() || status == null|| status.isEmpty()) {
+        if (advancePayment <= 0 || paymentStatus == null || paymentStatus.isEmpty() || status == null || status.isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "Please fill reservation details and payment details before saving").show();
             return;
         }
@@ -188,7 +188,9 @@ public class NewReservationController implements Initializable {
         ReservationDTO reservationDTO = new ReservationDTO(id, customerId, vehicleId, status, reservationDate);
         PaymentDTO paymentDTO = new PaymentDTO(paymentId, reservationDate, paymentStatus, id, advancePayment, fullPayment);
 
-        Connection connection = null;
+        makeReservationBO.saveReservationAndPayment(reservationDTO, paymentDTO, updatePAymentButton);
+
+       /* Connection connection = null;
 
         try {
             connection = DBConnection.getInstance().getConnection();
@@ -224,7 +226,7 @@ public class NewReservationController implements Initializable {
                 connection.setAutoCommit(true);
             }
         }
-        updatePAymentButton.setDisable(false);
+        updatePAymentButton.setDisable(false);*/
 
     }
 
@@ -244,12 +246,11 @@ public class NewReservationController implements Initializable {
     }
 
 
-
     private LocalDate getOriginalReservationDate(String reservationId) throws SQLException {
         String query = "select reservationDate from Reservation where id=?";
         ResultSet rst = SQLUtil.execute(query, reservationId);
 
-        if(rst.next()){
+        if (rst.next()) {
             return rst.getDate("reservationDate").toLocalDate();
         }
         return null;
@@ -282,24 +283,21 @@ public class NewReservationController implements Initializable {
     }
 
 
-
     @FXML
     void resetOnAction(ActionEvent event) {
         navigateTo("/view/reservation-vehicle-view.fxml");
     }
 
 
-
     @FXML
     void selectCustomers(ActionEvent event) {
         CustomerDTO selectCustomers = cmbCustomer.getValue();
-        if(selectCustomers != null){
+        if (selectCustomers != null) {
             String customerID = selectCustomers.getId();
             System.out.println(customerID);
 
         }
     }
-
 
 
     @FXML
@@ -317,12 +315,13 @@ public class NewReservationController implements Initializable {
     void watchHistory(ActionEvent event) {
         navigateTo("/view/reservation-table.fxml");
     }
-    public void navigateTo(String fxmlPath){
-        try{
+
+    public void navigateTo(String fxmlPath) {
+        try {
             reservationAnchorpane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource(fxmlPath));
             reservationAnchorpane.getChildren().add(load);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }
@@ -345,7 +344,7 @@ public class NewReservationController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Fail to load vehicle id").show();
         }
 
-        cmbStatus.setItems(FXCollections.observableArrayList("Pending","Done"));
+        cmbStatus.setItems(FXCollections.observableArrayList("Pending", "Done"));
         cmbStatus.setValue("Pending");
         cmbCustomer.setConverter(new StringConverter<>() {
             @Override
@@ -359,13 +358,8 @@ public class NewReservationController implements Initializable {
             }
         });
 
-
-
-
-
-
-
     }
+
     private boolean isValidNumber(String input) {
         return input.matches("\\d*(\\.\\d{0,2})?");
     }
@@ -408,10 +402,11 @@ public class NewReservationController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Failed to load customer names.").show();
         }
     }
+
     public void setVehicleDetails(VehicleDTO vehicle) {
-        if(vehicle == null){
+        if (vehicle == null) {
             System.err.println("Vehicle dto is null");
-        }else{
+        } else {
             selectedVehicle = vehicle;
             lblVehicleId.setText(vehicle.getId());
             lblModel.setText(vehicle.getModel());
@@ -434,13 +429,14 @@ public class NewReservationController implements Initializable {
 
     public void loadNextId() throws SQLException {
         //**
-        String nextId =reservationBO.getNextId();
-       lblReservationId.setText(nextId);
+        String nextId = reservationBO.getNextId();
+        lblReservationId.setText(nextId);
     }
+
     public void loadPaymentId() throws SQLException {
         //**
         String nextPaymentId = paymentBO.getNextId();
-       lblPaymentId.setText(nextPaymentId);
+        lblPaymentId.setText(nextPaymentId);
     }
 
 
@@ -484,9 +480,9 @@ public class NewReservationController implements Initializable {
             lblPrice.setText("0.00");
         }
 
-        if(reservationDTO.getStatus().equals("Pending")) {
+        if (reservationDTO.getStatus().equals("Pending")) {
             rdbPending.setSelected(true);
-        }else if(reservationDTO.getStatus().equals("Ongoing")) {
+        } else if (reservationDTO.getStatus().equals("Ongoing")) {
             rdbOngoing.setSelected(true);
         }
 
@@ -507,21 +503,22 @@ public class NewReservationController implements Initializable {
         String reservationId = lblReservationId.getText();
         btnSave.setDisable(true);
 
-        if(status.equals("Done")){
+        if (status.equals("Done")) {
             updatePAymentButton.setDisable(false);
 
             double endMilegae = mileageTrackingBO.getEndMileageForReservation(reservationId);
-            if(endMilegae == 0){
+            if (endMilegae == 0) {
                 new Alert(Alert.AlertType.WARNING, "Please fill the end date mileage before calculating full payment!").show();
                 cmbStatus.setValue("Pending");
                 navigateTo("/view/mileage-tracking-view.fxml");
                 return;
             }
-            double fullPAyment = calculateFullPaymentAmount(reservationId) ;
+            double fullPAyment = calculateFullPaymentAmount(reservationId);
             txtfullPayment.setText(String.format("%.2f", fullPAyment));
         }
         updateSaveButtonStatus();
     }
+
     private double calculateFullPaymentAmount(String reservationId) throws SQLException {
         //**
         String vehicleId = reservationBO.getVehicleIdByReservationId(reservationId);
@@ -534,16 +531,19 @@ public class NewReservationController implements Initializable {
         return estimatedMileageCost + totalExtraCharges + repairCost - advancePayment;
 
     }
+
     @FXML
     public void selectAdvancePaymentField(KeyEvent keyEvent) {
         updateSaveButtonStatus();
     }
+
     @FXML
     public void selctFullPaymentField(KeyEvent keyEvent) {
         updateSaveButtonStatus();
     }
+
     private void updateSaveButtonStatus() {
-        boolean isPaymentValid = (!txtAdvancePayment.getText().isEmpty() || !txtfullPayment.getText().isEmpty() )&& cmbStatus.getValue() != null;
+        boolean isPaymentValid = (!txtAdvancePayment.getText().isEmpty() || !txtfullPayment.getText().isEmpty()) && cmbStatus.getValue() != null;
         btnSave.setDisable(!isPaymentValid);
     }
 
@@ -563,7 +563,9 @@ public class NewReservationController implements Initializable {
 
         PaymentDTO paymentDTO = new PaymentDTO(currentPayment.getId(), LocalDate.now(), status, reservationId, advancePayment, fullPayment);
 
-        Connection connection = null;
+        makeReservationBO.updatePayment(paymentDTO, status, reservationId, updatePAymentButton);
+
+       /* Connection connection = null;
         try{
             connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
@@ -601,10 +603,11 @@ public class NewReservationController implements Initializable {
                 connection.setAutoCommit(true);
                 showBillUI(reservationId, paymentDTO.getId());
             }
-        }
+
+        }*/
     }
 
-    private void showBillUI(String reservationId, String paymentId) {
+   /* private void showBillUI(String reservationId, String paymentId) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/bill-view.fxml"));
             Parent root = loader.load();
@@ -631,9 +634,7 @@ public class NewReservationController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-
+    }*/
 
 
 }

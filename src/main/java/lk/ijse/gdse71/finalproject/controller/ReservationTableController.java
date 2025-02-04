@@ -82,7 +82,7 @@ public class ReservationTableController implements Initializable {
     void clickedTable(MouseEvent event) {
 
         selectedReservationTM = reservationTable.getSelectionModel().getSelectedItem();
-        if(selectedReservationTM != null){
+        if (selectedReservationTM != null) {
             btnDelete.setDisable(false);
 
         }
@@ -123,15 +123,15 @@ public class ReservationTableController implements Initializable {
 
     @FXML
     void navigateToVehicleView(ActionEvent event) {
-       navigateTo("/view/newReservation.fxml");
+        navigateTo("/view/newReservation.fxml");
     }
 
-    public void navigateTo(String fxmlPath){
-        try{
+    public void navigateTo(String fxmlPath) {
+        try {
             reservationTableAnchorPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource(fxmlPath));
             reservationTableAnchorPane.getChildren().add(load);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }
@@ -163,6 +163,7 @@ public class ReservationTableController implements Initializable {
         reservationTableAnchorPane.getChildren().clear();
         reservationTableAnchorPane.getChildren().add(reservationPane);
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colReservationId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -181,10 +182,10 @@ public class ReservationTableController implements Initializable {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load vehicle data").show();
         }
-        searchBar.setOnAction(event ->{
-            try{
+        searchBar.setOnAction(event -> {
+            try {
                 searchReservation();
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
                 new Alert(Alert.AlertType.ERROR, "Error searching reservation").show();
             }
@@ -192,7 +193,7 @@ public class ReservationTableController implements Initializable {
 
         try {
             refreshPage();
-        } catch (SQLException  e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load vehicle id").show();
         }
@@ -200,13 +201,12 @@ public class ReservationTableController implements Initializable {
         btnDelete.setDisable(true);
 
 
-
     }
 
     private void searchReservation() throws SQLException {
         String searchText = searchBar.getText().trim();
 
-        if(searchText.isEmpty()){
+        if (searchText.isEmpty()) {
             loadTableData();
             return;
         }
@@ -214,7 +214,7 @@ public class ReservationTableController implements Initializable {
         ArrayList<ReservationDTO> reservationDTOS = reservationBO.searchReservations(searchText);
         ObservableList<ReservationTM> reservationTMS = FXCollections.observableArrayList();
 
-        for(ReservationDTO reservationDTO : reservationDTOS){
+        for (ReservationDTO reservationDTO : reservationDTOS) {
 
             String customerName = customerBO.getCustomerNameById(reservationDTO.getCustomerId());
             String model = vehicleBO.getVehicleModelById(reservationDTO.getVehicleId());
@@ -239,7 +239,6 @@ public class ReservationTableController implements Initializable {
             addMileageButton.setStyle("-fx-text-fill: black; -fx-font-weight: bold;-fx-background-color: white; -fx-border-radius: 1 1 1 1;-fx-start-margin:2;-fx-end-margin: 2;  -fx-background-radius: 1 1 1 1;-fx-border-color:#6b6e76;-fx-font-size: 12px; ");
 
 
-
             updateButton.setOnAction(event -> {
                 try {
                     openReservationUpdateView(reservationDTO);
@@ -253,7 +252,7 @@ public class ReservationTableController implements Initializable {
 
             String status = reservationDTO.getStatus();
 
-            if(status.equals("Pending")){
+            if (status.equals("Pending")) {
                 addMileageButton.setDisable(true);
             }
             addMileageButton.setOnAction(event -> {
@@ -288,7 +287,7 @@ public class ReservationTableController implements Initializable {
         ArrayList<ReservationDTO> reservationDTOS = reservationBO.getAllReservations();
         ObservableList<ReservationTM> reservationTMS = FXCollections.observableArrayList();
 
-        for(ReservationDTO reservationDTO : reservationDTOS){
+        for (ReservationDTO reservationDTO : reservationDTOS) {
 
             String customerName = customerBO.getCustomerNameById(reservationDTO.getCustomerId());
             String model = vehicleBO.getVehicleModelById(reservationDTO.getVehicleId());
@@ -313,7 +312,6 @@ public class ReservationTableController implements Initializable {
             addMileageButton.setStyle("-fx-text-fill: black; -fx-font-weight: bold;-fx-background-color: white; -fx-border-radius: 1 1 1 1;-fx-start-margin:2;-fx-end-margin: 2;  -fx-background-radius: 1 1 1 1;-fx-border-color:#6b6e76;-fx-font-size: 12px; ");
 
 
-
             updateButton.setOnAction(event -> {
                 try {
                     openReservationUpdateView(reservationDTO);
@@ -327,7 +325,7 @@ public class ReservationTableController implements Initializable {
 
             String status = reservationDTO.getStatus();
 
-            if(status.equals("Pending")){
+            if (status.equals("Pending")) {
                 addMileageButton.setDisable(true);
             }
             addMileageButton.setOnAction(event -> {
@@ -358,7 +356,7 @@ public class ReservationTableController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/newReservation.fxml"));
         AnchorPane pane = loader.load();
 
-        NewReservationController  controller = loader.getController();
+        NewReservationController controller = loader.getController();
 
         controller.setReservationDetails(reservationDTO);
         controller.setReservationTableController(this);

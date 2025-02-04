@@ -37,12 +37,12 @@ public class DashBoardController implements Initializable {
         navigateTo("/view/login-page.fxml");
     }
 
-    public void navigateTo(String fxmlPath){
-        try{
+    public void navigateTo(String fxmlPath) {
+        try {
             dashboardAnchorPane.getChildren().clear();
             AnchorPane load = FXMLLoader.load(getClass().getResource(fxmlPath));
             dashboardAnchorPane.getChildren().add(load);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Fail to load page!").show();
         }
@@ -73,8 +73,8 @@ public class DashBoardController implements Initializable {
 
     }
 
-    private void handleKeyPress(KeyEvent event){
-        if(event.getCode() == KeyCode.ENTER);
-        SigninBtnOnAction(new ActionEvent(btnSignin,null));
+    private void handleKeyPress(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) ;
+        SigninBtnOnAction(new ActionEvent(btnSignin, null));
     }
 }

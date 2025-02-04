@@ -17,7 +17,7 @@ public class ReservationDTO {
     private String status;
     private LocalDate reservationDate;
 
-    public ReservationDTO(String id,String status) {
+    public ReservationDTO(String id, String status) {
         this.id = id;
         this.status = status;
     }
@@ -26,7 +26,6 @@ public class ReservationDTO {
         this.id = id;
 
     }
-
 
 
 }

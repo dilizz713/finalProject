@@ -8,10 +8,15 @@ import java.util.ArrayList;
 
 public interface MaintenanceRecordBO extends SuperBO {
     String getNextId() throws SQLException;
+
     ArrayList<MaintenanceRecordDTO> getAllMaintenanceRecords() throws SQLException;
+
     boolean saveMaintenanceRecords(MaintenanceRecordDTO maintenanceRecordDTO) throws SQLException;
+
     boolean updateMaintenanceRecords(MaintenanceRecordDTO maintenanceRecordDTO) throws SQLException;
+
     boolean deleteMaintenanceRecords(String recordId) throws SQLException;
+
     MaintenanceRecordDTO getMaintenanceRecordsById(String recordId) throws SQLException;
 
 }

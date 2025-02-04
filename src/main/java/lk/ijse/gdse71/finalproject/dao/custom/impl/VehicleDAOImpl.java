@@ -12,15 +12,16 @@ public class VehicleDAOImpl implements VehicleDAO {
     public String getNextId() throws SQLException {
         ResultSet resultSet = SQLUtil.execute("select id from Vehicle order by id desc limit 1");
 
-        if(resultSet.next()){
+        if (resultSet.next()) {
             String lastId = resultSet.getString(1);
             String subString = lastId.substring(1);
             int i = Integer.parseInt(subString);
-            int newId = i+1;
-            return String.format("V%03d",newId);
+            int newId = i + 1;
+            return String.format("V%03d", newId);
         }
         return "V001";
     }
+
     public ArrayList<VehicleDTO> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("select * from Vehicle");
 
@@ -98,12 +99,12 @@ public class VehicleDAOImpl implements VehicleDAO {
 
 
     public boolean delete(String vehicleId) throws SQLException {
-        return SQLUtil.execute("delete from Vehicle where id=?",vehicleId );
+        return SQLUtil.execute("delete from Vehicle where id=?", vehicleId);
     }
 
     public ArrayList<VehicleDTO> search(String keyword) throws SQLException {
         String searchQuery = "select * from Vehicle where vehicleType Like ? or model Like ? or id Like ?";
-        ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%");
+        ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%");
 
         ArrayList<VehicleDTO> vehicleDTOS = new ArrayList<>();
         while (rst.next()) {
@@ -145,6 +146,7 @@ public class VehicleDAOImpl implements VehicleDAO {
         return null;
 
     }
+
     public String getVehiclePriceById(String vehicleID) throws SQLException {
         ResultSet rst = SQLUtil.execute("select price from Vehicle where id = ?", vehicleID);
         return rst.next() ? rst.getString(1) : null;
