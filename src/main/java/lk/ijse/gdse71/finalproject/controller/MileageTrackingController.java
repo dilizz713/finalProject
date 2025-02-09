@@ -122,11 +122,9 @@ public class MileageTrackingController implements Initializable {
     @FXML
     private DatePicker endDatePicker;
 
-
     MileageTrackingBO mileageTrackingBO = (MileageTrackingBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.MILEAGETRACKING);
     ReservationBO reservationBO = (ReservationBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.RESERVATION);
     QueryBO queryBO = (QueryBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.QUERY);
-
 
     @FXML
     void SaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {

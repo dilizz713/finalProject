@@ -101,8 +101,6 @@ public class NewReservationController implements Initializable {
     private PaymentController paymentController;
 
 
-    //  private PaymentModel paymentModel = new PaymentModel();
-
     ReservationBO reservationBO = (ReservationBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.RESERVATION);
     PaymentBO paymentBO = (PaymentBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.PAYMENT);
     CustomerBO customerBO = (CustomerBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.CUSTOMER);

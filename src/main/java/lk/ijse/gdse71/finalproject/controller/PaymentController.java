@@ -82,6 +82,7 @@ public class PaymentController implements Initializable {
     ReservationBO reservationBO = (ReservationBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.RESERVATION);
     CustomerBO customerBO = (CustomerBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.CUSTOMER);
     QueryBO queryBO = (QueryBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.QUERY);
+
     ReservationDTO reservationDTO = new ReservationDTO();
 
     private PaymentTM selectedPaymentTM;
@@ -224,7 +225,7 @@ public class PaymentController implements Initializable {
 
 
             if (customerName == null) {
-                customerName = "Unknown Customer"; // Fallback name
+                customerName = "Unknown Customer";
             }
             Button updateButton = new Button("Update");
 
@@ -334,8 +335,4 @@ public class PaymentController implements Initializable {
 
     }
 
-
-    public void refreshTable() throws SQLException, ClassNotFoundException {
-        loadTableData();
-    }
 }

@@ -1,6 +1,6 @@
 package lk.ijse.gdse71.finalproject.dao.custom;
 
-import lk.ijse.gdse71.finalproject.dto.MileageTrackingDTO;
+import lk.ijse.gdse71.finalproject.dao.CrudDAO;
 import lk.ijse.gdse71.finalproject.entity.MileageTracking;
 
 import java.sql.SQLException;

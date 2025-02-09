@@ -16,10 +16,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import lk.ijse.gdse71.finalproject.bo.BOFactory;
 import lk.ijse.gdse71.finalproject.bo.custom.LoginBO;
-import lk.ijse.gdse71.finalproject.bo.custom.impl.LoginBOImpl;
 import lk.ijse.gdse71.finalproject.dto.LoginDTO;
-import lk.ijse.gdse71.finalproject.entity.Login;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;

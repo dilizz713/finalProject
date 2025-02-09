@@ -224,8 +224,8 @@ public class MaintenanceRecordsHistoryController implements Initializable {
         );
         controller.setMaintenanceRecordsHistoryController(this);
 
-        recordHistoryAnchorPane.getChildren().clear();  // Display the view
-        recordHistoryAnchorPane.getChildren().add(pane);  //
+        recordHistoryAnchorPane.getChildren().clear();
+        recordHistoryAnchorPane.getChildren().add(pane);
     }
 
 

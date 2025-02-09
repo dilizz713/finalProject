@@ -1,6 +1,4 @@
-package lk.ijse.gdse71.finalproject.dao.custom;
-
-import lk.ijse.gdse71.finalproject.dao.SuperDAO;
+package lk.ijse.gdse71.finalproject.dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

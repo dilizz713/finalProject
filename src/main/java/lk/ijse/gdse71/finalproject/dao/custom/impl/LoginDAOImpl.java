@@ -24,7 +24,6 @@ public class LoginDAOImpl implements LoginDAO {
         String query = "select * from Login where userName=?";
         ResultSet rst = SQLUtil.execute(query, userName);
 
-
         if (rst.next()) {
             return new Login(
                     rst.getString("userName"),
@@ -32,7 +31,9 @@ public class LoginDAOImpl implements LoginDAO {
                     rst.getString("email")
             );
         }
-        return null;
+       else{
+           return null;
+        }
 
 
     }

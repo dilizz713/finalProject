@@ -111,7 +111,7 @@ public class ReservationVehicleController implements Initializable {
             ArrayList<VehicleDTO> vehicles = vehicleBO.getAllVehicles();
 
             int itemsPerPage = 12;
-            int start = pageIndex * itemsPerPage;  // Correct usage of pageIndex
+            int start = pageIndex * itemsPerPage;
             int end = Math.min(start + itemsPerPage, vehicles.size());
 
             int colIndex = 0, rowIndex = 0;

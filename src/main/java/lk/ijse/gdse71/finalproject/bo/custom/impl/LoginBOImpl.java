@@ -26,7 +26,11 @@ public class LoginBOImpl implements LoginBO {
 
     public LoginDTO findByUserName(String userName) throws SQLException {
        Login login = loginDAO.findByUserName(userName);
-       return new LoginDTO(login.getUserName(), login.getPassword(), login.getEmail());
+       if(login != null){
+           return new LoginDTO(login.getUserName(), login.getPassword(), login.getEmail());
+       }else{
+           return null;
+       }
     }
 
     public boolean updateLogin(LoginDTO loginDTO) throws SQLException {
