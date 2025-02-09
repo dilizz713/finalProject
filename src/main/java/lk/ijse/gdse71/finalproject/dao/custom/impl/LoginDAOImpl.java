@@ -38,13 +38,13 @@ public class LoginDAOImpl implements LoginDAO {
 
     }
 
+    @Override
+    public boolean updatePasswordByEmail(String emailText, String newPassword) throws SQLException {
+        return SQLUtil.execute("update Login set password = ? where email = ?", newPassword, emailText);
+    }
+
     public boolean update(Login entity) throws SQLException {
-        return SQLUtil.execute(
-                "update  Login set  password = ? , email = ? where userName=?",
-                entity.getPassword(),
-                entity.getEmail(),
-                entity.getUserName()
-        );
+       return false;
     }
 
     @Override
@@ -71,7 +71,6 @@ public class LoginDAOImpl implements LoginDAO {
         String query = "select * from Login where email=?";
         ResultSet rst = SQLUtil.execute(query, email);
 
-
         if (rst.next()) {
             return new Login(
                     rst.getString("userName"),
@@ -79,6 +78,8 @@ public class LoginDAOImpl implements LoginDAO {
                     rst.getString("email")
             );
         }
-        return null;
+       else{
+           return null;
+        }
     }
 }

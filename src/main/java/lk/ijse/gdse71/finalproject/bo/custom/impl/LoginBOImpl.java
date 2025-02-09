@@ -34,11 +34,7 @@ public class LoginBOImpl implements LoginBO {
     }
 
     public boolean updateLogin(LoginDTO loginDTO) throws SQLException {
-        return loginDAO.update(new Login(
-                loginDTO.getUserName(),
-                loginDTO.getPassword(),
-                loginDTO.getEmail()
-        ));
+       return false;
     }
 
     @Override
@@ -63,6 +59,15 @@ public class LoginBOImpl implements LoginBO {
 
     public LoginDTO findByEmail(String email) throws SQLException {
         Login login =  loginDAO.findByEmail(email);
-        return new LoginDTO(login.getUserName(), login.getPassword(), login.getEmail());
+        if(login != null){
+            return new LoginDTO(login.getUserName(), login.getPassword(), login.getEmail());
+        }else{
+            return null;
+        }
+    }
+
+    @Override
+    public boolean updatePasswordByEmail(String emailText, String newPassword) throws SQLException {
+        return loginDAO.updatePasswordByEmail(emailText,newPassword);
     }
 }

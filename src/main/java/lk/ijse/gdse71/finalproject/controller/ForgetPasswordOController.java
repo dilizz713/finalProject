@@ -48,6 +48,11 @@ public class ForgetPasswordOController {
     void navigateToChangePW(ActionEvent event) throws IOException {
         String email = txtEmail.getText();
 
+        if(email.isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Please enter your email").show();
+            return;
+        }
+
         try {
             //****
             LoginDTO userDetails = loginBO.findByEmail(email);
@@ -56,6 +61,9 @@ public class ForgetPasswordOController {
                 emailText = email;
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/forgetPasswordNext.fxml"));
                 Parent load = loader.load();
+
+                ForgetPasswordOController controller = loader.getController();
+                controller.setEmail(emailText);
 
                 Stage stage = new Stage();
                 stage.setScene(new Scene(load));
@@ -77,23 +85,51 @@ public class ForgetPasswordOController {
 
     }
 
+    private void setEmail(String emailText) {
+        this.emailText = emailText;
+    }
+
     @FXML
     void changePWOnAction(ActionEvent event) throws IOException, SQLException {
         String password = txtNewPw.getText();
         String confirmPW = txtConfirmNewPw.getText();
 
-        //****
-        LoginDTO userDetails = loginBO.findByEmail(emailText);
+        if(password.isEmpty() || confirmPW.isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Please fill all the fields").show();
+            return;
+        }
 
-        if (password.equals(confirmPW)) {
+        if(!password.equals(confirmPW)){
+            new Alert(Alert.AlertType.ERROR, "Passwords do not match").show();
+            return;
+        }
+
+        System.out.printf("Email : " + emailText);
+
+        if(emailText == null || emailText.isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Email is missing.please try again!").show();
+            return;
+        }
+
+        try{
             //****
-            LoginDTO loginDTO = new LoginDTO(userDetails.getUserName(), userDetails.getPassword(), emailText);
-            boolean isUpdate = loginBO.updateLogin(loginDTO);
+            LoginDTO userDetails = loginBO.findByEmail(emailText);
 
-            if (isUpdate) {
-                new Alert(Alert.AlertType.INFORMATION, "password update successfully!").show();
-                changePWAnchorPane.getChildren().clear();
+            if(userDetails != null){
+                boolean isUpdate = loginBO.updatePasswordByEmail(emailText,password);
+                if (isUpdate) {
+                    new Alert(Alert.AlertType.INFORMATION, "password update successfully!").show();
+                    changePWAnchorPane.getChildren().clear();
+                }else {
+                    new Alert(Alert.AlertType.ERROR, "Failed to update password.").show();
+                }
+
+            }else{
+                new Alert(Alert.AlertType.ERROR, "User not found.").show();
             }
+        }catch (SQLException e){
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "An error occurred while updating the password.").show();
         }
 
     }

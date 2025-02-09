@@ -22,4 +22,7 @@ public interface LoginBO extends SuperBO {
     ArrayList<LoginDTO> searchLoginDetails(String keyword) throws SQLException;
 
     LoginDTO findByEmail(String email) throws SQLException;
+
+
+    boolean updatePasswordByEmail(String emailText, String password) throws SQLException;
 }

@@ -81,23 +81,23 @@ public class GenerateBillController implements Initializable {
 
         lblActualMileage.setText(String.format("%.2f km", mileage.getActualMileage()));
         lblEstimatedMileage.setText(String.format("%.2f km", mileage.getEstimatedMileage()));
-        lblEstimatedMileageCost.setText(String.format("$%.2f", mileage.getEstimatedMileageCost()));
-        lblExtraChargesPerKm.setText(String.format("$%.2f/km", mileage.getExtraChargePerKm()));
-        lblTotalExtraCharges.setText(String.format("$%.2f", mileage.getTotalExtraCharges()));
+        lblEstimatedMileageCost.setText(String.format("LKR%.2f", mileage.getEstimatedMileageCost()));
+        lblExtraChargesPerKm.setText(String.format("LKR%.2f/km", mileage.getExtraChargePerKm()));
+        lblTotalExtraCharges.setText(String.format("LKR%.2f", mileage.getTotalExtraCharges()));
 
-        lbladvancePayment.setText(String.format("$%.2f", payment.getAdvancePayment()));
-        lblFyllPayment.setText(String.format("$%.2f", payment.getFullPayment()));
+        lbladvancePayment.setText(String.format("LKR%.2f", payment.getAdvancePayment()));
+        lblFyllPayment.setText(String.format("LKR%.2f", payment.getFullPayment()));
 
         try {
 
             double repairCost = vehicleDamageBO.getRepairCostByVehicleId(vehicleId);
-            lblDamageCost.setText(String.format("$%.2f", repairCost));
+            lblDamageCost.setText(String.format("LKR%.2f", repairCost));
 
 
             double total = mileage.getEstimatedMileageCost() + mileage.getTotalExtraCharges() + repairCost;
-            lbladvancePayment.setText(String.format("$%.2f", payment.getAdvancePayment()));
-            lblFyllPayment.setText(String.format("$%.2f", payment.getFullPayment()));
-            lblTotal.setText(String.format("$%.2f", total));
+            lbladvancePayment.setText(String.format("LKR%.2f", payment.getAdvancePayment()));
+            lblFyllPayment.setText(String.format("LKR%.2f", payment.getFullPayment()));
+            lblTotal.setText(String.format("LKR%.2f", total));
 
         } catch (SQLException e) {
             e.printStackTrace();

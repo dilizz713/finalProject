@@ -10,4 +10,5 @@ public interface LoginDAO extends CrudDAO<Login> {
 
     Login findByUserName(String userName) throws SQLException;
 
+    boolean updatePasswordByEmail(String emailText, String newPassword) throws SQLException;
 }
