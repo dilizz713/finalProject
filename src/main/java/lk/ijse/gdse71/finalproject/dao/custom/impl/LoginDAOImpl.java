@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class LoginDAOImpl implements LoginDAO {
+    @Override
     public boolean save(Login entity) throws SQLException {
         return SQLUtil.execute(
                 "insert into Login values(?,?,?)",
@@ -19,7 +20,7 @@ public class LoginDAOImpl implements LoginDAO {
                 entity.getEmail()
         );
     }
-
+    @Override
     public Login findByUserName(String userName) throws SQLException {
         String query = "select * from Login where userName=?";
         ResultSet rst = SQLUtil.execute(query, userName);
@@ -66,7 +67,7 @@ public class LoginDAOImpl implements LoginDAO {
     public ArrayList<Login> search(String keyword) throws SQLException {
         return null;
     }
-
+    @Override
     public Login findByEmail(String email) throws SQLException {
         String query = "select * from Login where email=?";
         ResultSet rst = SQLUtil.execute(query, email);

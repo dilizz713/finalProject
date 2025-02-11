@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class QueryDAOImpl implements QueryDAO {
+    @Override
     public ArrayList<MaintenanceRecord> searchMaintenanceRecordDetails(String keyword) throws SQLException {
         String searchQuery = """
                 select M.* , V.model 
@@ -40,7 +41,7 @@ public class QueryDAOImpl implements QueryDAO {
         }
         return maintenanceRecordDTOS;
     }
-
+    @Override
     public ArrayList<Payment> searchPaymentDetils(String keyword) throws SQLException {
         String searchQuery = """
                 select p.*, c.name 
@@ -71,7 +72,7 @@ public class QueryDAOImpl implements QueryDAO {
         }
         return paymentDTOS;
     }
-
+    @Override
     public String getVehiclePrice(String reservationId) throws SQLException {
         ResultSet rst = SQLUtil.execute(
                 """
@@ -86,7 +87,7 @@ public class QueryDAOImpl implements QueryDAO {
         }
         return reservationId;
     }
-
+    @Override
     public Customer getCustomerDetailsByReservationId(String reservationId) throws SQLException {
         String sql = """
                     SELECT c.id, c.name, c.email
@@ -110,9 +111,16 @@ public class QueryDAOImpl implements QueryDAO {
         return null;
 
     }
-
+    @Override
     public String getCustomerNameByReservationId(String reservationId) throws SQLException {
         String query = "select c.name from Customer c inner join Reservation r on c.id = r.customerId where r.id = ?";
+        ResultSet resultSet = SQLUtil.execute(query, reservationId);
+
+        return resultSet.next() ? resultSet.getString(1) : null;
+    }
+
+    public String getCustomerEmailByReservationId(String reservationId) throws SQLException {
+        String query = "select c.email from Customer c inner join Reservation r on c.id = r.customerId where r.id = ?";
         ResultSet resultSet = SQLUtil.execute(query, reservationId);
 
         return resultSet.next() ? resultSet.getString(1) : null;

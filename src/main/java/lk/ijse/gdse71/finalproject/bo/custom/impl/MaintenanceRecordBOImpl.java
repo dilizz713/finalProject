@@ -11,10 +11,11 @@ import java.util.ArrayList;
 public class MaintenanceRecordBOImpl implements MaintenanceRecordBO {
     MaintenanceRecordDAO maintenanceRecordDAO = (MaintenanceRecordDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.MAINTENANCERECORD);
 
+    @Override
     public String getNextId() throws SQLException {
         return maintenanceRecordDAO.getNextId();
     }
-
+    @Override
     public ArrayList<MaintenanceRecordDTO> getAllMaintenanceRecords() throws SQLException {
         ArrayList<MaintenanceRecord> maintenanceRecords =  maintenanceRecordDAO.getAll();
         ArrayList<MaintenanceRecordDTO> maintenanceRecordDTOS = new ArrayList<>();
@@ -32,11 +33,7 @@ public class MaintenanceRecordBOImpl implements MaintenanceRecordBO {
         return maintenanceRecordDTOS;
     }
 
-    public ArrayList<MaintenanceRecordDTO> searchMaintenanceRecordDetails(String keyword) throws SQLException {
-        return null;
-    }
-
-
+    @Override
     public boolean saveMaintenanceRecords(MaintenanceRecordDTO maintenanceRecordDTO) throws SQLException {
         return maintenanceRecordDAO.save(new MaintenanceRecord(
                 maintenanceRecordDTO.getId(),
@@ -48,7 +45,7 @@ public class MaintenanceRecordBOImpl implements MaintenanceRecordBO {
         ));
     }
 
-
+    @Override
     public boolean updateMaintenanceRecords(MaintenanceRecordDTO maintenanceRecordDTO) throws SQLException {
         return maintenanceRecordDAO.update(new MaintenanceRecord(
                 maintenanceRecordDTO.getId(),
@@ -59,12 +56,12 @@ public class MaintenanceRecordBOImpl implements MaintenanceRecordBO {
                 maintenanceRecordDTO.getStatus()
         ));
     }
-
+    @Override
     public boolean deleteMaintenanceRecords(String recordId) throws SQLException {
         return maintenanceRecordDAO.delete(recordId);
     }
 
-
+    @Override
     public MaintenanceRecordDTO getMaintenanceRecordsById(String recordId) throws SQLException {
          MaintenanceRecord maintenanceRecord = maintenanceRecordDAO.getRecordsById(recordId);
          return new MaintenanceRecordDTO(

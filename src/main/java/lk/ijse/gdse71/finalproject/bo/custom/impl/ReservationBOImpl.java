@@ -13,11 +13,11 @@ import java.util.ArrayList;
 
 public class ReservationBOImpl implements ReservationBO {
     ReservationDAO reservationDAO = (ReservationDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.RESERVATION);
-
+    @Override
     public String getNextId() throws SQLException {
         return reservationDAO.getNextId();
     }
-
+    @Override
     public ArrayList<ReservationDTO> getAllReservations() throws SQLException {
         ArrayList<Reservation> reservations =  reservationDAO.getAll();
         ArrayList<ReservationDTO> reservationDTOs = new ArrayList<>();
@@ -33,7 +33,7 @@ public class ReservationBOImpl implements ReservationBO {
        }
        return reservationDTOs;
     }
-
+    @Override
     public boolean updateReservation(ReservationDTO reservationDTO) throws SQLException {
        return reservationDAO.update(new Reservation(
                reservationDTO.getId(),
@@ -45,11 +45,11 @@ public class ReservationBOImpl implements ReservationBO {
 
     }
 
-
+    @Override
     public boolean deleteReservations(String reservationId) throws SQLException {
         return reservationDAO.delete(reservationId);
     }
-
+    @Override
     public ArrayList<ReservationDTO> searchReservations(String keyword) throws SQLException {
         ArrayList<Reservation> reservations =  reservationDAO.search(keyword);
         ArrayList<ReservationDTO> reservationDTOs = new ArrayList<>();
@@ -66,7 +66,7 @@ public class ReservationBOImpl implements ReservationBO {
         return reservationDTOs;
 
     }
-
+    @Override
     public ReservationDTO getReservationById(String reservationId) throws SQLException {
         Reservation reservation =  reservationDAO.getReservationById(reservationId);
         return new ReservationDTO(
@@ -79,10 +79,7 @@ public class ReservationBOImpl implements ReservationBO {
     }
 
 
-    public ReservationDTO getReservationDetails(String reservationId) throws SQLException {
-       return null;
-    }
-
+    @Override
     public ArrayList<String> getAllReservationIds() throws SQLException {
         ArrayList<String> reservations =  reservationDAO.getAllReservationIds();
         ArrayList<String> reservationIds = new ArrayList<>();
@@ -92,11 +89,11 @@ public class ReservationBOImpl implements ReservationBO {
         }
         return reservationIds;
     }
-
+    @Override
     public String getVehicleIdByReservationId(String reservationId) throws SQLException {
         return reservationDAO.getVehicleIdByReservationId(reservationId);
     }
-
+    @Override
     public String getCustomerIdByVehicleId(String vehicleId) throws SQLException {
         return reservationDAO.getCustomerIdByVehicleId(vehicleId);
     }

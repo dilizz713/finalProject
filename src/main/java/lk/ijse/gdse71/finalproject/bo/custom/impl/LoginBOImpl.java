@@ -23,7 +23,7 @@ public class LoginBOImpl implements LoginBO {
                 loginDTO.getEmail()
         ));
     }
-
+    @Override
     public LoginDTO findByUserName(String userName) throws SQLException {
        Login login = loginDAO.findByUserName(userName);
        if(login != null){
@@ -33,14 +33,6 @@ public class LoginBOImpl implements LoginBO {
        }
     }
 
-    public boolean updateLogin(LoginDTO loginDTO) throws SQLException {
-       return false;
-    }
-
-    @Override
-    public boolean deleteLogin(String dto) throws SQLException {
-        return false;
-    }
 
     @Override
     public String getNextId() throws SQLException {
@@ -53,10 +45,6 @@ public class LoginBOImpl implements LoginBO {
     }
 
     @Override
-    public ArrayList<LoginDTO> searchLoginDetails(String keyword) throws SQLException {
-        return null;
-    }
-
     public LoginDTO findByEmail(String email) throws SQLException {
         Login login =  loginDAO.findByEmail(email);
         if(login != null){

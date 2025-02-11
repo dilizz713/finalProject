@@ -17,8 +17,6 @@ public interface MileageTrackingBO extends SuperBO {
 
     boolean deleteMileageTracking(String trackingId) throws SQLException;
 
-    MileageTrackingDTO getMileageTrackingByReservationId(String reservationId) throws SQLException;
-
     ArrayList<MileageTrackingDTO> searchMileageTracking(String keyword) throws SQLException;
 
     double getEstimatedMileageCost(String reservationId) throws SQLException;
@@ -27,5 +25,4 @@ public interface MileageTrackingBO extends SuperBO {
 
     double getEndMileageForReservation(String reservationId) throws SQLException;
 
-    MileageTrackingDTO getMileageDetails(String reservationId) throws SQLException;
 }

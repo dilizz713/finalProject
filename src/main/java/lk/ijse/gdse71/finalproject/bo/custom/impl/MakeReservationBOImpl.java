@@ -35,6 +35,7 @@ public class MakeReservationBOImpl implements MakeReservationBO {
     PaymentDAO paymentDAO = (PaymentDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.PAYMENT);
     MileageTrackingDAO mileageTrackingDAO = (MileageTrackingDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.MILEAGETRACKING);
 
+    @Override
     public void saveReservationAndPayment(ReservationDTO reservationDTO, PaymentDTO paymentDTO, Button updatePAymentButton) throws SQLException {
         Connection connection = null;
 
@@ -42,10 +43,6 @@ public class MakeReservationBOImpl implements MakeReservationBO {
             connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
 
-           /* boolean isReservationSaved = SQLUtil.execute(connection,
-                    "insert into Reservation (id, customerId, vehicleId, status, reservationDate) values (?, ?, ?, ?, ?)",
-                    reservationDTO.getId(), reservationDTO.getCustomerId(), reservationDTO.getVehicleId(),
-                    reservationDTO.getStatus(), reservationDTO.getReservationDate());*/
 
             boolean isReservationSaved = reservationDAO.save(new Reservation(
                     reservationDTO.getId(),
@@ -58,10 +55,6 @@ public class MakeReservationBOImpl implements MakeReservationBO {
                 throw new SQLException("Failed to save reservation.");
             }
 
-           /* boolean isPaymentSaved = SQLUtil.execute(connection,
-                    "insert into Payment (id, date, status, reservationId, advancePayment, fullPayment) values (?, ?, ?, ?, ?, ?)",
-                    paymentDTO.getId(), paymentDTO.getDate(), paymentDTO.getStatus(), paymentDTO.getReservationId(),
-                    paymentDTO.getAdvancePayment(), paymentDTO.getFullPayment());*/
 
             boolean isPaymentSaved = paymentDAO.save(new Payment(
                     paymentDTO.getId(),
@@ -92,17 +85,13 @@ public class MakeReservationBOImpl implements MakeReservationBO {
         }
         updatePAymentButton.setDisable(false);
     }
-
+    @Override
     public void updatePayment(Payment entity, String status, String reservationId, Button updatePAymentButton) throws SQLException {
         Connection connection = null;
         try {
             connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
 
-            /*boolean isPaymentUpdated = SQLUtil.execute(connection,
-                    "update Payment set date=?, status=?, reservationId=?, advancePayment=?, fullPayment=? where id=?",
-                    paymentDTO.getDate(), paymentDTO.getStatus(), paymentDTO.getReservationId(), paymentDTO.getAdvancePayment(),
-                    paymentDTO.getFullPayment(), paymentDTO.getId());*/
 
             boolean isPaymentUpdated = paymentDAO.update(entity);
 
@@ -137,6 +126,7 @@ public class MakeReservationBOImpl implements MakeReservationBO {
         }
     }
 
+    @Override
     public void showBillUI(String reservationId, String paymentId, Button updatePAymentButton) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/bill-view.fxml"));

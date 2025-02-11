@@ -54,15 +54,6 @@ public class VehicleDamageDAOImpl implements VehicleDamageDAO {
     }
 
 
-   /* public String getCustomerIdByVehicleId(String vehicleId) throws SQLException {
-        String sql = "select customerId from Reservation where vehicleId = ?";
-        ResultSet resultSet = SQLUtil.execute(sql, vehicleId);
-
-        if (resultSet.next()) {
-            return resultSet.getString("customerId");
-        }
-        return null;
-    }*/
 
     public boolean save(VehicleDamage entity) throws SQLException {
         return SQLUtil.execute(

@@ -23,55 +23,46 @@ public class SendMailController {
     @Setter
     private String customerEmail;
 
+   private static final String FROM = "dilinichamikasilva@gmail.com";
 
     @FXML
     public void sendUsingSendgridOnAction(ActionEvent actionEvent) {
-        if (customerEmail == null) {
+        if (customerEmail == null || customerEmail.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Customer email is not provided").show();
             return;
         }
-
-        final String FROM = "dilinichamikasilva@gmail.com";
-
         String subject = txtSubject.getText();
         String body = txtBody.getText();
 
-        if (subject.isEmpty() || body.isEmpty()) {
-            new Alert(Alert.AlertType.WARNING, "Subject and body must not be empty!").show();
-            return;
-        }
+        sendEmail(FROM,customerEmail,subject,body);
 
-        sendEmailWithSendgrid(FROM, customerEmail, subject, body);
+
+    }
+    public void setDefaultSubjectAndBody(String yourBillSummary, String billContent) {
+        txtSubject.setText(yourBillSummary);
+        txtBody.setText(billContent);
     }
 
-
-    private void sendEmailWithSendgrid(String from, String to, String subject, String body) {
+    private void sendEmail(String from, String to, String subject, String body) {
 
         String USER_NAME = "apikey";
-
 
         String PASSWORD = "mvzc erln mzzd apxk";
 
         Properties props = new Properties();
 
-
         props.put("mail.smtp.auth", "true");
-
 
         props.put("mail.smtp.starttls.enable", "true");
 
-
         props.put("mail.smtp.host", "smtp.sendgrid.net");
-
 
         props.put("mail.smtp.port", "587");
 
-
         props.put("mail.smtp.ssl.trust", "smtp.sendgrid.net");
-
 
         Session session = Session.getInstance(props, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-
 
                 return new PasswordAuthentication(USER_NAME, PASSWORD);
             }
@@ -81,17 +72,13 @@ public class SendMailController {
 
             Message message = new MimeMessage(session);
 
-
             message.setFrom(new InternetAddress(from));
 
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 
-
             message.setSubject(subject);
 
-
             message.setText(body);
-
 
             Transport.send(message);
 
@@ -108,9 +95,7 @@ public class SendMailController {
             return;
         }
 
-
         final String FROM = "dilinichamikasilva@gmail.com";
-
 
         String subject = txtSubject.getText();
         String body = txtBody.getText();
@@ -179,8 +164,33 @@ public class SendMailController {
     }
 
 
-    public void setDefaultSubjectAndBody(String yourBillSummary, String billContent) {
-        txtSubject.setText(yourBillSummary);
-        txtBody.setText(billContent);
+
+
+    private void sendEmailWithGmail(String from, String password, String to, String subject, String messageBody) {
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(from, password);
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setSubject(subject);
+            message.setText(messageBody);
+
+            Transport.send(message);
+            new Alert(Alert.AlertType.INFORMATION, "Email sent successfully!").show();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Failed to send email.").show();
+        }
     }
 }

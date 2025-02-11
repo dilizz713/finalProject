@@ -18,4 +18,6 @@ public interface QueryBO extends SuperBO {
     CustomerDTO getCustomerDetailsByReservationId(String reservationId) throws SQLException;
 
     String getCustomerNameByReservationId(String reservationId) throws SQLException;
+
+    String getCustomerEmailByReservationId(String reservationId) throws SQLException;
 }

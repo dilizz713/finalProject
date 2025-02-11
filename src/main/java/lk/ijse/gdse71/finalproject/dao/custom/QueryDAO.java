@@ -22,4 +22,6 @@ public interface QueryDAO extends SuperDAO {
 
     String getCustomerNameByReservationId(String reservationId) throws SQLException;
 
+    String getCustomerEmailByReservationId(String reservationId) throws SQLException;
+
 }

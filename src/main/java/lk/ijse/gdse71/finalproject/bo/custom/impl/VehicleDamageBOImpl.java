@@ -15,10 +15,11 @@ import java.util.ArrayList;
 public class VehicleDamageBOImpl implements VehicleDamageBO {
     VehicleDamageDAO vehicleDamageDAO = (VehicleDamageDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.VEHICLEDAMAGE);
 
+    @Override
     public String getNextId() throws SQLException {
         return vehicleDamageDAO.getNextId();
     }
-
+    @Override
     public ArrayList<VehicleDamageDTO> getAllVehcileDamageDetails() throws SQLException {
         ArrayList<VehicleDamage> vehicles =  vehicleDamageDAO.getAll();
         ArrayList<VehicleDamageDTO> vehicleDamageDTOs = new ArrayList<>();
@@ -36,11 +37,6 @@ public class VehicleDamageBOImpl implements VehicleDamageBO {
     }
 
     @Override
-    public ArrayList<VehicleDamageDTO> searchVehcileDamageDetails(String keyword) throws SQLException {
-        return null;
-    }
-
-
     public boolean saveVehcileDamageDetails(VehicleDamageDTO vehicleDamageDTO) throws SQLException {
         return vehicleDamageDAO.save(new VehicleDamage(
                 vehicleDamageDTO.getId(),
@@ -50,7 +46,7 @@ public class VehicleDamageBOImpl implements VehicleDamageBO {
                 vehicleDamageDTO.getVehicleId()
         ));
     }
-
+    @Override
     public boolean updateVehcileDamageDetails(VehicleDamageDTO vehicleDamageDTO) throws SQLException {
         return vehicleDamageDAO.update(new VehicleDamage(
                 vehicleDamageDTO.getId(),
@@ -60,12 +56,12 @@ public class VehicleDamageBOImpl implements VehicleDamageBO {
                 vehicleDamageDTO.getVehicleId()
         ));
     }
-
+    @Override
     public boolean deleteVehcileDamageDetails(String damageId) throws SQLException {
         return vehicleDamageDAO.delete(damageId);
 
     }
-
+    @Override
     public double getRepairCostByVehicleId(String vehicleId) throws SQLException {
         return vehicleDamageDAO.getRepairCostByVehicleId(vehicleId);
     }

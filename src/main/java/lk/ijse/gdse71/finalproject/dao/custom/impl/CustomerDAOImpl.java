@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CustomerDAOImpl implements CustomerDAO {
+    @Override
     public boolean save(Customer entity) throws SQLException {
         return SQLUtil.execute(
                 "insert into Customer values (?,?,?,?,?,?)",
@@ -24,6 +25,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 
     }
+    @Override
     public boolean update(Customer entity) throws SQLException {
         return SQLUtil.execute(
                 "update Customer set name=?, address=?, email=?, phoneNumber=?, nic=? where id=?",
@@ -35,10 +37,11 @@ public class CustomerDAOImpl implements CustomerDAO {
                 entity.getId()
         );
     }
+    @Override
     public boolean delete(String customerId) throws SQLException {
         return SQLUtil.execute("delete from Customer where id=?", customerId);
     }
-
+    @Override
     public String getNextId() throws SQLException {
         ResultSet resultSet = SQLUtil.execute("select id from Customer order by id desc limit 1");
 
@@ -51,7 +54,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
         return "C001";
     }
-
+    @Override
     public ArrayList<Customer> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("select * from Customer");
 
@@ -71,7 +74,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
         return customerDTOS;
     }
-
+    @Override
     public ArrayList<Customer> search(String keyword) throws SQLException {
         String searchQuery = "select * from Customer where id Like ? or name Like ? ";
 
@@ -95,7 +98,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         return customerDTOS;
     }
 
-
+    @Override
     public ArrayList<String> getAllCustomerNames() throws SQLException {
         String query = "select name from Customer";
         ResultSet rst = SQLUtil.execute(query);
@@ -108,7 +111,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         return customerNames;
 
     }
-
+    @Override
     public String getCustomerIdByName(String name) throws SQLException {
         String sql = "select id from Customer where name = ?";
         ResultSet resultSet = SQLUtil.execute(sql, name);
@@ -118,7 +121,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
         return null;
     }
-
+    @Override
     public String getCustomerNameById(String customerId) throws SQLException {
         String sql = "select name from Customer where id = ?";
         ResultSet resultSet = SQLUtil.execute(sql, customerId);
@@ -128,7 +131,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
         return null;
     }
-
+    @Override
     public ArrayList<Customer> getCustomerDTOsForReservation() throws SQLException {
         ArrayList<Customer> customers = new ArrayList<>();
 
@@ -145,4 +148,6 @@ public class CustomerDAOImpl implements CustomerDAO {
 
         return customers;
     }
+
+
 }

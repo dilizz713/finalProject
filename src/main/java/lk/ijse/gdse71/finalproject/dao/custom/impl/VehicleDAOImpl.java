@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class VehicleDAOImpl implements VehicleDAO {
+    @Override
     public String getNextId() throws SQLException {
         ResultSet resultSet = SQLUtil.execute("select id from Vehicle order by id desc limit 1");
 
@@ -22,7 +23,7 @@ public class VehicleDAOImpl implements VehicleDAO {
         }
         return "V001";
     }
-
+    @Override
     public ArrayList<Vehicle> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("select * from Vehicle");
 
@@ -45,7 +46,7 @@ public class VehicleDAOImpl implements VehicleDAO {
         }
         return vehicleDTOS;
     }
-
+    @Override
     public ArrayList<Vehicle> getVehiclesForPage(int start, int end) throws SQLException {
         ArrayList<Vehicle> vehicles = new ArrayList<>();
         String query = "select * from Vehicle limit ?, ?";
@@ -67,7 +68,7 @@ public class VehicleDAOImpl implements VehicleDAO {
 
         return vehicles;
     }
-
+    @Override
     public boolean save(Vehicle entity) throws SQLException {
         return SQLUtil.execute(
                 "insert into Vehicle values (?,?,?,?,?,?,?,?)",
@@ -83,7 +84,7 @@ public class VehicleDAOImpl implements VehicleDAO {
 
         );
     }
-
+    @Override
     public boolean update(Vehicle entity) throws SQLException {
         return SQLUtil.execute(
                 "update Vehicle set  make=?, model=?, vehicleType=?, image=?, numberPlate=?, price=?, registrationDate=? where id=?",
@@ -98,11 +99,11 @@ public class VehicleDAOImpl implements VehicleDAO {
         );
     }
 
-
+    @Override
     public boolean delete(String vehicleId) throws SQLException {
         return SQLUtil.execute("delete from Vehicle where id=?", vehicleId);
     }
-
+    @Override
     public ArrayList<Vehicle> search(String keyword) throws SQLException {
         String searchQuery = "select * from Vehicle where vehicleType Like ? or model Like ? or id Like ?";
         ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%");
@@ -126,7 +127,7 @@ public class VehicleDAOImpl implements VehicleDAO {
         return vehicleDTOS;
     }
 
-
+    @Override
     public ArrayList<String> getAllVehcileIds() throws SQLException {
         ResultSet rst = SQLUtil.execute("select id from Vehicle");
         ArrayList<String> vehilceId = new ArrayList<>();
@@ -136,7 +137,7 @@ public class VehicleDAOImpl implements VehicleDAO {
         return vehilceId;
 
     }
-
+    @Override
     public String getVehicleModelById(String vehicleId) throws SQLException {
         String sql = "select model from Vehicle where id = ?";
         ResultSet resultSet = SQLUtil.execute(sql, vehicleId);
@@ -147,12 +148,12 @@ public class VehicleDAOImpl implements VehicleDAO {
         return null;
 
     }
-
+    @Override
     public String getVehiclePriceById(String vehicleID) throws SQLException {
         ResultSet rst = SQLUtil.execute("select price from Vehicle where id = ?", vehicleID);
         return rst.next() ? rst.getString(1) : null;
     }
-
+    @Override
     public String getNumberPlateById(String vehicleId) throws SQLException {
         ResultSet rst = SQLUtil.execute("select numberPlate from Vehicle where id = ?", vehicleId);
         return rst.next() ? rst.getString(1) : null;

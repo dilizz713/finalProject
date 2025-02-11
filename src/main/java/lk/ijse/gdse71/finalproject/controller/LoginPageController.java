@@ -74,7 +74,7 @@ public class LoginPageController implements Initializable {
             LoginDTO loginDTO = loginBO.findByUserName(userName);
 
             if (loginDTO == null) {
-                new Alert(Alert.AlertType.INFORMATION, "User name not found. Please signup first").show();
+                new Alert(Alert.AlertType.INFORMATION, "User name not found. Please enter correct user-name or signup first ").show();
             } else if (!loginDTO.getPassword().equals(pw)) {
                 new Alert(Alert.AlertType.ERROR, "Incorrect password!. Please try again!").show();
             } else {

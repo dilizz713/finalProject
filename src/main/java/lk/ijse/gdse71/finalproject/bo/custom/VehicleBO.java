@@ -11,8 +11,6 @@ public interface VehicleBO extends SuperBO {
 
     ArrayList<VehicleDTO> getAllVehicles() throws SQLException;
 
-    ArrayList<VehicleDTO> getVehiclesForPage(int start, int end) throws SQLException;
-
     boolean saveVehicles(VehicleDTO vehicleDTO) throws SQLException;
 
     boolean updateVehicles(VehicleDTO vehicleDTO) throws SQLException;

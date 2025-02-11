@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class PaymentDAOImpl implements PaymentDAO {
 
+    @Override
     public String getNextId() throws SQLException {
         ResultSet resultSet = SQLUtil.execute("select id from Payment order by id desc limit 1");
 
@@ -25,6 +26,7 @@ public class PaymentDAOImpl implements PaymentDAO {
         return "P001";
     }
 
+    @Override
     public ArrayList<Payment> getAll() throws SQLException {
         ResultSet rst = SQLUtil.execute("select * from Payment");
 
@@ -49,7 +51,7 @@ public class PaymentDAOImpl implements PaymentDAO {
     public ArrayList<Payment> search(String keyword) throws SQLException {
         return null;
     }
-
+    @Override
     public boolean save(Payment entity) throws SQLException {
         return SQLUtil.execute(
                 "insert into Payment values (?,?,?,?,?,?)",
@@ -63,16 +65,16 @@ public class PaymentDAOImpl implements PaymentDAO {
         );
 
     }
-
+    @Override
     public void updateAdvancePaymentStatus(String reservationId) throws SQLException {
         String query = "update Payment set status = 'Done' where reservationId = ? and type = 'Advance Payment'";
         SQLUtil.execute(query, reservationId);
     }
-
+    @Override
     public boolean delete(String id) throws SQLException {
         return SQLUtil.execute("delete from Payment where id=?", id);
     }
-
+    @Override
     public boolean update(Payment entity) throws SQLException {
         return SQLUtil.execute(
                 "update Payment set  date=?,  status=?, reservationId=?,advancePayment=? , fullPayment=?  where id=?",
@@ -86,37 +88,8 @@ public class PaymentDAOImpl implements PaymentDAO {
         );
     }
 
-   /* public ArrayList<PaymentDTO> search(String keyword) throws SQLException {
-        String searchQuery = """
-                select p.*, c.name 
-                from Payment p
-                join Reservation r
-                on p.reservationId = r.id
-                join Customer c
-                on r.customerId = c.id
-                where p.id Like ? or p.date Like ? or p.reservationId Like ? or p.status Like ? or c.name Like ?;
-                """;
 
-        ResultSet rst = SQLUtil.execute(searchQuery, "%" + keyword + "%", "%" + keyword + "%","%" + keyword + "%","%" + keyword + "%","%" + keyword + "%");
-
-
-        ArrayList<PaymentDTO> paymentDTOS = new ArrayList<>();
-
-        while (rst.next()) {
-            PaymentDTO paymentDTO = new PaymentDTO(
-                    rst.getString(1),                    //id
-                    rst.getDate(2).toLocalDate(),        //date
-                    rst.getString(3),                    //status
-                    rst.getString(4),                     //reservationId
-                    rst.getDouble(5),                     //advance payment
-                    rst.getDouble(6)                     //full payment
-
-            );
-            paymentDTOS.add(paymentDTO);
-        }
-        return paymentDTOS;
-    }*/
-
+    @Override
     public double getAdvancePayment(String reservationId) throws SQLException {
         String query = "select sum(advancePayment) as totalAdvancePayment from Payment where reservationId = ?";
         ResultSet resultSet = SQLUtil.execute(query, reservationId);
@@ -127,7 +100,7 @@ public class PaymentDAOImpl implements PaymentDAO {
         return 0.0;
     }
 
-
+    @Override
     public Payment getPaymentById(String paymentId) throws SQLException {
         String query = "select * from Payment where id=?";
         ResultSet rst = SQLUtil.execute(query, paymentId);
@@ -147,7 +120,7 @@ public class PaymentDAOImpl implements PaymentDAO {
         return null;
     }
 
-
+    @Override
     public Payment getPaymentDetails(String paymentId) throws SQLException {
         String query = "SELECT * FROM Payment WHERE id = ?";
         ResultSet rst = SQLUtil.execute(query, paymentId);
