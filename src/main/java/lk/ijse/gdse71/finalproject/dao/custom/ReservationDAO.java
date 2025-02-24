@@ -8,8 +8,12 @@ import java.util.ArrayList;
 
 public interface ReservationDAO extends CrudDAO<Reservation> {
     Reservation getReservationById(String reservationId) throws SQLException;
+
     ArrayList<String> getAllReservationIds() throws SQLException;
+
     String getVehicleIdByReservationId(String reservationId) throws SQLException;
+
     String getCustomerIdByVehicleId(String vehicleId) throws SQLException;
 
+    boolean updateReservationStatus(String reservationId, String done) throws SQLException;
 }

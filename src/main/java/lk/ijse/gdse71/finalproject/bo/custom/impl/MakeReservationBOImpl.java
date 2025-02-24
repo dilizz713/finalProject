@@ -43,7 +43,6 @@ public class MakeReservationBOImpl implements MakeReservationBO {
             connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
 
-
             boolean isReservationSaved = reservationDAO.save(new Reservation(
                     reservationDTO.getId(),
                     reservationDTO.getCustomerId(),
@@ -84,7 +83,10 @@ public class MakeReservationBOImpl implements MakeReservationBO {
             }
         }
         updatePAymentButton.setDisable(false);
+
+
     }
+
     @Override
     public void updatePayment(Payment entity, String status, String reservationId, Button updatePAymentButton) throws SQLException {
         Connection connection = null;
@@ -92,16 +94,16 @@ public class MakeReservationBOImpl implements MakeReservationBO {
             connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
 
-
             boolean isPaymentUpdated = paymentDAO.update(entity);
 
             if (!isPaymentUpdated) {
                 throw new SQLException("Failed to update payment");
             }
             if (status.equalsIgnoreCase("Done")) {
-                boolean isReservationUpdated = SQLUtil.execute(connection,
+                /*boolean isReservationUpdated = SQLUtil.execute(connection,
                         "update Reservation set status=? where id=?", "Done", reservationId
-                );
+                );*/
+                boolean isReservationUpdated = reservationDAO.updateReservationStatus( reservationId, "Done");
                 if (!isReservationUpdated) {
                     throw new SQLException("Failed to update reservation status.");
                 }

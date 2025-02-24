@@ -155,4 +155,9 @@ public class ReservationDAOImpl implements ReservationDAO {
         }
         return null;
     }
+
+    @Override
+    public boolean updateReservationStatus(String reservationId, String status) throws SQLException {
+        return SQLUtil.execute( "update Reservation set status=? where id=?", status, reservationId);
+    }
 }
